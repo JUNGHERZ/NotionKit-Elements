@@ -132,6 +132,7 @@ export function nav(t, current) {
   ${link('app.html', t.navApp, 'app')}
   <span class="site-spacer"></span>
   <a href="https://notionkit.jungherz.com">${t.navFoundation}</a>
+  <a href="https://notionkit-web.jungherz.com">${t.navWeb}</a>
   <a href="https://github.com/JUNGHERZ/NotionKit-Elements">${t.navGitHub}</a>
   <a href="${t.other.href}${current}.html">${t.other.label}</a>
   <button class="nk-topbar-btn nk-share-btn" id="brandToggle" aria-pressed="false" title="${t.brandToggle}">🎨</button>

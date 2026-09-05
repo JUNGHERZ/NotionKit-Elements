@@ -8,6 +8,7 @@
 - [Showcase](https://notionkit-elements.jungherz.com/showcase.html): every element live, both themes, brand switch.
 - [Demo app](https://notionkit-elements.jungherz.com/app.html): the NotionKit reference app built from elements only.
 - [Foundation](https://notionkit.jungherz.com): NotionKit CSS, the peer dependency.
+- [NotionKit Web](https://notionkit-web.jungherz.com): the Astro template for complete websites on the same foundation.
 
 ## Elements (68)
 - Forms & controls: <nk-btn>, <nk-input>, <nk-textarea>, <nk-select>, <nk-switch>, <nk-check>, <nk-radio>, <nk-slider>, <nk-field>

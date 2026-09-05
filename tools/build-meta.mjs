@@ -26,6 +26,7 @@ writeFileSync('llms.txt', `# NotionKit Elements v${pkg.version}
 - [Showcase](${SITE}/showcase.html): every element live, both themes, brand switch.
 - [Demo app](${SITE}/app.html): the NotionKit reference app built from elements only.
 - [Foundation](https://notionkit.jungherz.com): NotionKit CSS, the peer dependency.
+- [NotionKit Web](https://notionkit-web.jungherz.com): the Astro template for complete websites on the same foundation.
 
 ## Elements (${CATALOG.length})
 ${byGroup}

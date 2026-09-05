@@ -20,6 +20,7 @@
   <a href="https://notionkit-elements.jungherz.com/docs.html">📖 Documentation</a> &nbsp;&middot;&nbsp;
   <a href="https://notionkit-elements.jungherz.com/showcase.html">🎨 Showcase</a> &nbsp;&middot;&nbsp;
   <a href="https://notionkit.jungherz.com/">📓 NotionKit CSS</a> &nbsp;&middot;&nbsp;
+  <a href="https://notionkit-web.jungherz.com/">🚀 NotionKit Web</a> &nbsp;&middot;&nbsp;
   <a href="SKILL.md">🤖 SKILL.md</a>
 </p>
 
@@ -29,7 +30,7 @@
 
 NotionKit Elements is the companion library to [NotionKit CSS](https://github.com/JUNGHERZ/NotionKit). It provides **68 Web Components** – from buttons and form controls over the sidebar, page tree and page shell to the settings modal, ⌘K palette, database views and AI thread – that encapsulate the class markup of the foundation into simple, declarative custom elements.
 
-It is the **app layer** of the NotionKit family – three layers, one design language: [NotionKit](https://notionkit.jungherz.com) is the pure-CSS foundation, NotionKit Elements wraps it into web components for application UIs, and NotionKit Web (planned) will be the Astro template for complete websites on top of the same foundation. The word stem stays the same across the layers: `.nk-callout` becomes `<nk-callout>`, a modifier class becomes an attribute, a state class becomes a boolean attribute.
+It is the **app layer** of the NotionKit family – three layers, one design language: [NotionKit](https://notionkit.jungherz.com) is the pure-CSS foundation, NotionKit Elements wraps it into web components for application UIs, and [NotionKit Web](https://notionkit-web.jungherz.com) is the Astro template for complete websites on top of the same foundation. The word stem stays the same across the layers: `.nk-callout` becomes `<nk-callout>`, a modifier class becomes an attribute, a state class becomes a boolean attribute.
 
 ```html
 <!-- Before: 6 elements, 6 classes -->
@@ -135,6 +136,6 @@ npm run check:coverage && npm run check:versions
 |---|---|
 | **NotionKit** – CSS foundation | [`@jungherz-de/notionkit`](https://github.com/JUNGHERZ/NotionKit) |
 | **NotionKit Elements** – this package | `@jungherz-de/notionkit-elements` |
-| NotionKit Web – Astro template | planned |
+| **NotionKit Web** – Astro template for complete websites | [`JUNGHERZ/NotionKit-Web`](https://github.com/JUNGHERZ/NotionKit-Web) · [notionkit-web.jungherz.com](https://notionkit-web.jungherz.com) |
 
 MIT · Jungherz GmbH

@@ -371,7 +371,7 @@ The open/close contract is one attribute: \`settings.open = true\`, \`settings.s
 
 ## 4.6 Landing / documentation page
 
-**When:** a public page in the NotionKit look – no sidebar, the page *is* the document. The precursor of NotionKit Web.
+**When:** a public page in the NotionKit look – no sidebar, the page *is* the document. For a complete website use [NotionKit Web](https://notionkit-web.jungherz.com), the Astro template on the same foundation.
 
 \`\`\`html
 <!DOCTYPE html>
