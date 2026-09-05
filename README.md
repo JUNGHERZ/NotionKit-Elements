@@ -1,18 +1,68 @@
+<h1 align="center">🧩 NotionKit Elements</h1>
+
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-2383e2?style=flat-square" alt="Version">
-  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/npm/v/@jungherz-de/notionkit-elements?style=flat-square&color=529cca" alt="npm"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.0.0-9065b0?style=flat-square" alt="Changelog"></a>
-  <img src="https://img.shields.io/badge/license-MIT-448361?style=flat-square" alt="MIT">
+  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.0.0-2383e2?style=flat-square" alt="Version"></a>
+  <a href="#"><img src="https://img.shields.io/badge/vanilla_JS-no_dependencies-448361?style=flat-square" alt="Vanilla JS"></a>
+  <a href="#"><img src="https://img.shields.io/badge/elements-68-529cca?style=flat-square" alt="68 Elements"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-9065b0?style=flat-square" alt="MIT License"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.0.0-lightgrey?style=flat-square" alt="Changelog"></a>
+  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/npm-%40jungherz--de%2Fnotionkit--elements-cb3837?style=flat-square&logo=npm" alt="npm"></a>
 </p>
 
-# NotionKit Elements
+<p align="center">
+  <strong>Drop-in Web Components for <a href="https://github.com/JUNGHERZ/NotionKit">NotionKit CSS</a></strong><br>
+  68 vanilla JavaScript custom elements wrapping NotionKit's calm, document-centric workspace look.<br>
+  Shadow DOM &middot; Native form participation &middot; Pixel parity with the class markup &middot; Zero dependencies.
+</p>
 
-Vanilla-JS Web Components for the [NotionKit](https://notionkit.jungherz.com) CSS foundation – 68 `<nk-*>` custom elements with Shadow DOM, automatic light/dark sync, native form participation and pixel parity with the class markup. Same word stem as the CSS classes: `.nk-callout` becomes `<nk-callout>`, a modifier class becomes an attribute, a state class becomes a boolean attribute.
+<p align="center">
+  <a href="https://notionkit-elements.jungherz.com/">🌐 Live Demo</a> &nbsp;&middot;&nbsp;
+  <a href="https://notionkit-elements.jungherz.com/docs.html">📖 Documentation</a> &nbsp;&middot;&nbsp;
+  <a href="https://notionkit-elements.jungherz.com/showcase.html">🎨 Showcase</a> &nbsp;&middot;&nbsp;
+  <a href="https://notionkit.jungherz.com/">📓 NotionKit CSS</a> &nbsp;&middot;&nbsp;
+  <a href="SKILL.md">🤖 SKILL.md</a>
+</p>
 
-- **Docs:** https://notionkit-elements.jungherz.com/docs.html – attributes, slots, events, before/after against the class markup
-- **Showcase:** https://notionkit-elements.jungherz.com/showcase.html – every element live, both themes, brand switch
-- **Demo app:** https://notionkit-elements.jungherz.com/app.html – the NotionKit reference app, elements only
-- **AI reference:** [SKILL.md](SKILL.md) – copy-paste markup, six app skeletons, rules and common mistakes
+---
+
+## ✨ What is NotionKit Elements?
+
+NotionKit Elements is the companion library to [NotionKit CSS](https://github.com/JUNGHERZ/NotionKit). It provides **68 Web Components** – from buttons and form controls over the sidebar, page tree and page shell to the settings modal, ⌘K palette, database views and AI thread – that encapsulate the class markup of the foundation into simple, declarative custom elements.
+
+It is the **app layer** of the NotionKit family – three layers, one design language: [NotionKit](https://notionkit.jungherz.com) is the pure-CSS foundation, NotionKit Elements wraps it into web components for application UIs, and NotionKit Web (planned) will be the Astro template for complete websites on top of the same foundation. The word stem stays the same across the layers: `.nk-callout` becomes `<nk-callout>`, a modifier class becomes an attribute, a state class becomes a boolean attribute.
+
+```html
+<!-- Before: 6 elements, 6 classes -->
+<div class="nk-field">
+  <div>
+    <div class="f-label">Email notifications</div>
+    <div class="f-desc">Shown next to your comments.</div>
+  </div>
+  <div class="f-control"><button class="nk-switch" role="switch" aria-checked="true"></button></div>
+</div>
+
+<!-- After: 2 elements, 0 classes -->
+<nk-field label="Email notifications" desc="Shown next to your comments.">
+  <nk-switch checked></nk-switch>
+</nk-field>
+```
+
+---
+
+## 🎯 Why NotionKit Elements?
+
+| Feature | Details |
+|---|---|
+| 🎯 **Pixel parity** | Every element renders identically to its class markup – verified by a Playwright pixel test in light and dark; the reference app differs by 0.00 % from the class version |
+| 🔌 **Shadow DOM** | Each root adopts the NotionKit *components* sheet via `adoptedStyleSheets`; tokens are inherited from the document, so one `:root { --nk-accent: … }` re-brands everything |
+| 🧩 **68 Elements** | Forms, content blocks, app shell & tree, page shell, overlays (modal, ⌘K palette, menus, popover, emoji picker, toast), database table & board, comments, AI thread |
+| 🎛️ **Form participation** | Input, textarea, select, switch, check, radio, slider, segmented and model card work natively with `<form>` via `ElementInternals`; radios group across shadow roots |
+| 🌗 **Theme sync** | One observer mirrors `data-theme` on `<html>` into every element |
+| 🪶 **Lightweight** | 167 KB minified / 33 KB gzipped (IIFE, foundation sheet included), no external dependencies |
+| 📦 **Four bundle shapes** | IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk |
+| 🤖 **AI-ready** | `SKILL.md` with copy-paste markup, six app skeletons and the rules – an agent given only that file built a working app in the release test |
+
+---
 
 ## Quick start
 
