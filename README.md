@@ -132,10 +132,12 @@ npm run check:coverage && npm run check:versions
 
 ## The NotionKit family
 
-| Layer | Package |
-|---|---|
-| **NotionKit** – CSS foundation | [`@jungherz-de/notionkit`](https://github.com/JUNGHERZ/NotionKit) |
-| **NotionKit Elements** – this package | `@jungherz-de/notionkit-elements` |
-| **NotionKit Web** – Astro template for complete websites | [`JUNGHERZ/NotionKit-Web`](https://github.com/JUNGHERZ/NotionKit-Web) · [notionkit-web.jungherz.com](https://notionkit-web.jungherz.com) |
+| Layer | Repository | Website |
+|---|---|---|
+| **NotionKit** – CSS foundation | [`JUNGHERZ/NotionKit`](https://github.com/JUNGHERZ/NotionKit) | [notionkit.jungherz.com](https://notionkit.jungherz.com) |
+| **NotionKit Elements** – Web Components (this package) | [`JUNGHERZ/NotionKit-Elements`](https://github.com/JUNGHERZ/NotionKit-Elements) | [notionkit-elements.jungherz.com](https://notionkit-elements.jungherz.com) |
+| **NotionKit Web** – Astro template for complete websites | [`JUNGHERZ/NotionKit-Web`](https://github.com/JUNGHERZ/NotionKit-Web) | [notionkit-web.jungherz.com](https://notionkit-web.jungherz.com) |
 
-MIT · Jungherz GmbH
+npm: [`@jungherz-de/notionkit`](https://www.npmjs.com/package/@jungherz-de/notionkit) · [`@jungherz-de/notionkit-elements`](https://www.npmjs.com/package/@jungherz-de/notionkit-elements)
+
+MIT · [Jungherz GmbH](https://www.jungherz.com)
