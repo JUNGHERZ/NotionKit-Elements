@@ -3,7 +3,7 @@ export const PAGES = {
   en: {
     lang: 'en', dir: '', other: { lang: 'de', label: '🇩🇪 DE', href: 'de/' },
     siteName: 'NotionKit Elements',
-    navDocs: 'Docs', navShowcase: 'Showcase', navApp: 'Demo app', navGitHub: 'GitHub', navFoundation: 'NotionKit CSS',
+    navDocs: 'Docs', navShowcase: 'Showcase', navApp: 'Demo app', navGitHub: 'GitHub', navFoundation: 'NotionKit CSS', navWeb: 'NotionKit Web',
     themeToggle: 'Toggle light / dark', brandToggle: 'Brand: --nk-accent → green',
     showcaseTitle: 'Showcase', showcaseLead: 'Every element, live, in both themes. The brand switch re-colours the whole page through one <code>:root</code> declaration – no element is left half-branded.',
     docsTitle: 'Documentation', docsLead: 'Attributes, slots, events and the class markup each element replaces.',
@@ -35,13 +35,13 @@ export const PAGES = {
     ],
     quickTitle: 'Quick start', quickSteps: ['Load NotionKit CSS and the elements bundle', 'Put <code>class="nk-body"</code> on <code>&lt;body&gt;</code>', 'Write elements'],
     previewTitle: 'The reference app', previewLead: 'The NotionKit demo app, rebuilt from elements only – 0.00 % pixel difference to the class version on desktop.',
-    familyTitle: 'The NotionKit family', family: [['NotionKit', 'CSS foundation – classes and tokens', 'https://notionkit.jungherz.com', false], ['NotionKit Elements', 'Web Components – this package', '#', true], ['NotionKit Web', 'Astro template – planned', null, false]],
+    familyTitle: 'The NotionKit family', family: [['NotionKit', 'CSS foundation – classes and tokens', 'https://notionkit.jungherz.com', false], ['NotionKit Elements', 'Web Components – this package', '#', true], ['NotionKit Web', 'Astro template – complete websites', 'https://notionkit-web.jungherz.com', false]],
     here: 'you are here', planned: 'planned',
   },
   de: {
     lang: 'de', dir: '../', other: { lang: 'en', label: '🇬🇧 EN', href: '../' },
     siteName: 'NotionKit Elements',
-    navDocs: 'Doku', navShowcase: 'Showcase', navApp: 'Demo-App', navGitHub: 'GitHub', navFoundation: 'NotionKit CSS',
+    navDocs: 'Doku', navShowcase: 'Showcase', navApp: 'Demo-App', navGitHub: 'GitHub', navFoundation: 'NotionKit CSS', navWeb: 'NotionKit Web',
     themeToggle: 'Hell / dunkel umschalten', brandToggle: 'Branding: --nk-accent → grün',
     showcaseTitle: 'Showcase', showcaseLead: 'Jedes Element, live, in beiden Themes. Der Branding-Schalter färbt die ganze Seite über eine einzige <code>:root</code>-Deklaration um – kein Element bleibt halb gebrandet.',
     docsTitle: 'Dokumentation', docsLead: 'Attribute, Slots, Events und das Klassen-Markup, das jedes Element ersetzt.',
@@ -73,7 +73,7 @@ export const PAGES = {
     ],
     quickTitle: 'Schnellstart', quickSteps: ['NotionKit CSS und das Elements-Bundle laden', '<code>class="nk-body"</code> auf <code>&lt;body&gt;</code> setzen', 'Elemente schreiben'],
     previewTitle: 'Die Referenz-App', previewLead: 'Die NotionKit-Demo-App, nur aus Elementen neu gebaut – 0,00 % Pixelabweichung zur Klassen-Version am Desktop.',
-    familyTitle: 'Die NotionKit-Familie', family: [['NotionKit', 'CSS-Foundation – Klassen und Tokens', 'https://notionkit.jungherz.com', false], ['NotionKit Elements', 'Web Components – dieses Paket', '#', true], ['NotionKit Web', 'Astro-Template – geplant', null, false]],
+    familyTitle: 'Die NotionKit-Familie', family: [['NotionKit', 'CSS-Foundation – Klassen und Tokens', 'https://notionkit.jungherz.com', false], ['NotionKit Elements', 'Web Components – dieses Paket', '#', true], ['NotionKit Web', 'Astro-Template – komplette Websites', 'https://notionkit-web.jungherz.com', false]],
     here: 'du bist hier', planned: 'geplant',
   },
 };
