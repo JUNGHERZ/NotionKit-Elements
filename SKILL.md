@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.0.0) wrapping NotionKit CSS v1.1.1 – the calm, document-centric design system in the Notion idiom. 68 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.0.1) wrapping NotionKit CSS v1.1.1 – the calm, document-centric design system in the Notion idiom. 68 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -22,7 +22,7 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.0.0) 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -2246,7 +2246,7 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2306,7 +2306,7 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and (from wave 3) `nk-page` are `d
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2373,7 +2373,7 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2433,7 +2433,7 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -2508,7 +2508,7 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -2554,7 +2554,7 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -2733,4 +2733,4 @@ Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + 
 
 
 ---
-*NotionKit Elements v1.0.0 · wrapping NotionKit CSS v1.1.1 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.0.1 · wrapping NotionKit CSS v1.1.1 · MIT · Jungherz GmbH*

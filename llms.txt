@@ -1,4 +1,4 @@
-# NotionKit Elements v1.0.0
+# NotionKit Elements v1.0.1
 
 > Vanilla-JS Web Components (<nk-*>, Shadow DOM) wrapping NotionKit CSS v1.1.1, the calm document-centric design system in the Notion idiom. Same word stem as the CSS classes: .nk-callout ↔ <nk-callout>; modifier class → attribute, state class → boolean attribute. No visual CSS of its own, tokens on the document, theme via data-theme on <html>.
 
@@ -19,6 +19,6 @@
 - Data & collaboration: <nk-database>, <nk-table-view>, <nk-board-view>, <nk-filter-bar>, <nk-comments>, <nk-comment>, <nk-ai-thread>, <nk-ai-msg>, <nk-ai-input-row>
 
 ## Install
-- CDN: https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css + https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js
+- CDN: https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css + https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.1/dist/notionkit-elements.min.js
 - npm: @jungherz-de/notionkit-elements (peer: @jungherz-de/notionkit >= 1.0.0)
 - MIT · Jungherz GmbH · https://github.com/JUNGHERZ/NotionKit-Elements

@@ -4,6 +4,21 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] – 2026-09-06
+
+Documentation-only release; the bundles are unchanged.
+
+### Changed
+- README: header aligned with GlassKit Elements (centred title, full badge
+  row, tagline, link row, "What is" intro with before/after, feature table);
+  the family table now lists repository and website for every layer in one
+  pattern; Jungherz GmbH links to jungherz.com.
+- NotionKit Web is available and linked from the README, the landing page,
+  the site navigation, `SKILL.md` and `llms.txt`.
+- Landing page content centred; German pages link to their German
+  counterparts (including the embedded `de/app.html`); page footers link
+  Jungherz GmbH.
+
 ## [1.0.0] – 2026-09-06
 
 First release: the Web-Components layer of the NotionKit family. 68 elements,
@@ -82,4 +97,5 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.0.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.1
 [1.0.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.0
