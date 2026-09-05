@@ -1,0 +1,17 @@
+// Built-in emoji set for <nk-emoji-picker>: eight categories, names for
+// search. Override with `picker.emojis = [{ char, name, cat }]`.
+const C = (cat, icon, list) => list.map(([char, name]) => ({ char, name, cat, icon }));
+export const EMOJI_CATEGORIES = [
+  { id: 'smileys', icon: '😀' }, { id: 'people', icon: '👋' }, { id: 'nature', icon: '🌿' }, { id: 'food', icon: '☕' },
+  { id: 'activity', icon: '🎯' }, { id: 'travel', icon: '🚀' }, { id: 'objects', icon: '💡' }, { id: 'symbols', icon: '✅' },
+];
+export const EMOJI = [
+  ...C('smileys', '😀', [['😀', 'grinning'], ['😊', 'smile blush'], ['😂', 'joy laugh'], ['🙂', 'slight smile'], ['😉', 'wink'], ['😍', 'heart eyes love'], ['🤔', 'thinking'], ['😎', 'cool sunglasses'], ['🥳', 'party'], ['😴', 'sleep'], ['🤯', 'mind blown'], ['😅', 'sweat smile'], ['🙃', 'upside down'], ['😇', 'angel halo'], ['🤗', 'hug'], ['😢', 'cry sad']]),
+  ...C('people', '👋', [['👋', 'wave hello'], ['👍', 'thumbs up'], ['👎', 'thumbs down'], ['🙏', 'pray thanks'], ['👏', 'clap'], ['🤝', 'handshake deal'], ['💪', 'strong'], ['👀', 'eyes look'], ['🧠', 'brain knowledge'], ['❤️', 'heart love'], ['👤', 'person user'], ['👥', 'people team members'], ['🧑‍💻', 'developer'], ['🙋', 'raise hand'], ['✍️', 'writing'], ['🫶', 'heart hands']]),
+  ...C('nature', '🌿', [['🌿', 'leaf herb'], ['🌱', 'seedling'], ['🌳', 'tree'], ['🌸', 'blossom flower'], ['🌞', 'sun'], ['🌙', 'moon night'], ['⭐', 'star'], ['🔥', 'fire hot'], ['🌈', 'rainbow'], ['🌊', 'wave water'], ['🍀', 'clover luck'], ['🐝', 'bee'], ['🦋', 'butterfly'], ['🐢', 'turtle'], ['🌍', 'earth globe'], ['❄️', 'snow']]),
+  ...C('food', '☕', [['☕', 'coffee'], ['🍵', 'tea'], ['🍎', 'apple'], ['🍕', 'pizza'], ['🍰', 'cake'], ['🍪', 'cookie'], ['🥐', 'croissant'], ['🍔', 'burger'], ['🍜', 'noodles'], ['🍺', 'beer'], ['🍷', 'wine'], ['🥗', 'salad'], ['🍫', 'chocolate'], ['🍓', 'strawberry'], ['🥑', 'avocado'], ['🍩', 'donut']]),
+  ...C('activity', '🎯', [['🎯', 'target goal'], ['🏆', 'trophy win'], ['🎉', 'tada celebration'], ['🎨', 'art palette design'], ['🎙️', 'microphone podcast voice'], ['🎬', 'clapper movie'], ['🎮', 'game'], ['⚽', 'football'], ['🏃', 'run'], ['🧘', 'yoga calm'], ['🎵', 'music'], ['🎲', 'dice'], ['🏁', 'finish flag'], ['🎓', 'graduation learn'], ['🧩', 'puzzle piece'], ['🔁', 'repeat retro']]),
+  ...C('travel', '🚀', [['🚀', 'rocket launch'], ['✈️', 'plane travel'], ['🚗', 'car'], ['🚲', 'bike'], ['🏠', 'house home'], ['🏢', 'office building'], ['🗺️', 'map'], ['🧭', 'compass'], ['⛰️', 'mountain'], ['🏖️', 'beach'], ['🚉', 'station'], ['🛰️', 'satellite'], ['🌆', 'city'], ['🏕️', 'camping'], ['⛵', 'sailboat'], ['🛫', 'departure']]),
+  ...C('objects', '💡', [['💡', 'idea bulb'], ['📊', 'chart bar'], ['📈', 'chart up'], ['📅', 'calendar date'], ['📄', 'page document'], ['📁', 'folder'], ['🗃️', 'card box database'], ['📌', 'pin'], ['🔍', 'search'], ['🛠️', 'tools'], ['⚙️', 'gear settings'], ['🔔', 'bell notification'], ['💎', 'gem diamond'], ['📝', 'memo notes'], ['📎', 'paperclip files'], ['🔒', 'lock secure'], ['💬', 'speech comment'], ['📤', 'export outbox'], ['📥', 'inbox'], ['🗑️', 'trash bin'], ['🖥️', 'desktop'], ['📱', 'phone'], ['💻', 'laptop'], ['🧾', 'receipt']]),
+  ...C('symbols', '✅', [['✅', 'check done'], ['✨', 'sparkles ai magic'], ['❌', 'cross no'], ['⚠️', 'warning'], ['ℹ️', 'info'], ['❓', 'question'], ['➕', 'plus add'], ['➡️', 'arrow right'], ['🔴', 'red circle'], ['🟢', 'green circle'], ['🟡', 'yellow circle'], ['🔵', 'blue circle'], ['⏳', 'hourglass wait'], ['♻️', 'recycle'], ['🆕', 'new'], ['💯', 'hundred']]),
+];

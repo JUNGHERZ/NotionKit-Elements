@@ -1,0 +1,62 @@
+# ============================================================
+# NotionKit Elements – GitHub Pages
+#
+# Trigger:  push on main (and manually)
+# Purpose:  Landing page, docs, showcase and the reference app live on
+#           GitHub Pages. dist/ is committed, so the site could be served
+#           from the repository root; it is assembled here anyway so the
+#           tarball-irrelevant files stay out of the published tree.
+#
+# Setup:    Repository → Settings → Pages → Source: "GitHub Actions".
+# ============================================================
+
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run build:all
+      - name: Assemble site
+        run: |
+          mkdir -p _site/de _site/dist
+          cp index.html app.html docs.html showcase.html \
+             docs-editor.js favicon.svg favicon.png apple-touch-icon.png og.png \
+             CNAME README.md SKILL.md LICENSE sitemap.xml robots.txt llms.txt _site/
+          cp de/*.html _site/de/
+          cp -R dist/. _site/dist/
+          touch _site/.nojekyll
+          ls -la _site
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

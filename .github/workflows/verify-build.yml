@@ -1,0 +1,74 @@
+# ============================================================
+# NotionKit Elements – Verify Build
+#
+# Trigger:  push / pull request on main
+# Purpose:  dist/ is committed (the pages load it directly). A fresh build
+#           must reproduce it byte for byte; the generated pages and
+#           SKILL.md must be current; every registered element must be
+#           documented; every version reference must agree; and the
+#           Playwright suite (parity, branding, reconnect, radio groups,
+#           light-DOM drift, per-component import) must pass.
+#
+# Locally:  npm run build:all && npm run check:coverage && npm test
+# ============================================================
+
+name: Verify Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    name: Build, check and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build bundles, pages, SKILL.md
+        run: npm run build:all
+
+      - name: Committed artefacts match source
+        run: |
+          if ! git diff --exit-code -- dist/ index.html docs.html showcase.html SKILL.md llms.txt de/; then
+            echo "::error::generated files are out of date – run 'npm run build:all' and commit the result."
+            exit 1
+          fi
+
+      - name: Documentation covers every element
+        run: npm run check:coverage
+
+      - name: Version references agree
+        run: npm run check:versions
+
+      - name: CHANGELOG has an entry for this version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          grep -q "## \[${VERSION}\]" CHANGELOG.md \
+            || { echo "::error::CHANGELOG.md has no entry for ${VERSION}"; exit 1; }
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Run tests
+        run: npm test
+
+      - name: Upload test artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: test/.artifacts
+          if-no-files-found: ignore

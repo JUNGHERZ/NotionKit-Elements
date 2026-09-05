@@ -1,0 +1,72 @@
+{
+  "name": "@jungherz-de/notionkit-elements",
+  "version": "1.0.0",
+  "description": "Vanilla JavaScript Web Components wrapping the NotionKit CSS foundation – <nk-*> custom elements with Shadow DOM, automatic theme sync and native form participation.",
+  "license": "MIT",
+  "author": "Jungherz GmbH <info@jungherz.com> (https://www.jungherz.com)",
+  "homepage": "https://notionkit-elements.jungherz.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JUNGHERZ/NotionKit-Elements.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JUNGHERZ/NotionKit-Elements/issues"
+  },
+  "type": "module",
+  "main": "dist/notionkit-elements.js",
+  "module": "dist/notionkit-elements.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/notionkit-elements.esm.js",
+      "default": "./dist/notionkit-elements.js"
+    },
+    "./components/*.js": "./dist/components/*.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prebuild": "node -e \"require('fs').rmSync('dist/components',{recursive:true,force:true})\"",
+    "build": "rollup -c",
+    "build:pages": "node tools/build-pages.mjs",
+    "build:skill": "node tools/build-skill.mjs",
+    "build:meta": "node tools/build-meta.mjs",
+    "build:all": "npm run build && npm run build:pages && npm run build:landing && npm run build:app && npm run build:skill && npm run build:meta",
+    "check:versions": "node check-versions.mjs",
+    "check:coverage": "node tools/check-coverage.mjs",
+    "test": "playwright test",
+    "dev": "rollup -c --watch",
+    "serve": "npx serve .",
+    "prepublishOnly": "npm run build",
+    "test:ui": "playwright test --ui",
+    "build:landing": "node tools/build-landing.mjs",
+    "build:app": "node tools/build-app-de.mjs",
+    "build:og": "node tools/build-og.mjs"
+  },
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "notion",
+    "notionkit",
+    "design-system",
+    "ui-components",
+    "vanilla-js",
+    "shadow-dom",
+    "dark-mode"
+  ],
+  "peerDependencies": {
+    "@jungherz-de/notionkit": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@jungherz-de/notionkit": "^1.1.1",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^4.0.0",
+    "@playwright/test": "^1.50.0",
+    "pngjs": "^7.0.0",
+    "pixelmatch": "^7.0.0"
+  }
+}

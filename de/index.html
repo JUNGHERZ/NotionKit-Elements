@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotionKit Elements – NotionKit Elements</title>
+<meta name="description" content="68 Vanilla-JS-Web-Components über der NotionKit-CSS-Foundation: gleicher Wortstamm, gleiche Tokens, Shadow DOM, automatischer Hell/Dunkel-Abgleich, native Formular-Teilnahme – und Pixel-Parität mit dem Klassen-Markup, in beiden Themes gemessen.">
+<link rel="canonical" href="https://notionkit-elements.jungherz.com/de/index.html">
+<link rel="alternate" hreflang="de" href="https://notionkit-elements.jungherz.com/de/index.html">
+<link rel="alternate" hreflang="en" href="https://notionkit-elements.jungherz.com/index.html">
+<meta property="og:title" content="NotionKit Elements – NotionKit Elements">
+<meta property="og:description" content="68 Vanilla-JS-Web-Components über der NotionKit-CSS-Foundation: gleicher Wortstamm, gleiche Tokens, Shadow DOM, automatischer Hell/Dunkel-Abgleich, native Formular-Teilnahme – und Pixel-Parität mit dem Klassen-Markup, in beiden Themes gemessen.">
+<meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
+<script src="../dist/notionkit-elements.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+.site-nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 6px; height: 45px; padding: 0 16px; background: var(--nk-bg); border-bottom: 1px solid var(--nk-border); }
+.site-nav .site-brand { font-weight: 600; text-decoration: none; color: var(--nk-text); display: flex; align-items: center; gap: 8px; margin-right: 8px; }
+.site-nav .site-brand span { color: var(--nk-accent); }
+.site-version { font-size: 11px; color: var(--nk-text-tertiary); border: 1px solid var(--nk-border); border-radius: 10px; padding: 1px 7px; }
+.site-nav a { color: var(--nk-text-secondary); text-decoration: none; font-size: 13.5px; padding: 4px 8px; border-radius: var(--nk-radius); }
+.site-nav a:hover { background: var(--nk-bg-hover); color: var(--nk-text); }
+.site-nav a.current { color: var(--nk-text); font-weight: 500; }
+.site-nav .site-spacer { flex: 1; }
+.site-layout { display: flex; min-height: calc(100vh - 45px); }
+.site-toc { width: 250px; flex-shrink: 0; background: var(--nk-bg-sidebar); border-right: 1px solid var(--nk-border); padding: 12px 8px 40px; position: sticky; top: 45px; height: calc(100vh - 45px); overflow-y: auto; font-size: 13.5px; }
+.site-toc a { display: block; color: var(--nk-text-secondary); text-decoration: none; padding: 3px 10px; border-radius: var(--nk-radius); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.site-toc a:hover { background: var(--nk-bg-hover); color: var(--nk-text); }
+.site-toc a.current { background: var(--nk-bg-active); color: var(--nk-text); font-weight: 500; }
+.site-toc .site-group { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: var(--nk-text-tertiary); padding: 14px 10px 4px; }
+.site-main { flex: 1; min-width: 0; padding: 32px clamp(16px, 4vw, 48px) 120px; }
+.site-main > .site-inner { max-width: 860px; margin: 0 auto; }
+.site-h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
+.site-lead { font-size: 15.5px; line-height: 1.6; color: var(--nk-text-secondary); margin: 0 0 28px; max-width: 70ch; }
+.site-section { margin-top: 48px; }
+.site-section > h2 { font-size: 20px; font-weight: 600; margin: 0 0 6px; padding-bottom: 8px; border-bottom: 1px solid var(--nk-border); }
+.site-section > .site-groupnote { font-size: 13px; color: var(--nk-text-tertiary); margin: 0 0 16px; }
+.doc-entry { margin: 32px 0 44px; scroll-margin-top: 60px; }
+.doc-entry > h3 { font-size: 17px; font-weight: 600; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.doc-entry > h3 code { font-family: var(--nk-font-mono); font-size: 14px; background: var(--nk-bg-code); padding: 2px 6px; border-radius: 4px; }
+.doc-desc { font-size: 14px; line-height: 1.6; color: var(--nk-text-secondary); margin: 0 0 12px; max-width: 75ch; }
+.doc-desc code, .doc-table code, .doc-meta code { font-family: var(--nk-font-mono); font-size: 12.5px; background: var(--nk-bg-code); padding: 1px 4px; border-radius: 3px; }
+.doc-compare { border: 1px solid var(--nk-border); border-radius: 8px; overflow: hidden; margin: 10px 0 14px; }
+.doc-compare-bar { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--nk-bg-sidebar); border-bottom: 1px solid var(--nk-border); font-size: 12px; color: var(--nk-text-tertiary); }
+.doc-compare-bar .site-spacer { flex: 1; }
+.doc-preview { padding: 18px; background: var(--nk-bg); overflow-x: auto; }
+.doc-preview[hidden] { display: none; }
+.doc-frame { display: block; width: 100%; min-width: 900px; border: 0; border-radius: 6px; background: var(--nk-bg); }
+.doc-preview:has(.doc-frame) { padding: 0; }
+.show-item:has(.doc-frame), .show-item.wide { grid-column: 1 / -1; }
+.doc-code { margin: 0; padding: 12px 14px; font-family: var(--nk-font-mono); font-size: 12.5px; line-height: 1.55; white-space: pre; overflow-x: auto; background: var(--nk-bg-code); border-top: 1px solid var(--nk-border); color: var(--nk-text); }
+.doc-code[hidden] { display: none; }
+.doc-code .tag { color: var(--nk-accent); } .doc-code .attr { color: var(--nk-tag-orange-text); }
+.doc-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 14px; }
+.doc-table th { text-align: left; font-weight: 500; color: var(--nk-text-tertiary); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--nk-border); }
+.doc-table td { padding: 6px 8px; border-bottom: 1px solid var(--nk-border); vertical-align: top; line-height: 1.45; }
+.doc-table td:first-child code { white-space: nowrap; }
+.doc-h4 { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: var(--nk-text-tertiary); margin: 14px 0 0; }
+.doc-meta { font-size: 13px; color: var(--nk-text-secondary); margin: 10px 0 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.doc-meta b { font-weight: 500; color: var(--nk-text); }
+.doc-classes { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.doc-classes code { font-family: var(--nk-font-mono); font-size: 11.5px; background: var(--nk-bg-callout); padding: 1px 6px; border-radius: 3px; color: var(--nk-text-secondary); }
+.show-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 18px; }
+.show-item { border: 1px solid var(--nk-border); border-radius: 8px; padding: 14px 16px 16px; background: var(--nk-bg-card); }
+.show-item > h4 { margin: 0 0 10px; font-size: 12px; font-weight: 500; color: var(--nk-text-tertiary); font-family: var(--nk-font-mono); }
+.show-item > h4 a { color: inherit; text-decoration: none; }
+.show-item > h4 a:hover { color: var(--nk-accent); }
+.show-body { display: flow-root; overflow-x: auto; }
+.site-footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--nk-border); font-size: 12.5px; color: var(--nk-text-tertiary); }
+.site-brand-on :root, html.site-branded { --nk-accent: #16a34a; }
+@media (max-width: 860px) { .site-toc { display: none; } .site-main { padding-top: 20px; } }
+
+.land-hero { padding: 56px 0 28px; max-width: 760px; }
+.land-hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 14px; line-height: 1.08; }
+.land-hero h1 span { color: var(--nk-accent); }
+.land-hero p { font-size: 17px; line-height: 1.6; color: var(--nk-text-secondary); margin: 0 0 22px; }
+.land-ctas { display: flex; gap: 8px; flex-wrap: wrap; }
+.land-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.land-badges span { font-size: 11.5px; padding: 2px 9px; border-radius: 10px; background: var(--nk-bg-callout); color: var(--nk-text-secondary); }
+.land-section { margin-top: 56px; }
+.land-section > h2 { font-size: 22px; font-weight: 600; margin: 0 0 6px; }
+.land-section > p { color: var(--nk-text-secondary); margin: 0 0 18px; max-width: 70ch; line-height: 1.55; }
+.land-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 16px; }
+.land-compare h4 { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: var(--nk-text-tertiary); margin: 0 0 6px; }
+.land-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; }
+.land-feature { border: 1px solid var(--nk-border); border-radius: 8px; padding: 14px 16px; background: var(--nk-bg-card); }
+.land-feature .i { font-size: 22px; margin-bottom: 6px; }
+.land-feature b { display: block; font-weight: 600; margin-bottom: 4px; }
+.land-feature p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--nk-text-secondary); }
+.land-feature code { font-family: var(--nk-font-mono); font-size: 12px; background: var(--nk-bg-code); padding: 1px 4px; border-radius: 3px; }
+.land-steps { counter-reset: s; display: grid; gap: 10px; }
+.land-step { display: flex; gap: 12px; align-items: flex-start; }
+.land-step::before { counter-increment: s; content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--nk-accent); color: var(--nk-on-accent); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.land-step code { font-family: var(--nk-font-mono); font-size: 12.5px; background: var(--nk-bg-code); padding: 1px 4px; border-radius: 3px; }
+.land-preview { border: 1px solid var(--nk-border); border-radius: 10px; overflow: hidden; box-shadow: var(--nk-shadow-card); }
+.land-preview iframe { display: block; width: 100%; height: 640px; border: 0; }
+.land-family { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 14px; }
+.land-family a, .land-family div { border: 1px solid var(--nk-border); border-radius: 8px; padding: 14px 16px; text-decoration: none; color: var(--nk-text); background: var(--nk-bg-card); display: block; }
+.land-family .here { border-color: var(--nk-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--nk-accent) 20%, transparent); }
+.land-family b { display: block; margin-bottom: 4px; }
+.land-family small { color: var(--nk-text-tertiary); font-size: 12.5px; }
+.land-family em { font-style: normal; font-size: 11px; color: var(--nk-accent); margin-left: 6px; }
+</style>
+</head>
+<body class="nk-body">
+<nav class="site-nav">
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.0.0</span></a>
+  <a href="docs.html">Doku</a>
+  <a href="showcase.html">Showcase</a>
+  <a href="app.html">Demo-App</a>
+  <span class="site-spacer"></span>
+  <a href="https://notionkit.jungherz.com">NotionKit CSS</a>
+  <a href="https://github.com/JUNGHERZ/NotionKit-Elements">GitHub</a>
+  <a href="../index.html">🇬🇧 EN</a>
+  <button class="nk-topbar-btn nk-share-btn" id="brandToggle" aria-pressed="false" title="Branding: --nk-accent → grün">🎨</button>
+  <button class="nk-topbar-btn nk-theme-toggle" id="themeToggle" title="Hell / dunkel umschalten">🌙</button>
+</nav>
+<main class="site-main" style="padding-top:0"><div class="site-inner" style="max-width:960px">
+  <section class="land-hero">
+    <div class="land-badges"><span>v1.0.0</span><span>68 elements</span><span>Shadow DOM</span><span>Vanilla JS</span><span>NotionKit CSS 1.1.1</span><span>MIT</span></div>
+    <h1>Der NotionKit-Look, als <span>Elemente</span>.</h1>
+    <p>68 Vanilla-JS-Web-Components über der NotionKit-CSS-Foundation: gleicher Wortstamm, gleiche Tokens, Shadow DOM, automatischer Hell/Dunkel-Abgleich, native Formular-Teilnahme – und Pixel-Parität mit dem Klassen-Markup, in beiden Themes gemessen.</p>
+    <div class="land-ctas"><nk-btn variant="primary" href="docs.html">Zur Doku</nk-btn> <nk-btn variant="secondary" href="app.html">Demo-App öffnen</nk-btn> <nk-btn variant="secondary" href="showcase.html">Showcase</nk-btn></div>
+  </section>
+
+  <section class="land-section" id="preview">
+    <h2>Die Referenz-App</h2><p>Die NotionKit-Demo-App, nur aus Elementen neu gebaut – 0,00 % Pixelabweichung zur Klassen-Version am Desktop.</p>
+    <div class="land-preview"><iframe src="app.html" title="NotionKit Elements demo app" loading="lazy" data-theme-sync></iframe></div>
+  </section>
+
+  <section class="land-section" id="compare">
+    <h2>Gleicher Look, ein Bruchteil des Markups</h2>
+    <div class="land-compare">
+      <div><h4>Vorher – .nk-*-Klassen</h4><div class="doc-compare"><div class="doc-preview"><div class="nk-field">
+  <div><div class="f-label">E-Mail-Benachrichtigungen</div><div class="f-desc">Erscheint neben deinen Kommentaren.</div></div>
+  <div class="f-control"><button class="nk-switch" role="switch" aria-checked="true"></button></div>
+</div>
+<div class="nk-callout"><span class="c-icon">💡</span><div>Ein Callout trägt einen Gedanken, der nicht untergehen darf.</div></div>
+<div class="nk-tree-item active"><span class="icon">🚀</span><span class="label">NotionKit MVP</span><span class="actions"><span>＋</span><span>⋯</span></span></div></div><pre class="doc-code">&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-field"&gt;
+  &lt;<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-label"&gt;E-Mail-Benachrichtigungen&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-desc"&gt;Erscheint neben deinen Kommentaren.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="f-control"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-switch" <span class="attr">role</span>="switch" <span class="attr">aria-checked</span>="true"&gt;&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">div</span>&gt;
+&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-callout"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="c-icon"&gt;💡&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span>&gt;Ein Callout trägt einen Gedanken, der nicht untergehen darf.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tree-item active"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;🚀&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;NotionKit MVP&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="actions"&gt;&lt;<span class="tag">span</span>&gt;＋&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;⋯&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre></div></div>
+      <div><h4>Nachher – ein Element</h4><div class="doc-compare"><div class="doc-preview"><nk-field label="E-Mail-Benachrichtigungen" desc="Erscheint neben deinen Kommentaren."><nk-switch checked></nk-switch></nk-field>
+<nk-callout icon="💡">Ein Callout trägt einen Gedanken, der nicht untergehen darf.</nk-callout>
+<nk-tree-item icon="🚀" active>NotionKit MVP</nk-tree-item></div><pre class="doc-code">&lt;<span class="tag">nk-field</span> <span class="attr">label</span>="E-Mail-Benachrichtigungen" <span class="attr">desc</span>="Erscheint neben deinen Kommentaren."&gt;&lt;<span class="tag">nk-switch</span> checked&gt;&lt;/<span class="tag">nk-switch</span>&gt;&lt;/<span class="tag">nk-field</span>&gt;
+&lt;<span class="tag">nk-callout</span> <span class="attr">icon</span>="💡"&gt;Ein Callout trägt einen Gedanken, der nicht untergehen darf.&lt;/<span class="tag">nk-callout</span>&gt;
+&lt;<span class="tag">nk-tree-item</span> <span class="attr">icon</span>="🚀" active&gt;NotionKit MVP&lt;/<span class="tag">nk-tree-item</span>&gt;</pre></div></div>
+    </div>
+  </section>
+
+  <section class="land-section" id="features">
+    <div class="land-features"><div class="land-feature"><div class="i">🧩</div><b>Gleicher Wortstamm</b><p><code>.nk-callout</code> wird <code>&lt;nk-callout&gt;</code>; eine Modifikator-Klasse wird Attribut, eine Zustandsklasse ein Boolean-Attribut.</p></div><div class="land-feature"><div class="i">🎯</div><b>Pixel-Parität</b><p>Jedes Element rendert identisch zu seinem Klassen-Markup – geprüft durch einen Playwright-Pixeltest in Hell und Dunkel.</p></div><div class="land-feature"><div class="i">🌗</div><b>Eine Theme-Quelle</b><p><code>data-theme</code> auf <code>&lt;html&gt;</code>; ein Observer spiegelt es in jedes Element. Einmal auf <code>:root</code> branden, alle Elemente folgen.</p></div><div class="land-feature"><div class="i">📝</div><b>Echte Formulare</b><p>Inputs, Selects, Switches, Checks, Radios und Slider nehmen an <code>FormData</code>, Reset und Validierung teil.</p></div><div class="land-feature"><div class="i">🗃️</div><b>Datenansichten</b><p><code>&lt;nk-database&gt;</code> bekommt Spalten und Zeilen und liefert Tabelle und Board mit polymorphen Zellen und Drag &amp; Drop.</p></div><div class="land-feature"><div class="i">⌘</div><b>Overlays mit Manieren</b><p>Einstellungs-Modal, ⌘K-Palette, Menüs, Popover und Toasts mit Fokusführung, <code>inert</code> und Tastatur.</p></div></div>
+  </section>
+
+  <section class="land-section" id="quickstart">
+    <h2>Schnellstart</h2>
+    <div class="land-steps"><div class="land-step"><div>NotionKit CSS und das Elements-Bundle laden</div></div><div class="land-step"><div><code>class="nk-body"</code> auf <code>&lt;body&gt;</code> setzen</div></div><div class="land-step"><div>Elemente schreiben</div></div></div>
+    <div class="doc-compare" style="margin-top:14px"><pre class="doc-code" style="border-top:0">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
+  &lt;<span class="tag">nk-callout</span> <span class="attr">icon</span>="💡"&gt;Ein Callout trägt einen Gedanken, der nicht untergehen darf.&lt;/<span class="tag">nk-callout</span>&gt;
+&lt;/<span class="tag">body</span>&gt;</pre></div>
+  </section>
+
+  <section class="land-section" id="family">
+    <h2>Die NotionKit-Familie</h2>
+    <div class="land-family"><a href="https://notionkit.jungherz.com" class=""><b>NotionKit</b><small>CSS-Foundation – Klassen und Tokens</small></a><a href="#" class="here"><b>NotionKit Elements<em>du bist hier</em></b><small>Web Components – dieses Paket</small></a><div><b>NotionKit Web<em>geplant</em></b><small>Astro-Template – geplant</small></div></div>
+  </section>
+  <div class="site-footer">NotionKit Elements v1.0.0 · wrapping NotionKit CSS v1.1.1 · MIT · Jungherz GmbH</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  function set(theme) {
+    root.setAttribute('data-theme', theme);
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    try { localStorage.setItem('nk-theme', theme); } catch (e) {}
+    document.querySelectorAll('iframe[data-theme-sync]').forEach(function (f) {
+      try { f.contentWindow.postMessage({ nkTheme: theme }, '*'); } catch (e) {}
+    });
+  }
+  var stored = null; try { stored = localStorage.getItem('nk-theme'); } catch (e) {}
+  set(stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  if (btn) btn.addEventListener('click', function () { set(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+  window.addEventListener('message', function (e) { if (e.data && e.data.nkTheme) set(e.data.nkTheme); });
+  var brand = document.getElementById('brandToggle');
+  if (brand) brand.addEventListener('click', function () {
+    var on = root.classList.toggle('site-branded');
+    brand.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>
+</div></main>

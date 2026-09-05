@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../node_modules/@jungherz-de/notionkit/notionkit.css">
+<script src="../../dist/notionkit-elements.min.js"></script>
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { background: var(--nk-bg-sidebar); font-family: var(--nk-font); color: var(--nk-text); }
+  .card { position: relative; width: 1200px; height: 630px; }
+  .text { position: absolute; left: 72px; top: 84px; width: 500px; }
+  .mark { width: 56px; height: 56px; border-radius: 13px; background: linear-gradient(135deg, var(--nk-decor-purple), var(--nk-decor-blue)); color: #fff; font-size: 30px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 26px; font-family: var(--nk-font-mono); }
+  h1 { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; margin: 0 0 18px; }
+  h1 span { color: var(--nk-accent); }
+  p { font-size: 20px; line-height: 1.45; color: var(--nk-text-secondary); margin: 0 0 24px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tags .nk-tag { font-size: 15px; padding: 3px 12px; }
+  .shot { position: absolute; left: 610px; top: 58px; width: 1000px; height: 640px; transform: scale(.72); transform-origin: top left;
+          border: 1px solid var(--nk-border-strong); border-radius: 14px; overflow: hidden; box-shadow: var(--nk-shadow-menu); background: var(--nk-bg); }
+  .shot iframe { width: 1000px; height: 640px; border: 0; }
+  .bar { display: flex; align-items: center; gap: 7px; padding: 10px 14px; border-bottom: 1px solid var(--nk-border); background: var(--nk-bg-sidebar); }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--nk-border-strong); }
+  .foot { position: absolute; left: 72px; bottom: 44px; font-size: 16px; color: var(--nk-text-tertiary); }
+</style>
+</head>
+<body class="nk-body">
+<div class="card">
+  <div class="text">
+    <div class="mark">&lt;/&gt;</div>
+    <h1>NotionKit <span>Elements</span></h1>
+    <p>The calm workspace look, as Web Components. 68 &lt;nk-*&gt; elements, Shadow DOM, light &amp; dark, real forms – pixel-identical to the CSS foundation.</p>
+    <div class="tags"><span class="nk-tag blue">68 elements</span><span class="nk-tag green">Vanilla JS</span><span class="nk-tag purple">Shadow DOM</span><span class="nk-tag orange">33 KB gzip</span></div>
+  </div>
+  <div class="shot"><div class="bar"><i></i><i></i><i></i></div><iframe src="../../app.html"></iframe></div>
+  <div class="foot">notionkit-elements.jungherz.com · MIT · Jungherz GmbH</div>
+</div>
+</body>
+</html>

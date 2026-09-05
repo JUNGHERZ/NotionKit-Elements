@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://notionkit-elements.jungherz.com/sitemap.xml

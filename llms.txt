@@ -1,0 +1,23 @@
+# NotionKit Elements v1.0.0
+
+> Vanilla-JS Web Components (<nk-*>, Shadow DOM) wrapping NotionKit CSS v1.1.1, the calm document-centric design system in the Notion idiom. Same word stem as the CSS classes: .nk-callout ↔ <nk-callout>; modifier class → attribute, state class → boolean attribute. No visual CSS of its own, tokens on the document, theme via data-theme on <html>.
+
+## Start here
+- [SKILL.md](https://notionkit-elements.jungherz.com/SKILL.md): AI-ready reference – copy-paste markup for every element, app skeletons, rules and common mistakes.
+- [Documentation](https://notionkit-elements.jungherz.com/docs.html): attributes, slots, events, before/after against the class markup.
+- [Showcase](https://notionkit-elements.jungherz.com/showcase.html): every element live, both themes, brand switch.
+- [Demo app](https://notionkit-elements.jungherz.com/app.html): the NotionKit reference app built from elements only.
+- [Foundation](https://notionkit.jungherz.com): NotionKit CSS, the peer dependency.
+
+## Elements (68)
+- Forms & controls: <nk-btn>, <nk-input>, <nk-textarea>, <nk-select>, <nk-switch>, <nk-check>, <nk-radio>, <nk-slider>, <nk-field>
+- Content elements: <nk-tag>, <nk-progress>, <nk-callout>, <nk-divider>, <nk-heading>, <nk-toggle>, <nk-todo>, <nk-kbd>, <nk-code>, <nk-quote>
+- App shell & navigation: <nk-app>, <nk-sidebar>, <nk-workspace-switcher>, <nk-section-label>, <nk-tree>, <nk-tree-item>, <nk-topbar>, <nk-breadcrumb>, <nk-theme-toggle>
+- Page shell & blocks: <nk-page>, <nk-page-cover>, <nk-page-title>, <nk-page-actions>, <nk-block-host>, <nk-banner>, <nk-empty>, <nk-skeleton>, <nk-synced>, <nk-tabs>, <nk-tab>, <nk-segmented>, <nk-stats>, <nk-stat>, <nk-avatar-group>, <nk-mention>, <nk-template-btn>, <nk-model-card>, <nk-profile-row>, <nk-danger-zone>, <nk-member-list>, <nk-member-row>
+- Overlays: <nk-modal>, <nk-settings-pane>, <nk-settings-user>, <nk-cmdk>, <nk-menu>, <nk-menu-item>, <nk-pop>, <nk-emoji-picker>, <nk-toast>
+- Data & collaboration: <nk-database>, <nk-table-view>, <nk-board-view>, <nk-filter-bar>, <nk-comments>, <nk-comment>, <nk-ai-thread>, <nk-ai-msg>, <nk-ai-input-row>
+
+## Install
+- CDN: https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css + https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.0.0/dist/notionkit-elements.min.js
+- npm: @jungherz-de/notionkit-elements (peer: @jungherz-de/notionkit >= 1.0.0)
+- MIT · Jungherz GmbH · https://github.com/JUNGHERZ/NotionKit-Elements

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotionKit Elements – App Preview</title>
+<meta name="description" content="The NotionKit reference app built entirely from <nk-*> elements: sidebar, page tree, database, settings modal, command palette, AI thread and a live TipTap editor.">
+<meta property="og:title" content="NotionKit Elements – App Preview">
+<meta property="og:description" content="The NotionKit reference app built entirely from <nk-*> elements.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
+<script src="dist/notionkit-elements.min.js"></script>
+</head>
+<body class="nk-body">
+
+<nk-app>
+
+  <!-- ================= SIDEBAR ================= -->
+  <nk-sidebar slot="sidebar" id="sidebar">
+    <nk-workspace-switcher slot="workspace" name="MonaHilft" avatar="M">
+      <nk-menu slot="menu">
+        <nk-menu-item type="label">Workspaces</nk-menu-item>
+        <nk-menu-item icon="🟣" value="monahilft">MonaHilft</nk-menu-item>
+        <nk-menu-item icon="💎" value="glasskit">GlassKit</nk-menu-item>
+        <nk-menu-item type="separator"></nk-menu-item>
+        <nk-menu-item icon="＋" value="new">New workspace</nk-menu-item>
+      </nk-menu>
+    </nk-workspace-switcher>
+
+    <nk-tree id="tree">
+      <nk-tree-item icon="🔍" value="search" no-actions>Search<span slot="end" class="nk-kbd-hint"><nk-kbd>⌘</nk-kbd><nk-kbd>K</nk-kbd></span></nk-tree-item>
+      <nk-tree-item icon="🏠" value="home">Home</nk-tree-item>
+      <nk-tree-item icon="📥" value="inbox">Inbox</nk-tree-item>
+
+      <nk-section-label addable>Favourites</nk-section-label>
+      <nk-tree-item icon="📊" value="overview" open>Project overview
+        <nk-tree-item icon="🚀" value="mvp" active>NotionKit MVP</nk-tree-item>
+        <nk-tree-item icon="🎙️" value="voh">Voice-Office-Hub</nk-tree-item>
+      </nk-tree-item>
+
+      <nk-section-label addable>Workspace</nk-section-label>
+      <nk-tree-item icon="🧠" value="kb">Knowledge base
+        <nk-tree-item icon="📄" value="onboarding">Onboarding</nk-tree-item>
+        <nk-tree-item icon="📄" value="playbooks">Playbooks</nk-tree-item>
+      </nk-tree-item>
+      <nk-tree-item icon="🎨" value="design">Design system</nk-tree-item>
+      <nk-tree-item icon="🗓️" value="editorial">Editorial plan</nk-tree-item>
+      <nk-tree-item icon="🤝" value="clients">Client projects</nk-tree-item>
+
+      <nk-section-label>Team spaces</nk-section-label>
+      <nk-tree-item icon="💎" value="glasskit">GlassKit</nk-tree-item>
+      <nk-tree-item icon="🌿" value="beautystar">BeautyStar</nk-tree-item>
+    </nk-tree>
+
+    <nk-tree-item slot="footer" icon="⚙️" value="settings" no-actions>Settings</nk-tree-item>
+    <nk-tree-item slot="footer" icon="🗑️" value="trash" no-actions>Trash</nk-tree-item>
+  </nk-sidebar>
+
+  <!-- ================= MAIN ================= -->
+  <nk-topbar>
+    <nk-btn variant="topbar" id="menuBtn" aria-label="Menu" style="display:none">☰</nk-btn>
+    <nk-breadcrumb id="crumbs"><span>📊 Project overview</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
+    <span slot="actions" class="nk-topbar-btn" style="color:var(--nk-text-tertiary);font-size:12.5px">Last edited 2 min ago</span>
+    <nk-btn slot="actions" variant="share">Share</nk-btn>
+    <nk-btn slot="actions" variant="topbar" title="Favourite">⭐</nk-btn>
+    <nk-theme-toggle slot="actions" id="themeToggle"></nk-theme-toggle>
+  </nk-topbar>
+
+  <nk-page id="page" icon="🚀" cover>
+    <nk-page-title editable id="pageTitle">NotionKit MVP</nk-page-title>
+    <nk-page-actions>
+      <span>👤 Marcel Karas</span>
+      <span>📅 Created 12 May 2026</span>
+      <span>🏷️ <nk-tag color="purple">Design system</nk-tag></span>
+    </nk-page-actions>
+
+    <p class="lead">A calm UI framework in the Notion idiom – as web components, without a build step. This page is the living preview: sidebar, page tree, callouts, todos, toggles and database views in one shell.</p>
+
+    <nk-callout icon="💡"><strong>Core idea:</strong> NotionKit supplies the look and the shell; the editor is mounted through <em>&lt;nk-block-host&gt;</em> (BlockNote, say), and the data comes from your own API. Three layers, cleanly separated.</nk-callout>
+
+    <nk-heading>✅ Next steps</nk-heading>
+    <nk-todo checked>Sketch the component scope</nk-todo>
+    <nk-todo checked>Build the preview with light/dark</nk-todo>
+    <nk-todo>Prioritise the MVP scope</nk-todo>
+    <nk-todo>Define the data model for tree &amp; database</nk-todo>
+
+    <nk-heading>🗃️ Project database</nk-heading>
+    <nk-database id="db" view="table" add-view>
+      <nk-table-view name="table" label="▦ Table" count new-row sortable></nk-table-view>
+      <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
+    </nk-database>
+
+    <nk-divider></nk-divider>
+
+    <nk-heading>🧩 More building blocks</nk-heading>
+    <p class="lead" style="font-size:14.5px">Everything else a Notion-like system needs – calm, drop-in elements. Try them out.</p>
+
+    <nk-banner variant="info">ℹ️ <span>This page is a <b>component preview</b> – every element follows the same design tokens.</span><span slot="action" id="bannerCmdk">Open palette</span></nk-banner>
+    <nk-banner variant="warning">⚠️ <span>The “Project overview” database has 2 overdue entries.</span><span slot="action">View</span></nk-banner>
+    <nk-banner variant="success">✓ <span>All changes have been synced.</span></nk-banner>
+
+    <div class="nk-gallery-grid">
+
+      <div class="nk-g-item">
+        <h4>Inline elements</h4>
+        <p style="line-height:1.7;color:var(--nk-text-secondary);font-size:14px">
+          Running text can link <nk-mention type="person"><span slot="avatar" class="mini-avatar" style="background:#448361">SL</span> Sara Lindt</nk-mention>,
+          pages such as <nk-mention type="page">📄 Knowledge base</nk-mention> and dates such as
+          <nk-mention type="date">📅 20 May</nk-mention> – and just as easily <code class="nk-inline-code">nk-database</code> as code.
+        </p>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Emoji picker</h4>
+        <nk-emoji-picker id="emoji" placeholder="Search emoji …"></nk-emoji-picker>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Context menu (⋯)</h4>
+        <nk-menu id="pageMenu">
+          <nk-menu-item type="label">Page</nk-menu-item>
+          <nk-menu-item icon="✏️" shortcut="⌘⇧R" value="rename">Rename</nk-menu-item>
+          <nk-menu-item icon="📋" shortcut="⌘D" value="duplicate">Duplicate</nk-menu-item>
+          <nk-menu-item icon="🔗" shortcut="⌘L" value="link">Copy link</nk-menu-item>
+          <nk-menu-item icon="📁" value="move">Move to …</nk-menu-item>
+          <nk-menu-item type="separator"></nk-menu-item>
+          <nk-menu-item icon="🗑️" shortcut="⌫" danger value="trash">Move to trash</nk-menu-item>
+        </nk-menu>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Page tabs</h4>
+        <nk-tabs value="notes">
+          <nk-tab value="notes">📝 Notes</nk-tab>
+          <nk-tab value="tasks">✅ Tasks</nk-tab>
+          <nk-tab value="files">📎 Files</nk-tab>
+          <div slot="panel" data-tab="notes" class="nk-tab-panel">Free-form notes on the project – meeting minutes, ideas, rough drafts.</div>
+          <div slot="panel" data-tab="tasks" class="nk-tab-panel">Tasks for this project, linked to the database below.</div>
+          <div slot="panel" data-tab="files" class="nk-tab-panel">Attached files and exports.</div>
+        </nk-tabs>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Template buttons</h4>
+        <nk-template-btn icon="📅" value="Week plan">Insert week plan</nk-template-btn>
+        <nk-template-btn icon="🤝" value="Meeting minutes">Insert meeting minutes</nk-template-btn>
+        <nk-template-btn icon="🔁" value="Retro board">Insert retro board</nk-template-btn>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Stat cards</h4>
+        <nk-stats>
+          <nk-stat label="Active pages" value="128" delta="▲ 12 this week" trend="up"></nk-stat>
+          <nk-stat label="AI requests" value="847" delta="▲ 23 %" trend="up"></nk-stat>
+          <nk-stat label="Open tasks" value="14" delta="▼ 5 since yesterday" trend="down"></nk-stat>
+        </nk-stats>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Synced block</h4>
+        <nk-synced badge="⟳ 3 places"><div style="font-size:14px;line-height:1.55"><b>Our mission:</b> Take real weight off the working day – calm, clear, effective. This text appears identically on three pages and is maintained in one place.</div></nk-synced>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Segmented control</h4>
+        <nk-segmented id="range" value="week"><button value="week">Week</button><button value="month">Month</button><button value="quarter">Quarter</button></nk-segmented>
+        <div style="margin-top:10px;font-size:12.5px;color:var(--nk-text-tertiary)">For time ranges, perspectives or density levels.</div>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Avatar group &amp; presence</h4>
+        <div style="display:flex;align-items:center;gap:12px">
+          <nk-avatar-group more="+2">
+            <span class="mini-avatar" style="background:linear-gradient(135deg,#9065b0,#529cca)">MK</span>
+            <span class="mini-avatar" style="background:#448361">SL</span>
+            <span class="mini-avatar" style="background:#d9730d">TW</span>
+          </nk-avatar-group>
+          <span style="font-size:12.5px;color:var(--nk-text-tertiary)">5 people have access</span>
+        </div>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Loading skeleton</h4>
+        <nk-skeleton height="18" width="60%"></nk-skeleton>
+        <nk-skeleton lines="3" widths="100%,85%,40%"></nk-skeleton>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Empty state</h4>
+        <nk-empty icon="🗂️" title="No entries yet" desc="Create the first entry or import existing data."><nk-btn variant="primary" small id="emptyNew">＋ New entry</nk-btn></nk-empty>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>Comment thread</h4>
+        <nk-comments id="comments" placeholder="Comment …" send-label="Send">
+          <nk-comment author="Sara Lindt" time="1 hr ago" color="#448361">The board view already feels very close to the original. 👍</nk-comment>
+          <nk-comment author="Mona" time="20 min ago" avatar="✨" color="var(--nk-text-tertiary)"><span slot="head" class="nk-tag blue" style="font-size:10.5px;padding:0 6px;margin-left:4px">KI</span>I have flagged the overdue entries and prepared a summary.</nk-comment>
+        </nk-comments>
+      </div>
+
+      <div class="nk-g-item">
+        <h4>AI assistant embedding</h4>
+        <nk-ai-thread id="thread">
+          <nk-ai-msg role="user" name="Du" avatar="MK">Summarise the open tasks for this project.</nk-ai-msg>
+          <nk-ai-msg role="assistant" name="Mona" badge="· KI">Two tasks are open: the <b>Table-View</b> sits at 65 % (due 20 May), the <b>Board with drag and drop</b> is planned. I would nail down the MVP scope first.
+            <button slot="actions" value="copy">📋 Copy</button><button slot="actions" value="rephrase">↻ Rephrase</button><button slot="actions" value="like">👍</button>
+          </nk-ai-msg>
+        </nk-ai-thread>
+        <nk-ai-input-row id="aiInput" placeholder="Ask Mona something …"></nk-ai-input-row>
+      </div>
+
+    </div>
+
+    <nk-divider></nk-divider>
+
+    <nk-toggle label="What does integrating it look like?">
+      One script tag is enough – no bundler, no framework lock-in:
+      <nk-code lang="html" highlight>&lt;nk-app&gt;
+  &lt;nk-sidebar slot="sidebar"&gt;…&lt;/nk-sidebar&gt;
+  &lt;nk-page icon="📊"&gt;
+    &lt;nk-page-title&gt;Project overview&lt;/nk-page-title&gt;
+    &lt;nk-database id="db"&gt;…&lt;/nk-database&gt;
+  &lt;/nk-page&gt;
+&lt;/nk-app&gt;</nk-code>
+    </nk-toggle>
+
+    <nk-toggle label="What is deliberately not part of the kit?">The text editor itself. With <em>&lt;nk-block-host&gt;</em> only the optical shell – TipTap, BlockNote or Novel is mounted as the editor. <em>&lt;nk-editor&gt;</em>, a thin TipTap wrapper, follows in v1.1.</nk-toggle>
+
+    <section id="nk-editor-section">
+      <nk-heading>✍️ Editor surface</nk-heading>
+      <p style="color:var(--nk-text-secondary);line-height:1.55;margin-bottom:10px">From here on you are typing into real <b>TipTap</b>, mounted into an <code class="nk-inline-code">nk-block-host</code> – with no editor CSS of its own. Hover a block for ＋ / ⠿, drag it, select text, or type <nk-kbd>/</nk-kbd>.</p>
+      <div class="nk-block-host" id="tiptap-demo" style="margin-left:-2px">
+        <p>This is no longer a preview: this paragraph is editable. The title above, the callout, the todos and the database are NotionKit elements – and this block is the same look, only alive.</p>
+        <ul data-type="taskList"><li data-type="taskItem" data-checked="true">Mount the editor into a block host</li><li data-type="taskItem" data-checked="false">Move a block with ⠿</li><li data-type="taskItem" data-checked="false">Pick a new block with <code>/</code></li></ul>
+        <blockquote>NotionKit supplies the look and the shell, the editor supplies the behaviour. Three layers, cleanly separated.</blockquote>
+        <p></p>
+      </div>
+    </section>
+  </nk-page>
+
+</nk-app>
+
+<!-- ================= SETTINGS MODAL ================= -->
+<nk-modal id="settings">
+  <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK"></nk-settings-user>
+
+  <nk-settings-pane name="profile" group="Account" icon="👤" label="My profile" title="My profile" active>
+    <nk-profile-row avatar="MK">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <nk-btn variant="secondary" small>Upload image</nk-btn>
+        <nk-btn variant="secondary" small style="color:var(--nk-text-tertiary)">Remove</nk-btn>
+      </div>
+    </nk-profile-row>
+    <h3>Details</h3>
+    <nk-field label="Display name" desc="How you appear in the workspace."><nk-input value="Marcel Karas"></nk-input></nk-field>
+    <nk-field label="E-Mail" desc="Used for invitations and notifications."><nk-input type="email" value="marcel@monahilft.de"></nk-input></nk-field>
+    <nk-field label="About me" desc="A short description for your team."><nk-textarea placeholder="A few words about yourself …">Builds calm knowledge systems and AI-native ways of working.</nk-textarea></nk-field>
+    <div style="display:flex;gap:8px;margin-top:20px">
+      <nk-btn variant="primary" data-save>Save changes</nk-btn>
+      <nk-btn variant="secondary">Discard</nk-btn>
+    </div>
+  </nk-settings-pane>
+
+  <nk-settings-pane name="appearance" group="Account" icon="🎨" label="Appearance" title="Appearance">
+    <nk-field label="Appearance" desc="Light, dark, or follow the system setting.">
+      <nk-select id="themeSelect"><option value="light">Light</option><option value="dark">Dark</option><option value="system">System</option></nk-select>
+    </nk-field>
+    <nk-field label="Palette" desc="The example palettes from theme-override.css – one line of --nk-accent on :root re-brands every element.">
+      <nk-select id="paletteSelect"><option value="default">Default</option><option value="forest">Forest</option><option value="slate">Slate</option><option value="sunset">Sunset</option><option value="high-contrast">High contrast</option></nk-select>
+    </nk-field>
+    <nk-field label="Language"><nk-select><option>German</option><option>English</option></nk-select></nk-field>
+    <h3>Comfort</h3>
+    <nk-field label="Compact view" desc="Reduces spacing in the sidebar and lists."><nk-switch></nk-switch></nk-field>
+    <nk-field label="Reduce motion" desc="Less motion for calmer work."><nk-switch></nk-switch></nk-field>
+    <nk-field label="Text size" desc="100 %" id="fontSizeField"><nk-slider id="fontSizeSlider" min="85" max="120" value="100" step="5"></nk-slider></nk-field>
+  </nk-settings-pane>
+
+  <nk-settings-pane name="notifications" group="Account" icon="🔔" label="Notifications" title="Notifications">
+    <h3>By email</h3>
+    <nk-check checked>Mentions and comments</nk-check>
+    <nk-check checked>Weekly digest</nk-check>
+    <nk-check>Product news</nk-check>
+    <h3>Push</h3>
+    <nk-field label="Push notifications" desc="Straight in the browser when shared pages see activity."><nk-switch checked></nk-switch></nk-field>
+    <nk-field label="Mentions only" desc="Everything else lands quietly in the inbox."><nk-switch></nk-switch></nk-field>
+  </nk-settings-pane>
+
+  <nk-settings-pane name="ai" group="Account" icon="✨" label="AI assistant" title="AI assistant">
+    <nk-field label="AI replies enabled" desc="Mona may read page content and suggest replies."><nk-switch checked></nk-switch></nk-field>
+    <h3>Model</h3>
+    <nk-model-card name="model" value="standard" desc="A balanced model for everyday work. Fast, calm, dependable." selected><span slot="title">Mona Standard <span class="nk-tag green">Recommended</span></span></nk-model-card>
+    <nk-model-card name="model" value="deep" title="Mona Deep" desc="More depth of thought for complex analysis and long documents. Answers more slowly."></nk-model-card>
+    <nk-model-card name="model" value="custom" desc="Connect your own API key (OpenAI, Anthropic, Azure)."><span slot="title">Custom model <span class="nk-tag purple">API</span></span></nk-model-card>
+    <h3>Reply style</h3>
+    <nk-radio name="style" value="concise" checked>Calm &amp; concise</nk-radio>
+    <nk-radio name="style" value="detailed">Detailed &amp; explanatory</nk-radio>
+    <nk-radio name="style" value="bullets">Bullet points only</nk-radio>
+    <div style="margin-top:14px"><nk-field label="API key" desc="Only needed for a custom model. Stays stored locally."><nk-input type="password" placeholder="sk-…"></nk-input></nk-field></div>
+    <div style="display:flex;gap:8px;margin-top:18px">
+      <nk-btn variant="primary" data-save>Save</nk-btn>
+      <nk-btn variant="secondary">Test connection</nk-btn>
+    </div>
+  </nk-settings-pane>
+
+  <nk-settings-pane name="general" group="Workspace" icon="⚙️" label="General" title="Workspace settings">
+    <nk-field label="Workspace name"><nk-input value="MonaHilft"></nk-input></nk-field>
+    <nk-field label="Domain" desc="Public pages appear under this address."><nk-input value="monahilft.notionkit.app"></nk-input></nk-field>
+    <nk-field label="Public home page" desc="Visitors may view shared pages without signing in."><nk-switch></nk-switch></nk-field>
+    <nk-danger-zone title="⚠️ Danger zone">
+      <nk-field label="Delete workspace" desc="Irreversibly removes all pages, databases and members."><nk-btn variant="danger-solid" small data-save-danger>Delete</nk-btn></nk-field>
+    </nk-danger-zone>
+  </nk-settings-pane>
+
+  <nk-settings-pane name="members" group="Workspace" icon="👥" label="Members" title="Members">
+    <div style="display:flex;gap:8px;padding-bottom:8px">
+      <nk-input wide type="email" placeholder="Invite an email address …" style="flex:1"></nk-input>
+      <nk-btn variant="primary" data-save>Invite</nk-btn>
+    </div>
+    <nk-member-list>
+      <nk-member-row name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK" color="linear-gradient(135deg,#9065b0,#529cca)"><nk-select slot="role" compact><option>Owner</option></nk-select></nk-member-row>
+      <nk-member-row name="Sara Lindt" mail="sara@monahilft.de" color="#448361"><nk-select slot="role" compact><option>Admin</option><option>Member</option><option>Viewer</option></nk-select></nk-member-row>
+      <nk-member-row name="Tom Weber" mail="tom@agentur-x.de" color="#d9730d"><nk-select slot="role" compact><option>Member</option><option>Admin</option><option>Viewer</option></nk-select></nk-member-row>
+      <nk-member-row name="Mona" mail="Virtual co-founder" avatar="✨" color="var(--nk-text-tertiary)"><nk-select slot="role" compact><option>Full access</option><option>Restricted</option></nk-select></nk-member-row>
+    </nk-member-list>
+  </nk-settings-pane>
+</nk-modal>
+
+<!-- ================= COMMAND PALETTE (⌘K) ================= -->
+<nk-cmdk id="palette" placeholder="Search or type a command …"></nk-cmdk>
+
+<nk-toast id="toast"></nk-toast>
+
+<script>
+  /* ============ Data ============ */
+  const columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' },
+      { value: 'progress', label: 'In progress', color: 'blue' },
+      { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+  ];
+  const marcel = { name: 'Marcel', initials: 'MK', color: '#9065b0' };
+  const projects = [
+    { id: 1, icon: '🧭', name: 'App-Shell & Sidebar', status: 'done', owner: marcel, due: '08.05.2026', progress: 100 },
+    { id: 2, icon: '📄', name: 'Page-Shell & Typografie', status: 'done', owner: marcel, due: '10.05.2026', progress: 100 },
+    { id: 3, icon: '🗃️', name: 'Database Table-View', status: 'progress', owner: marcel, due: '20.05.2026', progress: 65 },
+    { id: 4, icon: '▤', name: 'Board-View & Drag-and-Drop', status: 'planned', due: '02.06.2026', progress: 0 },
+  ];
+  db.columns = columns;
+  db.rows = projects;
+
+  /* ============ Database events ============ */
+  let counter = 1;
+  db.addEventListener('nk-action', e => {
+    if (e.detail.action === 'new-row') {
+      projects.push({ id: Date.now(), icon: '📄', name: 'Untitled ' + counter++, status: e.detail.value || 'planned', due: '—', progress: 0 });
+      db.rows = projects;
+      toast.show('New page created');
+    }
+    if (e.detail.action === 'add-view') toast.show('Views: table and board – more in your app');
+    if (e.detail.action === 'sort') toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`);
+  });
+  db.addEventListener('nk-select', e => toast.show(`Open “${e.detail.row.name}”`));
+  db.addEventListener('nk-change', e => toast.show(`“${e.detail.row.name}” → ${e.detail.value}`));
+
+  /* ============ Sidebar tree ============ */
+  tree.addEventListener('nk-select', e => {
+    if (e.detail.value === 'search') { e.preventDefault(); palette.show(); return; }
+    crumbs.lastElementChild.textContent = `${e.detail.item.icon || ''} ${e.detail.label}`.trim();
+    sidebar.close();
+  });
+  tree.addEventListener('nk-action', e => toast.show(`${e.detail.action === 'add' ? 'Add page under' : 'Options for'} “${e.detail.label}”`));
+  sidebar.addEventListener('nk-select', e => {
+    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); }
+    if (e.detail.value === 'trash') { e.preventDefault(); toast.show('Trash is empty'); }
+  });
+  sidebar.addEventListener('nk-select', e => { if (e.target.localName === 'nk-menu-item') toast.show(`Workspace: ${e.detail.label}`); });
+  menuBtn.addEventListener('click', () => sidebar.toggle());
+  const narrow = matchMedia('(max-width: 860px)');
+  const syncMenuBtn = () => { menuBtn.style.display = narrow.matches ? '' : 'none'; };
+  narrow.addEventListener('change', syncMenuBtn); syncMenuBtn();
+
+  /* ============ Theme ============ */
+  themeToggle.addEventListener('nk-change', e => toast.show(e.detail.value === 'dark' ? 'Dark mode on' : 'Light mode on'));
+  themeSelect.addEventListener('nk-change', e => {
+    const value = e.detail.value === 'system' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : e.detail.value;
+    themeToggle.apply(value);
+    if (e.detail.value === 'system') toast.show('Following the system setting');
+  });
+
+  /* ============ Palettes – one :root declaration re-brands every element ============ */
+  const PALETTES = {
+    default: '',
+    forest: ':root{--nk-accent:#2f8f5b}[data-theme="dark"]{--nk-accent:#5cbf87}',
+    slate: ':root{--nk-accent:#4b6b8a;--nk-decor-purple:#6b7d94;--nk-decor-blue:#4b6b8a;--nk-decor-orange:#8a7a5b}[data-theme="dark"]{--nk-accent:#7fa3c4}',
+    sunset: ':root{--nk-accent:#d9730d;--nk-danger:#c93c3c;--nk-decor-purple:#c2552a;--nk-decor-blue:#e0a53c}[data-theme="dark"]{--nk-accent:#ffa344}',
+    'high-contrast': ':root{--nk-text-secondary:rgba(55,53,47,0.72);--nk-text-tertiary:rgba(55,53,47,0.70);--nk-accent:#1e72c6;--nk-danger:#c64646;--nk-tag-blue-text:#2d7096;--nk-tag-green-text:#3d7657;--nk-tag-orange-text:#a05409;--nk-tag-purple-text:#845ca2}[data-theme="dark"]{--nk-text-tertiary:rgba(255,255,255,0.48);--nk-on-accent:#191919;--nk-tag-green-text:#52aea0;--nk-tag-purple-text:#a880de}',
+  };
+  const paletteStyle = document.createElement('style');
+  document.head.appendChild(paletteStyle);
+  function applyPalette(name) {
+    paletteStyle.textContent = PALETTES[name] || '';
+    paletteSelect.value = name;
+    try { localStorage.setItem('nk-palette', name); } catch (e) {}
+  }
+  paletteSelect.addEventListener('nk-change', e => { applyPalette(e.detail.value); toast.show(`Palette: ${e.detail.value}`); });
+  let storedPalette = 'default';
+  try { storedPalette = localStorage.getItem('nk-palette') || 'default'; } catch (e) {}
+  applyPalette(storedPalette);
+
+  /* ============ Settings ============ */
+  fontSizeSlider.addEventListener('nk-input', e => fontSizeField.setAttribute('desc', e.detail.value + ' %'));
+  fontSizeSlider.addEventListener('nk-change', e => toast.show('Text size set to ' + e.detail.value + ' %'));
+  document.querySelectorAll('[data-save]').forEach(b => b.addEventListener('click', () => toast.show('Settings saved')));
+  document.querySelectorAll('[data-save-danger]').forEach(b => b.addEventListener('click', () => toast.show('Just a preview – nothing was deleted')));
+  settings.addEventListener('nk-select', e => console.log('pane', e.detail.value));
+
+  /* ============ Command palette ============ */
+  palette.commands = [
+    { group: 'Pages', items: [
+      { id: 'mvp', icon: '🚀', label: 'NotionKit MVP' },
+      { id: 'voh', icon: '🎙️', label: 'Voice-Office-Hub' },
+      { id: 'kb', icon: '🧠', label: 'Knowledge base' },
+      { id: 'editorial', icon: '📅', label: 'Editorial plan' },
+    ]},
+    { group: 'Actions', items: [
+      { id: 'new', icon: '＋', label: 'Create new page', shortcut: '⌘N' },
+      { id: 'theme', icon: '🌙', label: 'Toggle theme', shortcut: '⌘⇧L', action: () => themeToggle.apply(themeToggle.value === 'dark' ? 'light' : 'dark') },
+      { id: 'settings', icon: '⚙️', label: 'Open settings', shortcut: '⌘,', action: () => settings.show() },
+      { id: 'export', icon: '📤', label: 'Export page …' },
+    ]},
+  ];
+  palette.addEventListener('nk-command', e => { if (!e.detail.item.action) toast.show(`${e.detail.item.icon} ${e.detail.item.label}`); });
+  bannerCmdk.addEventListener('click', () => palette.show());
+
+  /* ============ Gallery ============ */
+  emoji.emojis = ['😀','😊','🚀','💡','📊','🗃️','🧠','✨','🎯','🤝','📅','🔥','🌿','💎','🎙️','📄','✅','⭐','🔍','🛠️','📌','🧭','❤️','☕'].map(char => ({ char, name: char }));
+  emoji.categories = [{ id: 'smileys', icon: '😀' }, { id: 'nature', icon: '🌿' }, { id: 'food', icon: '🍕' }, { id: 'travel', icon: '🚀' }, { id: 'objects', icon: '💡' }, { id: 'symbols', icon: '❤️' }, { id: 'random', icon: '🎲' }];
+  emoji.addEventListener('nk-select', e => { page.icon = e.detail.emoji; toast.show(`Page icon set to ${e.detail.emoji}`); });
+  page.addEventListener('nk-action', e => { if (e.detail.action === 'icon') toast.show('Pick an icon in the emoji picker below'); });
+  pageMenu.addEventListener('nk-select', e => toast.show(`Menu: ${e.detail.label}`));
+  document.querySelectorAll('nk-template-btn').forEach(b => b.addEventListener('nk-select', e => toast.show(`Template “${e.detail.value}” inserted`)));
+  range.addEventListener('nk-change', e => toast.show(`Range: ${e.detail.value}`));
+  emptyNew.addEventListener('click', () => toast.show('New entry'));
+  comments.addEventListener('nk-submit', e => {
+    const c = document.createElement('nk-comment');
+    c.setAttribute('author', 'Marcel Karas'); c.setAttribute('time', 'just now'); c.setAttribute('color', '#9065b0');
+    c.textContent = e.detail.text;
+    comments.appendChild(c);
+    toast.show('Comment sent');
+  });
+  thread.addEventListener('nk-action', e => toast.show(`AI: ${e.detail.action}`));
+  aiInput.addEventListener('nk-submit', e => {
+    const m = document.createElement('nk-ai-msg');
+    m.setAttribute('role', 'user'); m.setAttribute('name', 'Du'); m.setAttribute('avatar', 'MK');
+    m.textContent = e.detail.text;
+    thread.appendChild(m);
+    toast.show('Mona is thinking …');
+  });
+  pageTitle.addEventListener('nk-change', e => { crumbs.lastElementChild.textContent = `🚀 ${e.detail.value}`; toast.show(`Renamed to “${e.detail.value}”`); });
+</script>
+<script type="module" src="docs-editor.js"></script>
+</body>
+</html>

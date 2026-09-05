@@ -1,0 +1,113 @@
+# ============================================================
+# NotionKit Elements – Release Pipeline
+#
+# Trigger:  tag push matching v* (e.g. v1.0.0)
+# Steps:    1. build  2. GitHub release with the bundles  3. npm publish
+#
+# Usage:    git tag v1.0.0 && git push origin v1.0.0
+# Auth:     npm Trusted Publishing (OIDC) – no NPM_TOKEN secret.
+#           On npmjs.com → package → Settings → Trusted Publisher:
+#             GitHub Actions · JUNGHERZ/NotionKit-Elements · workflow: release.yml
+#           The filename of this workflow must therefore stay release.yml.
+#           Provenance is generated automatically.
+#
+# Release order matters: dist/ embeds whatever NotionKit CSS version is
+# installed at build time. Publish the CSS package first, then `npm install`
+# here, rebuild, commit dist/ and tag.
+# ============================================================
+
+name: Release & Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write   # OIDC token for npm Trusted Publishing
+
+jobs:
+  build-and-publish:
+    name: Build, Release & Publish to npm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      # Trusted Publishing needs npm >= 11.5.1
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Tag matches package.json
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          test "${GITHUB_REF_NAME}" = "v${VERSION}" \
+            || { echo "::error::tag ${GITHUB_REF_NAME} does not match package.json version ${VERSION}"; exit 1; }
+
+      - name: CHANGELOG has an entry for this version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          grep -q "## \[${VERSION}\]" CHANGELOG.md \
+            || { echo "::error::CHANGELOG.md has no entry for ${VERSION} – add '## [${VERSION}] – YYYY-MM-DD' before releasing"; exit 1; }
+
+      - name: Build all artifacts
+        run: npm run build
+
+      # dist/ is committed. If the fresh build differs, `npm run build` was not
+      # committed – or the installed NotionKit version differs from the one the
+      # committed dist/ was built with.
+      - name: Committed dist/ matches source
+        run: |
+          if ! git diff --exit-code -- dist/; then
+            echo "::error::dist/ is out of date – run 'npm run build' and commit the result."
+            exit 1
+          fi
+
+      - name: Log file sizes
+        run: |
+          ls -lh dist/notionkit-elements.js dist/notionkit-elements.min.js dist/notionkit-elements.esm.js
+          echo "gzip (min): $(gzip -9 -c dist/notionkit-elements.min.js | wc -c) B"
+          echo "per-component entries: $(ls dist/components/*.js | wc -l)"
+          du -sh dist/components
+
+      - name: Create GitHub Release & upload assets
+        uses: softprops/action-gh-release@v3
+        with:
+          name: ${{ github.ref_name }} – NotionKit Elements
+          generate_release_notes: true
+          files: |
+            dist/notionkit-elements.min.js
+            dist/notionkit-elements.js
+            dist/notionkit-elements.esm.js
+            SKILL.md
+
+      # The very first version of a package has to be published by hand before
+      # a trusted publisher can be configured. Tagging that same version later
+      # must still create the GitHub release without failing on npm.
+      - name: Already on npm?
+        id: onnpm
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@jungherz-de/notionkit-elements@${VERSION}" version >/dev/null 2>&1; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::@jungherz-de/notionkit-elements@${VERSION} is already on npm – skipping publish"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to npm
+        if: steps.onnpm.outputs.skip == 'false'
+        run: npm publish --access public
