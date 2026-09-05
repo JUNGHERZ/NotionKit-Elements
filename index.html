@@ -71,6 +71,8 @@ body { margin: 0; }
 .show-item > h4 a:hover { color: var(--nk-accent); }
 .show-body { display: flow-root; overflow-x: auto; }
 .site-footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--nk-border); font-size: 12.5px; color: var(--nk-text-tertiary); }
+.site-footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.site-footer a:hover { color: var(--nk-text); }
 .site-brand-on :root, html.site-branded { --nk-accent: #16a34a; }
 @media (max-width: 860px) { .site-toc { display: none; } .site-main { padding-top: 20px; } }
 
@@ -173,7 +175,7 @@ body { margin: 0; }
     <h2>The NotionKit family</h2>
     <div class="land-family"><a href="https://notionkit.jungherz.com" class=""><b>NotionKit</b><small>CSS foundation – classes and tokens</small></a><a href="#" class="here"><b>NotionKit Elements<em>you are here</em></b><small>Web Components – this package</small></a><div><b>NotionKit Web<em>planned</em></b><small>Astro template – planned</small></div></div>
   </section>
-  <div class="site-footer">NotionKit Elements v1.0.0 · wrapping NotionKit CSS v1.1.1 · MIT · Jungherz GmbH</div>
+  <div class="site-footer">NotionKit Elements v1.0.0 · wrapping NotionKit CSS v1.1.1 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

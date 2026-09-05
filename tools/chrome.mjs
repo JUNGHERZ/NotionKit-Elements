@@ -65,6 +65,8 @@ body { margin: 0; }
 .show-item > h4 a:hover { color: var(--nk-accent); }
 .show-body { display: flow-root; overflow-x: auto; }
 .site-footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--nk-border); font-size: 12.5px; color: var(--nk-text-tertiary); }
+.site-footer a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.site-footer a:hover { color: var(--nk-text); }
 .site-brand-on :root, html.site-branded { --nk-accent: #16a34a; }
 @media (max-width: 860px) { .site-toc { display: none; } .site-main { padding-top: 20px; } }
 `;
