@@ -152,3 +152,22 @@ test('field layouts: stacked sets wide on the control and stacks the box; nk-fie
   // Unstacking removes the wide the field added, but not one the author set.
   expect(await page.evaluate(() => { document.getElementById('st').stacked = false; document.getElementById('ri').setAttribute('wide', ''); document.getElementById('row').stacked = true; document.getElementById('row').stacked = false; return [document.getElementById('ta').hasAttribute('wide'), document.getElementById('ri').hasAttribute('wide')]; })).toEqual([false, true]);
 });
+
+test('field grid: inputs never overflow their column, even at 150px columns', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, `<div style="width:500px"><nk-fields id="grid">
+    <nk-field id="f1" label="A"><nk-input id="i1" value="x"></nk-input></nk-field>
+    <nk-field id="f2" label="B"><nk-select id="s2"><option>Lorem ipsum dolor sit amet</option></nk-select></nk-field>
+    <nk-field id="f3" label="C"><nk-textarea id="t3"></nk-textarea></nk-field>
+  </nk-fields></div>`);
+  const r = await page.evaluate(() => {
+    const field = id => document.getElementById(id).shadowRoot.querySelector('.nk-field').getBoundingClientRect();
+    const ctl = (id, sel) => document.getElementById(id).shadowRoot.querySelector(sel).getBoundingClientRect();
+    const cols = getComputedStyle(document.getElementById('grid').shadowRoot.querySelector('.nk-fields')).gridTemplateColumns.split(' ').length;
+    const pairs = [['f1', 'i1', 'input'], ['f2', 's2', 'select'], ['f3', 't3', 'textarea']];
+    return { cols, over: pairs.map(([f, c, sel]) => Math.round(ctl(c, sel).right - field(f).right)), widths: pairs.map(([f]) => Math.round(field(f).width)) };
+  });
+  expect(r.cols).toBe(3);
+  expect(r.over).toEqual([0, 0, 0]);
+  expect(Math.max(...r.widths) - Math.min(...r.widths)).toBeLessThanOrEqual(1);
+});

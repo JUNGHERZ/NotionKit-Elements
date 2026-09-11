@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-EVtzqKmc.js';
+import { N as NkElement } from './shared/base-DL7ok-Xt.js';
 
 // <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@…" avatar="MK"></nk-settings-user>
 // → <div class="nk-settings-user"><div class="avatar">MK</div><div class="u-text"><div class="name">…</div><div class="mail">…</div></div></div>

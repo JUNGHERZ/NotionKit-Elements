@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-EVtzqKmc.js';
+import { N as NkElement } from './shared/base-DL7ok-Xt.js';
 
 // <nk-synced badge="⟳ 3 places">…</nk-synced>
 // → <div class="nk-synced"><span class="synced-badge">⟳ 3 places</span>…</div>

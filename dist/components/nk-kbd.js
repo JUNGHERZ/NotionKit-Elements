@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-EVtzqKmc.js';
+import { N as NkElement } from './shared/base-DL7ok-Xt.js';
 
 // <nk-kbd>⌘</nk-kbd> <nk-kbd>K</nk-kbd>  →  <kbd class="nk-kbd">
 class NkKbd extends NkElement {

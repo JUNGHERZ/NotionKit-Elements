@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-EVtzqKmc.js';
+import { a as NkFormElement } from './shared/base-DL7ok-Xt.js';
 
 // <nk-textarea name="bio" rows="3" wide>Text</nk-textarea>  →  <textarea class="nk-textarea wide">
 // The initial value is the `value` attribute, or the element's text content.

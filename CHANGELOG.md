@@ -4,6 +4,18 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] – 2026-09-11
+
+Rebuilt against NotionKit CSS 1.3.1 (peer `>= 1.3.1`); the bundle embeds the
+stylesheet, so the fix below needs this release.
+
+### Fixed
+- Inputs inside `nk-fields` (and stacked / compact `nk-field`s) overflowed
+  their column by about 20px: the controls' `min-width: 210px` became the
+  grid item's automatic minimum. NotionKit 1.3.1 sets `min-width: 0` down
+  the chain; a test now measures that every control ends inside its column
+  at 150px. Reported by Auxdesk.
+
 ## [1.2.0] – 2026-09-11
 
 Built and tested against NotionKit CSS 1.3.0; the peer range is now
@@ -154,6 +166,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.2.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.1
 [1.2.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.0
 [1.1.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.1.0
 [1.0.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.1

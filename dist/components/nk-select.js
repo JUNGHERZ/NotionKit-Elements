@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-EVtzqKmc.js';
+import { a as NkFormElement } from './shared/base-DL7ok-Xt.js';
 
 // <nk-select name="role" value="editor">
 //   <option value="viewer">Viewer</option>
