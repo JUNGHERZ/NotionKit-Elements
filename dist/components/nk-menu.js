@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BavgHsS-.js';
+import { N as NkElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-menu>
 //   <nk-menu-item type="label">Page</nk-menu-item>

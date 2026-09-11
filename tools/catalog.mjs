@@ -135,7 +135,7 @@ export const CATALOG = [
     str('value', 'string', 'Selected value.', 'Ausgewählter Wert.'),
     ...formAttrs,
     bool('required', 'Required field.', 'Pflichtfeld.'),
-    bool('compact', '120px minimum width (<code>.compact</code>), e.g. inside a member row.', '120px Mindestbreite (<code>.compact</code>), z. B. in einer Mitgliederzeile.'),
+    bool('compact', '120px minimum width (<code>.compact</code>), e.g. inside a member row.', '120px Mindestbreite (<code>.compact</code>), z. B. in einer Mitgliederzeile.'), bool('wide', 'Full width (<code>.nk-select.wide</code>).', 'Volle Breite (<code>.nk-select.wide</code>).'),
   ],
   slots: [{ name: '(default)', desc: t('<code>&lt;option&gt;</code> / <code>&lt;optgroup&gt;</code> children – direct children only.', '<code>&lt;option&gt;</code>-/<code>&lt;optgroup&gt;</code>-Kinder – nur direkte Kinder.') }],
   events: [changeEvent('On selection.', 'Bei Auswahl.')],
@@ -153,24 +153,26 @@ export const CATALOG = [
 </select>`,
 },
 {
-  tag: 'nk-switch', group: 'forms', classes: ['nk-switch'],
+  tag: 'nk-switch', group: 'forms', classes: ['nk-switch', 'nk-switch-label'],
   title: t('Switch', 'Schalter'),
   desc: t('Renders <code>button.nk-switch[role=switch]</code>; the stylesheet keys the knob on <code>aria-checked</code>, the element does the toggling. Submits <code>value</code> (default <code>on</code>) when checked, nothing otherwise – like a checkbox.',
           'Rendert <code>button.nk-switch[role=switch]</code>; das Stylesheet steuert den Knopf über <code>aria-checked</code>, das Element übernimmt das Umschalten. Sendet <code>value</code> (Standard <code>on</code>) wenn eingeschaltet, sonst nichts – wie eine Checkbox.'),
   mobile: t('34×20px – below the 44px touch target. Give it a label row (<code>nk-field</code>) to enlarge the hit area.', '34×20px – unter dem 44px-Touch-Ziel. In einer Label-Zeile (<code>nk-field</code>) wächst die Trefferfläche.'),
-  attrs: [bool('checked', 'On/off state.', 'Ein/Aus-Zustand.'), ...formAttrs, str('value', 'string', 'Submitted value when checked.', 'Gesendeter Wert, wenn eingeschaltet.', { default: 'on' }), str('label', 'string', 'Accessible name (<code>aria-label</code>).', 'Barrierefreier Name (<code>aria-label</code>).')],
-  slots: [],
+  attrs: [bool('checked', 'On/off state.', 'Ein/Aus-Zustand.'), ...formAttrs, str('value', 'string', 'Submitted value when checked.', 'Gesendeter Wert, wenn eingeschaltet.', { default: 'on' }), str('text', 'string', 'Visible text beside the switch (alternative to the default slot).', 'Sichtbarer Text neben dem Schalter (alternativ zum Default-Slot).'), str('label', 'string', 'Accessible name (<code>aria-label</code>) when there is no visible text.', 'Barrierefreier Name (<code>aria-label</code>), wenn es keinen sichtbaren Text gibt.')],
+  slots: [{ name: '(default)', desc: t('Visible text beside the switch; part of the hit area. Without it the element renders the bare button.', 'Sichtbarer Text neben dem Schalter; gehört zur Trefferfläche. Ohne ihn rendert das Element den nackten Button.') }],
   events: [{ name: 'nk-change', detail: '{ checked, value, name }', desc: t('On toggle.', 'Beim Umschalten.') }],
   methods: ['toggle()'],
-  example: W => `<nk-switch name="notify" checked label="${W.notify}"></nk-switch>`,
-  classMarkup: W => `<button class="nk-switch" role="switch" aria-checked="true" aria-label="${W.notify}"></button>`,
+  example: W => `<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center"><nk-switch name="notify" checked label="${W.notify}"></nk-switch>
+<nk-switch name="planned" checked>${W.planned}</nk-switch><nk-switch name="progress">${W.inProgress}</nk-switch><nk-switch name="done" text="${W.done}" checked></nk-switch></div>`,
+  classMarkup: W => `<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center"><button class="nk-switch" role="switch" aria-checked="true" aria-label="${W.notify}"></button>
+<label class="nk-switch-label"><button class="nk-switch" role="switch" aria-checked="true"></button><span>${W.planned}</span></label><label class="nk-switch-label"><button class="nk-switch" role="switch" aria-checked="false"></button><span>${W.inProgress}</span></label><label class="nk-switch-label"><button class="nk-switch" role="switch" aria-checked="true"></button><span>${W.done}</span></label></div>`,
 },
 {
   tag: 'nk-check', group: 'forms', classes: ['nk-check'],
   title: t('Checkbox', 'Checkbox'),
   desc: t('A <code>label.nk-check</code> with a custom-drawn checkbox; the label text is slotted, so clicking it toggles the box.', 'Ein <code>label.nk-check</code> mit selbst gezeichneter Checkbox; der Text wird geslottet, ein Klick darauf schaltet um.'),
   mobile: t('Row height ~24px; the whole label is the hit area.', 'Zeilenhöhe ~24px; die ganze Beschriftung ist Trefferfläche.'),
-  attrs: [bool('checked', 'Checked state.', 'Angehakt.'), bool('indeterminate', 'Mixed state (cleared on the next click).', 'Teilzustand (beim nächsten Klick aufgehoben).'), ...formAttrs, str('value', 'string', 'Submitted value.', 'Gesendeter Wert.', { default: 'on' }), bool('required', 'Must be checked to submit.', 'Muss zum Absenden angehakt sein.')],
+  attrs: [bool('checked', 'Checked state.', 'Angehakt.'), bool('indeterminate', 'Mixed state (cleared on the next click).', 'Teilzustand (beim nächsten Klick aufgehoben).'), ...formAttrs, str('value', 'string', 'Submitted value.', 'Gesendeter Wert.', { default: 'on' }), bool('required', 'Must be checked to submit.', 'Muss zum Absenden angehakt sein.'), str('text', 'string', 'Label text (alternative to the default slot).', 'Beschriftung (alternativ zum Default-Slot).')],
   slots: [{ name: '(default)', desc: t('Label text.', 'Beschriftung.') }],
   events: [{ name: 'nk-change', detail: '{ checked, value, name }', desc: t('On toggle.', 'Beim Umschalten.') }],
   example: W => `<nk-check name="digest" value="weekly" checked>${W.weekly}</nk-check>
@@ -184,7 +186,7 @@ export const CATALOG = [
   desc: t('Same optics as <code>nk-check</code> with a round mark. Radios with the same <code>name</code> in the same tree and form form one group – across shadow roots, which native radios cannot do. One tab stop per group; arrow keys move, wrap and skip disabled entries. There is deliberately no <code>nk-radio-group</code>.',
           'Gleiche Optik wie <code>nk-check</code> mit rundem Mark. Radios mit gleichem <code>name</code> im selben Tree und Formular bilden eine Gruppe – auch über Shadow-Grenzen, was native Radios nicht können. Ein Tab-Stop pro Gruppe; Pfeiltasten wandern, springen um und überspringen deaktivierte. Ein <code>nk-radio-group</code> gibt es bewusst nicht.'),
   mobile: t('As <code>nk-check</code>.', 'Wie <code>nk-check</code>.'),
-  attrs: [bool('checked', 'Selected; the last checked radio in markup wins.', 'Ausgewählt; das letzte <code>checked</code> im Markup gewinnt.'), ...formAttrs, str('value', 'string', 'Submitted value.', 'Gesendeter Wert.'), bool('required', 'One of the group must be selected.', 'Eines der Gruppe muss gewählt sein.')],
+  attrs: [bool('checked', 'Selected; the last checked radio in markup wins.', 'Ausgewählt; das letzte <code>checked</code> im Markup gewinnt.'), ...formAttrs, str('value', 'string', 'Submitted value.', 'Gesendeter Wert.'), bool('required', 'One of the group must be selected.', 'Eines der Gruppe muss gewählt sein.'), str('text', 'string', 'Label text (alternative to the default slot).', 'Beschriftung (alternativ zum Default-Slot).')],
   slots: [{ name: '(default)', desc: t('Label text.', 'Beschriftung.') }],
   events: [{ name: 'nk-change', detail: '{ checked, value, name }', desc: t('On selection, also via arrow keys.', 'Bei Auswahl, auch per Pfeiltaste.') }],
   example: W => `<nk-radio name="style" value="concise">${W.concise}</nk-radio>
@@ -206,11 +208,11 @@ export const CATALOG = [
   classMarkup: W => `<input type="range" class="nk-slider" name="size" min="12" max="18" value="14"><div class="nk-slider-value">14px</div>`,
 },
 {
-  tag: 'nk-field', group: 'forms', classes: ['nk-field', 'f-label', 'f-desc', 'f-control'],
+  tag: 'nk-field', group: 'forms', classes: ['nk-field', 'f-label', 'f-desc', 'f-control', 'stacked', 'compact'],
   title: t('Field row', 'Feldzeile'),
-  desc: t('The settings row: label and description left, control right. Put any control – <code>nk-input</code>, <code>nk-switch</code>, <code>nk-select</code> – in the default slot.', 'Die Einstellungszeile: Label und Beschreibung links, Control rechts. Ins Default-Slot gehört ein beliebiges Control – <code>nk-input</code>, <code>nk-switch</code>, <code>nk-select</code>.'),
-  mobile: t('Stays a row; long descriptions wrap under the label.', 'Bleibt eine Zeile; lange Beschreibungen brechen unter dem Label um.'),
-  attrs: [str('label', 'string', 'Label text.', 'Beschriftung.'), str('desc', 'string', 'Secondary description.', 'Erläuterung.')],
+  desc: t('The settings row: label and description left, control right. Put any control – <code>nk-input</code>, <code>nk-switch</code>, <code>nk-select</code> – in the default slot. <code>stacked</code> puts the label above a full-width control (textareas, long descriptions) and sets <code>wide</code> on the control for you; <code>compact</code> shrinks the label to 12px tertiary text. Inside <code>nk-fields</code> both are on by default.', 'Die Einstellungszeile: Label und Beschreibung links, Control rechts. Ins Default-Slot gehört ein beliebiges Control – <code>nk-input</code>, <code>nk-switch</code>, <code>nk-select</code>. <code>stacked</code> setzt das Label über ein vollbreites Control (Textareas, lange Beschreibungen) und setzt <code>wide</code> am Control selbst; <code>compact</code> verkleinert das Label auf 12px tertiären Text. In <code>nk-fields</code> sind beide Standard.'),
+  mobile: t('Stays a row; long descriptions wrap under the label. Use <code>stacked</code> where the control needs the whole width.', 'Bleibt eine Zeile; lange Beschreibungen brechen unter dem Label um. <code>stacked</code>, wo das Control die ganze Breite braucht.'),
+  attrs: [str('label', 'string', 'Label text.', 'Beschriftung.'), str('desc', 'string', 'Secondary description.', 'Erläuterung.'), bool('stacked', 'Label above a full-width control.', 'Label über einem vollbreiten Control.'), bool('compact', 'Small tertiary label, no row padding.', 'Kleines tertiäres Label, kein Zeilen-Padding.')],
   slots: [{ name: '(default)', desc: t('The control.', 'Das Control.') }, { name: 'label', desc: t('Rich label content (instead of the attribute).', 'Formatierte Beschriftung (statt Attribut).') }, { name: 'desc', desc: t('Rich description.', 'Formatierte Erläuterung.') }],
   events: [],
   example: W => `<nk-field label="${W.displayName}" desc="${W.displayNameDesc}">
@@ -218,6 +220,9 @@ export const CATALOG = [
 </nk-field>
 <nk-field label="${W.notify}">
   <nk-switch checked></nk-switch>
+</nk-field>
+<nk-field label="${W.bio}" stacked>
+  <nk-textarea rows="2" placeholder="${W.bioPlaceholder}"></nk-textarea>
 </nk-field>`,
   classMarkup: W => `<div class="nk-field">
   <div><div class="f-label">${W.displayName}</div><div class="f-desc">${W.displayNameDesc}</div></div>
@@ -226,6 +231,29 @@ export const CATALOG = [
 <div class="nk-field">
   <div><div class="f-label">${W.notify}</div></div>
   <div class="f-control"><button class="nk-switch" role="switch" aria-checked="true"></button></div>
+</div>
+<div class="nk-field stacked">
+  <div><div class="f-label">${W.bio}</div></div>
+  <div class="f-control"><textarea class="nk-textarea wide" rows="2" placeholder="${W.bioPlaceholder}"></textarea></div>
+</div>`,
+},
+{
+  tag: 'nk-fields', group: 'forms', classes: ['nk-fields'],
+  title: t('Field grid', 'Feldraster'),
+  desc: t('Several short fields in one row: a grid of <code>minmax(150px, 1fr)</code> columns that wraps as the width allows. Every <code>nk-field</code> inside renders itself stacked and compact – a 12px label above a full-width control – so nothing collides.', 'Mehrere kurze Felder in einer Zeile: ein Raster aus <code>minmax(150px, 1fr)</code>-Spalten, das umbricht, wie es die Breite erlaubt. Jedes <code>nk-field</code> darin rendert sich gestapelt und kompakt – ein 12px-Label über einem vollbreiten Control –, damit nichts kollidiert.'),
+  mobile: t('Wraps to one or two columns on its own; no breakpoint needed.', 'Bricht von selbst auf ein oder zwei Spalten um; kein Breakpoint nötig.'),
+  attrs: [],
+  slots: [{ name: '(default)', desc: t('<code>nk-field</code> children.', '<code>nk-field</code>-Kinder.') }],
+  events: [],
+  example: W => `<nk-fields>
+  <nk-field label="${W.displayName}"><nk-input value="Ada Lovelace"></nk-input></nk-field>
+  <nk-field label="${W.email}"><nk-input value="ada@acme.com"></nk-input></nk-field>
+  <nk-field label="${W.role}"><nk-select value="editor"><option value="viewer">${W.viewer}</option><option value="editor">${W.editor}</option></nk-select></nk-field>
+</nk-fields>`,
+  classMarkup: W => `<div class="nk-fields">
+  <div class="nk-field"><div><div class="f-label">${W.displayName}</div></div><div class="f-control"><input class="nk-input" value="Ada Lovelace"></div></div>
+  <div class="nk-field"><div><div class="f-label">${W.email}</div></div><div class="f-control"><input class="nk-input" value="ada@acme.com"></div></div>
+  <div class="nk-field"><div><div class="f-label">${W.role}</div></div><div class="f-control"><select class="nk-select"><option>${W.viewer}</option><option selected>${W.editor}</option></select></div></div>
 </div>`,
 },
 // ============================================================ WAVE 1 · CONTENT

@@ -1,17 +1,20 @@
-import { a as NkFormElement } from './shared/base-BavgHsS-.js';
+import { a as NkFormElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-check name="mail" value="weekly" checked>Weekly digest</nk-check>
 // → <label class="nk-check"><input type="checkbox"> Weekly digest</label>
 class NkCheck extends NkFormElement {
-  static get observedAttributes() { return ['checked', 'disabled', 'name', 'value', 'indeterminate', 'required']; }
+  static get observedAttributes() { return ['checked', 'disabled', 'name', 'value', 'text', 'indeterminate', 'required']; }
 
   render() {
     const label = this.createElement('label', ['nk-check']);
     this._input = this.createElement('input', [], { type: 'checkbox' });
+    const slot = document.createElement('slot');
+    this._text = document.createTextNode('');
+    slot.appendChild(this._text);
     this._apply();
     this._defaultChecked = this.getBoolAttr('checked');
     label.appendChild(this._input);
-    label.appendChild(document.createElement('slot'));
+    label.appendChild(slot);
     this._wrapper.appendChild(label);
     this._syncFormValue();
   }
@@ -24,6 +27,7 @@ class NkCheck extends NkFormElement {
     const name = this.getAttribute('name');
     name ? this._input.setAttribute('name', name) : this._input.removeAttribute('name');
     this._input.value = this.getAttribute('value') || 'on';
+    if (this._text) this._text.data = this.getAttribute('text') ?? '';
   }
 
   setupEvents() {
@@ -68,6 +72,8 @@ class NkCheck extends NkFormElement {
   set disabled(v) { this.setBoolAttr('disabled', v); }
   get name() { return this.getAttribute('name'); }
   set name(v) { this.setAttribute('name', v); }
+  get text() { return this.getAttribute('text'); }
+  set text(v) { v == null ? this.removeAttribute('text') : this.setAttribute('text', v); }
   get value() { return this.getAttribute('value') || 'on'; }
   set value(v) { this.setAttribute('value', v); }
 }

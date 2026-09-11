@@ -103,3 +103,52 @@ test('disabled and checked before the first render: parsed markup, pre-connect p
   })).toBe(true);
   expect(errors).toEqual([]);
 });
+
+// Visible switch text, field layouts, field grid.
+test('switch text: slot or attribute renders beside the switch and toggles it; bare switch stays bare', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, `<nk-switch id="a">Waiting</nk-switch><nk-switch id="b" text="Done" checked></nk-switch><nk-switch id="c" label="Bare"></nk-switch>`);
+  const r = await page.evaluate(() => {
+    const q = (id, sel) => document.getElementById(id).shadowRoot.querySelector(sel);
+    const rowDisplay = id => getComputedStyle(q(id, '.nk-switch-label')).display;
+    q('a', 'span').click();                                   // label text toggles the button
+    return {
+      a: [rowDisplay('a'), q('a', 'span').hidden, document.getElementById('a').checked],
+      b: [rowDisplay('b'), q('b', 'span').textContent, q('b', 'button').getAttribute('aria-checked')],
+      c: [rowDisplay('c'), q('c', 'span').hidden, q('c', 'button').getAttribute('aria-label')],
+      bHeight: q('b', '.nk-switch-label').getBoundingClientRect().height,
+    };
+  });
+  expect(r.a).toEqual(['inline-flex', false, true]);
+  expect(r.b).toEqual(['inline-flex', 'Done', 'true']);
+  expect(r.c).toEqual(['contents', true, 'Bare']);
+  expect(r.bHeight).toBeGreaterThanOrEqual(20);
+  // Text added later flips the wrapper on.
+  expect(await page.evaluate(() => { document.getElementById('c').text = 'Late'; return getComputedStyle(document.getElementById('c').shadowRoot.querySelector('.nk-switch-label')).display; })).toBe('inline-flex');
+});
+
+test('field layouts: stacked sets wide on the control and stacks the box; nk-fields makes its fields stacked + compact', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, `<div style="width:600px">
+    <nk-field id="row" label="Row"><nk-input id="ri"></nk-input></nk-field>
+    <nk-field id="st" label="Stacked" stacked><nk-textarea id="ta"></nk-textarea></nk-field>
+    <nk-fields id="grid"><nk-field id="g1" label="A"><nk-input id="gi"></nk-input></nk-field><nk-field id="g2" label="B"><nk-select id="gs"><option>x</option></nk-select></nk-field><nk-field id="g3" label="C"><nk-input></nk-input></nk-field><nk-field id="g4" label="D"><nk-input></nk-input></nk-field></nk-fields>
+  </div>`);
+  const r = await page.evaluate(() => {
+    const box = (id, sel) => document.getElementById(id).shadowRoot.querySelector(sel).getBoundingClientRect();
+    const cls = id => [...document.getElementById(id).shadowRoot.querySelector('.nk-field').classList].sort().join(' ');
+    return {
+      rowCls: cls('row'), stCls: cls('st'), g1Cls: cls('g1'),
+      rowWide: document.getElementById('ri').hasAttribute('wide'),
+      taWide: document.getElementById('ta').hasAttribute('wide'), giWide: document.getElementById('gi').hasAttribute('wide'), gsWide: document.getElementById('gs').hasAttribute('wide'),
+      stackedFull: Math.round(box('ta', 'textarea').width) === Math.round(box('st', '.nk-field').width),
+      labelAbove: box('st', '.f-label').bottom <= box('ta', 'textarea').top,
+      gridCols: getComputedStyle(document.getElementById('grid').shadowRoot.querySelector('.nk-fields')).gridTemplateColumns.split(' ').length,
+      g1Label: getComputedStyle(document.getElementById('g1').shadowRoot.querySelector('.f-label')).fontSize,
+      g1SideBySideG2: Math.abs(box('g1', '.nk-field').top - box('g2', '.nk-field').top) < 1 && box('g1', '.nk-field').right <= box('g2', '.nk-field').left,
+    };
+  });
+  expect(r).toEqual({ rowCls: 'nk-field', stCls: 'nk-field stacked', g1Cls: 'compact nk-field stacked', rowWide: false, taWide: true, giWide: true, gsWide: true, stackedFull: true, labelAbove: true, gridCols: 3, g1Label: '12px', g1SideBySideG2: true });
+  // Unstacking removes the wide the field added, but not one the author set.
+  expect(await page.evaluate(() => { document.getElementById('st').stacked = false; document.getElementById('ri').setAttribute('wide', ''); document.getElementById('row').stacked = true; document.getElementById('row').stacked = false; return [document.getElementById('ta').hasAttribute('wide'), document.getElementById('ri').hasAttribute('wide')]; })).toEqual([false, true]);
+});

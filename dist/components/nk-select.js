@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-BavgHsS-.js';
+import { a as NkFormElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-select name="role" value="editor">
 //   <option value="viewer">Viewer</option>
@@ -9,7 +9,7 @@ import { a as NkFormElement } from './shared/base-BavgHsS-.js';
 // MutationObserver keeps the copy in step when a framework swaps them; the
 // empty string is a valid value; the live selection survives a rebuild.
 class NkSelect extends NkFormElement {
-  static get observedAttributes() { return ['value', 'name', 'disabled', 'required', 'compact', 'aria-label']; }
+  static get observedAttributes() { return ['value', 'name', 'disabled', 'required', 'compact', 'wide', 'aria-label']; }
   static get observesLightDom() { return true; }
 
   render() {
@@ -30,6 +30,7 @@ class NkSelect extends NkFormElement {
     this._select.disabled = this.getBoolAttr('disabled') || !!this._formDisabled;
     this._select.required = this.getBoolAttr('required');
     this._select.classList.toggle('compact', this.getBoolAttr('compact'));
+    this._select.classList.toggle('wide', this.getBoolAttr('wide'));
   }
 
   projectLightDom() {
@@ -120,6 +121,8 @@ class NkSelect extends NkFormElement {
   set required(v) { this.setBoolAttr('required', v); }
   get compact() { return this.getBoolAttr('compact'); }
   set compact(v) { this.setBoolAttr('compact', v); }
+  get wide() { return this.getBoolAttr('wide'); }
+  set wide(v) { this.setBoolAttr('wide', v); }
 }
 
 customElements.define('nk-select', NkSelect);

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BavgHsS-.js';
+import { N as NkElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-tab-bar-item icon="📥" value="inbox" active>Inbox</nk-tab-bar-item>
 // → <button class="nk-tab-bar-item active" type="button">

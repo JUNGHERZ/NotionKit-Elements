@@ -351,7 +351,7 @@ The open/close contract is one attribute: \`settings.open = true\`, \`settings.s
     <nk-heading>1 · Profile</nk-heading>
     <nk-field label="${W.displayName}" desc="${W.displayNameDesc}"><nk-input name="name" required></nk-input></nk-field>
     <nk-field label="${W.email}"><nk-input name="email" type="email" required></nk-input></nk-field>
-    <nk-field label="${W.bio}"><nk-textarea name="bio" rows="3" placeholder="${W.bioPlaceholder}"></nk-textarea></nk-field>
+    <nk-field label="${W.bio}" stacked><nk-textarea name="bio" rows="3" placeholder="${W.bioPlaceholder}"></nk-textarea></nk-field>
 
     <nk-heading>2 · Notifications</nk-heading>
     <nk-field label="${W.notify}"><nk-switch name="notify" checked></nk-switch></nk-field>
@@ -486,7 +486,7 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Theme sync | one \`MutationObserver\` on \`<html>[data-theme]\`, a \`Set\` of instances, \`.nk-wrapper[data-theme]\` inside each root |
 | Components | \`src/components/{forms,content,shell,page,overlays,data}/nk-*.js\`, one tag per file, \`customElements.define\` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (\`dist/components/\`) |
-| Peer | \`@jungherz-de/notionkit >= 1.2.0\` (the tab bar needs its \`.nk-tab-bar\` rules; 1.1.0 brought slot-name twins and disabled optics) |
+| Peer | \`@jungherz-de/notionkit >= 1.3.0\` (field layouts and the labelled switch need 1.3.0, the tab bar 1.2.0; 1.1.0 brought slot-name twins and disabled optics) |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + \`render()\`) → every connect (\`setupEvents()\`, theme registration, light-DOM observer) → \`attributeChangedCallback\` → \`onAttributeChanged\` → disconnect (\`teardownEvents()\`, unregister).
 `,

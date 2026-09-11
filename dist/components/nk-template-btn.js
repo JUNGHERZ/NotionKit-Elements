@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BavgHsS-.js';
+import { N as NkElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-template-btn icon="📅" value="week-plan">Insert week plan</nk-template-btn>
 // → <button class="nk-template-btn">📅 Insert week plan</button>

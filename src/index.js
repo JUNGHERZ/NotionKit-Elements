@@ -16,6 +16,7 @@ export { NkCheck } from './components/forms/nk-check.js';
 export { NkRadio } from './components/forms/nk-radio.js';
 export { NkSlider } from './components/forms/nk-slider.js';
 export { NkField } from './components/forms/nk-field.js';
+export { NkFields } from './components/forms/nk-fields.js';
 
 // Wave 1 – content
 export { NkTag } from './components/content/nk-tag.js';

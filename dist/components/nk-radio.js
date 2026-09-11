@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-BavgHsS-.js';
+import { a as NkFormElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-radio name="style" value="concise" checked>Concise</nk-radio>
 // → <label class="nk-check"><input type="radio"> Concise</label>
@@ -29,17 +29,20 @@ function syncGroupTabIndex(group) {
 }
 
 class NkRadio extends NkFormElement {
-  static get observedAttributes() { return ['checked', 'disabled', 'name', 'value', 'required']; }
+  static get observedAttributes() { return ['checked', 'disabled', 'name', 'value', 'text', 'required']; }
 
   render() {
     const label = this.createElement('label', ['nk-check']);
     this._input = this.createElement('input', [], { type: 'radio' });
+    const slot = document.createElement('slot');
+    this._text = document.createTextNode('');
+    slot.appendChild(this._text);
     // `name` on the inner input is inert (it is alone in its tree); it stays
     // as a devtools courtesy. The group above is the real one.
     this._apply();
     this._defaultChecked = this.getBoolAttr('checked');
     label.appendChild(this._input);
-    label.appendChild(document.createElement('slot'));
+    label.appendChild(slot);
     this._wrapper.appendChild(label);
     this._syncFormValue();
     // Elements upgrade in document order, so the last `checked` one in the
@@ -55,6 +58,7 @@ class NkRadio extends NkFormElement {
     const name = this.getAttribute('name');
     name ? this._input.setAttribute('name', name) : this._input.removeAttribute('name');
     this._input.value = this.getAttribute('value') || '';
+    if (this._text) this._text.data = this.getAttribute('text') ?? '';
   }
 
   setupEvents() {
@@ -151,6 +155,8 @@ class NkRadio extends NkFormElement {
   set disabled(v) { this.setBoolAttr('disabled', v); }
   get name() { return this.getAttribute('name'); }
   set name(v) { this.setAttribute('name', v); }
+  get text() { return this.getAttribute('text'); }
+  set text(v) { v == null ? this.removeAttribute('text') : this.setAttribute('text', v); }
   get value() { return this.getAttribute('value') || ''; }
   set value(v) { this.setAttribute('value', v); }
 }

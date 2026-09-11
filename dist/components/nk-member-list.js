@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BavgHsS-.js';
+import { N as NkElement } from './shared/base-EVtzqKmc.js';
 
 // <nk-member-list><nk-member-row …></nk-member-row>…</nk-member-list>
 // → <div class="nk-member-list">…</div>; the last row gets `last` (no border).

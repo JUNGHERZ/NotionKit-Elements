@@ -4,6 +4,27 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] – 2026-09-11
+
+Built and tested against NotionKit CSS 1.3.0; the peer range is now
+`>= 1.3.0` (field layouts and the labelled switch need its rules).
+
+### Added
+- **Visible text on `nk-switch`.** The default slot (or `text`) renders
+  beside the switch inside `label.nk-switch-label`, so several switches in
+  one row are readable and the text is part of the hit area. Without text
+  the element still renders the bare button. `label` stays the accessible
+  name for the bare form.
+- **`text` on `nk-check` and `nk-radio`** as the attribute alternative to
+  the slotted label text (the slot was always the visible label).
+- **`nk-field stacked` / `compact`** – label above a full-width control,
+  small tertiary label without row padding. A stacked field sets `wide` on
+  its `nk-input` / `nk-textarea` / `nk-select` itself, because the
+  stylesheet cannot reach into the control's shadow root.
+- **`nk-fields`** – the field grid: `minmax(150px, 1fr)` columns that wrap,
+  every `nk-field` inside stacked and compact by default.
+- `wide` on `nk-select`. Requested by Auxdesk.
+
 ## [1.1.0] – 2026-09-11
 
 Built and tested against NotionKit CSS 1.2.0; the peer range is now
@@ -133,6 +154,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.2.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.0
 [1.1.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.1.0
 [1.0.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.1
 [1.0.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.0
