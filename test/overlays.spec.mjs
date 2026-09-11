@@ -77,6 +77,7 @@ test('palette: hotkey toggles, fuzzy search, arrows + Enter fire nk-command and 
   expect(picked).toEqual(['theme']);
   expect(await page.evaluate(() => ({ ran: window.ran === true, open: document.getElementById('c').open, inert: document.getElementById('outside').inert }))).toEqual({ ran: true, open: false, inert: false });
   await page.keyboard.press('Control+k');
+  await page.waitForTimeout(50);                                          // focus lands in the input on the next frame
   await page.keyboard.type('zzzz');
   expect(await page.evaluate(() => document.getElementById('c').shadowRoot.querySelector('.nk-cmdk-empty')?.textContent)).toContain('zzzz');
   await page.keyboard.press('Escape');

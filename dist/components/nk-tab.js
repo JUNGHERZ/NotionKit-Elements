@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-6gEcoatG.js';
+import { N as NkElement } from './shared/base-BavgHsS-.js';
 
 // <nk-tab value="notes" active>📝 Notes</nk-tab>  →  <span class="nk-tab active" role="tab">
 class NkTab extends NkElement {

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-6gEcoatG.js';
+import { N as NkElement } from './shared/base-BavgHsS-.js';
 
 // <nk-settings-pane name="profile" label="My profile" icon="👤" group="Account" title="My profile" active>…</nk-settings-pane>
 // → <section class="nk-settings-pane active"><h2>My profile</h2>…</section>

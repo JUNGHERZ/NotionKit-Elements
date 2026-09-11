@@ -553,6 +553,45 @@ export const CATALOG = [
 
 // ============================================================ WAVE 3 · PAGE
 {
+  tag: 'nk-tab-bar', group: 'shell', classes: ['nk-tab-bar', 'always', 'floating'],
+  title: t('Tab bar (mobile)', 'Tab-Bar (mobil)'),
+  desc: t('The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it last inside <code>nk-app</code>: it is slotted into the main column below the scrolling page, so it never moves and no bottom padding is needed. Keeps exactly one <code>nk-tab-bar-item</code> active (listening to <code>nk-select</code>); a <code>drawer</code> item opens the sidebar instead. Needs NotionKit CSS 1.2.0.',
+          'Der daumenfreundliche Zwilling der Sidebar für Telefone und installierte PWAs. Als letztes Kind von <code>nk-app</code> landet sie in der Hauptspalte unter der scrollenden Seite – sie bewegt sich nie, ein unteres Padding ist nirgends nötig. Hält genau ein <code>nk-tab-bar-item</code> aktiv (hört <code>nk-select</code>); ein <code>drawer</code>-Eintrag öffnet stattdessen die Sidebar. Braucht NotionKit CSS 1.2.0.'),
+  mobile: t('This is where it lives: hidden above 860px (the sidebar is the navigation there), shown below. <code>always</code> shows it at every width – previews, phone frames. The bottom padding grows with <code>env(safe-area-inset-bottom)</code>.',
+            'Hier ist ihr Platz: über 860px verborgen (dort ist die Sidebar die Navigation), darunter sichtbar. <code>always</code> zeigt sie in jeder Breite – Vorschauen, Telefon-Rahmen. Das untere Padding wächst um <code>env(safe-area-inset-bottom)</code>.'),
+  attrs: [str('value', 'string', 'Active item value (default: the item with <code>active</code>, else the first).', 'Aktiver Wert (Standard: Eintrag mit <code>active</code>, sonst der erste).'), bool('always', 'Visible at every width, not only below 860px.', 'In jeder Breite sichtbar, nicht nur unter 860px.'), bool('floating', 'A fixed capsule with rounded corners instead of the full-width bar.', 'Eine fixierte Kapsel mit runden Ecken statt der vollbreiten Leiste.'), str('label', 'string', '<code>aria-label</code> of the <code>nav</code>.', '<code>aria-label</code> des <code>nav</code>.')],
+  slots: [{ name: '(default)', desc: t('<code>nk-tab-bar-item</code> children, up to five.', '<code>nk-tab-bar-item</code>-Kinder, bis zu fünf.') }],
+  events: [{ name: 'nk-change', detail: '{ value }', desc: t('Active item changed.', 'Aktiver Eintrag gewechselt.') }, { name: 'nk-select', detail: '{ value, label, href, item, drawer }', desc: t('Bubbles from the tapped item; cancelable.', 'Bubbelt vom getippten Eintrag; abbrechbar.') }],
+  props: ['value', 'items'],
+  example: W => `<div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nk-tab-bar always value="inbox">
+  <nk-tab-bar-item icon="🏠" value="home">${W.home}</nk-tab-bar-item>
+  <nk-tab-bar-item icon="📥" value="inbox">${W.inbox}</nk-tab-bar-item>
+  <nk-tab-bar-item icon="🔍" value="search">${W.search}</nk-tab-bar-item>
+  <nk-tab-bar-item icon="⚙️" value="settings">${W.settings}</nk-tab-bar-item>
+  <nk-tab-bar-item icon="☰" drawer>${W.more}</nk-tab-bar-item>
+</nk-tab-bar></div>`,
+  classMarkup: W => `<div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nav class="nk-tab-bar always">
+  <button class="nk-tab-bar-item"><span class="icon">🏠</span><span class="label">${W.home}</span></button>
+  <button class="nk-tab-bar-item active"><span class="icon">📥</span><span class="label">${W.inbox}</span></button>
+  <button class="nk-tab-bar-item"><span class="icon">🔍</span><span class="label">${W.search}</span></button>
+  <button class="nk-tab-bar-item"><span class="icon">⚙️</span><span class="label">${W.settings}</span></button>
+  <button class="nk-tab-bar-item"><span class="icon">☰</span><span class="label">${W.more}</span></button>
+</nav></div>`,
+},
+{
+  tag: 'nk-tab-bar-item', group: 'shell', classes: ['nk-tab-bar-item', 'icon', 'label', 'active'],
+  title: t('Tab bar item', 'Tab-Bar-Eintrag'),
+  desc: t('One destination of <code>nk-tab-bar</code>: an icon over a short label. A tap emits <code>nk-select</code> (cancelable), then moves the bar’s <code>value</code>; with <code>href</code> it navigates afterwards. <code>drawer</code> turns it into the “More” item that opens the nearest <code>nk-sidebar</code> as a drawer and never becomes active. Standalone it toggles its own <code>active</code>.',
+          'Ein Ziel von <code>nk-tab-bar</code>: ein Icon über einer kurzen Beschriftung. Ein Tipp feuert <code>nk-select</code> (abbrechbar) und setzt dann den <code>value</code> der Bar; mit <code>href</code> navigiert er danach. <code>drawer</code> macht ihn zum „Mehr“-Eintrag, der die nächste <code>nk-sidebar</code> als Schublade öffnet und nie aktiv wird. Alleinstehend schaltet er sein eigenes <code>active</code>.'),
+  mobile: t('Made for the thumb: 20px icon, 10.5px label, the whole column is the hit area.', 'Für den Daumen gemacht: 20px-Icon, 10,5px-Beschriftung, die ganze Spalte ist Trefferfläche.'),
+  attrs: [str('icon', 'string', 'Emoji or glyph (alternative: <code>slot="icon"</code>).', 'Emoji oder Glyphe (Alternative: <code>slot="icon"</code>).'), str('value', 'string', 'Value (default: the label).', 'Wert (Standard: die Beschriftung).'), str('label', 'string', 'Label text (alternative to the default slot).', 'Beschriftung (alternativ zum Default-Slot).'), str('href', 'string', 'Navigates after <code>nk-select</code>.', 'Navigiert nach <code>nk-select</code>.'), bool('active', 'The current destination (<code>aria-current="page"</code>).', 'Das aktuelle Ziel (<code>aria-current="page"</code>).'), bool('drawer', 'Opens the sidebar drawer instead of becoming active.', 'Öffnet die Sidebar-Schublade, statt aktiv zu werden.'), bool('disabled', 'Not selectable.', 'Nicht wählbar.')],
+  slots: [{ name: '(default)', desc: t('Label.', 'Beschriftung.') }, { name: 'icon', desc: t('Icon node instead of the attribute.', 'Icon-Knoten statt des Attributs.') }],
+  events: [{ name: 'nk-select', detail: '{ value, label, href, item, drawer }', desc: t('Tapped; cancelable.', 'Getippt; abbrechbar.') }],
+  methods: ['select()', 'focus()'],
+  example: W => `<div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nk-tab-bar always><nk-tab-bar-item icon="🏠" value="home" active>${W.home}</nk-tab-bar-item><nk-tab-bar-item icon="📥" value="inbox">${W.inbox}</nk-tab-bar-item></nk-tab-bar></div>`,
+  classMarkup: W => `<div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nav class="nk-tab-bar always"><button class="nk-tab-bar-item active"><span class="icon">🏠</span><span class="label">${W.home}</span></button><button class="nk-tab-bar-item"><span class="icon">📥</span><span class="label">${W.inbox}</span></button></nav></div>`,
+},
+{
   tag: 'nk-page', group: 'page', classes: ['nk-page-scroll', 'nk-page', 'nk-page-icon', 'nk-cover', 'lead'], frame: 360,
   title: t('Page', 'Seite'),
   desc: t('The document column: a scrolling wrapper, an optional cover, the 760px page with 64px side padding, and the page icon (rendered here because its slotted twin is keyed on the parent). <code>narrow</code> drops the scroll wrapper for pages that are the document itself.',

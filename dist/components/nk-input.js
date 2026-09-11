@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-6gEcoatG.js';
+import { a as NkFormElement } from './shared/base-BavgHsS-.js';
 
 // <nk-input name="title" value="…" placeholder="…" wide></nk-input>  →  <input class="nk-input wide">
 // Takes part in the surrounding <form> through ElementInternals.
@@ -21,7 +21,7 @@ class NkInput extends NkFormElement {
 
   _forward(attr) {
     if (BOOLEANS.includes(attr)) {
-      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr);
+      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr) || (attr === 'disabled' && !!this._formDisabled);
       return;
     }
     const v = this.getAttribute(attr);

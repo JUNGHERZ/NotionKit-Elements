@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-6gEcoatG.js';
+import { N as NkElement } from './shared/base-BavgHsS-.js';
 
 // <nk-tabs value="notes">
 //   <nk-tab value="notes">📝 Notes</nk-tab>

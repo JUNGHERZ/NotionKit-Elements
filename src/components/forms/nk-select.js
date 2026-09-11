@@ -27,7 +27,7 @@ class NkSelect extends NkFormElement {
     name ? this._select.setAttribute('name', name) : this._select.removeAttribute('name');
     const label = this.getAttribute('aria-label');
     label ? this._select.setAttribute('aria-label', label) : this._select.removeAttribute('aria-label');
-    this._select.disabled = this.getBoolAttr('disabled');
+    this._select.disabled = this.getBoolAttr('disabled') || !!this._formDisabled;
     this._select.required = this.getBoolAttr('required');
     this._select.classList.toggle('compact', this.getBoolAttr('compact'));
   }

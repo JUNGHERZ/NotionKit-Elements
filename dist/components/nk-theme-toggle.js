@@ -1,4 +1,4 @@
-import { N as NkElement, g as getCurrentTheme } from './shared/base-6gEcoatG.js';
+import { N as NkElement, g as getCurrentTheme } from './shared/base-BavgHsS-.js';
 
 // <nk-theme-toggle slot="actions"></nk-theme-toggle>
 // → <button class="nk-topbar-btn nk-theme-toggle">🌙</button>

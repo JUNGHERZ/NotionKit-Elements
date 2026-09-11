@@ -1,0 +1,82 @@
+import { NkElement } from '../../base.js';
+
+// <nk-tab-bar value="inbox">
+//   <nk-tab-bar-item icon="🏠" value="home">Home</nk-tab-bar-item>
+//   <nk-tab-bar-item icon="📥" value="inbox">Inbox</nk-tab-bar-item>
+//   <nk-tab-bar-item icon="☰" drawer>More</nk-tab-bar-item>
+// </nk-tab-bar>
+// → <nav class="nk-tab-bar">…</nav>
+//
+// The thumb-reachable twin of the sidebar for phones and installed PWAs. As
+// the last child of <nk-app> it is slotted into .nk-main below the scrolling
+// page, so it never moves and needs no bottom padding anywhere. The
+// stylesheet hides it above 860px – there the sidebar is the navigation –
+// and shows it below; `always` shows it at every width (previews, phone
+// frames), `floating` makes it a capsule. Exactly one item is `active`; a
+// `drawer` item opens the sidebar instead of becoming active.
+class NkTabBar extends NkElement {
+  static get observedAttributes() { return ['value', 'always', 'floating', 'label']; }
+
+  render() {
+    this._bar = this.createElement('nav', ['nk-tab-bar']);
+    this._slot = document.createElement('slot');
+    this._bar.appendChild(this._slot);
+    this._wrapper.appendChild(this._bar);
+    this._syncBar();
+    this._sync();
+  }
+
+  get items() { return [...this.querySelectorAll(':scope > nk-tab-bar-item')]; }
+
+  // Attribute access only: on the first connect the children are in the DOM
+  // but not yet upgraded, so their accessors do not exist.
+  _valueOf(item) { return item.getAttribute('value') ?? item.getAttribute('label') ?? item.textContent.trim(); }
+
+  _syncBar() {
+    this._bar.classList.toggle('always', this.getBoolAttr('always'));
+    this._bar.classList.toggle('floating', this.getBoolAttr('floating'));
+    const label = this.getAttribute('label');
+    label ? this._bar.setAttribute('aria-label', label) : this._bar.removeAttribute('aria-label');
+  }
+
+  _sync() {
+    const items = this.items.filter(i => !i.hasAttribute('drawer'));
+    if (!items.length) return;
+    let value = this.getAttribute('value');
+    if (value === null || !items.some(i => this._valueOf(i) === value)) {
+      const preset = items.find(i => i.hasAttribute('active')) || items[0];
+      value = this._valueOf(preset);
+    }
+    for (const item of items) {
+      if (this._valueOf(item) === value) item.setAttribute('active', ''); else item.removeAttribute('active');
+    }
+    this._value = value;
+  }
+
+  setupEvents() {
+    this._onSlot = () => this._sync();
+    this._slot.addEventListener('slotchange', this._onSlot);
+    this._sync();
+  }
+
+  teardownEvents() {
+    this._slot?.removeEventListener('slotchange', this._onSlot);
+  }
+
+  onAttributeChanged(name) {
+    if (name !== 'value') { this._syncBar(); return; }
+    const before = this._value;
+    this._sync();
+    if (this._value !== before) this.emit('nk-change', { value: this._value });
+  }
+
+  get value() { return this._value ?? this.getAttribute('value'); }
+  set value(v) { this.setAttribute('value', v); }
+  get always() { return this.getBoolAttr('always'); }
+  set always(v) { this.setBoolAttr('always', v); }
+  get floating() { return this.getBoolAttr('floating'); }
+  set floating(v) { this.setBoolAttr('floating', v); }
+}
+
+customElements.define('nk-tab-bar', NkTabBar);
+export { NkTabBar };

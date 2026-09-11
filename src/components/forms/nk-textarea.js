@@ -19,7 +19,7 @@ class NkTextarea extends NkFormElement {
 
   _forward(attr) {
     if (BOOLEANS.includes(attr)) {
-      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr);
+      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr) || (attr === 'disabled' && !!this._formDisabled);
       return;
     }
     const v = this.getAttribute(attr);

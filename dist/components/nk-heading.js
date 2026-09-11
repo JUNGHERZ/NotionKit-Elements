@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-6gEcoatG.js';
+import { N as NkElement } from './shared/base-BavgHsS-.js';
 
 // <nk-heading level="2">Section</nk-heading>  →  <h2 class="nk-heading">
 // The heading level is real markup (h1–h4), so the outline stays honest.

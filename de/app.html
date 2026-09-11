@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.1.1/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.2.0/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -243,6 +243,14 @@
     </section>
   </nk-page>
 
+  <nk-tab-bar id="tabBar" value="home">
+    <nk-tab-bar-item icon="🏠" value="home">Start</nk-tab-bar-item>
+    <nk-tab-bar-item icon="📥" value="inbox">Eingang</nk-tab-bar-item>
+    <nk-tab-bar-item icon="🔍" value="search">Suche</nk-tab-bar-item>
+    <nk-tab-bar-item icon="⚙️" value="settings">Einstellungen</nk-tab-bar-item>
+    <nk-tab-bar-item icon="☰" drawer>Mehr</nk-tab-bar-item>
+  </nk-tab-bar>
+
 </nk-app>
 
 <!-- ================= SETTINGS MODAL ================= -->
@@ -384,6 +392,11 @@
   });
   sidebar.addEventListener('nk-select', e => { if (e.target.localName === 'nk-menu-item') toast.show(`Workspace: ${e.detail.label}`); });
   menuBtn.addEventListener('click', () => sidebar.toggle());
+  tabBar.addEventListener('nk-select', e => {
+    if (e.detail.drawer) return;                       // opens the sidebar drawer by itself
+    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); return; }
+    toast.show(`Tab: ${e.detail.label}`);
+  });
   const narrow = matchMedia('(max-width: 860px)');
   const syncMenuBtn = () => { menuBtn.style.display = narrow.matches ? '' : 'none'; };
   narrow.addEventListener('change', syncMenuBtn); syncMenuBtn();

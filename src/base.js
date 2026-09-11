@@ -137,6 +137,12 @@ export class NkElement extends HTMLElement {
 
   connectedCallback() {
     if (!this._initialized) {
+      // A framework may have set properties on the instance before the
+      // definition arrived (hybrids binds checked="${bool}" as a property
+      // while the element is still a plain HTMLElement). Such an own property
+      // shadows the accessor on the prototype for good; re-apply it through
+      // the setter so the attribute – and with it render() – sees the value.
+      this._upgradeOwnProperties();
       this._initialized = true;
 
       // The wrapper mirrors data-theme from <html> so [data-theme]-keyed
@@ -185,6 +191,18 @@ export class NkElement extends HTMLElement {
 
   _syncTheme(theme) {
     this._wrapper?.setAttribute('data-theme', theme);
+  }
+
+  _upgradeOwnProperties() {
+    for (const key of Object.keys(this)) {
+      if (key.startsWith('_')) continue;
+      let proto = Object.getPrototypeOf(this), desc;
+      while (proto && proto !== HTMLElement.prototype && !(desc = Object.getOwnPropertyDescriptor(proto, key))) proto = Object.getPrototypeOf(proto);
+      if (!desc?.set) continue;
+      const value = this[key];
+      delete this[key];
+      this[key] = value;
+    }
   }
 
   /** Subclasses override to build the inner DOM inside this._wrapper. Runs once. */
@@ -268,9 +286,21 @@ export class NkFormElement extends NkElement {
   checkValidity() { return this._internals.checkValidity(); }
   reportValidity() { return this._internals.reportValidity(); }
 
+  connectedCallback() {
+    const first = !this._initialized;
+    super.connectedCallback();
+    // A `disabled` attribute in the markup fires formDisabledCallback on
+    // parse or upgrade – before the first connect, when nothing is rendered
+    // yet. The state was remembered below; apply it now that render() ran.
+    if (first && this._formDisabled) this.onFormDisabled(true);
+  }
+
   formResetCallback() { this.resetValue(); }
   formStateRestoreCallback(state, mode) { this.restoreValue(state, mode); }
-  formDisabledCallback(disabled) { this.onFormDisabled(disabled); }
+  formDisabledCallback(disabled) {
+    this._formDisabled = disabled;
+    if (this._initialized) this.onFormDisabled(disabled);
+  }
 
   /** Subclasses override. */
   resetValue() {}

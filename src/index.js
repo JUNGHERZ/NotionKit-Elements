@@ -39,6 +39,8 @@ export { NkTreeItem } from './components/shell/nk-tree-item.js';
 export { NkTopbar } from './components/shell/nk-topbar.js';
 export { NkBreadcrumb } from './components/shell/nk-breadcrumb.js';
 export { NkThemeToggle } from './components/shell/nk-theme-toggle.js';
+export { NkTabBar } from './components/shell/nk-tab-bar.js';
+export { NkTabBarItem } from './components/shell/nk-tab-bar-item.js';
 
 // Wave 3 – page shell & blocks
 export { NkPage } from './components/page/nk-page.js';

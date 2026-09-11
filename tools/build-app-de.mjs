@@ -16,6 +16,7 @@ const PAIRS = [
   ['value="kb">Knowledge base', 'value="kb">Wissensbasis'], ['value="design">Design system<', 'value="design">Designsystem<'], ['value="editorial">Editorial plan<', 'value="editorial">Redaktionsplan<'], ['value="clients">Client projects<', 'value="clients">Kundenprojekte<'],
   ['<nk-section-label>Team spaces</nk-section-label>', '<nk-section-label>Team-Bereiche</nk-section-label>'],
   ['no-actions>Settings<', 'no-actions>Einstellungen<'], ['no-actions>Trash<', 'no-actions>Papierkorb<'],
+  ['value="search">Search<', 'value="search">Suche<'], ['value="settings">Settings<', 'value="settings">Einstellungen<'], ['drawer>More<', 'drawer>Mehr<'],
   ['<span>📊 Project overview</span>', '<span>📊 Projektübersicht</span>'], ['>Last edited 2 min ago<', '>Zuletzt bearbeitet vor 2 Min.<'], ['variant="share">Share<', 'variant="share">Teilen<'], ['title="Favourite"', 'title="Favorit"'],
   ['<span>📅 Created 12 May 2026</span>', '<span>📅 Erstellt am 12. Mai 2026</span>'], ['<nk-tag color="purple">Design system</nk-tag>', '<nk-tag color="purple">Designsystem</nk-tag>'],
   ['A calm UI framework in the Notion idiom – as web components, without a build step. This page is the living preview: sidebar, page tree, callouts, todos, toggles and database views in one shell.', 'Ein ruhiges UI-Framework im Notion-Stil – als Web Components, ohne Build-Schritt. Diese Seite ist die lebende Vorschau: Sidebar, Seitenbaum, Callouts, Todos, Toggles und Datenbank-Ansichten in einer Hülle.'],

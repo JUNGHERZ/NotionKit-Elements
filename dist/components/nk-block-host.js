@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-6gEcoatG.js';
+import { N as NkElement } from './shared/base-BavgHsS-.js';
 
 // <nk-block-host handle><p>Editable content lives here.</p></nk-block-host>
 // → <div class="nk-block-host"><span class="nk-block-handle">⠿</span>…</div>

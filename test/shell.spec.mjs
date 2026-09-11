@@ -157,3 +157,74 @@ test('a tree item moved to another tree keeps selecting', async ({ page }) => {
   expect(await page.evaluate(active)).toEqual(['x']);
   expect(await page.evaluate(() => document.getElementById('x').label)).toBe('X');
 });
+
+// The mobile tab bar: one active item, drawer item, hidden above 860px.
+const TABBAR = `<nk-app id="app" style="height:400px">
+  <nk-sidebar slot="sidebar" id="sb"><nk-tree><nk-tree-item value="home">Home</nk-tree-item></nk-tree></nk-sidebar>
+  <nk-topbar><nk-breadcrumb><span>Home</span></nk-breadcrumb></nk-topbar>
+  <nk-page><p>Body</p></nk-page>
+  <nk-tab-bar id="bar" value="inbox">
+    <nk-tab-bar-item id="home" icon="🏠" value="home">Home</nk-tab-bar-item>
+    <nk-tab-bar-item id="inbox" icon="📥" value="inbox">Inbox</nk-tab-bar-item>
+    <nk-tab-bar-item id="search" icon="🔍" value="search" disabled>Search</nk-tab-bar-item>
+    <nk-tab-bar-item id="more" icon="☰" drawer>More</nk-tab-bar-item>
+  </nk-tab-bar>
+</nk-app>`;
+
+test('tab bar: value ↔ active, nk-change / nk-select, disabled items, drawer item opens the sidebar', async ({ page }) => {
+  await openHarness(page);
+  await page.evaluate(() => { window.activeTabs = () => [...document.querySelectorAll('nk-tab-bar-item[active]')].map(i => i.id); });
+  await setStage(page, TABBAR);
+  expect(await page.evaluate(() => [window.activeTabs(), document.getElementById('bar').value])).toEqual([['inbox'], 'inbox']);
+
+  const events = await page.evaluate(() => {
+    const log = [];
+    document.getElementById('bar').addEventListener('nk-change', e => log.push(['change', e.detail.value]));
+    document.getElementById('bar').addEventListener('nk-select', e => log.push(['select', e.detail.value, e.detail.drawer]));
+    document.getElementById('home').shadowRoot.querySelector('button').click();
+    document.getElementById('search').shadowRoot.querySelector('button').click();   // disabled – nothing
+    window.__log = log;
+    return { log, active: window.activeTabs(), value: document.getElementById('bar').value, current: document.getElementById('home').shadowRoot.querySelector('button').getAttribute('aria-current') };
+  });
+  expect(events).toEqual({ log: [['select', 'home', false], ['change', 'home']], active: ['home'], value: 'home', current: 'page' });
+
+  // Programmatic value moves `active` and reports once; an unknown value is ignored.
+  expect(await page.evaluate(() => { document.getElementById('bar').value = 'inbox'; document.getElementById('bar').value = 'nope'; return [window.activeTabs(), window.__log.length]; })).toEqual([['inbox'], 3]);
+
+  // The drawer item toggles the sidebar and never becomes active.
+  expect(await page.evaluate(() => {
+    document.getElementById('more').shadowRoot.querySelector('button').click();
+    const open = document.getElementById('sb').open;
+    return [open, window.activeTabs(), window.__log.at(-1)];
+  })).toEqual([true, ['inbox'], ['select', 'More', true]]);
+
+  // A cancelled nk-select leaves everything as it is.
+  expect(await page.evaluate(() => {
+    document.getElementById('bar').addEventListener('nk-select', e => e.preventDefault(), { once: true });
+    document.getElementById('home').shadowRoot.querySelector('button').click();
+    return window.activeTabs();
+  })).toEqual(['inbox']);
+});
+
+test('tab bar: hidden on desktop, shown below 860px at the bottom of the main column, `always` overrides', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, TABBAR);
+  const display = () => page.evaluate(() => getComputedStyle(document.getElementById('bar').shadowRoot.querySelector('.nk-tab-bar')).display);
+  expect(await display()).toBe('none');
+  await page.evaluate(() => { document.getElementById('bar').always = true; });
+  expect(await display()).toBe('flex');
+  await page.evaluate(() => { document.getElementById('bar').always = false; });
+
+  await page.setViewportSize({ width: 390, height: 700 });
+  expect(await display()).toBe('flex');
+  const geo = await page.evaluate(() => {
+    const app = document.getElementById('app').shadowRoot.querySelector('.nk-app').getBoundingClientRect();
+    const main = document.getElementById('app').shadowRoot.querySelector('.nk-main').getBoundingClientRect();
+    const bar = document.getElementById('bar').shadowRoot.querySelector('.nk-tab-bar').getBoundingClientRect();
+    const page = document.querySelector('nk-page').shadowRoot.querySelector('.nk-page-scroll').getBoundingClientRect();
+    return { barBottomAtApp: Math.round(bar.bottom) === Math.round(app.bottom), fullWidth: Math.round(bar.width) === Math.round(main.width), pageAboveBar: page.bottom <= bar.top + 0.5, height: Math.round(bar.height) };
+  });
+  expect(geo).toEqual({ barBottomAtApp: true, fullWidth: true, pageAboveBar: true, height: geo.height });
+  expect(geo.height).toBeGreaterThan(40);
+  expect(geo.height).toBeLessThan(70);
+});

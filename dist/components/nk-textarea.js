@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-6gEcoatG.js';
+import { a as NkFormElement } from './shared/base-BavgHsS-.js';
 
 // <nk-textarea name="bio" rows="3" wide>Text</nk-textarea>  →  <textarea class="nk-textarea wide">
 // The initial value is the `value` attribute, or the element's text content.
@@ -19,7 +19,7 @@ class NkTextarea extends NkFormElement {
 
   _forward(attr) {
     if (BOOLEANS.includes(attr)) {
-      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr);
+      this._input[attr === 'readonly' ? 'readOnly' : attr] = this.getBoolAttr(attr) || (attr === 'disabled' && !!this._formDisabled);
       return;
     }
     const v = this.getAttribute(attr);

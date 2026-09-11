@@ -110,6 +110,13 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
     <p class="lead">${W.lead}</p>
     <nk-callout icon="💡">The tree, topbar and sidebar are elements; the page body is still class markup until wave 3.</nk-callout>
   </div></div>
+
+  <nk-tab-bar>
+    <nk-tab-bar-item icon="🏠" value="home" active>${W.home}</nk-tab-bar-item>
+    <nk-tab-bar-item icon="📥" value="inbox">${W.inbox}</nk-tab-bar-item>
+    <nk-tab-bar-item icon="🔍" value="search">${W.search}</nk-tab-bar-item>
+    <nk-tab-bar-item icon="☰" drawer>${W.more}</nk-tab-bar-item>
+  </nk-tab-bar>
 </nk-app>
 <script>
   tree.addEventListener('nk-select', e => console.log('open page', e.detail.value));
@@ -119,7 +126,7 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 </html>
 \`\`\`
 
-Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and (from wave 3) \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and \`sidebar.toggle()\` opens it as a drawer.
+Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and (from wave 3) \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and \`sidebar.toggle()\` opens it as a drawer. For phones and installed PWAs add \`<nk-tab-bar>\` as the last child of \`<nk-app>\`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a \`drawer\` item opens the sidebar. Never give it a \`view-transition-name\` – it stays put between pages.
 
 ## 4.2 Database app
 
@@ -420,10 +427,10 @@ Note \`narrow\`: the page is the document, so there is no inner scroll wrapper �
 
 | Event | Fired by | \`detail\` |
 |---|---|---|
-| \`nk-change\` | every form control, \`nk-segmented\`, \`nk-tabs\`, editable \`nk-page-title\` | \`{ value, name }\` – checkables add \`checked\` |
+| \`nk-change\` | every form control, \`nk-segmented\`, \`nk-tabs\`, \`nk-tab-bar\`, editable \`nk-page-title\` | \`{ value, name }\` – checkables add \`checked\` |
 | \`nk-input\` | \`nk-input\`, \`nk-textarea\`, \`nk-slider\` | \`{ value, name }\` on every keystroke / drag |
 | \`nk-toggle\` | \`nk-toggle\`, tree branches, overlays | \`{ open }\` |
-| \`nk-select\` | tree items, menu items, breadcrumb, tabs, palette rows | \`{ value, label, … }\` |
+| \`nk-select\` | tree items, menu items, breadcrumb, tabs, tab bar items, palette rows | \`{ value, label, … }\` |
 | \`nk-view-change\` | \`nk-database\` | \`{ view }\` |
 | \`nk-command\` | \`nk-cmdk\` | \`{ id, item, query }\` |
 | \`nk-submit\` | comment and AI input rows | \`{ text }\` |
@@ -479,7 +486,7 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Theme sync | one \`MutationObserver\` on \`<html>[data-theme]\`, a \`Set\` of instances, \`.nk-wrapper[data-theme]\` inside each root |
 | Components | \`src/components/{forms,content,shell,page,overlays,data}/nk-*.js\`, one tag per file, \`customElements.define\` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (\`dist/components/\`) |
-| Peer | \`@jungherz-de/notionkit >= 1.0.0\`; 1.1.0 recommended (slot-name twins, disabled optics) |
+| Peer | \`@jungherz-de/notionkit >= 1.2.0\` (the tab bar needs its \`.nk-tab-bar\` rules; 1.1.0 brought slot-name twins and disabled optics) |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + \`render()\`) → every connect (\`setupEvents()\`, theme registration, light-DOM observer) → \`attributeChangedCallback\` → \`onAttributeChanged\` → disconnect (\`teardownEvents()\`, unregister).
 `,

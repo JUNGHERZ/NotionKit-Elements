@@ -4,6 +4,42 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] – 2026-09-11
+
+Built and tested against NotionKit CSS 1.2.0; the peer range is now
+`>= 1.2.0` (the tab bar needs its `.nk-tab-bar` rules, everything else still
+works with 1.0.0).
+
+### Added
+- **`nk-tab-bar` / `nk-tab-bar-item`** – the mobile tab bar for phones and
+  installed PWAs. Last child of `nk-app`, it is slotted into the main column
+  below the scrolling page, so it never moves and needs no bottom padding.
+  Exactly one item is `active` (`value` ↔ `active`, `nk-change`); an item
+  emits a cancelable `nk-select`, navigates with `href`, and with `drawer`
+  opens the nearest `nk-sidebar` as a drawer instead of becoming active.
+  Hidden above 860px by the stylesheet – there the sidebar is the
+  navigation – and shown below; `always` shows it at every width (previews,
+  phone frames), `floating` makes it a capsule. Icon as attribute or
+  `slot="icon"`. Requested by Auxdesk.
+- Demo app and the workspace skeleton in `SKILL.md` carry the tab bar.
+
+### Fixed
+- **`disabled` before the first render threw.** A `disabled` attribute in
+  the markup fires `formDisabledCallback` on parse or upgrade, before
+  `connectedCallback` has rendered anything; `nk-todo`, `nk-check`,
+  `nk-radio`, `nk-switch`, `nk-input`, `nk-textarea`, `nk-select`,
+  `nk-slider` and `nk-segmented` wrote into the missing inner control
+  (`TypeError: Cannot set properties of undefined`). `NkFormElement` now
+  remembers the state and applies it after the first render. The same path
+  was hit when a template engine set `checked` and `disabled` as properties
+  on a not-yet-connected element. Reported by Auxdesk (hybrids).
+- **Own properties from before the upgrade** – a `checked = true` set on
+  the element while it was still a plain `HTMLElement` (a template clone
+  before the bundle loaded) shadowed the accessor for good. `NkElement`
+  re-applies such properties through their setters on the first connect.
+- `nk-input`, `nk-textarea`, `nk-select`: toggling the `disabled` attribute
+  inside a `<fieldset disabled>` no longer re-enables the control.
+
 ## [1.0.1] – 2026-09-06
 
 Documentation-only release; the bundles are unchanged.
@@ -97,5 +133,6 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.1.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.1.0
 [1.0.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.1
 [1.0.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.0.0

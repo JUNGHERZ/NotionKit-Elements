@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-6gEcoatG.js';
+import { a as NkFormElement } from './shared/base-BavgHsS-.js';
 
 // <nk-radio name="style" value="concise" checked>Concise</nk-radio>
 // → <label class="nk-check"><input type="radio"> Concise</label>
