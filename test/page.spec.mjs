@@ -89,3 +89,25 @@ test('skeleton lines, avatar-group more bubble, page icon action', async ({ page
   expect(actions).toEqual(['icon']);
   expect(await page.evaluate(() => !!document.getElementById('p').shadowRoot.querySelector('.nk-page-scroll'))).toBe(false);
 });
+
+// nk-segmented `scroll` / `wrap` keep a long filter row inside its parent.
+test('segmented: default overflows a narrow parent, scroll caps and scrolls, wrap breaks rows', async ({ page }) => {
+  await openHarness(page);
+  const five = '<button value="a">All</button><button value="b">⚠️ Attention</button><button value="c">Failed</button><button value="d">Read</button><button value="e">Ignored</button>';
+  await setStage(page, `<div style="width:300px">
+    <nk-segmented id="plain" value="a">${five}</nk-segmented>
+    <nk-segmented id="scroll" value="a" scroll>${five}</nk-segmented>
+    <nk-segmented id="wrap" value="a" wrap>${five}</nk-segmented>
+  </div>`);
+  const r = await page.evaluate(() => {
+    const box = id => document.getElementById(id).shadowRoot.querySelector('.nk-segmented');
+    const m = id => ({ w: Math.round(box(id).getBoundingClientRect().width), h: Math.round(box(id).getBoundingClientRect().height), scrollable: box(id).scrollWidth > box(id).clientWidth + 1, overflowX: getComputedStyle(box(id)).overflowX });
+    return { plain: m('plain'), scroll: m('scroll'), wrap: m('wrap') };
+  });
+  // Without a modifier the row is squeezed: the buttons' text wraps and the track grows in height (or overflows).
+  expect(r.plain.h > r.scroll.h || r.plain.w > 300).toBe(true);
+  expect(r.scroll.w).toBe(300); expect(r.scroll.scrollable).toBe(true); expect(r.scroll.overflowX).toBe('auto'); expect(r.scroll.h).toBeLessThan(40);
+  expect(r.wrap.w).toBeLessThanOrEqual(300); expect(r.wrap.scrollable).toBe(false); expect(r.wrap.h).toBeGreaterThan(r.scroll.h * 1.5);
+  // Scrolling reaches the last segment; clicking it still selects.
+  expect(await page.evaluate(() => { const box = document.getElementById('scroll').shadowRoot.querySelector('.nk-segmented'); box.scrollLeft = 1000; document.querySelector('#scroll button[value=e]').click(); return [box.scrollLeft > 0, document.getElementById('scroll').value]; })).toEqual([true, 'e']);
+});

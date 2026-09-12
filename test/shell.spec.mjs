@@ -228,3 +228,19 @@ test('tab bar: hidden on desktop, shown below 860px at the bottom of the main co
   expect(geo.height).toBeGreaterThan(40);
   expect(geo.height).toBeLessThan(70);
 });
+
+test('tab bar `fixed`: pinned to the viewport bottom, the spacer keeps its height, the page ends above it', async ({ page }) => {
+  await openHarness(page);
+  await page.setViewportSize({ width: 390, height: 700 });
+  await setStage(page, TABBAR.replace('<nk-tab-bar id="bar"', '<nk-tab-bar id="bar" fixed'));
+  const r = await page.evaluate(() => {
+    const root = document.getElementById('bar').shadowRoot;
+    const nav = root.querySelector('.nk-tab-bar'), spacer = root.querySelector('.nk-tab-bar-spacer');
+    const scroll = document.querySelector('nk-page').shadowRoot.querySelector('.nk-page-scroll').getBoundingClientRect();
+    return { position: getComputedStyle(nav).position, navBottom: Math.round(nav.getBoundingClientRect().bottom), spacerDisplay: getComputedStyle(spacer).display,
+      spacerHeight: Math.round(spacer.getBoundingClientRect().height), navHeight: Math.round(nav.getBoundingClientRect().height), pageEndsAbove: Math.abs(scroll.bottom - spacer.getBoundingClientRect().top) < 1 };
+  });
+  expect(r).toEqual({ position: 'fixed', navBottom: 700, spacerDisplay: 'block', spacerHeight: 58, navHeight: 58, pageEndsAbove: true });
+  // Not fixed: no spacer, the bar sits in the column.
+  expect(await page.evaluate(() => { document.getElementById('bar').fixed = false; const root = document.getElementById('bar').shadowRoot; return [getComputedStyle(root.querySelector('.nk-tab-bar')).position, getComputedStyle(root.querySelector('.nk-tab-bar-spacer')).display]; })).toEqual(['sticky', 'none']);
+});

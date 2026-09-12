@@ -33,7 +33,7 @@ ${byGroup}
 
 ## Install
 - CDN: https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@${NK_VERSION}/notionkit.min.css + https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@${pkg.version}/dist/notionkit-elements.min.js
-- npm: @jungherz-de/notionkit-elements (peer: @jungherz-de/notionkit >= 1.3.1)
+- npm: @jungherz-de/notionkit-elements (peer: @jungherz-de/notionkit >= 1.4.0)
 - MIT · Jungherz GmbH · https://github.com/JUNGHERZ/NotionKit-Elements
 `);
 console.log(`✅ sitemap.xml (${pages.length} URLs), robots.txt, llms.txt generated`);

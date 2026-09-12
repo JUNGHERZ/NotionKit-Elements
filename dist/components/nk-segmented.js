@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-DL7ok-Xt.js';
+import { a as NkFormElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-segmented name="range" value="week">
 //   <button value="week">Week</button><button value="month">Month</button>
@@ -9,14 +9,21 @@ import { a as NkFormElement } from './shared/base-DL7ok-Xt.js';
 const KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
 
 class NkSegmented extends NkFormElement {
-  static get observedAttributes() { return ['value', 'name', 'disabled']; }
+  static get observedAttributes() { return ['value', 'name', 'disabled', 'scroll', 'wrap']; }
 
   render() {
     this._box = this.createElement('div', ['nk-segmented'], { role: 'radiogroup' });
     this._slot = document.createElement('slot');
     this._box.appendChild(this._slot);
     this._wrapper.appendChild(this._box);
+    this._syncBox();
     this._sync();
+  }
+
+  // `scroll`: one horizontally scrollable row, scrollbar hidden; `wrap`: rows.
+  _syncBox() {
+    this._box.classList.toggle('scroll', this.getBoolAttr('scroll'));
+    this._box.classList.toggle('wrap', this.getBoolAttr('wrap'));
   }
 
   get buttons() { return this._slot?.assignedElements().filter(el => el.localName === 'button') ?? []; }
@@ -84,7 +91,10 @@ class NkSegmented extends NkFormElement {
     this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
-  onAttributeChanged() { if (!this._syncing) this._sync(); }
+  onAttributeChanged(name) {
+    if (name === 'scroll' || name === 'wrap') { this._syncBox(); return; }
+    if (!this._syncing) this._sync();
+  }
   resetValue() { if (this._defaultValue !== undefined) this.setAttribute('value', this._defaultValue); }
   onFormDisabled(d) { this._formDisabled = d; this._sync(); }
 
@@ -92,6 +102,10 @@ class NkSegmented extends NkFormElement {
   set value(v) { this.setAttribute('value', v); }
   get name() { return this.getAttribute('name'); }
   set name(v) { this.setAttribute('name', v); }
+  get scroll() { return this.getBoolAttr('scroll'); }
+  set scroll(v) { this.setBoolAttr('scroll', v); }
+  get wrap() { return this.getBoolAttr('wrap'); }
+  set wrap(v) { this.setBoolAttr('wrap', v); }
 }
 
 customElements.define('nk-segmented', NkSegmented);

@@ -12,16 +12,20 @@ import { NkElement } from '../../base.js';
 // page, so it never moves and needs no bottom padding anywhere. The
 // stylesheet hides it above 860px – there the sidebar is the navigation –
 // and shows it below; `always` shows it at every width (previews, phone
-// frames), `floating` makes it a capsule. Exactly one item is `active`; a
+// frames), `fixed` pins it to the viewport (standalone PWAs) with a spacer
+// holding its place, `floating` makes it a capsule. Exactly one item is `active`; a
 // `drawer` item opens the sidebar instead of becoming active.
 class NkTabBar extends NkElement {
-  static get observedAttributes() { return ['value', 'always', 'floating', 'label']; }
+  static get observedAttributes() { return ['value', 'always', 'fixed', 'floating', 'label']; }
 
   render() {
     this._bar = this.createElement('nav', ['nk-tab-bar']);
     this._slot = document.createElement('slot');
     this._bar.appendChild(this._slot);
-    this._wrapper.appendChild(this._bar);
+    // With `fixed` the bar leaves the flow; the spacer (styled by the
+    // stylesheet, shown only then) keeps its height so the page ends above it.
+    this._spacer = this.createElement('div', ['nk-tab-bar-spacer']);
+    this._wrapper.append(this._bar, this._spacer);
     this._syncBar();
     this._sync();
   }
@@ -34,6 +38,7 @@ class NkTabBar extends NkElement {
 
   _syncBar() {
     this._bar.classList.toggle('always', this.getBoolAttr('always'));
+    this._bar.classList.toggle('fixed', this.getBoolAttr('fixed'));
     this._bar.classList.toggle('floating', this.getBoolAttr('floating'));
     const label = this.getAttribute('label');
     label ? this._bar.setAttribute('aria-label', label) : this._bar.removeAttribute('aria-label');
@@ -74,6 +79,8 @@ class NkTabBar extends NkElement {
   set value(v) { this.setAttribute('value', v); }
   get always() { return this.getBoolAttr('always'); }
   set always(v) { this.setBoolAttr('always', v); }
+  get fixed() { return this.getBoolAttr('fixed'); }
+  set fixed(v) { this.setBoolAttr('fixed', v); }
   get floating() { return this.getBoolAttr('floating'); }
   set floating(v) { this.setBoolAttr('floating', v); }
 }

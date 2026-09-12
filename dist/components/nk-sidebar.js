@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-DL7ok-Xt.js';
+import { N as NkElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-sidebar slot="sidebar">
 //   <nk-workspace-switcher slot="workspace" name="Acme"></nk-workspace-switcher>

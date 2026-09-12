@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-DL7ok-Xt.js';
+import { N as NkElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-member-row name="Sara Lindt" mail="sara@…" avatar="SL" color="#448361">
 //   <nk-select slot="role" compact>…</nk-select>

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-DL7ok-Xt.js';
+import { N as NkElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-ai-input-row placeholder="Ask Mona something …"></nk-ai-input-row>
 // → <div class="nk-ai-input-row"><span>✨</span><input><button class="nk-ai-send">↑</button></div>

@@ -581,13 +581,13 @@ export const CATALOG = [
 
 // ============================================================ WAVE 3 · PAGE
 {
-  tag: 'nk-tab-bar', group: 'shell', classes: ['nk-tab-bar', 'always', 'floating'],
+  tag: 'nk-tab-bar', group: 'shell', classes: ['nk-tab-bar', 'nk-tab-bar-spacer', 'always', 'fixed', 'floating'],
   title: t('Tab bar (mobile)', 'Tab-Bar (mobil)'),
   desc: t('The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it last inside <code>nk-app</code>: it is slotted into the main column below the scrolling page, so it never moves and no bottom padding is needed. Keeps exactly one <code>nk-tab-bar-item</code> active (listening to <code>nk-select</code>); a <code>drawer</code> item opens the sidebar instead. Needs NotionKit CSS 1.2.0.',
           'Der daumenfreundliche Zwilling der Sidebar für Telefone und installierte PWAs. Als letztes Kind von <code>nk-app</code> landet sie in der Hauptspalte unter der scrollenden Seite – sie bewegt sich nie, ein unteres Padding ist nirgends nötig. Hält genau ein <code>nk-tab-bar-item</code> aktiv (hört <code>nk-select</code>); ein <code>drawer</code>-Eintrag öffnet stattdessen die Sidebar. Braucht NotionKit CSS 1.2.0.'),
   mobile: t('This is where it lives: hidden above 860px (the sidebar is the navigation there), shown below. <code>always</code> shows it at every width – previews, phone frames. The bottom padding grows with <code>env(safe-area-inset-bottom)</code>.',
             'Hier ist ihr Platz: über 860px verborgen (dort ist die Sidebar die Navigation), darunter sichtbar. <code>always</code> zeigt sie in jeder Breite – Vorschauen, Telefon-Rahmen. Das untere Padding wächst um <code>env(safe-area-inset-bottom)</code>.'),
-  attrs: [str('value', 'string', 'Active item value (default: the item with <code>active</code>, else the first).', 'Aktiver Wert (Standard: Eintrag mit <code>active</code>, sonst der erste).'), bool('always', 'Visible at every width, not only below 860px.', 'In jeder Breite sichtbar, nicht nur unter 860px.'), bool('floating', 'A fixed capsule with rounded corners instead of the full-width bar.', 'Eine fixierte Kapsel mit runden Ecken statt der vollbreiten Leiste.'), str('label', 'string', '<code>aria-label</code> of the <code>nav</code>.', '<code>aria-label</code> des <code>nav</code>.')],
+  attrs: [str('value', 'string', 'Active item value (default: the item with <code>active</code>, else the first).', 'Aktiver Wert (Standard: Eintrag mit <code>active</code>, sonst der erste).'), bool('always', 'Visible at every width, not only below 860px.', 'In jeder Breite sichtbar, nicht nur unter 860px.'), bool('fixed', 'Pinned to the viewport bottom instead of sitting in the column – for standalone PWAs; a spacer keeps its height (<code>--nk-tab-bar-height</code> + safe area) in the flow.', 'An den unteren Viewport-Rand geheftet statt in der Spalte – für Standalone-PWAs; ein Platzhalter hält ihre Höhe (<code>--nk-tab-bar-height</code> + Safe-Area) im Fluss frei.'), bool('floating', 'A fixed capsule with rounded corners instead of the full-width bar.', 'Eine fixierte Kapsel mit runden Ecken statt der vollbreiten Leiste.'), str('label', 'string', '<code>aria-label</code> of the <code>nav</code>.', '<code>aria-label</code> des <code>nav</code>.')],
   slots: [{ name: '(default)', desc: t('<code>nk-tab-bar-item</code> children, up to five.', '<code>nk-tab-bar-item</code>-Kinder, bis zu fünf.') }],
   events: [{ name: 'nk-change', detail: '{ value }', desc: t('Active item changed.', 'Aktiver Eintrag gewechselt.') }, { name: 'nk-select', detail: '{ value, label, href, item, drawer }', desc: t('Bubbles from the tapped item; cancelable.', 'Bubbelt vom getippten Eintrag; abbrechbar.') }],
   props: ['value', 'items'],
@@ -769,15 +769,19 @@ export const CATALOG = [
   classMarkup: W => `<div class="nk-tabs"><span class="nk-tab active">${W.notes}</span><span class="nk-tab">${W.tasks}</span></div>`,
 },
 {
-  tag: 'nk-segmented', group: 'page', classes: ['nk-segmented', 'active'],
+  tag: 'nk-segmented', group: 'page', classes: ['nk-segmented', 'active', 'scroll', 'wrap'],
   title: t('Segmented control', 'Segment-Schalter'),
   desc: t('Plain <code>&lt;button value&gt;</code> children stay in the light DOM (the stylesheet’s slotted twins shape them); the element moves <code>.active</code>, handles arrow keys and submits <code>value</code> with the form.', 'Einfache <code>&lt;button value&gt;</code>-Kinder bleiben im Light DOM (die Slot-Zwillinge des Stylesheets formen sie); das Element bewegt <code>.active</code>, behandelt Pfeiltasten und sendet <code>value</code> mit dem Formular.'),
-  mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('value', 'string', 'Selected value (default: the button with <code>.active</code>, else the first).', 'Gewählter Wert (Standard: Button mit <code>.active</code>, sonst der erste).'), ...formAttrs],
+  mobile: t('One row by default, which five filter options overflow on a phone: <code>scroll</code> keeps one thumb-swipeable row capped at the parent width (scrollbar hidden), <code>wrap</code> breaks it onto further rows.', 'Standard ist eine Zeile, die fünf Filteroptionen auf dem Telefon sprengen: <code>scroll</code> hält eine wischbare Zeile, begrenzt auf die Elternbreite (Scrollleiste versteckt), <code>wrap</code> bricht um.'),
+  attrs: [str('value', 'string', 'Selected value (default: the button with <code>.active</code>, else the first).', 'Gewählter Wert (Standard: Button mit <code>.active</code>, sonst der erste).'), bool('scroll', 'Horizontally scrollable row, scrollbar hidden.', 'Horizontal scrollbare Zeile, Scrollleiste versteckt.'), bool('wrap', 'Segments wrap onto further rows.', 'Segmente brechen in weitere Zeilen um.'), ...formAttrs],
   slots: [{ name: '(default)', desc: t('<code>&lt;button value="…"&gt;</code> children.', '<code>&lt;button value="…"&gt;</code>-Kinder.') }],
   events: [changeEvent('Selection changed.', 'Auswahl geändert.')],
-  example: W => `<nk-segmented name="range" value="week"><button value="week">${W.week}</button><button value="month">${W.month}</button><button value="quarter">${W.quarter}</button></nk-segmented>`,
-  classMarkup: W => `<div class="nk-segmented"><button class="active">${W.week}</button><button>${W.month}</button><button>${W.quarter}</button></div>`,
+  example: W => `<nk-segmented name="range" value="week"><button value="week">${W.week}</button><button value="month">${W.month}</button><button value="quarter">${W.quarter}</button></nk-segmented>
+<div style="max-width:300px;margin-top:12px"><nk-segmented name="filter" value="all" scroll><button value="all">${W.all}</button><button value="attention">⚠️ ${W.attention}</button><button value="failed">${W.failed}</button><button value="read">${W.read}</button><button value="ignored">${W.ignored}</button></nk-segmented></div>
+<div style="max-width:300px;margin-top:12px"><nk-segmented name="filter2" value="all" wrap><button value="all">${W.all}</button><button value="attention">⚠️ ${W.attention}</button><button value="failed">${W.failed}</button><button value="read">${W.read}</button><button value="ignored">${W.ignored}</button></nk-segmented></div>`,
+  classMarkup: W => `<div class="nk-segmented"><button class="active">${W.week}</button><button>${W.month}</button><button>${W.quarter}</button></div>
+<div style="max-width:300px;margin-top:12px"><div class="nk-segmented scroll"><button class="active">${W.all}</button><button>⚠️ ${W.attention}</button><button>${W.failed}</button><button>${W.read}</button><button>${W.ignored}</button></div></div>
+<div style="max-width:300px;margin-top:12px"><div class="nk-segmented wrap"><button class="active">${W.all}</button><button>⚠️ ${W.attention}</button><button>${W.failed}</button><button>${W.read}</button><button>${W.ignored}</button></div></div>`,
 },
 {
   tag: 'nk-stats', group: 'page', classes: ['nk-stats', 'nk-stat', 's-label', 's-value', 's-delta', 'up', 'down'],

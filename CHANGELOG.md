@@ -4,6 +4,24 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] – 2026-09-12
+
+Built and tested against NotionKit CSS 1.4.0 (peer `>= 1.4.0`).
+
+### Added
+- `nk-segmented scroll` / `wrap`: a long filter row scrolls horizontally
+  with the scrollbar hidden, capped at the parent width, or wraps onto
+  further rows. Default stays one row.
+- `nk-tab-bar fixed`: pinned to the viewport bottom for standalone PWAs; the
+  element renders the `.nk-tab-bar-spacer` itself, so the page still ends
+  above the bar without any padding of yours.
+
+### Fixed
+- Through NotionKit 1.4.0: `.nk-app` is `100dvh` (fallback `100vh`), so an
+  iOS standalone PWA no longer counts the status bar into the shell and the
+  tab bar no longer sits half behind the home indicator. The bar has a fixed
+  height now (`--nk-tab-bar-height` + safe area). Reported by Auxdesk.
+
 ## [1.2.1] – 2026-09-11
 
 Rebuilt against NotionKit CSS 1.3.1 (peer `>= 1.3.1`); the bundle embeds the
@@ -166,6 +184,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.3.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.0
 [1.2.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.1
 [1.2.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.0
 [1.1.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.1.0

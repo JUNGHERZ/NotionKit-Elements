@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-DL7ok-Xt.js';
+import { N as NkElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-profile-row avatar="MK"><nk-btn variant="secondary" small>Change photo</nk-btn></nk-profile-row>
 // → <div class="nk-profile-row"><div class="big-avatar">MK</div>…</div>

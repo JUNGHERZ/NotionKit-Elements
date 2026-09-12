@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-DL7ok-Xt.js';
+import { N as NkElement } from './shared/base-BpzLmUWl.js';
 
 // <nk-stats><nk-stat …></nk-stat>…</nk-stats>  →  <div class="nk-stats">
 class NkStats extends NkElement {
