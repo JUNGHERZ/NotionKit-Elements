@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-tag color="blue">Text</nk-tag>  —  modifier class .blue becomes color="blue"
 const COLORS = ['blue', 'green', 'orange', 'purple'];

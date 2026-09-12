@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-page icon="🚀" cover>
 //   <nk-page-title>NotionKit MVP</nk-page-title>
@@ -46,14 +46,22 @@ class NkPage extends NkElement {
     this._icon.textContent = icon || '';
     this._icon.style.display = icon ? '' : 'none';
     this._cover.style.display = this.getBoolAttr('cover') ? '' : 'none';
+    // `covered` is the stylesheet's twin of `.nk-cover + .nk-page`: the icon
+    // overlaps the cover and the page drops its top padding. Without a cover
+    // (attribute or a slotted nk-page-cover) the icon sits in the padding.
+    const slotted = this._coverSlot.assignedNodes().some(n => n.nodeType === Node.ELEMENT_NODE || n.data.trim());
+    this._page.classList.toggle('covered', this.getBoolAttr('cover') || slotted);
   }
 
   setupEvents() {
     this._onIcon = () => this.emit('nk-action', { action: 'icon', value: this.getAttribute('icon') });
+    this._onCover = () => this._sync();
     this._icon.addEventListener('click', this._onIcon);
+    this._coverSlot.addEventListener('slotchange', this._onCover);
+    this._sync();
   }
 
-  teardownEvents() { this._icon?.removeEventListener('click', this._onIcon); }
+  teardownEvents() { this._icon?.removeEventListener('click', this._onIcon); this._coverSlot?.removeEventListener('slotchange', this._onCover); }
 
   onAttributeChanged(name) {
     if (name === 'narrow') this._build();

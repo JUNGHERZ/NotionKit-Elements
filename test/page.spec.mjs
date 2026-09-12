@@ -111,3 +111,24 @@ test('segmented: default overflows a narrow parent, scroll caps and scrolls, wra
   // Scrolling reaches the last segment; clicking it still selects.
   expect(await page.evaluate(() => { const box = document.getElementById('scroll').shadowRoot.querySelector('.nk-segmented'); box.scrollLeft = 1000; document.querySelector('#scroll button[value=e]').click(); return [box.scrollLeft > 0, document.getElementById('scroll').value]; })).toEqual([true, 'e']);
 });
+
+// The page icon is only pulled up over a cover; without one it must stay inside the scroll container.
+test('page icon: fully visible without a cover, overlapping with `cover` or a slotted nk-page-cover', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, `<div style="display:flex;flex-direction:column;height:300px"><nk-page id="plain" icon="📥"><p>x</p></nk-page></div>
+    <div style="display:flex;flex-direction:column;height:300px"><nk-page id="cov" icon="📥" cover><p>x</p></nk-page></div>
+    <div style="display:flex;flex-direction:column;height:300px"><nk-page id="slot" icon="📥"><nk-page-cover slot="cover"></nk-page-cover><p>x</p></nk-page></div>`);
+  const r = await page.evaluate(() => {
+    const m = id => {
+      const root = document.getElementById(id).shadowRoot;
+      const scroll = root.querySelector('.nk-page-scroll').getBoundingClientRect(), pg = root.querySelector('.nk-page'), icon = root.querySelector('.nk-page-icon').getBoundingClientRect();
+      return { covered: pg.classList.contains('covered'), padTop: getComputedStyle(pg).paddingTop, iconInside: icon.top >= scroll.top - 0.5, iconTopFromScroll: Math.round(icon.top - scroll.top) };
+    };
+    return { plain: m('plain'), cov: m('cov'), slot: m('slot') };
+  });
+  expect(r.plain).toEqual({ covered: false, padTop: '24px', iconInside: true, iconTopFromScroll: 24 });
+  expect(r.cov.covered).toBe(true); expect(r.cov.padTop).toBe('0px'); expect(r.cov.iconInside).toBe(true); expect(r.cov.iconTopFromScroll).toBeGreaterThan(24);
+  expect(r.slot.covered).toBe(true); expect(r.slot.padTop).toBe('0px');
+  // Removing the cover attribute brings the padding back.
+  expect(await page.evaluate(() => { const p = document.getElementById('cov'); p.cover = false; return [p.shadowRoot.querySelector('.nk-page').classList.contains('covered'), getComputedStyle(p.shadowRoot.querySelector('.nk-page')).paddingTop]; })).toEqual([false, '24px']);
+});

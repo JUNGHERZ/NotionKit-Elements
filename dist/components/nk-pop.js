@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-pop placement="bottom-start">
 //   <nk-btn slot="trigger" variant="secondary">Options</nk-btn>

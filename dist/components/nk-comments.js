@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-comments placeholder="Comment …" send-label="Send">
 //   <nk-comment …>…</nk-comment>

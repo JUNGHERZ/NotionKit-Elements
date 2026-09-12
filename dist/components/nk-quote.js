@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-quote cite="Ada Lovelace">The Analytical Engine weaves…</nk-quote>
 // .q-cite has no ::slotted() twin, so the citation is rendered here.

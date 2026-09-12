@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.3.0) wrapping NotionKit CSS v1.4.0 – the calm, document-centric design system in the Notion idiom. 71 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.3.1) wrapping NotionKit CSS v1.4.1 – the calm, document-centric design system in the Notion idiom. 71 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.3.0) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -1081,7 +1081,7 @@ The document column: a scrolling wrapper, an optional cover, the 760px page with
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `icon` | string | – | Page emoji; click fires `nk-action`. |
-| `cover` | boolean | – | Show the token gradient cover. |
+| `cover` | boolean | – | Shows the cover strip; the icon then overlaps its bottom edge and the page drops its top padding (the stylesheet’s `covered` state, also set for a slotted `nk-page-cover`). Without it the icon sits in 24px top padding, fully visible. |
 | `narrow` | boolean | – | No scroll wrapper (landing / docs page). |
 
 **Slots:** `(default)` – Title, meta, blocks – anything with `class="lead"` on a `<p>` becomes the lead paragraph. · `cover` – An `nk-page-cover` (instead of the `cover` attribute). · `icon` – Custom icon node.
@@ -2373,8 +2373,8 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2440,8 +2440,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and (from wave 3) `nk-page` are `d
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2507,8 +2507,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2567,8 +2567,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -2642,8 +2642,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -2688,8 +2688,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -2865,10 +2865,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (`dist/components/`) |
-| Peer | `@jungherz-de/notionkit >= 1.4.0` (segmented scroll/wrap, fixed tab bar and dvh shell need 1.4.0; field layouts and the labelled switch 1.3.x; the tab bar 1.2.0) |
+| Peer | `@jungherz-de/notionkit >= 1.4.1` (1.4.1 keeps a coverless page icon visible; segmented scroll/wrap, fixed tab bar and dvh shell need 1.4.0; field layouts and the labelled switch 1.3.x; the tab bar 1.2.0) |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.3.0 · wrapping NotionKit CSS v1.4.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.3.1 · wrapping NotionKit CSS v1.4.1 · MIT · Jungherz GmbH*

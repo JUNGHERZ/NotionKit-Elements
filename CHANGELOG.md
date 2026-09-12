@@ -4,6 +4,18 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] – 2026-09-12
+
+Rebuilt against NotionKit CSS 1.4.1 (peer `>= 1.4.1`).
+
+### Fixed
+- `nk-page` without `cover` clipped the top of its icon: the stylesheet
+  pulled the icon up by 42px regardless of a cover, and the page had no top
+  padding, so half the icon sat outside the scroll container. The element
+  now sets the stylesheet's `covered` state only with the `cover` attribute
+  or a slotted `nk-page-cover`; otherwise the icon sits in 24px top padding.
+  Reported by Auxdesk.
+
 ## [1.3.0] – 2026-09-12
 
 Built and tested against NotionKit CSS 1.4.0 (peer `>= 1.4.0`).
@@ -184,6 +196,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.3.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.0
 [1.2.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.1
 [1.2.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.0

@@ -486,7 +486,7 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Theme sync | one \`MutationObserver\` on \`<html>[data-theme]\`, a \`Set\` of instances, \`.nk-wrapper[data-theme]\` inside each root |
 | Components | \`src/components/{forms,content,shell,page,overlays,data}/nk-*.js\`, one tag per file, \`customElements.define\` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (\`dist/components/\`) |
-| Peer | \`@jungherz-de/notionkit >= 1.4.0\` (segmented scroll/wrap, fixed tab bar and dvh shell need 1.4.0; field layouts and the labelled switch 1.3.x; the tab bar 1.2.0) |
+| Peer | \`@jungherz-de/notionkit >= 1.4.1\` (1.4.1 keeps a coverless page icon visible; segmented scroll/wrap, fixed tab bar and dvh shell need 1.4.0; field layouts and the labelled switch 1.3.x; the tab bar 1.2.0) |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + \`render()\`) → every connect (\`setupEvents()\`, theme registration, light-DOM observer) → \`attributeChangedCallback\` → \`onAttributeChanged\` → disconnect (\`teardownEvents()\`, unregister).
 `,

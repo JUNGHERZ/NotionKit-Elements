@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-page-cover slot="cover"></nk-page-cover>            → the token gradient
 // <nk-page-cover slot="cover" src="cover.jpg"></nk-page-cover>  → an image

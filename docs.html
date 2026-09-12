@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
@@ -79,7 +79,7 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.3.0</span></a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.3.1</span></a>
   <a href="docs.html" class="current">Docs</a>
   <a href="showcase.html">Showcase</a>
   <a href="app.html">Demo app</a>
@@ -99,8 +99,8 @@ body { margin: 0; }
   <p class="site-lead">Attributes, slots, events and the class markup each element replaces.</p>
   
 <section class="site-section" id="install"><h2>Installation</h2>
-  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
   <p class="doc-h4">npm</p><pre class="doc-code">npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 
 import '@jungherz-de/notionkit/notionkit.css';
@@ -109,8 +109,8 @@ import '@jungherz-de/notionkit-elements';</pre>
 </section>
 <section class="site-section" id="prereq"><h2>Prerequisites</h2><p class="doc-desc">Load <code>notionkit.css</code> on the document and put <code>class="nk-body"</code> on <code>&lt;body&gt;</code>. The shadow roots inherit font, colour and the scoped reset from there; the elements ship no visual CSS of their own. The bundle additionally injects the design tokens as a cascade layer (<code>@layer notionkit-defaults</code>), so a page without the stylesheet still renders, and any unlayered <code>:root { --nk-* }</code> of yours wins.</p><pre class="doc-code">&lt;<span class="tag">html</span> <span class="attr">lang</span>="en" <span class="attr">data-theme</span>="light"&gt;
   &lt;<span class="tag">head</span>&gt;
-    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css"&gt;
-    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css"&gt;
+    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
   &lt;/<span class="tag">head</span>&gt;
   &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
     &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="primary"&gt;Save&lt;/<span class="tag">nk-btn</span>&gt;
@@ -799,7 +799,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-app"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
   <nk-sidebar slot=&quot;sidebar&quot;>
     <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
     <nk-tree>
@@ -819,7 +819,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
   </div></div>
 </nk-app><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
   <aside class=&quot;nk-sidebar&quot;>
     <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
     <div class=&quot;nk-sidebar-scroll&quot;>
@@ -905,7 +905,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sidebar"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar>
   <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon=&quot;🏠&quot; active>Home</nk-tree-item>
@@ -914,7 +914,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;⚙️&quot;>Settings</nk-tree-item>
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;🗑️&quot;>Trash</nk-tree-item>
 </nk-sidebar></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
   <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
   <div class=&quot;nk-sidebar-scroll&quot;>
     <div class=&quot;nk-tree-item active&quot;><span class=&quot;icon&quot;>🏠</span><span class=&quot;label&quot;>Home</span></div>
@@ -1324,12 +1324,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-page"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 3</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
   <nk-page-title>NotionKit MVP</nk-page-title>
   <nk-page-actions><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <nk-tag color=&quot;purple&quot;>Design system</nk-tag></span></nk-page-actions>
   <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
 </nk-page></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
   <div class=&quot;nk-page-icon&quot;>🚀</div>
   <h1 class=&quot;nk-page-title&quot;>NotionKit MVP</h1>
   <div class=&quot;nk-page-meta&quot;><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <span class=&quot;nk-tag purple&quot;>Design system</span></span></div>
@@ -1350,7 +1350,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attributes</p>
   <table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Page emoji; click fires <code>nk-action</code>.</td></tr>
-<tr><td><code>cover</code></td><td><code>boolean</code></td><td>–</td><td>Show the token gradient cover.</td></tr>
+<tr><td><code>cover</code></td><td><code>boolean</code></td><td>–</td><td>Shows the cover strip; the icon then overlaps its bottom edge and the page drops its top padding (the stylesheet’s <code>covered</code> state, also set for a slotted <code>nk-page-cover</code>). Without it the icon sits in 24px top padding, fully visible.</td></tr>
 <tr><td><code>narrow</code></td><td><code>boolean</code></td><td>–</td><td>No scroll wrapper (landing / docs page).</td></tr></table>
   <p class="doc-h4">Slots</p>
   <table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
@@ -2017,7 +2017,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-modal"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
   <nk-settings-user slot=&quot;user&quot; name=&quot;Marcel Karas&quot; mail=&quot;marcel@monahilft.de&quot;></nk-settings-user>
   <nk-settings-pane name=&quot;profile&quot; group=&quot;Account&quot; icon=&quot;👤&quot; label=&quot;My profile&quot; title=&quot;My profile&quot; active>
     <nk-profile-row avatar=&quot;MK&quot;><nk-btn variant=&quot;secondary&quot; small>Change photo</nk-btn></nk-profile-row>
@@ -2031,7 +2031,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-member-list><nk-member-row name=&quot;Sara Lindt&quot; mail=&quot;sara@example.com&quot; color=&quot;#448361&quot;></nk-member-row></nk-member-list>
   </nk-settings-pane>
 </nk-modal><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
   <nav class=&quot;nk-settings-nav&quot;>
     <div class=&quot;nk-settings-user&quot;><div class=&quot;avatar&quot;>MK</div><div class=&quot;u-text&quot;><div class=&quot;name&quot;>Marcel Karas</div><div class=&quot;mail&quot;>marcel@monahilft.de</div></div></div>
     <div class=&quot;nk-section-label&quot;>Account</div>
@@ -2159,7 +2159,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-cmdk"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
 <script>
   document.querySelector('nk-cmdk').commands = [
     { group: 'Pages', items: [
@@ -2174,7 +2174,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     ]},
   ];
 </script><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
   <div class=&quot;nk-cmdk-input-row&quot;><span style=&quot;font-size:15px&quot;>🔍</span><input placeholder=&quot;Search or type a command …&quot;><kbd class=&quot;nk-kbd&quot;>esc</kbd></div>
   <div class=&quot;nk-cmdk-list&quot;>
     <div class=&quot;nk-cmdk-group&quot;>Pages</div>
@@ -2389,8 +2389,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-toast"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
     <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-toast</span> open <span class="attr">duration</span>="0"&gt;Settings saved&lt;/<span class="tag">nk-toast</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-toast show"&gt;✓ &lt;<span class="tag">span</span>&gt;Settings saved&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
@@ -2861,7 +2861,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-meta"><b>On a small screen:</b><span>Unchanged.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-ai-input-row</code><code>.nk-ai-send</code></div>
 </article></section>
-  <div class="site-footer">NotionKit Elements v1.3.0 · wrapping NotionKit CSS v1.4.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.3.1 · wrapping NotionKit CSS v1.4.1 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

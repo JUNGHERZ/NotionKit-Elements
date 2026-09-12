@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BpzLmUWl.js';
+import { N as NkElement } from './shared/base-Bet1FMjb.js';
 
 // <nk-tab-bar value="inbox">
 //   <nk-tab-bar-item icon="🏠" value="home">Home</nk-tab-bar-item>
