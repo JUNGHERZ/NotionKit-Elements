@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-FHMDMonZ.js';
+import { a as NkFormElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-switch name="notify" checked></nk-switch>
 // → <button class="nk-switch" role="switch" aria-checked="true">

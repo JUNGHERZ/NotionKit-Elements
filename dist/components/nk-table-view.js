@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
 
 // <nk-table-view name="table" label="▦ Table" count new-row sortable wrap></nk-table-view>

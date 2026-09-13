@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-empty icon="🗂️" title="No entries yet" desc="Create the first one."><nk-btn variant="primary" small>＋ New</nk-btn></nk-empty>
 // → <div class="nk-empty"><div class="e-icon">🗂️</div><div class="e-title">…</div><div class="e-desc">…</div>…</div>

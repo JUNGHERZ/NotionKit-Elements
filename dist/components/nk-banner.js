@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-banner variant="info">ℹ️ <span>Text</span><span slot="action">Open</span></nk-banner>
 // → <div class="nk-banner info">…<span class="b-action">Open</span></div>

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-fields>
 //   <nk-field label="Name"><nk-input name="name"></nk-input></nk-field>

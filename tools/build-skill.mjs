@@ -76,7 +76,7 @@ ${quick}
 
 ${SKILL_PROSE.integration()}
 
-${SKILL_PROSE.architecture()}
+${SKILL_PROSE.architecture({ pkg })}
 
 ---
 *NotionKit Elements v${pkg.version} · wrapping NotionKit CSS v${NK_VERSION} · MIT · Jungherz GmbH*

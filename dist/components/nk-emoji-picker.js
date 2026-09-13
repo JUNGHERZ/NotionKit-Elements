@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // Built-in emoji set for <nk-emoji-picker>: eight categories, names for
 // search. Override with `picker.emojis = [{ char, name, cat }]`.

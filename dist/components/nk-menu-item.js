@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-menu-item icon="✏️" shortcut="⌘E" value="rename">Rename</nk-menu-item>
 // <nk-menu-item type="separator"></nk-menu-item>   <nk-menu-item type="label">Danger</nk-menu-item>

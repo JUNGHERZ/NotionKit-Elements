@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 import { l as lockScroll, i as inertOutside, f as firstFocusable, u as unlockScroll } from './shared/focus-DXrK9oLe.js';
 
 // <nk-modal id="settings">

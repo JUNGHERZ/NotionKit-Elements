@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-FHMDMonZ.js';
+import { a as NkFormElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-input name="title" value="…" placeholder="…" wide></nk-input>  →  <input class="nk-input wide">
 // Takes part in the surrounding <form> through ElementInternals.

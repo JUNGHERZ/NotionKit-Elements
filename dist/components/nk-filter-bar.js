@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-filter-bar search placeholder="Search rows …"></nk-filter-bar>
 // bar.filters = [{ key: 'status', label: 'Status: Done', value: 'done' }];

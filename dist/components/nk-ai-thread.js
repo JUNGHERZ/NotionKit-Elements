@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { N as NkElement } from './shared/base-BPIvRI6K.js';
 
 // <nk-ai-thread><nk-ai-msg …>…</nk-ai-msg>…</nk-ai-thread>  →  <div class="nk-ai-thread">
 class NkAiThread extends NkElement {

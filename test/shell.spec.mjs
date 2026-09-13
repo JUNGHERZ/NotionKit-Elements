@@ -128,7 +128,8 @@ test('sidebar: footer rows are compact, footer hidden when empty, drawer opens b
   expect(await page.evaluate(() => getComputedStyle(document.getElementById('sb2').shadowRoot.querySelector('.nk-sidebar-footer')).display)).toBe('none');
   await page.setViewportSize({ width: 600, height: 700 });
   const asideWidth = () => document.getElementById('sb').shadowRoot.querySelector('.nk-sidebar').getBoundingClientRect().width;
-  expect(await page.evaluate(asideWidth)).toBe(0);
+  // Crossing the breakpoint runs the drawer's slide-out (display is held for 240ms).
+  await expect.poll(() => page.evaluate(asideWidth)).toBe(0);
   await page.evaluate(() => document.getElementById('sb').show());
   expect(await page.evaluate(asideWidth)).toBe(260);
   expect(await page.evaluate(() => getComputedStyle(document.getElementById('sb').shadowRoot.querySelector('.nk-sidebar')).position)).toBe('fixed');
@@ -243,4 +244,78 @@ test('tab bar `fixed`: pinned to the viewport bottom, the spacer keeps its heigh
   expect(r).toEqual({ position: 'fixed', navBottom: 700, spacerDisplay: 'block', spacerHeight: 58, navHeight: 58, pageEndsAbove: true });
   // Not fixed: no spacer, the bar sits in the column.
   expect(await page.evaluate(() => { document.getElementById('bar').fixed = false; const root = document.getElementById('bar').shadowRoot; return [getComputedStyle(root.querySelector('.nk-tab-bar')).position, getComputedStyle(root.querySelector('.nk-tab-bar-spacer')).display]; })).toEqual(['sticky', 'none']);
+});
+
+// The drawer animates in CSS only: transform + display with allow-discrete, @starting-style for the way in.
+test('sidebar drawer: slides in from the left, scrim fades, display is held while closing, reduced motion snaps', async ({ page }) => {
+  await openHarness(page);
+  await page.setViewportSize({ width: 600, height: 700 });
+  await setStage(page, `<div style="display:flex;height:300px"><nk-sidebar id="sb"><nk-tree><nk-tree-item>Home</nk-tree-item></nk-tree></nk-sidebar></div>`);
+  await page.evaluate(() => { window.probe = () => {
+    const r = document.getElementById('sb').shadowRoot, a = getComputedStyle(r.querySelector('.nk-sidebar')), b = getComputedStyle(r.querySelector('.nk-sidebar-backdrop'));
+    const x = a.transform === 'none' ? 0 : Math.round(Number(a.transform.match(/matrix\(([^)]*)\)/)[1].split(',')[4]));
+    return { display: a.display, position: a.position, x, backdrop: b.display, opacity: Math.round(Number(b.opacity) * 100) / 100 };
+  }; });
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => window.probe())).toMatchObject({ display: 'none', position: 'fixed', backdrop: 'none' });
+
+  // First frame after show(): starting style – fully off-screen, scrim transparent, but displayed.
+  const t0 = await page.evaluate(() => { document.getElementById('sb').show(); return window.probe(); });
+  expect(t0).toMatchObject({ display: 'flex', position: 'fixed', x: -260, backdrop: 'block', opacity: 0 });
+  await page.waitForTimeout(400);
+  expect(await page.evaluate(() => window.probe())).toEqual({ display: 'flex', position: 'fixed', x: 0, backdrop: 'block', opacity: 1 });
+
+  // First frame after close(): still displayed and fixed, moving out.
+  const c0 = await page.evaluate(() => { document.getElementById('sb').close(); return window.probe(); });
+  expect(c0).toMatchObject({ display: 'flex', position: 'fixed', backdrop: 'block' });
+  await page.waitForTimeout(120);
+  const mid = await page.evaluate(() => window.probe());
+  expect(mid.display).toBe('flex'); expect(mid.x).toBeLessThan(-20); expect(mid.x).toBeGreaterThan(-260); expect(mid.opacity).toBeLessThan(1);
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => window.probe())).toMatchObject({ display: 'none', backdrop: 'none' });
+
+  // Reduced motion: no transition in either direction.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  expect(await page.evaluate(() => { document.getElementById('sb').show(); return window.probe(); })).toMatchObject({ display: 'flex', x: 0, opacity: 1 });
+  expect(await page.evaluate(() => { document.getElementById('sb').close(); return window.probe(); })).toMatchObject({ display: 'none', backdrop: 'none' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+});
+
+// Safe areas (iPhone landscape: Dynamic Island left/right 59px, home indicator 34px), emulated through CDP.
+test('safe areas: tab bar, topbar, page and drawer keep their content inside the insets, backgrounds run edge to edge', async ({ page }) => {
+  await openHarness(page);
+  await page.setViewportSize({ width: 852, height: 393 });
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setSafeAreaInsetsOverride', { insets: { top: 0, left: 59, right: 59, bottom: 34 } });
+  await setStage(page, `<nk-app id="app" style="height:360px">
+    <nk-sidebar slot="sidebar" id="sb"><nk-tree><nk-tree-item id="home" icon="🏠">Home</nk-tree-item></nk-tree></nk-sidebar>
+    <nk-topbar><nk-btn id="menu" variant="topbar">☰</nk-btn><nk-breadcrumb><span>Home</span></nk-breadcrumb></nk-topbar>
+    <nk-page><p id="text">Body</p></nk-page>
+    <nk-tab-bar id="bar" value="home"><nk-tab-bar-item id="first" icon="🏠" value="home">Home</nk-tab-bar-item><nk-tab-bar-item icon="📥" value="inbox">Inbox</nk-tab-bar-item></nk-tab-bar>
+  </nk-app>`);
+  const r = await page.evaluate(() => {
+    const app = document.getElementById('app').shadowRoot.querySelector('.nk-app').getBoundingClientRect();
+    const bar = document.getElementById('bar').shadowRoot.querySelector('.nk-tab-bar');
+    const cs = getComputedStyle(bar), b = bar.getBoundingClientRect();
+    const first = document.getElementById('first').shadowRoot.querySelector('button').getBoundingClientRect();
+    const topbar = document.querySelector('nk-topbar').shadowRoot.querySelector('.nk-topbar');
+    const menu = document.getElementById('menu').shadowRoot.querySelector('button').getBoundingClientRect();
+    const pg = document.querySelector('nk-page').shadowRoot.querySelector('.nk-page');
+    return {
+      barPadBottom: cs.paddingBottom, barHeight: Math.round(b.height), barEdgeToEdge: Math.round(b.left) === Math.round(app.left) && Math.round(b.right) === Math.round(app.right),
+      firstItemLeft: Math.round(first.left - app.left), topbarPadLeft: getComputedStyle(topbar).paddingLeft, menuLeft: Math.round(menu.left - app.left),
+      pagePadLeft: getComputedStyle(pg).paddingLeft, pagePadRight: getComputedStyle(pg).paddingRight,
+    };
+  });
+  expect(r).toEqual({ barPadBottom: '34px', barHeight: 86, barEdgeToEdge: true, firstItemLeft: 59, topbarPadLeft: '59px', menuLeft: 59, pagePadLeft: '59px', pagePadRight: '59px' });
+  // The drawer: wider by the inset, its rows start right of the island.
+  await page.evaluate(() => document.getElementById('sb').show());
+  await page.waitForTimeout(400);
+  const d = await page.evaluate(() => {
+    const aside = document.getElementById('sb').shadowRoot.querySelector('.nk-sidebar').getBoundingClientRect();
+    const row = document.getElementById('home').shadowRoot.querySelector('.nk-tree-item').getBoundingClientRect();
+    return { asideWidth: Math.round(aside.width), asideLeft: Math.round(aside.left), rowLeft: Math.round(row.left) };
+  });
+  expect(d.asideWidth).toBe(260 + 59); expect(d.asideLeft).toBe(0); expect(d.rowLeft).toBeGreaterThanOrEqual(59);
+  await cdp.send('Emulation.setSafeAreaInsetsOverride', { insets: {} });
 });

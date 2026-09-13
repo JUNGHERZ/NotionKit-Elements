@@ -4,6 +4,25 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.1] – 2026-09-14
+
+Built against NotionKit CSS 1.5.1 (peer `>= 1.5.1`).
+
+### Fixed
+- **`nk-sidebar` drawer transition.** Below 860px the drawer used to snap
+  in and out (a bare `display` switch). It now slides in over 240ms while
+  the scrim fades, and closing runs the same way backwards – CSS only:
+  `display` transitions with `transition-behavior: allow-discrete`,
+  `@starting-style` supplies the first frame, `position: fixed` applies in
+  both states so the closing aside does not fall back into the flow.
+  Browsers without either feature switch hard as before;
+  `prefers-reduced-motion` snaps. Crossing the breakpoint downwards runs the
+  slide-out once.
+- Through NotionKit 1.5.1: the tab bar no longer stacks its 6px on the
+  home-indicator inset, and topbar, page, tab bar and the drawer honour the
+  left/right safe-area insets (Dynamic Island in landscape). Reported by
+  Auxdesk.
+
 ## [1.5.0] – 2026-09-13
 
 Rebuilt against NotionKit CSS 1.5.0 (peer `>= 1.5.0`) – the Notion-2025
@@ -220,6 +239,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.5.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.1
 [1.5.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.0
 [1.3.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.0
