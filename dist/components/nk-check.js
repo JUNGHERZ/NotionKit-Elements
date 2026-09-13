@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-Bet1FMjb.js';
+import { a as NkFormElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-check name="mail" value="weekly" checked>Weekly digest</nk-check>
 // → <label class="nk-check"><input type="checkbox"> Weekly digest</label>

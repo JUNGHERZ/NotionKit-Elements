@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-field label="Display name" desc="Shown next to your comments">
 //   <nk-input value="Marcel"></nk-input>

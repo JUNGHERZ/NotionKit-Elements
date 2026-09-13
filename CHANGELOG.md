@@ -4,6 +4,30 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] – 2026-09-13
+
+Rebuilt against NotionKit CSS 1.5.0 (peer `>= 1.5.0`) – the Notion-2025
+fidelity release: darker text greys and a dedicated sidebar text colour,
+`-webkit-font-smoothing: auto`, filled inputs, white buttons, 36px table
+rows, pill view tabs. From this release on, Elements and the foundation
+share one version number (1.4.x is skipped).
+
+### Added
+- `nk-tag color` accepts all nine Notion select colours: `gray`, `brown`,
+  `orange`, `yellow`, `green`, `blue`, `purple`, `pink`, `red`. Without
+  `color` the tag is grey, as in Notion – it used to have no fill at all.
+- `nk-banner variant="danger"`.
+- `nk-table-view wrap` lets cell text break (`.nk-table.wrap`), like
+  Notion's "wrap column".
+
+### Changed
+- Select and multi-select cells fall back to the grey tag for an option
+  without a known colour (was blue).
+- Tags are 20px tall with 3px corners and near-black text on the fill; the
+  old mid-tone tag text lives on in the foundation as `--nk-color-*`, the
+  old soft backgrounds as `--nk-tint-*`. Banners use those tints under the
+  normal text colour.
+
 ## [1.3.1] – 2026-09-12
 
 Rebuilt against NotionKit CSS 1.4.1 (peer `>= 1.4.1`).
@@ -196,6 +220,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.5.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.0
 [1.3.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.1
 [1.3.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.0
 [1.2.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.2.1

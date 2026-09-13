@@ -43,8 +43,11 @@ for (const theme of ['light', 'dark']) {
         // Shell examples need a viewport wider than the 860px breakpoint, so
         // they get 1000px boxes stacked vertically (the harness viewport is 1100px).
         const box = entry.frame ? ` style="width:1000px;height:${entry.frame}px;overflow:hidden"` : '';
+        // The theme toggle draws ☀️ in dark mode; the theme-agnostic class markup
+        // in the catalog shows 🌙, so the reference gets the glyph the element shows.
+        const classHtml = entry.tag === 'nk-theme-toggle' && theme === 'dark' ? entry.classMarkup(WORDS.en).replace('🌙', '☀️') : entry.classMarkup(WORDS.en);
         await setStage(page, `<div class="pair"${entry.frame ? ' style="flex-direction:column"' : ''}>
-          <div class="box" id="a"${box}>${entry.classMarkup(WORDS.en)}</div>
+          <div class="box" id="a"${box}>${classHtml}</div>
           <div class="box" id="b"${box}>${entry.example(WORDS.en)}</div>
         </div>`);
         // Example scripts (database data etc.) run in the page; document.currentScript

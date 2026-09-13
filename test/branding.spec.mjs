@@ -32,11 +32,17 @@ for (const bare of [false, true]) {
     await page.waitForTimeout(400);   // .nk-btn / .nk-switch transition their background
     const after = await page.evaluate(readAccents);
     expect(after).toEqual({ btn: GREEN, sw: GREEN, chk: GREEN, todo: GREEN, rad: GREEN, hostToken: '#16a34a' });
-    // focus ring derives from the accent, too
+    // focus ring derives from the accent, too: 60 % of it, mixed by the stylesheet
     await page.locator('#inp').locator('input').focus();
     await page.waitForTimeout(300);   // border-color transition
-    const ring = await page.evaluate(() => getComputedStyle(document.getElementById('inp').shadowRoot.querySelector('input')).borderColor);
-    expect(ring).toBe(GREEN);
+    const { ring, expected } = await page.evaluate(() => {
+      const probe = document.createElement('div');
+      probe.style.borderColor = 'color-mix(in srgb, #16a34a 60%, transparent)';
+      document.body.appendChild(probe);
+      const expected = getComputedStyle(probe).borderColor; probe.remove();
+      return { ring: getComputedStyle(document.getElementById('inp').shadowRoot.querySelector('input')).borderColor, expected };
+    });
+    expect(ring).toBe(expected);
   });
 }
 
@@ -62,7 +68,7 @@ test('theme sync: data-theme on <html> re-themes every instance', async ({ page 
     bg: getComputedStyle(document.getElementById('inp').shadowRoot.querySelector('input')).backgroundColor,
     wrapper: document.getElementById('inp').shadowRoot.querySelector('.nk-wrapper').getAttribute('data-theme'),
   }));
-  expect(light).toBe('rgb(255, 255, 255)');
-  expect(dark.bg).toBe('rgb(25, 25, 25)');
+  expect(light).toBe('rgba(242, 241, 238, 0.6)');      // --nk-bg-input, light
+  expect(dark.bg).toBe('rgba(255, 255, 255, 0.055)');  // --nk-bg-input, dark
   expect(dark.wrapper).toBe('dark');
 });

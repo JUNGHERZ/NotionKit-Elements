@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-stat label="Active pages" value="128" delta="▲ 12 this week" trend="up"></nk-stat>
 // → <div class="nk-stat"><div class="s-label">…</div><div class="s-value">…</div><div class="s-delta up">…</div></div>

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-page icon="🚀" cover>
 //   <nk-page-title>NotionKit MVP</nk-page-title>

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-toggle label="Details" open>Body…</nk-toggle>
 // → <details class="nk-toggle" open><summary>Details</summary><div class="toggle-body">…</div></details>

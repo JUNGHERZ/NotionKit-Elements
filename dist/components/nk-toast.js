@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-toast id="toast"></nk-toast>   …   toast.show('Saved');
 // → <div class="nk-toast show">✓ Saved</div>

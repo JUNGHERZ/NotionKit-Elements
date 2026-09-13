@@ -1,7 +1,8 @@
 import { NkElement } from '../../base.js';
 
-// <nk-tag color="blue">Text</nk-tag>  —  modifier class .blue becomes color="blue"
-const COLORS = ['blue', 'green', 'orange', 'purple'];
+// <nk-tag color="blue">Text</nk-tag>  —  modifier class .blue becomes color="blue".
+// Notion's nine select colours; without `color` the stylesheet draws the grey tag.
+const COLORS = ['gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'];
 
 class NkTag extends NkElement {
   static get observedAttributes() { return ['color']; }

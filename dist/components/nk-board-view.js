@@ -1,5 +1,5 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
-import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-Dn91uFkf.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
 
 // <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
 // Groups rows by a select column (default: the first select column); one

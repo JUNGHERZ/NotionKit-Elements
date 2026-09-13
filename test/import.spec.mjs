@@ -29,5 +29,5 @@ test('a single component entry registers only its own tag', async ({ page }) => 
   expect(await page.evaluate(() => ({ tag: !!customElements.get('nk-tag'), btn: !!customElements.get('nk-btn') }))).toEqual({ tag: true, btn: false });
   await page.evaluate(() => { document.getElementById('stage').innerHTML = '<nk-tag color="green">Done</nk-tag>'; });
   const color = await page.evaluate(() => getComputedStyle(document.querySelector('nk-tag').shadowRoot.querySelector('.nk-tag')).color);
-  expect(color).toBe('rgb(68, 131, 97)');
+  expect(color).toBe('rgb(28, 56, 41)');   // --nk-tag-green-text #1c3829
 });

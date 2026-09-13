@@ -4,6 +4,7 @@ export const WORDS = {
   en: {
     save: 'Save', cancel: 'Cancel', delete: 'Delete', share: 'Share', newPage: 'New page',
     inProgress: 'In progress', done: 'Done', planned: 'Planned', design: 'Design',
+    tagGray: 'Not started', tagBrown: 'Archive', tagYellow: 'Review', tagPink: 'Idea', tagRed: 'Blocked', bannerDanger: 'The connection to Notion was lost.',
     calloutText: 'A callout carries one thought that must not be missed.',
     displayName: 'Display name', displayNameDesc: 'Shown next to your comments.',
     email: 'Email', bio: 'Short bio', bioPlaceholder: 'A sentence about you',
@@ -41,6 +42,7 @@ export const WORDS = {
   de: {
     save: 'Speichern', cancel: 'Abbrechen', delete: 'Löschen', share: 'Teilen', newPage: 'Neue Seite',
     inProgress: 'In Arbeit', done: 'Erledigt', planned: 'Geplant', design: 'Design',
+    tagGray: 'Nicht begonnen', tagBrown: 'Archiv', tagYellow: 'Review', tagPink: 'Idee', tagRed: 'Blockiert', bannerDanger: 'Die Verbindung zu Notion ist abgerissen.',
     calloutText: 'Ein Callout trägt einen Gedanken, der nicht untergehen darf.',
     displayName: 'Anzeigename', displayNameDesc: 'Erscheint neben deinen Kommentaren.',
     email: 'E-Mail', bio: 'Kurzprofil', bioPlaceholder: 'Ein Satz über dich',

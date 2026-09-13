@@ -258,15 +258,15 @@ export const CATALOG = [
 },
 // ============================================================ WAVE 1 · CONTENT
 {
-  tag: 'nk-tag', group: 'content', classes: ['nk-tag', 'blue', 'green', 'orange', 'purple'],
+  tag: 'nk-tag', group: 'content', classes: ['nk-tag', 'gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'],
   title: t('Tag', 'Tag'),
-  desc: t('Semantic status tag. The colour modifier class becomes the <code>color</code> attribute; each pair is tuned per theme.', 'Semantischer Status-Tag. Die Farb-Modifikator-Klasse wird zum <code>color</code>-Attribut; jedes Paar ist pro Theme abgestimmt.'),
+  desc: t('The select option as Notion draws it, in its nine colours. The colour modifier class becomes the <code>color</code> attribute; without one it is the grey tag. Each pair is tuned per theme.', 'Die Select-Option, wie Notion sie zeichnet, in ihren neun Farben. Die Farb-Modifikator-Klasse wird zum <code>color</code>-Attribut; ohne ist es der graue Tag. Jedes Paar ist pro Theme abgestimmt.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('color', 'blue | green | orange | purple', 'Colour pair.', 'Farbpaar.')],
+  attrs: [str('color', 'gray | brown | orange | yellow | green | blue | purple | pink | red', 'Colour pair; grey without it.', 'Farbpaar; ohne grau.')],
   slots: [{ name: '(default)', desc: t('Tag text.', 'Tag-Text.') }],
   events: [],
-  example: W => `<nk-tag color="blue">${W.inProgress}</nk-tag> <nk-tag color="green">${W.done}</nk-tag> <nk-tag color="orange">${W.planned}</nk-tag> <nk-tag color="purple">${W.design}</nk-tag>`,
-  classMarkup: W => `<span class="nk-tag blue">${W.inProgress}</span> <span class="nk-tag green">${W.done}</span> <span class="nk-tag orange">${W.planned}</span> <span class="nk-tag purple">${W.design}</span>`,
+  example: W => `<nk-tag>${W.tagGray}</nk-tag> <nk-tag color="brown">${W.tagBrown}</nk-tag> <nk-tag color="orange">${W.planned}</nk-tag> <nk-tag color="yellow">${W.tagYellow}</nk-tag> <nk-tag color="green">${W.done}</nk-tag> <nk-tag color="blue">${W.inProgress}</nk-tag> <nk-tag color="purple">${W.design}</nk-tag> <nk-tag color="pink">${W.tagPink}</nk-tag> <nk-tag color="red">${W.tagRed}</nk-tag>`,
+  classMarkup: W => `<span class="nk-tag">${W.tagGray}</span> <span class="nk-tag brown">${W.tagBrown}</span> <span class="nk-tag orange">${W.planned}</span> <span class="nk-tag yellow">${W.tagYellow}</span> <span class="nk-tag green">${W.done}</span> <span class="nk-tag blue">${W.inProgress}</span> <span class="nk-tag purple">${W.design}</span> <span class="nk-tag pink">${W.tagPink}</span> <span class="nk-tag red">${W.tagRed}</span>`,
 },
 {
   tag: 'nk-progress', group: 'content', classes: ['nk-progress', 'nk-progress-label'],
@@ -683,19 +683,21 @@ export const CATALOG = [
   classMarkup: W => `<div class="nk-block-host"><span class="nk-block-handle">⠿</span><p style="margin:0" contenteditable="true">${W.editableHint}</p></div>`,
 },
 {
-  tag: 'nk-banner', group: 'page', classes: ['nk-banner', 'info', 'success', 'warning', 'b-action'],
+  tag: 'nk-banner', group: 'page', classes: ['nk-banner', 'info', 'success', 'warning', 'danger', 'b-action'],
   title: t('Banner', 'Banner'),
   desc: t('A tinted notice row. The colour modifier becomes <code>variant</code>; an action link goes into <code>slot="action"</code> and sits at the right edge.', 'Eine getönte Hinweiszeile. Der Farb-Modifikator wird <code>variant</code>; ein Aktions-Link kommt in <code>slot="action"</code> und sitzt am rechten Rand.'),
   mobile: t('Wraps; the action drops below the text when needed.', 'Bricht um; die Aktion rutscht bei Bedarf unter den Text.'),
-  attrs: [str('variant', 'info | success | warning', 'Colour pair.', 'Farbpaar.')],
+  attrs: [str('variant', 'info | success | warning | danger', 'Tint.', 'Tönung.')],
   slots: [{ name: '(default)', desc: t('Icon and text.', 'Icon und Text.') }, { name: 'action', desc: t('Action link (underlined, right).', 'Aktions-Link (unterstrichen, rechts).') }],
   events: [],
   example: W => `<nk-banner variant="info">ℹ️ <span>${W.bannerInfo}</span><span slot="action">${W.openPalette}</span></nk-banner>
 <nk-banner variant="warning">⚠️ <span>${W.bannerWarn}</span><span slot="action">${W.view}</span></nk-banner>
-<nk-banner variant="success">✓ <span>${W.bannerOk}</span></nk-banner>`,
+<nk-banner variant="success">✓ <span>${W.bannerOk}</span></nk-banner>
+<nk-banner variant="danger">⛔ <span>${W.bannerDanger}</span></nk-banner>`,
   classMarkup: W => `<div class="nk-banner info">ℹ️ <span>${W.bannerInfo}</span><span class="b-action">${W.openPalette}</span></div>
 <div class="nk-banner warning">⚠️ <span>${W.bannerWarn}</span><span class="b-action">${W.view}</span></div>
-<div class="nk-banner success">✓ <span>${W.bannerOk}</span></div>`,
+<div class="nk-banner success">✓ <span>${W.bannerOk}</span></div>
+<div class="nk-banner danger">⛔ <span>${W.bannerDanger}</span></div>`,
 },
 {
   tag: 'nk-empty', group: 'page', classes: ['nk-empty', 'e-icon', 'e-title', 'e-desc'],
@@ -1121,12 +1123,12 @@ ${dbScript(W)}`,
 </div>`,
 },
 {
-  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'mini-avatar', 'nk-new-row'], wide: true, script: true,
+  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'wrap', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'mini-avatar', 'nk-new-row'], wide: true, script: true,
   title: t('Table view', 'Tabellenansicht'),
   desc: t('Renders <code>columns</code> × <code>rows</code> as the NotionKit table. Cells are polymorphic (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) and rendered as plain markup by the exported <code>renderPropertyCell()</code> – every cell rule starts with <code>.nk-table</code>, so a cell element of its own would never be styled. Header clicks sort with <code>sortable</code>.',
           'Rendert <code>columns</code> × <code>rows</code> als NotionKit-Tabelle. Zellen sind polymorph (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) und werden vom exportierten <code>renderPropertyCell()</code> als Klassen-Markup gerendert – jede Zellregel beginnt mit <code>.nk-table</code>, ein eigenes Zellen-Element würde nie gestylt. Kopfklicks sortieren mit <code>sortable</code>.'),
   mobile: t('Scrolls horizontally inside <code>.nk-table-wrap</code>.', 'Scrollt horizontal in <code>.nk-table-wrap</code>.'),
-  attrs: [str('name', 'string', 'View name (tab id).', 'View-Name (Tab-Kennung).'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('badge', 'string', 'Tab badge.', 'Tab-Badge.'), bool('count', 'Row count as badge.', 'Zeilenzahl als Badge.'), bool('new-row', 'Show the add row.', 'Hinzufügen-Zeile zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' }), bool('sortable', 'Header click sorts locally.', 'Kopfklick sortiert lokal.'), str('sort-key', 'string', 'Sorted column.', 'Sortierte Spalte.'), str('sort-dir', 'asc | desc', 'Direction.', 'Richtung.')],
+  attrs: [str('name', 'string', 'View name (tab id).', 'View-Name (Tab-Kennung).'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('badge', 'string', 'Tab badge.', 'Tab-Badge.'), bool('count', 'Row count as badge.', 'Zeilenzahl als Badge.'), bool('new-row', 'Show the add row.', 'Hinzufügen-Zeile zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' }), bool('sortable', 'Header click sorts locally.', 'Kopfklick sortiert lokal.'), str('sort-key', 'string', 'Sorted column.', 'Sortierte Spalte.'), str('sort-dir', 'asc | desc', 'Direction.', 'Richtung.'), bool('wrap', 'Cell text may break (Notion\'s "wrap column").', 'Zellentext darf umbrechen (Notions „Spalte umbrechen“).')],
   slots: [],
   events: [{ name: 'nk-select', detail: '{ row, id }', desc: t('Row clicked.', 'Zeile geklickt.') }, { name: 'nk-change', detail: '{ row, key, value }', desc: t('Checkbox cell toggled (row updated in place).', 'Checkbox-Zelle umgeschaltet (Zeile direkt aktualisiert).') }, { name: 'nk-action', detail: "{ action: 'sort' | 'new-row', key?, value? }", desc: t('Header or add row clicked.', 'Kopf oder Hinzufügen-Zeile geklickt.') }],
   props: ['columns', 'rows', 'data'], methods: ['refresh()'],

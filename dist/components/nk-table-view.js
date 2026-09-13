@@ -1,14 +1,15 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
-import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-Dn91uFkf.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
+import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
 
-// <nk-table-view name="table" label="▦ Table" count new-row sortable></nk-table-view>
+// <nk-table-view name="table" label="▦ Table" count new-row sortable wrap></nk-table-view>
+// `wrap` lets cell text break (`.nk-table.wrap`), like Notion's "wrap column".
 // Standalone: view.columns = […]; view.rows = […];  Inside <nk-database> the
 // database pushes `data`. → <div class="nk-table-wrap"><table class="nk-table">…</table><div class="nk-new-row">＋ New page</div></div>
 // Cells are plain markup from renderPropertyCell(); rows fire nk-select,
 // checkboxes nk-change, headers nk-action { action: 'sort' } (and sort locally
 // with `sortable`), the add row nk-action { action: 'new-row' }.
 class NkTableView extends NkElement {
-  static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'new-row', 'new-row-label', 'sortable', 'sort-key', 'sort-dir']; }
+  static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'new-row', 'new-row-label', 'sortable', 'sort-key', 'sort-dir', 'wrap']; }
 
   render() {
     this._wrap = this.createElement('div', ['nk-table-wrap']);
@@ -33,6 +34,7 @@ class NkTableView extends NkElement {
 
   _render() {
     if (!this._thead) return;
+    this._table.classList.toggle('wrap', this.getBoolAttr('wrap'));
     const tr = document.createElement('tr');
     for (const col of this._columns) {
       const th = this.createElement('th', [], { 'data-key': col.key, scope: 'col' });

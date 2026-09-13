@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-Bet1FMjb.js';
+import { N as NkElement } from './shared/base-FHMDMonZ.js';
 
 // <nk-progress value="72" label="72%"></nk-progress>
 // The bar is `.nk-progress > i` — a child combinator, so both nodes live here.

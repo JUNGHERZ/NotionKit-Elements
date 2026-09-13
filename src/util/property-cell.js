@@ -6,7 +6,7 @@
 // column: { key, label, type, icon, options: [{ value, label, color }], title }
 // types: text | select | multi-select | date | person | checkbox | url | number | progress
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-const COLORS = ['blue', 'green', 'orange', 'purple'];
+const COLORS = ['gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'];
 
 export function optionFor(column, value) {
   const opts = column.options || [];
@@ -15,7 +15,7 @@ export function optionFor(column, value) {
 
 export function tagFor(column, value) {
   const opt = optionFor(column, value);
-  const color = opt?.color && COLORS.includes(opt.color) ? opt.color : 'blue';
+  const color = opt?.color && COLORS.includes(opt.color) ? opt.color : 'gray';   // Notion's default option colour
   return el('span', `nk-tag ${color}`, opt?.label ?? String(value));
 }
 

@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.3.1) wrapping NotionKit CSS v1.4.1 – the calm, document-centric design system in the Notion idiom. 71 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.5.0) wrapping NotionKit CSS v1.5.0 – the calm, document-centric design system in the Notion idiom. 71 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.3.1) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -413,23 +413,23 @@ _No attributes._
 
 ### 3.11 `<nk-tag>` – Tag
 
-Semantic status tag. The colour modifier class becomes the `color` attribute; each pair is tuned per theme.
+The select option as Notion draws it, in its nine colours. The colour modifier class becomes the `color` attribute; without one it is the grey tag. Each pair is tuned per theme.
 
 ```html
-<nk-tag color="blue">In progress</nk-tag> <nk-tag color="green">Done</nk-tag> <nk-tag color="orange">Planned</nk-tag> <nk-tag color="purple">Design</nk-tag>
+<nk-tag>Not started</nk-tag> <nk-tag color="brown">Archive</nk-tag> <nk-tag color="orange">Planned</nk-tag> <nk-tag color="yellow">Review</nk-tag> <nk-tag color="green">Done</nk-tag> <nk-tag color="blue">In progress</nk-tag> <nk-tag color="purple">Design</nk-tag> <nk-tag color="pink">Idea</nk-tag> <nk-tag color="red">Blocked</nk-tag>
 ```
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `color` | blue | green | orange | purple | – | Colour pair. |
+| `color` | gray | brown | orange | yellow | green | blue | purple | pink | red | – | Colour pair; grey without it. |
 
 **Slots:** `(default)` – Tag text.
 
-**Replaces:** `.nk-tag`, `.blue`, `.green`, `.orange`, `.purple`
+**Replaces:** `.nk-tag`, `.gray`, `.brown`, `.orange`, `.yellow`, `.green`, `.blue`, `.purple`, `.pink`, `.red`
 
 ```html
 <!-- equivalent class markup -->
-<span class="nk-tag blue">In progress</span> <span class="nk-tag green">Done</span> <span class="nk-tag orange">Planned</span> <span class="nk-tag purple">Design</span>
+<span class="nk-tag">Not started</span> <span class="nk-tag brown">Archive</span> <span class="nk-tag orange">Planned</span> <span class="nk-tag yellow">Review</span> <span class="nk-tag green">Done</span> <span class="nk-tag blue">In progress</span> <span class="nk-tag purple">Design</span> <span class="nk-tag pink">Idea</span> <span class="nk-tag red">Blocked</span>
 ```
 
 **Small screens:** Unchanged.
@@ -1207,21 +1207,23 @@ A tinted notice row. The colour modifier becomes `variant`; an action link goes 
 <nk-banner variant="info">ℹ️ <span>This page is a <b>component preview</b> – every element follows the same design tokens.</span><span slot="action">Open palette</span></nk-banner>
 <nk-banner variant="warning">⚠️ <span>The “Project overview” database has 2 overdue entries.</span><span slot="action">View</span></nk-banner>
 <nk-banner variant="success">✓ <span>All changes have been synced.</span></nk-banner>
+<nk-banner variant="danger">⛔ <span>The connection to Notion was lost.</span></nk-banner>
 ```
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `variant` | info | success | warning | – | Colour pair. |
+| `variant` | info | success | warning | danger | – | Tint. |
 
 **Slots:** `(default)` – Icon and text. · `action` – Action link (underlined, right).
 
-**Replaces:** `.nk-banner`, `.info`, `.success`, `.warning`, `.b-action`
+**Replaces:** `.nk-banner`, `.info`, `.success`, `.warning`, `.danger`, `.b-action`
 
 ```html
 <!-- equivalent class markup -->
 <div class="nk-banner info">ℹ️ <span>This page is a <b>component preview</b> – every element follows the same design tokens.</span><span class="b-action">Open palette</span></div>
 <div class="nk-banner warning">⚠️ <span>The “Project overview” database has 2 overdue entries.</span><span class="b-action">View</span></div>
 <div class="nk-banner success">✓ <span>All changes have been synced.</span></div>
+<div class="nk-banner danger">⛔ <span>The connection to Notion was lost.</span></div>
 ```
 
 **Small screens:** Wraps; the action drops below the text when needed.
@@ -2102,12 +2104,13 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
 | `sortable` | boolean | – | Header click sorts locally. |
 | `sort-key` | string | – | Sorted column. |
 | `sort-dir` | asc | desc | – | Direction. |
+| `wrap` | boolean | – | Cell text may break (Notion's "wrap column"). |
 
 **Events:** `nk-select` `{ row, id }` – Row clicked. · `nk-change` `{ row, key, value }` – Checkbox cell toggled (row updated in place). · `nk-action` `{ action: 'sort' | 'new-row', key?, value? }` – Header or add row clicked.
 
 **Properties:** `columns`, `rows`, `data` · **Methods:** `refresh()`
 
-**Replaces:** `.nk-table-wrap`, `.nk-table`, `.th-icon`, `.row-title`, `.date-cell`, `.person-cell`, `.mini-avatar`, `.nk-new-row`
+**Replaces:** `.nk-table-wrap`, `.nk-table`, `.wrap`, `.th-icon`, `.row-title`, `.date-cell`, `.person-cell`, `.mini-avatar`, `.nk-new-row`
 
 ```html
 <!-- equivalent class markup -->
@@ -2373,8 +2376,8 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2440,8 +2443,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and (from wave 3) `nk-page` are `d
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2507,8 +2510,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2567,8 +2570,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -2642,8 +2645,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -2688,8 +2691,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.4.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.3.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -2871,4 +2874,4 @@ Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + 
 
 
 ---
-*NotionKit Elements v1.3.1 · wrapping NotionKit CSS v1.4.1 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.5.0 · wrapping NotionKit CSS v1.5.0 · MIT · Jungherz GmbH*
