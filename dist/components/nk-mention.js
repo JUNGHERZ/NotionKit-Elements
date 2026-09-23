@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-mention type="person"><span slot="avatar" class="mini-avatar" style="background:#448361">SL</span>Sara Lindt</nk-mention>
 // <nk-mention type="page">📄 Onboarding</nk-mention>   <nk-mention type="date">📅 May 20</nk-mention>

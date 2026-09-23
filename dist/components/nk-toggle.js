@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-toggle label="Details" open>Body…</nk-toggle>
 // → <details class="nk-toggle" open><summary>Details</summary><div class="toggle-body">…</div></details>

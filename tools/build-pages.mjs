@@ -88,7 +88,7 @@ function docs(lang) {
 <section class="site-section" id="install"><h2>${t.install}</h2>
   <p class="doc-h4">${t.installCdn}</p>${code(`<link rel="stylesheet" href="${CDN_CSS}">\n<script src="${CDN_JS}"></script>`)}
   <p class="doc-h4">${t.installNpm}</p>${code(`npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit\n\nimport '@jungherz-de/notionkit/notionkit.css';\nimport '@jungherz-de/notionkit-elements';`)}
-  <p class="doc-h4">${t.installSingle}</p>${code(`import '@jungherz-de/notionkit-elements/components/nk-btn.js';`)}
+  <p class="doc-h4">${t.installSingle}</p>${code(`import '@jungherz-de/notionkit-elements/components/nk-btn.js';\n\n<!-- build-free: map NotionKit's sheet once, the files import it -->\n<script type="importmap">{ "imports": { "@jungherz-de/notionkit/notionkit-styles.js": "/node_modules/@jungherz-de/notionkit/notionkit-styles.js" } }</script>`)}
 </section>
 <section class="site-section" id="prereq"><h2>${t.prereq}</h2><p class="doc-desc">${t.prereqBody}</p>${code(`<html lang="en" data-theme="light">\n  <head>\n    <link rel="stylesheet" href="${CDN_CSS}">\n    <script src="${CDN_JS}"></script>\n  </head>\n  <body class="nk-body">\n    <nk-btn variant="primary">${W.save}</nk-btn>\n  </body>\n</html>`)}</section>
 <section class="site-section" id="hosts"><h2>${t.hosts}</h2><p class="doc-desc">${t.hostsBody}</p>${code(`<!-- ✓ spacing on a wrapper you own -->\n<div style="margin-top:16px"><nk-btn variant="primary">${W.save}</nk-btn></div>\n\n<!-- ✗ the host has no box; this margin does nothing -->\n<nk-btn style="margin-top:16px" variant="primary">${W.save}</nk-btn>`)}</section>

@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-quote cite="Ada Lovelace">The Analytical Engine weaves…</nk-quote>
 // .q-cite has no ::slotted() twin, so the citation is rendered here.

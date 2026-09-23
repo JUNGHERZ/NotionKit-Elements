@@ -1,5 +1,7 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
-import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
+import { NkElement } from './base.js';
+import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-o7N30kAQ.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
+import './shared/avatar-BiqCaHOt.js';
 
 // <nk-table-view name="table" label="▦ Table" count new-row sortable wrap></nk-table-view>
 // `wrap` lets cell text break (`.nk-table.wrap`), like Notion's "wrap column".
@@ -50,6 +52,8 @@ class NkTableView extends NkElement {
       const r = this.createElement('tr', [], { 'data-id': row.id ?? '' });
       for (const col of this._columns) {
         const td = document.createElement('td');
+        // Numbers right-aligned in figures of equal width, as Notion sets them.
+        if (col.type === 'number') td.className = 'num';
         td.appendChild(renderPropertyCell(col, row[col.key], row));
         r.appendChild(td);
       }

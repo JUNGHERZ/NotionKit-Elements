@@ -1,5 +1,7 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
-import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
+import { NkElement } from './base.js';
+import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-o7N30kAQ.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
+import './shared/avatar-BiqCaHOt.js';
 
 // <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
 // Groups rows by a select column (default: the first select column); one

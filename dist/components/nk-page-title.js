@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-page-title>NotionKit MVP</nk-page-title>          → <h1 class="nk-page-title">
 // <nk-page-title editable placeholder="Untitled">…</nk-page-title>

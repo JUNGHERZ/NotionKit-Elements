@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-btn variant="primary" small>Save</nk-btn>   →  <button class="nk-btn primary small">
 // <nk-btn href="/docs" variant="secondary">Docs</nk-btn>  →  <a class="nk-btn secondary">

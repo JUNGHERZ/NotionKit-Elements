@@ -50,6 +50,8 @@ class NkTableView extends NkElement {
       const r = this.createElement('tr', [], { 'data-id': row.id ?? '' });
       for (const col of this._columns) {
         const td = document.createElement('td');
+        // Numbers right-aligned in figures of equal width, as Notion sets them.
+        if (col.type === 'number') td.className = 'num';
         td.appendChild(renderPropertyCell(col, row[col.key], row));
         r.appendChild(td);
       }

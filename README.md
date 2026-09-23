@@ -1,17 +1,17 @@
 <h1 align="center">🧩 NotionKit Elements</h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.5.3-2383e2?style=flat-square" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.6.0-2383e2?style=flat-square" alt="Version"></a>
   <a href="#"><img src="https://img.shields.io/badge/vanilla_JS-no_dependencies-448361?style=flat-square" alt="Vanilla JS"></a>
-  <a href="#"><img src="https://img.shields.io/badge/elements-71-529cca?style=flat-square" alt="71 Elements"></a>
+  <a href="#"><img src="https://img.shields.io/badge/elements-77-529cca?style=flat-square" alt="77 Elements"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-9065b0?style=flat-square" alt="MIT License"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.5.3-lightgrey?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.6.0-lightgrey?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/npm-%40jungherz--de%2Fnotionkit--elements-cb3837?style=flat-square&logo=npm" alt="npm"></a>
 </p>
 
 <p align="center">
   <strong>Drop-in Web Components for <a href="https://github.com/JUNGHERZ/NotionKit">NotionKit CSS</a></strong><br>
-  71 vanilla JavaScript custom elements wrapping NotionKit's calm, document-centric workspace look.<br>
+  77 vanilla JavaScript custom elements wrapping NotionKit's calm, document-centric workspace look.<br>
   Shadow DOM &middot; Native form participation &middot; Pixel parity with the class markup &middot; Zero dependencies.
 </p>
 
@@ -28,7 +28,7 @@
 
 ## ✨ What is NotionKit Elements?
 
-NotionKit Elements is the companion library to [NotionKit CSS](https://github.com/JUNGHERZ/NotionKit). It provides **71 Web Components** – from buttons and form controls over the sidebar, page tree and page shell to the settings modal, ⌘K palette, database views and AI thread – that encapsulate the class markup of the foundation into simple, declarative custom elements.
+NotionKit Elements is the companion library to [NotionKit CSS](https://github.com/JUNGHERZ/NotionKit). It provides **77 Web Components** – from buttons and form controls over the sidebar, page tree and page shell with its properties to the settings modal, ⌘K palette, database views and AI thread – that encapsulate the class markup of the foundation into simple, declarative custom elements.
 
 It is the **app layer** of the NotionKit family – three layers, one design language: [NotionKit](https://notionkit.jungherz.com) is the pure-CSS foundation, NotionKit Elements wraps it into web components for application UIs, and [NotionKit Web](https://notionkit-web.jungherz.com) is the Astro template for complete websites on top of the same foundation. The word stem stays the same across the layers: `.nk-callout` becomes `<nk-callout>`, a modifier class becomes an attribute, a state class becomes a boolean attribute.
 
@@ -56,11 +56,11 @@ It is the **app layer** of the NotionKit family – three layers, one design lan
 |---|---|
 | 🎯 **Pixel parity** | Every element renders identically to its class markup – verified by a Playwright pixel test in light and dark; the reference app differs by 0.00 % from the class version |
 | 🔌 **Shadow DOM** | Each root adopts the NotionKit *components* sheet via `adoptedStyleSheets`; tokens are inherited from the document, so one `:root { --nk-accent: … }` re-brands everything |
-| 🧩 **71 Elements** | Forms, content blocks, app shell & tree, page shell, overlays (modal, ⌘K palette, menus, popover, emoji picker, toast), database table & board, comments, AI thread |
+| 🧩 **77 Elements** | Forms, content blocks, app shell & tree, page shell with properties, panels and avatars, overlays (modal, ⌘K palette, menus, popover, emoji picker, toast), database table, board & list, comments, AI thread |
 | 🎛️ **Form participation** | Input, textarea, select, switch, check, radio, slider, segmented and model card work natively with `<form>` via `ElementInternals`; radios group across shadow roots |
 | 🌗 **Theme sync** | One observer mirrors `data-theme` on `<html>` into every element |
-| 🪶 **Lightweight** | 167 KB minified / 33 KB gzipped (IIFE, foundation sheet included), no external dependencies |
-| 📦 **Four bundle shapes** | IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk |
+| 🪶 **Lightweight** | 197 KB minified / 39 KB gzipped (IIFE, foundation sheet included), no external dependencies |
+| 📦 **Four bundle shapes** | IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `base.js`, which import NotionKit's sheet instead of carrying a copy |
 | 🤖 **AI-ready** | `SKILL.md` with copy-paste markup, six app skeletons and the rules – an agent given only that file built a working app in the release test |
 
 ---
@@ -71,8 +71,8 @@ It is the **app layer** of the NotionKit family – three layers, one design lan
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-field label="Display name" desc="Shown next to your comments">
@@ -90,10 +90,19 @@ npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 ```js
 import '@jungherz-de/notionkit/notionkit.css';
 import '@jungherz-de/notionkit-elements';                              // everything
-import '@jungherz-de/notionkit-elements/components/nk-btn.js';         // or one element (shared code is one extra chunk)
+import '@jungherz-de/notionkit-elements/components/nk-btn.js';         // or one element (shared code: base.js)
+import { componentsSheet } from '@jungherz-de/notionkit-elements';     // the sheet the elements adopt, for your own views
 ```
 
-Two prerequisites, always: `notionkit.css` on the document (the peer dependency, `>= 1.5.1`; 1.5.1 handles the safe areas, 1.5.0 brings the Notion-2025 tokens, the nine tag colours and the filled inputs, 1.4.x segmented scroll/wrap, the fixed tab bar and the dvh shell, 1.3.x the field layouts; from 1.5.0 on, Elements and the foundation share one version number – the elements are built and tested against the same release) and `class="nk-body"` on `<body>`. The elements ship no visual CSS of their own – every rule comes from the foundation. The bundle injects the design tokens once as `@layer notionkit-defaults`, so any plain `:root { --nk-accent: … }` of yours re-brands every element in both themes.
+The per-component files import NotionKit's sheet as `@jungherz-de/notionkit/notionkit-styles.js` rather than carrying a copy, so a project that adopts the sheet in its own views has it once. A bundler resolves it from `node_modules`; a build-free page adds one import-map entry:
+
+```html
+<script type="importmap">{ "imports": { "@jungherz-de/notionkit/notionkit-styles.js": "/node_modules/@jungherz-de/notionkit/notionkit-styles.js" } }</script>
+```
+
+Do not mix the full bundle with the per-component files: each brings its own `NkElement`. With the bundle, take `componentsSheet` and `NkElement` from the bundle (`NotionKitElements.componentsSheet` from the `<script>` build).
+
+Two prerequisites, always: `notionkit.css` on the document (the peer dependency, `>= 1.6.0`; 1.6.0 brings page properties, page options, list view, panels, prose and the avatar, 1.5.1 the safe areas, 1.5.0 the Notion-2025 tokens, the nine tag colours and the filled inputs; from 1.5.0 on, Elements and the foundation share one version number – the elements are built and tested against the same release) and `class="nk-body"` on `<body>`. The elements ship no visual CSS of their own – every rule comes from the foundation. The bundle injects the design tokens once as `@layer notionkit-defaults`, so any plain `:root { --nk-accent: … }` of yours re-brands every element in both themes.
 
 ## Elements
 
@@ -102,9 +111,9 @@ Two prerequisites, always: `notionkit.css` on the document (the peer dependency,
 | Forms & controls | `nk-btn` `nk-input` `nk-textarea` `nk-select` `nk-switch` `nk-check` `nk-radio` `nk-slider` `nk-field` `nk-fields` |
 | Content | `nk-tag` `nk-progress` `nk-callout` `nk-divider` `nk-heading` `nk-toggle` `nk-todo` `nk-kbd` `nk-code` `nk-quote` |
 | App shell & navigation | `nk-app` `nk-sidebar` `nk-workspace-switcher` `nk-section-label` `nk-tree` `nk-tree-item` `nk-topbar` `nk-breadcrumb` `nk-theme-toggle` `nk-tab-bar` `nk-tab-bar-item` |
-| Page shell & blocks | `nk-page` `nk-page-cover` `nk-page-title` `nk-page-actions` `nk-block-host` `nk-banner` `nk-empty` `nk-skeleton` `nk-synced` `nk-tabs` `nk-tab` `nk-segmented` `nk-stats` `nk-stat` `nk-avatar-group` `nk-mention` `nk-template-btn` `nk-model-card` `nk-profile-row` `nk-danger-zone` `nk-member-list` `nk-member-row` |
+| Page shell & blocks | `nk-page` `nk-page-cover` `nk-page-title` `nk-page-actions` `nk-props` `nk-prop` `nk-panels` `nk-panel` `nk-avatar` `nk-block-host` `nk-banner` `nk-empty` `nk-skeleton` `nk-synced` `nk-tabs` `nk-tab` `nk-segmented` `nk-stats` `nk-stat` `nk-avatar-group` `nk-mention` `nk-template-btn` `nk-model-card` `nk-profile-row` `nk-danger-zone` `nk-member-list` `nk-member-row` |
 | Overlays | `nk-modal` `nk-settings-pane` `nk-settings-user` `nk-cmdk` `nk-menu` `nk-menu-item` `nk-pop` `nk-emoji-picker` `nk-toast` |
-| Data & collaboration | `nk-database` `nk-table-view` `nk-board-view` `nk-filter-bar` `nk-comments` `nk-comment` `nk-ai-thread` `nk-ai-msg` `nk-ai-input-row` (+ the exported `renderPropertyCell()`) |
+| Data & collaboration | `nk-database` `nk-table-view` `nk-board-view` `nk-list-view` `nk-filter-bar` `nk-comments` `nk-comment` `nk-ai-thread` `nk-ai-msg` `nk-ai-input-row` (+ the exported `renderPropertyCell()`) |
 
 Static content goes in through attributes and slots, dynamic data through properties (`tree.data`, `database.rows`, `palette.commands`). Interactions fire custom events with fixed names: `nk-select`, `nk-change`, `nk-view-change`, `nk-command`, `nk-toggle`, `nk-submit`, `nk-action`. No fetching, no two-way binding – the elements render what they get.
 
@@ -114,7 +123,7 @@ Static content goes in through attributes and slots, dynamic data through proper
 - Every host is `display: contents`: the inner `.nk-*` element sits in the parent layout exactly where the class markup would. That is what makes the pixel parity hold – and why spacing belongs on a wrapper you own, not on the host.
 - Form controls are form-associated custom elements: `FormData`, `reset`, `required` and `<fieldset disabled>` just work. `<nk-radio>`s with the same `name` form a real group across shadow roots, with one tab stop and arrow keys.
 - Elements that copy light-DOM children (`nk-select` options, breadcrumb crumbs) watch them; `element.refresh()` is the escape hatch. Listeners are re-armed on every connect, so a moved element keeps working.
-- `::slotted()` matches only the assigned node: pass icons directly (`<span slot="icon">📁</span>`), never wrapped.
+- `::slotted()` matches only the assigned node: pass icons directly (`<span slot="icon">📁</span>`), never wrapped. For the same reason there is no `<nk-prose>`: rendered Markdown goes into a light-DOM `<div class="nk-prose">`, which reads the same rules as the editor adapter.
 - Overlays (`nk-modal`, `nk-cmdk`, `nk-toast`) go directly under `<body>`; they lock scroll, make the rest of the page `inert` and return focus.
 - The editor stays an adapter: `nk-block-host` is the shell, `docs-editor.js` the TipTap recipe (used in the demo app). `<nk-editor>` follows in v1.1 as an optional import, never in the core bundle.
 
@@ -122,7 +131,7 @@ Static content goes in through attributes and slots, dynamic data through proper
 
 ```bash
 npm install
-npm run build        # dist/: IIFE, minified IIFE, ESM, per-component ESM + shared chunk
+npm run build        # dist/: IIFE, minified IIFE, ESM, per-component ESM on dist/components/base.js
 npm run build:all    # + docs.html, showcase.html, index.html, de/, SKILL.md, llms.txt
 npm test             # Playwright: pixel parity vs. class markup (both themes), branding, reconnect, radio groups, light-DOM drift, forms, overlays, data views, per-component import
 npm run check:coverage && npm run check:versions

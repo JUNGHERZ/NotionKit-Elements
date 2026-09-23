@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-page-actions><span>👤 Ada</span><span>📅 12 May</span><span>🏷️ <nk-tag color="purple">Design</nk-tag></span></nk-page-actions>
 // → <div class="nk-page-meta">…</div>  – the meta row under the title

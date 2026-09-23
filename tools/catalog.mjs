@@ -35,23 +35,30 @@ const dbScript = W => `<script>{
     { key: 'owner', label: '${W.dbOwner}', type: 'person', icon: '👤' },
     { key: 'due', label: '${W.dbDue}', type: 'date', icon: '📅' },
     { key: 'progress', label: '${W.dbProgress}', type: 'progress', icon: '▰' },
+    { key: 'effort', label: '${W.effort}', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: '${W.p1}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '08.05.2026', progress: 100 },
-    { id: 2, icon: '📄', name: '${W.p2}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '10.05.2026', progress: 100 },
-    { id: 3, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '20.05.2026', progress: 65 },
-    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0 },
+    { id: 1, icon: '🧭', name: '${W.p1}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: '${W.p2}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
 }</script>`;
 const dbTableClass = W => `<div class="nk-table-wrap"><table class="nk-table">
-  <thead><tr><th><span class="th-icon">📄</span>${W.dbName}</th><th><span class="th-icon">◉</span>${W.dbStatus}</th><th><span class="th-icon">👤</span>${W.dbOwner}</th><th><span class="th-icon">📅</span>${W.dbDue}</th><th><span class="th-icon">▰</span>${W.dbProgress}</th></tr></thead>
+  <thead><tr><th><span class="th-icon">📄</span>${W.dbName}</th><th><span class="th-icon">◉</span>${W.dbStatus}</th><th><span class="th-icon">👤</span>${W.dbOwner}</th><th><span class="th-icon">📅</span>${W.dbDue}</th><th><span class="th-icon">▰</span>${W.dbProgress}</th><th><span class="th-icon">#</span>${W.effort}</th></tr></thead>
   <tbody>
-    <tr><td><span class="row-title">🧭 ${W.p1}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">📄 ${W.p2}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">🗃️ ${W.p3}</span></td><td><span class="nk-tag blue">${W.statusProgress}</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td></tr>
-    <tr><td><span class="row-title">▤ ${W.p4}</span></td><td><span class="nk-tag orange">${W.statusPlanned}</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td></tr>
+    <tr><td><span class="row-title">🧭 ${W.p1}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>6.0</span></td></tr>
+    <tr><td><span class="row-title">📄 ${W.p2}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>4.5</span></td></tr>
+    <tr><td><span class="row-title">🗃️ ${W.p3}</span></td><td><span class="nk-tag blue">${W.statusProgress}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td><td class="num"><span>12.5</span></td></tr>
+    <tr><td><span class="row-title">▤ ${W.p4}</span></td><td><span class="nk-tag orange">${W.statusPlanned}</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td></tr>
   </tbody>
 </table><div class="nk-new-row">＋ New page</div></div>`;
+const dbListClass = W => `<div class="nk-list">
+  <div class="nk-list-item"><span class="l-icon">🧭</span><span class="l-title">${W.p1}</span><span class="l-meta">08.05.2026<span class="nk-tag green">${W.statusDone}</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">📄</span><span class="l-title">${W.p2}</span><span class="l-meta">10.05.2026<span class="nk-tag green">${W.statusDone}</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">🗃️</span><span class="l-title">${W.p3}</span><span class="l-meta">20.05.2026<span class="nk-tag blue">${W.statusProgress}</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">▤</span><span class="l-title">${W.p4}</span><span class="l-meta">02.06.2026<span class="nk-tag orange">${W.statusPlanned}</span></span></div>
+</div>`;
 const dbBoardClass = W => `<div class="nk-board active">
   <div class="nk-board-col"><div class="nk-board-col-header"><span class="nk-tag orange">${W.statusPlanned}</span><span class="count">1</span></div><div class="nk-card" draggable="true"><div class="card-title">▤ ${W.p4}</div><div class="card-meta"><span>📅 02.06.2026</span><span>▰ 0%</span></div></div><div class="nk-new-row" style="padding:6px 10px">＋</div></div>
   <div class="nk-board-col"><div class="nk-board-col-header"><span class="nk-tag blue">${W.statusProgress}</span><span class="count">1</span></div><div class="nk-card" draggable="true"><div class="card-title">🗃️ ${W.p3}</div><div class="card-meta"><span>📅 20.05.2026</span><span>▰ 65%</span></div></div><div class="nk-new-row" style="padding:6px 10px">＋</div></div>
@@ -269,11 +276,11 @@ export const CATALOG = [
   classMarkup: W => `<span class="nk-tag">${W.tagGray}</span> <span class="nk-tag brown">${W.tagBrown}</span> <span class="nk-tag orange">${W.planned}</span> <span class="nk-tag yellow">${W.tagYellow}</span> <span class="nk-tag green">${W.done}</span> <span class="nk-tag blue">${W.inProgress}</span> <span class="nk-tag purple">${W.design}</span> <span class="nk-tag pink">${W.tagPink}</span> <span class="nk-tag red">${W.tagRed}</span>`,
 },
 {
-  tag: 'nk-progress', group: 'content', classes: ['nk-progress', 'nk-progress-label'],
+  tag: 'nk-progress', group: 'content', classes: ['nk-progress', 'nk-progress-label', 'wide'],
   title: t('Progress', 'Fortschritt'),
   desc: t('A 60px bar with an optional label. <code>value</code>/<code>max</code> set the fill; the bar carries <code>role="progressbar"</code>.', 'Ein 60px-Balken mit optionalem Label. <code>value</code>/<code>max</code> setzen die Füllung; der Balken trägt <code>role="progressbar"</code>.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('value', 'number', 'Current value.', 'Aktueller Wert.', { default: '0' }), str('max', 'number', 'Maximum.', 'Maximum.', { default: '100' }), str('label', 'string', 'Text after the bar.', 'Text hinter dem Balken.')],
+  attrs: [str('value', 'number', 'Current value.', 'Aktueller Wert.', { default: '0' }), str('max', 'number', 'Maximum.', 'Maximum.', { default: '100' }), str('label', 'string', 'Text after the bar.', 'Text hinter dem Balken.'), bool('wide', 'Fills its row – a property value, a panel; in a flex row the label stays beside it.', 'Füllt seine Zeile – ein Eigenschaftswert, ein Panel; in einer flex-Zeile bleibt das Label daneben.')],
   slots: [],
   events: [],
   example: W => `<nk-progress value="72" label="72%"></nk-progress>`,
@@ -620,12 +627,12 @@ export const CATALOG = [
   classMarkup: W => `<div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nav class="nk-tab-bar always"><button class="nk-tab-bar-item active"><span class="icon">🏠</span><span class="label">${W.home}</span></button><button class="nk-tab-bar-item"><span class="icon">📥</span><span class="label">${W.inbox}</span></button></nav></div>`,
 },
 {
-  tag: 'nk-page', group: 'page', classes: ['nk-page-scroll', 'nk-page', 'nk-page-icon', 'nk-cover', 'lead'], frame: 360,
+  tag: 'nk-page', group: 'page', classes: ['nk-page-scroll', 'nk-page', 'nk-page-icon', 'nk-cover', 'lead', 'full', 'small'], frame: 360,
   title: t('Page', 'Seite'),
   desc: t('The document column: a scrolling wrapper, an optional cover, the 760px page with 64px side padding, and the page icon (rendered here because its slotted twin is keyed on the parent). <code>narrow</code> drops the scroll wrapper for pages that are the document itself.',
           'Die Dokumentspalte: scrollender Wrapper, optionales Cover, die 760px-Seite mit 64px Seitenabstand und das Seiten-Icon (hier gerendert, weil sein Slot-Zwilling am Elternelement hängt). <code>narrow</code> lässt den Scroll-Wrapper weg, wenn die Seite selbst das Dokument ist.'),
   mobile: t('Side padding drops to 24px below 860px.', 'Seitenabstand sinkt unter 860px auf 24px.'),
-  attrs: [str('icon', 'string', 'Page emoji; click fires <code>nk-action</code>.', 'Seiten-Emoji; Klick feuert <code>nk-action</code>.'), bool('cover', 'Shows the cover strip; the icon then overlaps its bottom edge and the page drops its top padding (the stylesheet’s <code>covered</code> state, also set for a slotted <code>nk-page-cover</code>). Without it the icon sits in 24px top padding, fully visible.', 'Zeigt den Cover-Streifen; das Icon überlappt dann dessen Unterkante und die Seite verliert ihr oberes Padding (der <code>covered</code>-Zustand des Stylesheets, auch bei geslottetem <code>nk-page-cover</code>). Ohne Cover sitzt das Icon in 24px oberem Padding, ganz sichtbar.'), bool('narrow', 'No scroll wrapper (landing / docs page).', 'Ohne Scroll-Wrapper (Landing-/Doku-Seite).')],
+  attrs: [str('icon', 'string', 'Page emoji; click fires <code>nk-action</code>.', 'Seiten-Emoji; Klick feuert <code>nk-action</code>.'), bool('full', 'Page option “Full width”: the column fills the window instead of stopping at 760px.', 'Seitenoption „Volle Breite“: Die Spalte füllt das Fenster, statt bei 760px zu enden.'), bool('small', 'Page option “Small text”: document text 14px instead of 16px; headings, lead, prose and editor follow.', 'Seitenoption „Kleiner Text“: Dokumenttext 14px statt 16px; Überschriften, Lead, Prosa und Editor ziehen mit.'), bool('cover', 'Shows the cover strip; the icon then overlaps its bottom edge and the page drops its top padding (the stylesheet’s <code>covered</code> state, also set for a slotted <code>nk-page-cover</code>). Without it the icon sits in 24px top padding, fully visible.', 'Zeigt den Cover-Streifen; das Icon überlappt dann dessen Unterkante und die Seite verliert ihr oberes Padding (der <code>covered</code>-Zustand des Stylesheets, auch bei geslottetem <code>nk-page-cover</code>). Ohne Cover sitzt das Icon in 24px oberem Padding, ganz sichtbar.'), bool('narrow', 'No scroll wrapper (landing / docs page).', 'Ohne Scroll-Wrapper (Landing-/Doku-Seite).')],
   slots: [{ name: '(default)', desc: t('Title, meta, blocks – anything with <code>class="lead"</code> on a <code>&lt;p&gt;</code> becomes the lead paragraph.', 'Titel, Meta, Blöcke – ein <code>&lt;p class="lead"&gt;</code> wird zum Vorspann.') }, { name: 'cover', desc: t('An <code>nk-page-cover</code> (instead of the <code>cover</code> attribute).', 'Ein <code>nk-page-cover</code> (statt des <code>cover</code>-Attributs).') }, { name: 'icon', desc: t('Custom icon node.', 'Eigener Icon-Knoten.') }],
   events: [{ name: 'nk-action', detail: "{ action: 'icon', value }", desc: t('Icon clicked (open an emoji picker).', 'Icon geklickt (Emoji-Picker öffnen).') }],
   example: W => `<div style="display:flex;flex-direction:column;height:100%"><nk-page icon="🚀" cover>
@@ -643,12 +650,12 @@ export const CATALOG = [
 {
   tag: 'nk-page-cover', group: 'page', classes: ['nk-cover'],
   title: t('Page cover', 'Seiten-Cover'),
-  desc: t('The 200px cover band. Without <code>src</code> it shows the token gradient; with <code>src</code> an image, covered and centred.', 'Das 200px-Cover-Band. Ohne <code>src</code> der Token-Gradient, mit <code>src</code> ein Bild, ausgefüllt und zentriert.'),
+  desc: t('The 200px cover band. Without <code>src</code> it shows the token gradient; with <code>src</code> a picture – an <code>&lt;img&gt;</code> inside the band, cropped rather than stretched. <code>position</code> moves the crop, as Notion’s “Reposition” does.', 'Das 200px-Cover-Band. Ohne <code>src</code> der Token-Gradient, mit <code>src</code> ein Bild – ein <code>&lt;img&gt;</code> im Band, beschnitten statt verzerrt. <code>position</code> verschiebt den Ausschnitt wie Notions „Neu positionieren“.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('src', 'URL', 'Cover image.', 'Cover-Bild.')],
+  attrs: [str('src', 'URL', 'Cover picture.', 'Cover-Bild.'), str('position', 'CSS object-position', 'Where the crop sits.', 'Wo der Ausschnitt sitzt.', { default: 'center' })],
   slots: [], events: [],
-  example: W => `<nk-page-cover></nk-page-cover>`,
-  classMarkup: W => `<div class="nk-cover"></div>`,
+  example: W => `<nk-page-cover src="/covers/meadow.svg"></nk-page-cover>`,
+  classMarkup: W => `<div class="nk-cover"><img src="/covers/meadow.svg" alt=""></div>`,
 },
 {
   tag: 'nk-page-title', group: 'page', classes: ['nk-page-title'],
@@ -670,6 +677,66 @@ export const CATALOG = [
   attrs: [], slots: [{ name: '(default)', desc: t('Meta items.', 'Meta-Einträge.') }], events: [],
   example: W => `<nk-page-actions><span>${W.owner}</span><span>${W.created}</span><span>${W.tagged} <nk-tag color="purple">${W.designSystem}</nk-tag></span></nk-page-actions>`,
   classMarkup: W => `<div class="nk-page-meta"><span>${W.owner}</span><span>${W.created}</span><span>${W.tagged} <span class="nk-tag purple">${W.designSystem}</span></span></div>`,
+},
+{
+  tag: 'nk-props', group: 'page', classes: ['nk-props'],
+  title: t('Page properties', 'Seiteneigenschaften'),
+  desc: t('The properties under the title of a database page, the pattern Notion is known for: a list of <code>nk-prop</code> rows. The rows are hosts with <code>display: contents</code>, so each renders as a row of this list – no markup of their own around them.', 'Die Eigenschaften unter dem Titel einer Datenbankseite, das Muster, für das Notion bekannt ist: eine Liste von <code>nk-prop</code>-Zeilen. Die Zeilen sind Hosts mit <code>display: contents</code> und erscheinen deshalb als Zeilen dieser Liste – ohne eigenes Markup drumherum.'),
+  mobile: t('Below 860px each property stacks: the name above its value.', 'Unter 860px stapelt sich jede Eigenschaft: der Name über seinem Wert.'),
+  attrs: [], slots: [{ name: '(default)', desc: t('<code>nk-prop</code> children.', '<code>nk-prop</code>-Kinder.') }], events: [],
+  example: W => `<nk-props style="max-width:520px">
+  <nk-prop label="${W.propStatus}" icon="◉"><nk-tag color="blue">${W.statusProgress}</nk-tag></nk-prop>
+  <nk-prop label="${W.propOwner}" icon="👤"><nk-avatar size="small" color="purple">AL</nk-avatar>Ada Lovelace</nk-prop>
+  <nk-prop label="${W.propDue}" icon="📅">${W.dueDate}</nk-prop>
+  <nk-prop label="${W.propTags}" icon="🏷️"><nk-tag color="purple">${W.designSystem}</nk-tag><nk-tag>CSS</nk-tag></nk-prop>
+  <nk-prop label="${W.propProgress}" icon="▰"><nk-progress value="65" label="65 %" wide></nk-progress></nk-prop>
+</nk-props>`,
+  classMarkup: W => `<dl class="nk-props" style="max-width:520px">
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">◉</span>${W.propStatus}</dt><dd class="p-value"><span class="nk-tag blue">${W.statusProgress}</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">👤</span>${W.propOwner}</dt><dd class="p-value"><span class="nk-avatar small purple">AL</span>Ada Lovelace</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>${W.propDue}</dt><dd class="p-value">${W.dueDate}</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">🏷️</span>${W.propTags}</dt><dd class="p-value"><span class="nk-tag purple">${W.designSystem}</span><span class="nk-tag">CSS</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">▰</span>${W.propProgress}</dt><dd class="p-value"><span class="nk-progress wide"><i style="width:65%"></i></span><span class="nk-progress-label">65 %</span></dd></div>
+</dl>`,
+},
+{
+  tag: 'nk-prop', group: 'page', classes: ['nk-prop', 'p-name', 'p-icon', 'p-value'],
+  title: t('Page property', 'Seiteneigenschaft'),
+  desc: t('One property: the name with its type icon in a 160px column, the value beside it, 34px with the hover wash on both halves. The value is the element’s content – tags, an avatar and a name, a date, <code>&lt;nk-progress wide&gt;</code>. A click fires <code>nk-action</code> with the half that was hit, the moment Notion opens the property’s editor.', 'Eine Eigenschaft: der Name mit seinem Typ-Icon in einer 160px-Spalte, daneben der Wert, 34px hoch mit Hover-Hauch auf beiden Hälften. Der Wert ist der Inhalt des Elements – Tags, ein Avatar mit Namen, ein Datum, <code>&lt;nk-progress wide&gt;</code>. Ein Klick feuert <code>nk-action</code> mit der getroffenen Hälfte – der Moment, in dem Notion den Editor der Eigenschaft öffnet.'),
+  mobile: t('Stacks below 860px.', 'Stapelt sich unter 860px.'),
+  attrs: [str('label', 'string', 'Property name.', 'Name der Eigenschaft.'), str('icon', 'string', 'Type icon.', 'Typ-Icon.')],
+  slots: [{ name: '(default)', desc: t('The value.', 'Der Wert.') }, { name: 'icon', desc: t('Icon node.', 'Icon-Knoten.') }],
+  events: [{ name: 'nk-action', detail: "{ action: 'name' | 'value', label }", desc: t('Name or value clicked.', 'Name oder Wert geklickt.') }],
+  example: W => `<nk-props style="max-width:520px"><nk-prop label="${W.propDue}" icon="📅">${W.dueDate}</nk-prop></nk-props>`,
+  classMarkup: W => `<dl class="nk-props" style="max-width:520px"><div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>${W.propDue}</dt><dd class="p-value">${W.dueDate}</dd></div></dl>`,
+},
+{
+  tag: 'nk-panels', group: 'page', classes: ['nk-panels'],
+  title: t('Panels', 'Panels'),
+  desc: t('A grid of <code>nk-panel</code>s: columns of at least 200px that share the row. The panels are hosts with <code>display: contents</code>, so each is a cell of this grid.', 'Ein Raster aus <code>nk-panel</code>s: Spalten von mindestens 200px, die sich die Zeile teilen. Die Panels sind Hosts mit <code>display: contents</code> und damit Zellen dieses Rasters.'),
+  mobile: t('Falls to one column as soon as two 200px columns no longer fit.', 'Fällt auf eine Spalte, sobald zwei 200px-Spalten nicht mehr passen.'),
+  attrs: [], slots: [{ name: '(default)', desc: t('<code>nk-panel</code> children.', '<code>nk-panel</code>-Kinder.') }], events: [],
+  example: W => `<nk-panels>
+  <nk-panel href="#" cover="/covers/aurora.svg" icon="🚀" title="${W.pageTitle}"><p>${W.minAgo}</p></nk-panel>
+  <nk-panel href="#" cover="/covers/dunes.svg" icon="📚" title="${W.knowledgeBase}"><p>${W.yesterday}</p></nk-panel>
+  <nk-panel title="${W.weeklyReview}"><p>${W.weeklyReviewText}</p></nk-panel>
+</nk-panels>`,
+  classMarkup: W => `<div class="nk-panels">
+  <a class="nk-panel" href="#"><div class="nk-cover"><img src="/covers/aurora.svg" alt=""></div><div class="nk-page-icon">🚀</div><h3>${W.pageTitle}</h3><p>${W.minAgo}</p></a>
+  <a class="nk-panel" href="#"><div class="nk-cover"><img src="/covers/dunes.svg" alt=""></div><div class="nk-page-icon">📚</div><h3>${W.knowledgeBase}</h3><p>${W.yesterday}</p></a>
+  <div class="nk-panel"><h3>${W.weeklyReview}</h3><p>${W.weeklyReviewText}</p></div>
+</div>`,
+},
+{
+  tag: 'nk-panel', group: 'page', classes: ['nk-panel', 'nk-cover', 'nk-page-icon'],
+  title: t('Panel', 'Panel'),
+  desc: t('A neutral surface for content that belongs together – the cards on Notion’s Home, the boxes in its settings. <code>title</code> is the heading (never a tooltip); the content goes in as <code>&lt;p&gt;</code>s and blocks. <code>cover</code> without a value draws the gradient band, with a URL a picture; <code>icon</code> overlaps the cover as on a page – a page tile. With <code>href</code> the panel is a link.', 'Eine neutrale Fläche für Inhalt, der zusammengehört – die Karten auf Notions Startseite, die Kästen in seinen Einstellungen. <code>title</code> ist die Überschrift (nie ein Tooltip); der Inhalt kommt als <code>&lt;p&gt;</code>s und Blöcke hinein. <code>cover</code> ohne Wert zeichnet das Verlaufsband, mit URL ein Bild; <code>icon</code> überlappt das Cover wie auf einer Seite – eine Seitenkachel. Mit <code>href</code> ist das Panel ein Link.'),
+  mobile: t('Takes the width of its grid cell.', 'Nimmt die Breite seiner Rasterzelle.'),
+  attrs: [str('title', 'string', 'Heading.', 'Überschrift.'), str('icon', 'string', 'Page icon.', 'Seiten-Icon.'), str('cover', 'URL | empty', 'Cover band: empty for the gradient, a URL for a picture.', 'Cover-Band: leer für den Verlauf, eine URL für ein Bild.'), str('href', 'URL', 'Makes the panel a link.', 'Macht das Panel zum Link.'), str('target', 'string', 'Link target.', 'Link-Ziel.')],
+  slots: [{ name: '(default)', desc: t('Content: <code>&lt;p&gt;</code>, a prose block, a progress bar.', 'Inhalt: <code>&lt;p&gt;</code>, ein Prosa-Block, ein Fortschrittsbalken.') }],
+  events: [],
+  example: W => `<div style="max-width:260px"><nk-panel href="#" cover icon="🚀" title="${W.pageTitle}"><p>${W.minAgo}</p></nk-panel></div>`,
+  classMarkup: W => `<div style="max-width:260px"><a class="nk-panel" href="#"><div class="nk-cover"></div><div class="nk-page-icon">🚀</div><h3>${W.pageTitle}</h3><p>${W.minAgo}</p></a></div>`,
 },
 {
   tag: 'nk-block-host', group: 'page', classes: ['nk-block-host', 'nk-block-handle', 'nk-drop-target'],
@@ -818,13 +885,24 @@ export const CATALOG = [
 {
   tag: 'nk-avatar-group', group: 'page', classes: ['nk-avatar-group', 'mini-avatar', 'more'],
   title: t('Avatar group', 'Avatar-Gruppe'),
-  desc: t('Overlapping <code>.mini-avatar</code> children (light DOM, styled by the slotted twins) plus a “more” bubble from the attribute.', 'Überlappende <code>.mini-avatar</code>-Kinder (Light DOM, gestylt durch die Slot-Zwillinge) plus eine „Mehr“-Blase aus dem Attribut.'),
+  desc: t('Overlapping <code>.mini-avatar</code> children (light DOM, styled by the slotted twins) plus a “more” bubble from the attribute. Pass <code>.mini-avatar</code>, not <code>.nk-avatar</code>: the document rule of <code>.nk-avatar</code> sets its own 24px, and for slotted nodes the document wins over the group’s 26px.', 'Überlappende <code>.mini-avatar</code>-Kinder (Light DOM, gestylt durch die Slot-Zwillinge) plus eine „Mehr“-Blase aus dem Attribut. <code>.mini-avatar</code> übergeben, nicht <code>.nk-avatar</code>: Die Dokumentregel von <code>.nk-avatar</code> setzt eigene 24px, und bei geslotteten Knoten gewinnt das Dokument gegen die 26px der Gruppe.'),
   mobile: t('Unchanged.', 'Unverändert.'),
   attrs: [str('more', 'string', 'Text of the trailing bubble, e.g. <code>+2</code>.', 'Text der letzten Blase, z. B. <code>+2</code>.')],
   slots: [{ name: '(default)', desc: t('<code>&lt;span class="mini-avatar" style="background:…"&gt;</code> children.', '<code>&lt;span class="mini-avatar" style="background:…"&gt;</code>-Kinder.') }],
   events: [],
-  example: W => `<div style="display:flex;align-items:center;gap:12px"><nk-avatar-group more="+2"><span class="mini-avatar" style="background:linear-gradient(135deg,#9065b0,#529cca)">MK</span><span class="mini-avatar" style="background:#448361">SL</span><span class="mini-avatar" style="background:#d9730d">TW</span></nk-avatar-group><span style="font-size:12.5px;color:var(--nk-text-tertiary)">${W.people}</span></div>`,
-  classMarkup: W => `<div style="display:flex;align-items:center;gap:12px"><div class="nk-avatar-group"><span class="mini-avatar" style="background:linear-gradient(135deg,#9065b0,#529cca)">MK</span><span class="mini-avatar" style="background:#448361">SL</span><span class="mini-avatar" style="background:#d9730d">TW</span><span class="mini-avatar more">+2</span></div><span style="font-size:12.5px;color:var(--nk-text-tertiary)">${W.people}</span></div>`,
+  example: W => `<div style="display:flex;align-items:center;gap:12px"><nk-avatar-group more="+2"><span class="mini-avatar" style="background:linear-gradient(135deg,var(--nk-decor-purple),var(--nk-decor-blue))">MK</span><span class="mini-avatar" style="background:var(--nk-color-green)">SL</span><span class="mini-avatar" style="background:var(--nk-color-orange)">TW</span></nk-avatar-group><span style="font-size:12.5px;color:var(--nk-text-tertiary)">${W.people}</span></div>`,
+  classMarkup: W => `<div style="display:flex;align-items:center;gap:12px"><div class="nk-avatar-group"><span class="nk-avatar">MK</span><span class="nk-avatar green">SL</span><span class="nk-avatar orange">TW</span><span class="mini-avatar more">+2</span></div><span style="font-size:12.5px;color:var(--nk-text-tertiary)">${W.people}</span></div>`,
+},
+{
+  tag: 'nk-avatar', group: 'page', classes: ['nk-avatar', 'small', 'large', 'xlarge', 'square', 'green', 'blue', 'orange', 'purple'],
+  title: t('Avatar', 'Avatar'),
+  desc: t('A person or a workspace: initials, an emoji or a photo in a circle. <code>size</code> small (20px), default 24px, large (32px), xlarge (56px); <code>color</code> one of Notion’s nine names or any CSS background, without it the avatar gradient; <code>square</code> for a workspace icon. Without content the initials come from <code>name</code>; with <code>src</code> a photo fills the circle and <code>name</code> becomes its alt text.', 'Eine Person oder ein Workspace: Initialen, ein Emoji oder ein Foto im Kreis. <code>size</code> small (20px), Standard 24px, large (32px), xlarge (56px); <code>color</code> einer der neun Notion-Namen oder ein beliebiger CSS-Hintergrund, ohne ihn der Avatar-Verlauf; <code>square</code> für ein Workspace-Icon. Ohne Inhalt kommen die Initialen aus <code>name</code>; mit <code>src</code> füllt ein Foto den Kreis und <code>name</code> wird sein Alt-Text.'),
+  mobile: t('Unchanged. A fixed size, so a row of avatars never reflows.', 'Unverändert. Eine feste Größe, eine Reihe von Avataren fließt also nie um.'),
+  attrs: [str('size', 'small | large | xlarge', 'Size; default 24px.', 'Größe; Standard 24px.'), str('color', 'colour name | CSS', 'gray, brown, orange, yellow, green, blue, purple, pink, red – or any CSS background.', 'gray, brown, orange, yellow, green, blue, purple, pink, red – oder ein beliebiger CSS-Hintergrund.'), bool('square', 'Corners instead of a circle.', 'Ecken statt Kreis.'), str('name', 'string', 'Initials when empty; alt text of the photo.', 'Initialen, wenn leer; Alt-Text des Fotos.'), str('src', 'URL', 'Photo.', 'Foto.')],
+  slots: [{ name: '(default)', desc: t('Initials or an emoji.', 'Initialen oder ein Emoji.') }],
+  events: [],
+  example: W => `<div style="display:flex;align-items:center;gap:10px"><nk-avatar size="small" color="blue">TW</nk-avatar><nk-avatar>AL</nk-avatar><nk-avatar color="green">SL</nk-avatar><nk-avatar size="large" color="orange">MK</nk-avatar><nk-avatar size="xlarge" color="purple" name="Ada Lovelace"></nk-avatar><nk-avatar size="large" square>A</nk-avatar></div>`,
+  classMarkup: W => `<div style="display:flex;align-items:center;gap:10px"><span class="nk-avatar small blue">TW</span><span class="nk-avatar">AL</span><span class="nk-avatar green">SL</span><span class="nk-avatar large orange">MK</span><span class="nk-avatar xlarge purple">AL</span><span class="nk-avatar large square">A</span></div>`,
 },
 {
   tag: 'nk-mention', group: 'page', classes: ['nk-mention', 'person', 'page', 'date', 'mini-avatar'],
@@ -909,11 +987,11 @@ export const CATALOG = [
   title: t('Member row', 'Mitgliederzeile'),
   desc: t('One row; see <code>nk-member-list</code>.', 'Eine Zeile; siehe <code>nk-member-list</code>.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('name', 'string', 'Name.', 'Name.'), str('mail', 'string', 'Mail.', 'Mail.'), str('avatar', 'string', 'Initials.', 'Initialen.'), str('color', 'CSS color', 'Avatar background.', 'Avatar-Hintergrund.'), bool('last', 'No bottom border.', 'Kein unterer Rand.')],
+  attrs: [str('name', 'string', 'Name.', 'Name.'), str('mail', 'string', 'Mail.', 'Mail.'), str('avatar', 'string', 'Initials.', 'Initialen.'), str('color', 'colour name | CSS', 'Avatar colour: one of the nine names (gray … red) or any CSS background; without it the avatar gradient.', 'Avatar-Farbe: einer der neun Namen (gray … red) oder ein beliebiger CSS-Hintergrund; ohne sie der Avatar-Verlauf.'), bool('last', 'No bottom border.', 'Kein unterer Rand.')],
   slots: [{ name: 'role', desc: t('Control on the right.', 'Control rechts.') }, { name: 'avatar', desc: t('Custom avatar.', 'Eigener Avatar.') }, { name: '(default)', desc: t('Extra content.', 'Zusatzinhalt.') }],
   events: [],
-  example: W => `<nk-member-row name="Sara Lindt" mail="sara@example.com" color="#448361" last></nk-member-row>`,
-  classMarkup: W => `<div class="nk-member-row last"><span class="mini-avatar" style="background:#448361">SL</span><div>Sara Lindt<div class="m-mail">sara@example.com</div></div></div>`,
+  example: W => `<nk-member-row name="Sara Lindt" mail="sara@example.com" color="green" last></nk-member-row>`,
+  classMarkup: W => `<div class="nk-member-row last"><span class="nk-avatar green">SL</span><div>Sara Lindt<div class="m-mail">sara@example.com</div></div></div>`,
 },
 
 // ============================================================ WAVE 4 · OVERLAYS
@@ -1050,13 +1128,13 @@ export const CATALOG = [
 {
   tag: 'nk-menu-item', group: 'overlays', classes: ['nk-menu-item', 'danger', 'nk-menu-sep', 'nk-menu-label'],
   title: t('Menu item', 'Menüeintrag'),
-  desc: t('One row of <code>nk-menu</code>: icon, label, shortcut; <code>danger</code> for destructive actions. <code>type</code> switches to a separator or a group label.', 'Eine Zeile von <code>nk-menu</code>: Icon, Label, Shortcut; <code>danger</code> für Destruktives. <code>type</code> macht daraus Trenner oder Gruppenlabel.'),
+  desc: t('One row of <code>nk-menu</code>: icon, label, shortcut; <code>danger</code> for destructive actions. <code>type</code> switches to a separator or a group label, or to a row with a switch on the right – “Small text” in Notion’s page menu: a click flips <code>checked</code> and fires <code>nk-change</code>, so the menu stays open.', 'Eine Zeile von <code>nk-menu</code>: Icon, Label, Shortcut; <code>danger</code> für Destruktives. <code>type</code> macht daraus Trenner oder Gruppenlabel oder eine Zeile mit Schalter rechts – „Kleiner Text“ in Notions Seitenmenü: Ein Klick kippt <code>checked</code> und feuert <code>nk-change</code>, das Menü bleibt also offen.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('icon', 'string', 'Leading icon.', 'Icon vorn.'), str('shortcut', 'string', 'Trailing shortcut text.', 'Shortcut-Text hinten.'), str('value', 'string', 'Reported value (default: text).', 'Gemeldeter Wert (Standard: Text).'), bool('danger', 'Red text.', 'Roter Text.'), str('type', 'item | separator | label', 'Row kind.', 'Zeilenart.', { default: 'item' }), bool('disabled', 'Not selectable.', 'Nicht wählbar.')],
+  attrs: [str('icon', 'string', 'Leading icon.', 'Icon vorn.'), str('shortcut', 'string', 'Trailing shortcut text.', 'Shortcut-Text hinten.'), str('value', 'string', 'Reported value (default: text).', 'Gemeldeter Wert (Standard: Text).'), bool('danger', 'Red text.', 'Roter Text.'), str('type', 'item | separator | label | switch', 'Row kind.', 'Zeilenart.', { default: 'item' }), bool('checked', 'The switch is on (type="switch").', 'Der Schalter ist an (type="switch").'), bool('disabled', 'Not selectable.', 'Nicht wählbar.')],
   slots: [{ name: '(default)', desc: t('Label.', 'Beschriftung.') }, { name: 'icon', desc: t('Icon node.', 'Icon-Knoten.') }],
-  events: [{ name: 'nk-select', detail: '{ value, label, item }', desc: t('Clicked / Enter.', 'Geklickt / Enter.') }],
-  example: W => `<nk-menu><nk-menu-item icon="✏️" shortcut="⌘E" value="rename">${W.rename}</nk-menu-item></nk-menu>`,
-  classMarkup: W => `<div class="nk-pop nk-menu"><div class="nk-menu-item"><span class="m-icon">✏️</span>${W.rename}<span class="m-shortcut">⌘E</span></div></div>`,
+  events: [{ name: 'nk-select', detail: '{ value, label, item }', desc: t('Clicked / Enter.', 'Geklickt / Enter.') }, { name: 'nk-change', detail: '{ value, checked, item }', desc: t('A switch row flipped.', 'Eine Schalter-Zeile gekippt.') }],
+  example: W => `<nk-menu><nk-menu-item icon="✏️" shortcut="⌘E" value="rename">${W.rename}</nk-menu-item><nk-menu-item type="switch" icon="🔡" value="small" checked>${W.smallText}</nk-menu-item></nk-menu>`,
+  classMarkup: W => `<div class="nk-pop nk-menu"><div class="nk-menu-item"><span class="m-icon">✏️</span>${W.rename}<span class="m-shortcut">⌘E</span></div><div class="nk-menu-item" role="menuitemcheckbox" aria-checked="true"><span class="m-icon">🔡</span>${W.smallText}<span class="nk-switch" aria-hidden="true" aria-checked="true"></span></div></div>`,
 },
 {
   tag: 'nk-pop', group: 'overlays', classes: ['nk-pop'],
@@ -1123,9 +1201,9 @@ ${dbScript(W)}`,
 </div>`,
 },
 {
-  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'wrap', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'mini-avatar', 'nk-new-row'], wide: true, script: true,
+  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'wrap', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'nk-avatar', 'num', 'nk-new-row'], wide: true, script: true,
   title: t('Table view', 'Tabellenansicht'),
-  desc: t('Renders <code>columns</code> × <code>rows</code> as the NotionKit table. Cells are polymorphic (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) and rendered as plain markup by the exported <code>renderPropertyCell()</code> – every cell rule starts with <code>.nk-table</code>, so a cell element of its own would never be styled. Header clicks sort with <code>sortable</code>.',
+  desc: t('Renders <code>columns</code> × <code>rows</code> as the NotionKit table. Cells are polymorphic (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) and rendered as plain markup by the exported <code>renderPropertyCell()</code> – every cell rule starts with <code>.nk-table</code>, so a cell element of its own would never be styled. Header clicks sort with <code>sortable</code>. A <code>number</code> column stands right-aligned in figures of equal width, formatted by its <code>locale</code> and <code>format</code> (Intl.NumberFormat options); a person’s <code>color</code> takes one of the nine names.',
           'Rendert <code>columns</code> × <code>rows</code> als NotionKit-Tabelle. Zellen sind polymorph (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) und werden vom exportierten <code>renderPropertyCell()</code> als Klassen-Markup gerendert – jede Zellregel beginnt mit <code>.nk-table</code>, ein eigenes Zellen-Element würde nie gestylt. Kopfklicks sortieren mit <code>sortable</code>.'),
   mobile: t('Scrolls horizontally inside <code>.nk-table-wrap</code>.', 'Scrollt horizontal in <code>.nk-table-wrap</code>.'),
   attrs: [str('name', 'string', 'View name (tab id).', 'View-Name (Tab-Kennung).'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('badge', 'string', 'Tab badge.', 'Tab-Badge.'), bool('count', 'Row count as badge.', 'Zeilenzahl als Badge.'), bool('new-row', 'Show the add row.', 'Hinzufügen-Zeile zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' }), bool('sortable', 'Header click sorts locally.', 'Kopfklick sortiert lokal.'), str('sort-key', 'string', 'Sorted column.', 'Sortierte Spalte.'), str('sort-dir', 'asc | desc', 'Direction.', 'Richtung.'), bool('wrap', 'Cell text may break (Notion\'s "wrap column").', 'Zellentext darf umbrechen (Notions „Spalte umbrechen“).')],
@@ -1149,6 +1227,19 @@ ${dbScript(W)}`,
   example: W => `<nk-board-view group-by="status" new-row></nk-board-view>
 ${dbScript(W)}`,
   classMarkup: dbBoardClass,
+},
+{
+  tag: 'nk-list-view', group: 'data', classes: ['nk-list', 'nk-list-item', 'l-icon', 'l-title', 'l-meta'], wide: true, script: true,
+  title: t('List view', 'Listenansicht'),
+  desc: t('The third database view: one line per row – icon and title, the <code>meta-keys</code> on the right (default: the select and date columns, in column order). Dates and text stand as text, selects as tags, a person as avatar and name. Rows fire <code>nk-select</code>; <code>new-row</code> adds the add row.', 'Die dritte Datenbank-Ansicht: eine Zeile pro Eintrag – Icon und Titel, rechts die <code>meta-keys</code> (Standard: die Select- und Datumsspalten, in Spaltenreihenfolge). Datum und Text stehen als Text, Selects als Tags, eine Person als Avatar mit Namen. Zeilen feuern <code>nk-select</code>; <code>new-row</code> ergänzt die Hinzufügen-Zeile.'),
+  mobile: t('Stays one line per row: the title ends in an ellipsis, the properties keep their place.', 'Bleibt eine Zeile pro Eintrag: Der Titel endet mit Auslassungspunkten, die Eigenschaften behalten ihren Platz.'),
+  attrs: [str('name', 'string', 'View name.', 'View-Name.'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('title-key', 'string', 'Title column.', 'Titelspalte.'), str('meta-keys', 'list', 'Comma-separated columns on the right.', 'Kommagetrennte Spalten rechts.'), bool('new-row', 'Show the add row.', 'Hinzufügen-Zeile zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' })],
+  slots: [],
+  events: [{ name: 'nk-select', detail: '{ row, id }', desc: t('Row clicked or Enter.', 'Zeile geklickt oder Enter.') }, { name: 'nk-action', detail: "{ action: 'new-row' }", desc: t('Add row clicked.', 'Hinzufügen-Zeile geklickt.') }],
+  props: ['columns', 'rows', 'data'], methods: ['refresh()'],
+  example: W => `<nk-list-view meta-keys="due,status"></nk-list-view>
+${dbScript(W)}`,
+  classMarkup: dbListClass,
 },
 {
   tag: 'nk-filter-bar', group: 'data', classes: ['nk-btn', 'secondary', 'small', 'nk-tag', 'nk-input'], wide: true,
@@ -1187,11 +1278,11 @@ ${dbScript(W)}`,
   title: t('Comment', 'Kommentar'),
   desc: t('One comment: avatar (initials + <code>color</code>), bold author, time, body. <code>slot="head"</code> adds content after the name.', 'Ein Kommentar: Avatar (Initialen + <code>color</code>), fetter Autor, Zeit, Text. <code>slot="head"</code> ergänzt Inhalt hinter dem Namen.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('author', 'string', 'Name.', 'Name.'), str('time', 'string', 'Relative time.', 'Relative Zeit.'), str('avatar', 'string', 'Initials/emoji (default: from the author).', 'Initialen/Emoji (Standard: aus dem Autor).'), str('color', 'CSS color', 'Avatar background.', 'Avatar-Hintergrund.')],
+  attrs: [str('author', 'string', 'Name.', 'Name.'), str('time', 'string', 'Relative time.', 'Relative Zeit.'), str('avatar', 'string', 'Initials/emoji (default: from the author).', 'Initialen/Emoji (Standard: aus dem Autor).'), str('color', 'colour name | CSS', 'Avatar colour: one of the nine names or any CSS background; without it the avatar gradient.', 'Avatar-Farbe: einer der neun Namen oder ein beliebiger CSS-Hintergrund; ohne sie der Avatar-Verlauf.')],
   slots: [{ name: '(default)', desc: t('Body.', 'Text.') }, { name: 'head', desc: t('After the name (tag, badge).', 'Hinter dem Namen (Tag, Badge).') }, { name: 'avatar', desc: t('Custom avatar.', 'Eigener Avatar.') }],
   events: [],
-  example: W => `<nk-comments no-input><nk-comment author="Sara Lindt" time="1 hr ago" color="#448361">${W.commentText1}</nk-comment></nk-comments>`,
-  classMarkup: W => `<div class="nk-comments"><div class="nk-comment"><span class="mini-avatar" style="background:#448361">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">${W.commentText1}</div></div></div></div>`,
+  example: W => `<nk-comments no-input><nk-comment author="Sara Lindt" time="1 hr ago" color="green">${W.commentText1}</nk-comment></nk-comments>`,
+  classMarkup: W => `<div class="nk-comments"><div class="nk-comment"><span class="nk-avatar green">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">${W.commentText1}</div></div></div></div>`,
 },
 {
   tag: 'nk-ai-thread', group: 'data', classes: ['nk-ai-thread', 'nk-ai-msg', 'user', 'a-body', 'a-name', 'nk-ai-actions', 'nk-ai-input-row', 'nk-ai-send'],
@@ -1215,15 +1306,15 @@ ${dbScript(W)}`,
 <div class="nk-ai-input-row"><span style="font-size:14px">✨</span><input placeholder="${W.askAi}"><button class="nk-ai-send">↑</button></div>`,
 },
 {
-  tag: 'nk-ai-msg', group: 'data', classes: ['nk-ai-msg', 'user', 'a-body', 'a-name', 'nk-ai-actions'],
+  tag: 'nk-ai-msg', group: 'data', classes: ['nk-ai-msg', 'user', 'bubble', 'a-body', 'a-name', 'nk-ai-actions'],
   title: t('AI message', 'KI-Nachricht'),
   desc: t('One message. <code>role="user"</code> flips the avatar to the gradient; <code>badge</code> is the grey suffix after the name (“· AI”); plain <code>&lt;button slot="actions"&gt;</code>s form the action row.', 'Eine Nachricht. <code>role="user"</code> schaltet den Avatar auf den Gradient; <code>badge</code> ist das graue Suffix hinter dem Namen („· KI“); einfache <code>&lt;button slot="actions"&gt;</code>s bilden die Aktionszeile.'),
   mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [str('role', 'user | assistant', 'Who speaks.', 'Wer spricht.', { default: 'assistant' }), str('name', 'string', 'Name line.', 'Namenszeile.'), str('badge', 'string', 'Grey suffix.', 'Graues Suffix.'), str('avatar', 'string', 'Initials/emoji.', 'Initialen/Emoji.'), str('color', 'CSS color', 'Avatar background override.', 'Avatar-Hintergrund.')],
+  attrs: [str('role', 'user | assistant', 'Who speaks.', 'Wer spricht.', { default: 'assistant' }), str('name', 'string', 'Name line.', 'Namenszeile.'), str('badge', 'string', 'Grey suffix.', 'Graues Suffix.'), str('avatar', 'string', 'Initials/emoji.', 'Initialen/Emoji.'), str('color', 'CSS color', 'Avatar background override.', 'Avatar-Hintergrund.'), bool('bubble', 'The message as a grey bubble without avatar or name; with <code>role="user"</code> on the right, as Notion’s AI chat shows your own question.', 'Die Nachricht als graue Blase ohne Avatar und Namen; mit <code>role="user"</code> rechts, wie Notions KI-Chat die eigene Frage zeigt.')],
   slots: [{ name: '(default)', desc: t('Message body (HTML allowed).', 'Nachrichtentext (HTML erlaubt).') }, { name: 'actions', desc: t('<code>&lt;button value&gt;</code> children.', '<code>&lt;button value&gt;</code>-Kinder.') }, { name: 'avatar', desc: t('Custom avatar.', 'Eigener Avatar.') }],
   events: [{ name: 'nk-action', detail: '{ action, value }', desc: t('Action button clicked.', 'Action-Button geklickt.') }],
-  example: W => `<nk-ai-thread><nk-ai-msg role="assistant" name="${W.aiName}" badge="${W.aiBadge}">${W.aiAnswer}<button slot="actions" value="copy">${W.copy}</button></nk-ai-msg></nk-ai-thread>`,
-  classMarkup: W => `<div class="nk-ai-thread"><div class="nk-ai-msg"><span class="mini-avatar">✨</span><div class="a-body"><div class="a-name">${W.aiName} <span>${W.aiBadge}</span></div>${W.aiAnswer}<div class="nk-ai-actions"><button>${W.copy}</button></div></div></div></div>`,
+  example: W => `<nk-ai-thread><nk-ai-msg role="user" bubble>${W.bubbleQuestion}</nk-ai-msg><nk-ai-msg role="assistant" name="${W.aiName}" badge="${W.aiBadge}">${W.aiAnswer}<button slot="actions" value="copy">${W.copy}</button></nk-ai-msg></nk-ai-thread>`,
+  classMarkup: W => `<div class="nk-ai-thread"><div class="nk-ai-msg user bubble"><div class="a-body">${W.bubbleQuestion}</div></div><div class="nk-ai-msg"><span class="mini-avatar">✨</span><div class="a-body"><div class="a-name">${W.aiName} <span>${W.aiBadge}</span></div>${W.aiAnswer}<div class="nk-ai-actions"><button>${W.copy}</button></div></div></div></div>`,
 },
 {
   tag: 'nk-ai-input-row', group: 'data', classes: ['nk-ai-input-row', 'nk-ai-send'],

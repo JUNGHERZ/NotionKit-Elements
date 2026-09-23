@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-heading level="2">Section</nk-heading>  →  <h2 class="nk-heading">
 // The heading level is real markup (h1–h4), so the outline stays honest.

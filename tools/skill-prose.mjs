@@ -32,9 +32,19 @@ npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 \`\`\`js
 import '@jungherz-de/notionkit/notionkit.css';     // via your bundler, or a <link>
 import '@jungherz-de/notionkit-elements';           // registers every <nk-*> tag
-// or one element at a time (shared code is one extra chunk):
+// or one element at a time (shared code: base.js):
 import '@jungherz-de/notionkit-elements/components/nk-btn.js';
+// the sheet the elements adopt, for your own views – never a second copy:
+import { componentsSheet } from '@jungherz-de/notionkit-elements';
 \`\`\`
+
+The per-component files import NotionKit's sheet as \`@jungherz-de/notionkit/notionkit-styles.js\` instead of carrying a copy. A bundler resolves it; a build-free page maps it once:
+
+\`\`\`html
+<script type="importmap">{ "imports": { "@jungherz-de/notionkit/notionkit-styles.js": "/node_modules/@jungherz-de/notionkit/notionkit-styles.js" } }</script>
+\`\`\`
+
+Never mix the full bundle with the per-component files – each brings its own \`NkElement\`. With the bundle, take \`componentsSheet\` and \`NkElement\` from it (\`NotionKitElements.componentsSheet\` from the \`<script>\` build).
 `,
 
   concepts: () => `# 2. Core Concepts
@@ -59,11 +69,11 @@ import '@jungherz-de/notionkit-elements/components/nk-btn.js';
 
   skeletons: ({ CDN_CSS, CDN_JS, W }) => `# 4. Composition Patterns (app skeletons)
 
-Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one, delete what you do not need.
+Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one, delete what you do not need.
 
 ## 4.1 Workspace app
 
-**When:** the default for Notion-like document apps – pages are the primary object, a tree on the left, one page on the right.
+**When:** the default for Notion-like document apps – pages are the primary object, a tree on the left, one page on the right. A page that is a database row shows its properties under the title and lists its sub-pages.
 
 \`\`\`html
 <!DOCTYPE html>
@@ -103,13 +113,21 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
     <nk-theme-toggle slot="actions"></nk-theme-toggle>
   </nk-topbar>
 
-  <!-- wave 3 replaces this with <nk-page> / <nk-page-title> / <nk-block-host> -->
-  <div class="nk-page-scroll"><div class="nk-cover"></div><div class="nk-page">
-    <div class="nk-page-icon">🚀</div>
-    <h1 class="nk-page-title">${W.pageTitle}</h1>
+  <!-- Page options: add full (full width) or small (14px text) to <nk-page>. -->
+  <nk-page icon="🚀" cover>
+    <nk-page-title editable>${W.pageTitle}</nk-page-title>
+    <nk-props>
+      <nk-prop label="${W.propStatus}" icon="◉"><nk-tag color="blue">${W.statusProgress}</nk-tag></nk-prop>
+      <nk-prop label="${W.propOwner}" icon="👤"><nk-avatar size="small">AL</nk-avatar>Ada Lovelace</nk-prop>
+      <nk-prop label="${W.propDue}" icon="📅">${W.dueDate}</nk-prop>
+    </nk-props>
     <p class="lead">${W.lead}</p>
-    <nk-callout icon="💡">The tree, topbar and sidebar are elements; the page body is still class markup until wave 3.</nk-callout>
-  </div></div>
+    <nk-heading>Sub-pages</nk-heading>
+    <nk-list-view id="subpages" meta-keys="due,status"></nk-list-view>
+    <!-- The editor: mount TipTap into a light-DOM .nk-block-host (docs-editor.js).
+         Saved HTML shown read-only goes into <div class="nk-prose"> – same look. -->
+    <div class="nk-block-host" id="editor"></div>
+  </nk-page>
 
   <nk-tab-bar>
     <nk-tab-bar-item icon="🏠" value="home" active>${W.home}</nk-tab-bar-item>
@@ -121,12 +139,18 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 <script>
   tree.addEventListener('nk-select', e => console.log('open page', e.detail.value));
   tree.addEventListener('nk-action', e => console.log(e.detail.action, 'on', e.detail.value));
+  subpages.columns = [
+    { key: 'name', label: 'Name', title: true }, { key: 'due', label: 'Due', type: 'date' },
+    { key: 'status', label: 'Status', type: 'select', options: [{ value: 'done', label: 'Done', color: 'green' }, { value: 'open', label: 'Open', color: 'gray' }] },
+  ];
+  subpages.rows = [{ id: 1, icon: '📄', name: 'Hiring plan', due: '12 Aug', status: 'done' }, { id: 2, icon: '📄', name: 'Budget review', due: '2 Sep', status: 'open' }];
+  subpages.addEventListener('nk-select', e => console.log('open sub-page', e.detail.id));
 </script>
 </body>
 </html>
 \`\`\`
 
-Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and (from wave 3) \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and \`sidebar.toggle()\` opens it as a drawer. For phones and installed PWAs add \`<nk-tab-bar>\` as the last child of \`<nk-app>\`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a \`drawer\` item opens the sidebar. Never give it a \`view-transition-name\` – it stays put between pages.
+Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and \`sidebar.toggle()\` opens it as a drawer. For phones and installed PWAs add \`<nk-tab-bar>\` as the last child of \`<nk-app>\`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a \`drawer\` item opens the sidebar. Never give it a \`view-transition-name\` – it stays put between pages.
 
 ## 4.2 Database app
 
@@ -421,6 +445,101 @@ The open/close contract is one attribute: \`settings.open = true\`, \`settings.s
 \`\`\`
 
 Note \`narrow\`: the page is the document, so there is no inner scroll wrapper – the browser scrolls. Inside \`<nk-app>\` leave it off.
+## 4.7 Home page
+
+**When:** the first screen after sign-in – a greeting, the pages someone comes back to, what is due next. Notion calls it Home; LearnHub builds it as “My courses”, Auxdesk as “Overview”. Full width and small text, panels with a picture cover, a list for what is next.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="${CDN_CSS}">
+  <script src="${CDN_JS}"></script>
+</head>
+<body class="nk-body">
+<nk-app>
+  <nk-sidebar slot="sidebar">
+    <nk-workspace-switcher slot="workspace" name="${W.workspace}"></nk-workspace-switcher>
+    <nk-tree>
+      <nk-tree-item icon="🏠" value="home" active>${W.home}</nk-tree-item>
+      <nk-tree-item icon="🚀" value="mvp">${W.mvp}</nk-tree-item>
+    </nk-tree>
+  </nk-sidebar>
+  <nk-topbar><nk-breadcrumb><span>🏠 ${W.home}</span></nk-breadcrumb><nk-theme-toggle slot="actions"></nk-theme-toggle></nk-topbar>
+
+  <!-- An app view, not a document: the whole width, 14px text. -->
+  <nk-page full small>
+    <nk-page-title>Good morning, Ada</nk-page-title>
+    <nk-heading>🕘 Recently visited</nk-heading>
+    <nk-panels>
+      <nk-panel href="/roadmap" cover="covers/roadmap.jpg" icon="🚀" title="Roadmap"><p><nk-avatar size="small">AL</nk-avatar> ${W.minAgo}</p></nk-panel>
+      <nk-panel href="/kb" cover icon="📚" title="${W.knowledgeBase}"><p>${W.yesterday}</p></nk-panel>
+      <nk-panel href="/onboarding" icon="🧭" title="${W.onboarding}"><p>Monday</p></nk-panel>
+    </nk-panels>
+    <nk-heading>📌 Upcoming</nk-heading>
+    <nk-list-view id="upcoming" meta-keys="due,status"></nk-list-view>
+    <nk-heading>📊 This week</nk-heading>
+    <nk-panels>
+      <nk-panel title="${W.weeklyReview}"><p>${W.weeklyReviewText}</p><nk-progress value="60" label="60 %" wide></nk-progress></nk-panel>
+      <nk-panel title="Release notes"><div class="nk-prose"><p>Version 2.4 ships the list view. <a href="/changelog">Read more</a></p></div></nk-panel>
+    </nk-panels>
+  </nk-page>
+</nk-app>
+<script>
+  upcoming.columns = [
+    { key: 'name', label: 'Name', title: true }, { key: 'due', label: 'Due', type: 'date' },
+    { key: 'status', label: 'Status', type: 'select', options: [{ value: 'progress', label: 'In progress', color: 'blue' }, { value: 'planned', label: 'Planned', color: 'orange' }] },
+  ];
+  upcoming.rows = [{ id: 1, icon: '🗃️', name: 'Table view', due: '20 May', status: 'progress' }, { id: 2, icon: '▤', name: 'Board with drag and drop', due: '2 June', status: 'planned' }];
+  upcoming.addEventListener('nk-select', e => location.assign('/tasks/' + e.detail.id));
+</script>
+</body>
+</html>
+\`\`\`
+
+\`nk-panels\` falls to one column on a phone; the list keeps one line per row and cuts the title first. A slotted \`<p>\` in a panel is styled by the panel – inside it, \`<nk-avatar>\` brings its own size.
+
+## 4.8 Sign-in page
+
+**When:** the page before the app – sign in with a provider or by email. A narrow centred column in a panel, no sidebar. Not an element on purpose: panel, field and buttons already are one.
+
+\`\`\`html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="${CDN_CSS}">
+  <script src="${CDN_JS}"></script>
+</head>
+<body class="nk-body">
+<!-- A narrow column, centred: layout is yours, so it is inline. -->
+<nk-page narrow>
+  <div style="max-width:420px;margin:12vh auto 0;display:flex;flex-direction:column;gap:14px">
+    <div style="text-align:center">
+      <nk-avatar size="xlarge" square>A</nk-avatar>
+      <nk-page-title>Sign in to Acme</nk-page-title>
+      <div style="color:var(--nk-text-secondary)">Use your work account.</div>
+    </div>
+    <form id="signin">
+      <nk-panel>
+        <nk-btn variant="secondary" type="button">Continue with Google</nk-btn>
+        <nk-btn variant="secondary" type="button">Continue with Microsoft</nk-btn>
+        <nk-field label="Email" stacked><nk-input name="email" type="email" placeholder="ada@acme.com" required></nk-input></nk-field>
+        <nk-btn variant="primary" type="submit">Continue with email</nk-btn>
+      </nk-panel>
+    </form>
+    <nk-banner variant="success" id="sent" hidden>✉️ Check your inbox – we sent you a sign-in link.</nk-banner>
+  </div>
+</nk-page>
+<script>
+  signin.addEventListener('submit', e => { e.preventDefault(); sent.hidden = false; });
+</script>
+</body>
+</html>
+\`\`\`
+
+The form takes part in \`FormData\` through \`nk-input\`; \`hidden\` on the banner works on every element.
 `,
 
   events: () => `# 5. State & Event Overview
@@ -485,7 +604,7 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Token injection | \`src/base.js\` – once per page, \`@layer notionkit-defaults { tokensCss }\` appended to \`document.adoptedStyleSheets\` |
 | Theme sync | one \`MutationObserver\` on \`<html>[data-theme]\`, a \`Set\` of instances, \`.nk-wrapper[data-theme]\` inside each root |
 | Components | \`src/components/{forms,content,shell,page,overlays,data}/nk-*.js\`, one tag per file, \`customElements.define\` at the bottom |
-| Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (\`dist/components/\`) |
+| Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable \`dist/components/base.js\` that import NotionKit's sheet (\`@jungherz-de/notionkit/notionkit-styles.js\`) instead of inlining it; the full bundles inline it and export \`componentsSheet\` |
 | Peer | \`@jungherz-de/notionkit >= ${pkg.version}\` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + \`render()\`) → every connect (\`setupEvents()\`, theme registration, light-DOM observer) → \`attributeChangedCallback\` → \`onAttributeChanged\` → disconnect (\`teardownEvents()\`, unregister).

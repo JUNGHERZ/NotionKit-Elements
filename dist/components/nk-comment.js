@@ -1,14 +1,17 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import { i as initialsOf, p as paintAvatar } from './shared/avatar-BiqCaHOt.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
-// <nk-comment author="Sara Lindt" time="1 hr ago" avatar="SL" color="#448361">The board view feels close.</nk-comment>
-// → <div class="nk-comment"><span class="mini-avatar">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">…</div></div></div>
+// <nk-comment author="Sara Lindt" time="1 hr ago" avatar="SL" color="green">The board view feels close.</nk-comment>
+// → <div class="nk-comment"><span class="nk-avatar green">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">…</div></div></div>
+// color: one of Notion's nine names, or any CSS background; without it the avatar gradient.
 // slot="head" adds content after the name (e.g. an <nk-tag>).
 class NkComment extends NkElement {
   static get observedAttributes() { return ['author', 'time', 'avatar', 'color']; }
 
   render() {
     const box = this.createElement('div', ['nk-comment']);
-    this._avatar = this.createElement('span', ['mini-avatar']);
+    this._avatar = this.createElement('span', ['nk-avatar']);
     const avatarSlot = this.createElement('slot', [], { name: 'avatar' });
     avatarSlot.appendChild(this._avatar);
     const text = document.createElement('div');
@@ -29,8 +32,8 @@ class NkComment extends NkElement {
     this._author.textContent = author;
     const time = this.getAttribute('time');
     this._time.data = time ? ` · ${time}` : '';
-    this._avatar.textContent = this.getAttribute('avatar') || author.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    this._avatar.style.background = this.getAttribute('color') || 'var(--nk-text-tertiary)';
+    this._avatar.textContent = this.getAttribute('avatar') || initialsOf(author);
+    paintAvatar(this._avatar, this.getAttribute('color'));
   }
 
   onAttributeChanged() { this._sync(); }

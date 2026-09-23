@@ -50,6 +50,17 @@ function landing(lang) {
   const after = `<nk-field label="${W.notify}" desc="${W.displayNameDesc}"><nk-switch checked></nk-switch></nk-field>
 <nk-callout icon="💡">${W.calloutText}</nk-callout>
 <nk-tree-item icon="🚀" active>${W.mvp}</nk-tree-item>`;
+  // Second pair: page properties, where the element saves the most markup.
+  const beforeProps = `<dl class="nk-props">
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">◉</span>${W.propStatus}</dt><dd class="p-value"><span class="nk-tag blue">${W.statusProgress}</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">👤</span>${W.propOwner}</dt><dd class="p-value"><span class="nk-avatar small">MK</span>Marcel Karas</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">▰</span>${W.propProgress}</dt><dd class="p-value"><span class="nk-progress wide"><i style="width:65%"></i></span><span class="nk-progress-label">65 %</span></dd></div>
+</dl>`;
+  const afterProps = `<nk-props>
+  <nk-prop label="${W.propStatus}" icon="◉"><nk-tag color="blue">${W.statusProgress}</nk-tag></nk-prop>
+  <nk-prop label="${W.propOwner}" icon="👤"><nk-avatar size="small">MK</nk-avatar>Marcel Karas</nk-prop>
+  <nk-prop label="${W.propProgress}" icon="▰"><nk-progress value="65" label="65 %" wide></nk-progress></nk-prop>
+</nk-props>`;
   const quick = `<link rel="stylesheet" href="${CDN_CSS}">\n<script src="${CDN_JS}"></script>\n\n<body class="nk-body">\n  <nk-callout icon="💡">${W.calloutText}</nk-callout>\n</body>`;
   return `${head(t, { title: 'NotionKit Elements', description: t.heroLead.replace(/<[^>]+>/g, ''), path: 'index.html', extraCss: LANDING_CSS })}
 ${nav(t, 'index')}
@@ -71,6 +82,10 @@ ${nav(t, 'index')}
     <div class="land-compare">
       <div><h4>${t.before}</h4><div class="doc-compare"><div class="doc-preview">${before}</div><pre class="doc-code">${highlightHtml(before)}</pre></div></div>
       <div><h4>${t.after}</h4><div class="doc-compare"><div class="doc-preview">${after}</div><pre class="doc-code">${highlightHtml(after)}</pre></div></div>
+    </div>
+    <div class="land-compare" style="margin-top:16px">
+      <div><h4>${t.before}</h4><div class="doc-compare"><div class="doc-preview">${beforeProps}</div><pre class="doc-code">${highlightHtml(beforeProps)}</pre></div></div>
+      <div><h4>${t.after}</h4><div class="doc-compare"><div class="doc-preview">${afterProps}</div><pre class="doc-code">${highlightHtml(afterProps)}</pre></div></div>
     </div>
   </section>
 

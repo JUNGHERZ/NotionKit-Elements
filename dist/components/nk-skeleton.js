@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-skeleton height="18" width="60%"></nk-skeleton>
 // <nk-skeleton lines="3" widths="100%,85%,40%"></nk-skeleton>

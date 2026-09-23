@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-synced badge="⟳ 3 places">…</nk-synced>
 // → <div class="nk-synced"><span class="synced-badge">⟳ 3 places</span>…</div>

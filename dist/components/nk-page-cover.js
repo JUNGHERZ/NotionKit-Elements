@@ -1,12 +1,17 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-page-cover slot="cover"></nk-page-cover>            → the token gradient
-// <nk-page-cover slot="cover" src="cover.jpg"></nk-page-cover>  → an image
+// <nk-page-cover slot="cover" src="cover.jpg" position="center 30%"></nk-page-cover>  → a picture
+// → <div class="nk-cover"><img src="cover.jpg" alt=""></div>: the picture fills
+// the band, cropped rather than stretched; `position` moves the crop, as
+// Notion's "Reposition" does. The gradient stays underneath while it loads.
 class NkPageCover extends NkElement {
-  static get observedAttributes() { return ['src']; }
+  static get observedAttributes() { return ['src', 'position']; }
 
   render() {
     this._cover = this.createElement('div', ['nk-cover']);
+    this._img = this.createElement('img', [], { alt: '' });
     this._wrapper.appendChild(this._cover);
     this._sync();
   }
@@ -14,14 +19,10 @@ class NkPageCover extends NkElement {
   _sync() {
     const src = this.getAttribute('src');
     if (src) {
-      this._cover.style.backgroundImage = `url("${src}")`;
-      this._cover.style.backgroundSize = 'cover';
-      this._cover.style.backgroundPosition = 'center';
-    } else {
-      this._cover.style.backgroundImage = '';
-      this._cover.style.backgroundSize = '';
-      this._cover.style.backgroundPosition = '';
-    }
+      this._img.src = src;
+      this._img.style.objectPosition = this.getAttribute('position') || '';
+      if (!this._img.isConnected) this._cover.appendChild(this._img);
+    } else this._img.remove();
   }
 
   onAttributeChanged() { this._sync(); }

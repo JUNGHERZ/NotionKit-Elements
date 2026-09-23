@@ -43,13 +43,13 @@ test('table view: polymorphic cells, row select, checkbox change, local sort', a
   const row0 = await page.evaluate(cells, 0);
   expect(row0[0]).toBe('<span class="row-title">🧭 Shell</span>');
   expect(row0[1]).toBe('<span class="nk-tag green">Done</span>');
-  expect(row0[2]).toBe('<span class="person-cell"><span class="mini-avatar">MK</span> Marcel</span>');
+  expect(row0[2]).toBe('<span class="person-cell"><span class="nk-avatar small">MK</span> Marcel</span>');
   expect(row0[3]).toBe('<span class="date-cell">08.05.2026</span>');
   expect(row0[4]).toBe('<span class="nk-progress"><i></i></span><span class="nk-progress-label">100%</span>');
   expect(row0[5]).toContain('type="checkbox"');
   const row2 = await page.evaluate(cells, 2);
   expect(row2[2]).toBe('<span class="person-cell">—</span>');
-  expect((await page.evaluate(cells, 1))[2]).toBe('<span class="person-cell"><span class="mini-avatar">AL</span> Ada Lovelace</span>');
+  expect((await page.evaluate(cells, 1))[2]).toBe('<span class="person-cell"><span class="nk-avatar small">AL</span> Ada Lovelace</span>');
   const events = [];
   await page.exposeFunction('ev', (t, v) => events.push([t, v]));
   await page.evaluate(() => { const t = document.getElementById('t'); t.addEventListener('nk-select', e => window.ev('select', e.detail.id)); t.addEventListener('nk-change', e => window.ev('change', e.detail.row.id + ':' + e.detail.key + '=' + e.detail.value)); t.addEventListener('nk-action', e => window.ev('action', e.detail.action + ':' + (e.detail.key || ''))); });
@@ -110,5 +110,5 @@ test('comments and AI input fire nk-submit and clear', async ({ page }) => {
   expect(seen).toEqual(['c:Hello', 'ai:Summarise', 'action:copy']);
   expect(await page.evaluate(() => [document.getElementById('c').value, document.getElementById('ai').value])).toEqual(['', '']);
   expect(await page.evaluate(() => document.getElementById('cm').shadowRoot.querySelector('.c-head').textContent)).toBe('Sara Lindt · 1 hr ago');
-  expect(await page.evaluate(() => document.getElementById('cm').shadowRoot.querySelector('.mini-avatar').textContent)).toBe('SL');
+  expect(await page.evaluate(() => document.getElementById('cm').shadowRoot.querySelector('.nk-avatar').textContent)).toBe('SL');
 });

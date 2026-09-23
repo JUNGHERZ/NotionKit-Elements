@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-profile-row avatar="MK"><nk-btn variant="secondary" small>Change photo</nk-btn></nk-profile-row>
 // → <div class="nk-profile-row"><div class="big-avatar">MK</div>…</div>

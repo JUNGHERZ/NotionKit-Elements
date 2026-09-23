@@ -1,3 +1,5 @@
+import { i as initialsOf, p as paintAvatar } from './avatar-BiqCaHOt.js';
+
 // Polymorphic property renderer for database views. Returns plain DOM built
 // from NotionKit classes – deliberately not a custom element: every cell rule
 // starts with `.nk-table`, so a cell inside its own shadow root would never
@@ -5,6 +7,7 @@
 //
 // column: { key, label, type, icon, options: [{ value, label, color }], title }
 // types: text | select | multi-select | date | person | checkbox | url | number | progress
+
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
 const COLORS = ['gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'];
 
@@ -38,14 +41,16 @@ function renderPropertyCell(column, value, row = {}) {
     case 'person': {
       const cell = el('span', 'person-cell');
       const p = typeof value === 'string' ? { name: value } : value;
-      const avatar = el('span', 'mini-avatar', p.initials || p.avatar || (p.name || '').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase());
-      avatar.style.background = p.color || 'var(--nk-text-tertiary)';
+      // color: one of Notion's nine names, or any CSS background; none – the avatar gradient.
+      const avatar = el('span', 'nk-avatar small', p.initials || p.avatar || initialsOf(p.name));
+      paintAvatar(avatar, p.color);
       cell.append(avatar, document.createTextNode(' ' + (p.name || '')));
       return cell;
     }
     case 'checkbox': return checkbox(column, !!value, row);
     case 'url': { const a = el('a', null, String(value).replace(/^https?:\/\//, '')); a.href = String(value); a.target = '_blank'; a.rel = 'noopener'; return a; }
-    case 'number': return el('span', null, typeof value === 'number' ? value.toLocaleString() : String(value));
+    // column.locale / column.format: Intl.NumberFormat locale and options, e.g. { minimumFractionDigits: 1 }.
+    case 'number': return el('span', null, typeof value === 'number' ? value.toLocaleString(column.locale, column.format) : String(value));
     case 'progress': return progress(Number(value) || 0);
     default: {
       if (column.title) {

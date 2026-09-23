@@ -1,4 +1,5 @@
-import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
+import { NkFormElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-model-card name="model" value="gpt" title="Mona Pro" desc="Best for long documents" selected></nk-model-card>
 // → <div class="nk-model-card selected"><div class="m-radio"></div><div><div class="m-name">…</div><div class="m-desc">…</div></div></div>

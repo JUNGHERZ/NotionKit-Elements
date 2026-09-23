@@ -1,4 +1,5 @@
-import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
+import { NkFormElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-check name="mail" value="weekly" checked>Weekly digest</nk-check>
 // → <label class="nk-check"><input type="checkbox"> Weekly digest</label>

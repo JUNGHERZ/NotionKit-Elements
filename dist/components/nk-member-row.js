@@ -1,15 +1,19 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import { i as initialsOf, p as paintAvatar } from './shared/avatar-BiqCaHOt.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
-// <nk-member-row name="Sara Lindt" mail="sara@…" avatar="SL" color="#448361">
+// <nk-member-row name="Sara Lindt" mail="sara@…" avatar="SL" color="green">
 //   <nk-select slot="role" compact>…</nk-select>
 // </nk-member-row>
-// → <div class="nk-member-row"><span class="mini-avatar">SL</span><div>Sara Lindt<div class="m-mail">…</div></div><select …></div>
+// → <div class="nk-member-row"><span class="nk-avatar green">SL</span><div>Sara Lindt<div class="m-mail">…</div></div><select …></div>
+// color: one of Notion's nine names, or any CSS background; without it the
+// avatar gradient. The row sizes the avatar to 28px.
 class NkMemberRow extends NkElement {
   static get observedAttributes() { return ['name', 'mail', 'avatar', 'color', 'last']; }
 
   render() {
     this._row = this.createElement('div', ['nk-member-row']);
-    this._avatar = this.createElement('span', ['mini-avatar']);
+    this._avatar = this.createElement('span', ['nk-avatar']);
     const avatarSlot = this.createElement('slot', [], { name: 'avatar' });
     avatarSlot.appendChild(this._avatar);
     const text = document.createElement('div');
@@ -33,8 +37,8 @@ class NkMemberRow extends NkElement {
     this._mail.textContent = mail || '';
     this._mail.style.display = mail ? '' : 'none';
     const avatar = this.getAttribute('avatar');
-    this._avatar.textContent = avatar || (this.getAttribute('name') || '').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    this._avatar.style.background = this.getAttribute('color') || 'var(--nk-text-tertiary)';
+    this._avatar.textContent = avatar || initialsOf(this.getAttribute('name'));
+    paintAvatar(this._avatar, this.getAttribute('color'));
     this._row.classList.toggle('last', this.getBoolAttr('last'));
   }
 

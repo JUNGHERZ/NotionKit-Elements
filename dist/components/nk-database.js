@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-database id="db" view="table" add-view>
 //   <nk-table-view name="table" label="▦ Table" count></nk-table-view>

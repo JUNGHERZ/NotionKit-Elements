@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NotionKit Elements – NotionKit Elements</title>
-<meta name="description" content="71 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.">
+<meta name="description" content="77 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.">
 <link rel="canonical" href="https://notionkit-elements.jungherz.com/index.html">
 <link rel="alternate" hreflang="en" href="https://notionkit-elements.jungherz.com/index.html">
 <link rel="alternate" hreflang="de" href="https://notionkit-elements.jungherz.com/de/index.html">
 <meta property="og:title" content="NotionKit Elements – NotionKit Elements">
-<meta property="og:description" content="71 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.">
+<meta property="og:description" content="77 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.">
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
@@ -124,7 +124,7 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.5.3</span></a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.6.0</span></a>
   <div class="site-nav-links">
     <a href="docs.html">Docs</a>
     <a href="showcase.html">Showcase</a>
@@ -140,9 +140,9 @@ body { margin: 0; }
 </nav>
 <main class="site-main" style="padding-top:0"><div class="site-inner" style="max-width:960px">
   <section class="land-hero">
-    <div class="land-badges"><span>v1.5.3</span><span>71 elements</span><span>Shadow DOM</span><span>Vanilla JS</span><span>NotionKit CSS 1.5.3</span><span>MIT</span></div>
+    <div class="land-badges"><span>v1.6.0</span><span>77 elements</span><span>Shadow DOM</span><span>Vanilla JS</span><span>NotionKit CSS 1.6.0</span><span>MIT</span></div>
     <h1>The NotionKit look, as <span>elements</span>.</h1>
-    <p>71 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.</p>
+    <p>77 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.</p>
     <div class="land-ctas"><nk-btn variant="primary" href="docs.html">Read the docs</nk-btn> <nk-btn variant="secondary" href="app.html">Open the demo app</nk-btn> <nk-btn variant="secondary" href="showcase.html">Showcase</nk-btn></div>
   </section>
 
@@ -171,17 +171,37 @@ body { margin: 0; }
 &lt;<span class="tag">nk-callout</span> <span class="attr">icon</span>="💡"&gt;A callout carries one thought that must not be missed.&lt;/<span class="tag">nk-callout</span>&gt;
 &lt;<span class="tag">nk-tree-item</span> <span class="attr">icon</span>="🚀" active&gt;NotionKit MVP&lt;/<span class="tag">nk-tree-item</span>&gt;</pre></div></div>
     </div>
+    <div class="land-compare" style="margin-top:16px">
+      <div><h4>Before – .nk-* classes</h4><div class="doc-compare"><div class="doc-preview"><dl class="nk-props">
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">◉</span>Status</dt><dd class="p-value"><span class="nk-tag blue">In progress</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">👤</span>Owner</dt><dd class="p-value"><span class="nk-avatar small">MK</span>Marcel Karas</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">▰</span>Progress</dt><dd class="p-value"><span class="nk-progress wide"><i style="width:65%"></i></span><span class="nk-progress-label">65 %</span></dd></div>
+</dl></div><pre class="doc-code">&lt;<span class="tag">dl</span> <span class="attr">class</span>="nk-props"&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-prop"&gt;&lt;<span class="tag">dt</span> <span class="attr">class</span>="p-name"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="p-icon"&gt;◉&lt;/<span class="tag">span</span>&gt;Status&lt;/<span class="tag">dt</span>&gt;&lt;<span class="tag">dd</span> <span class="attr">class</span>="p-value"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag blue"&gt;In progress&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">dd</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-prop"&gt;&lt;<span class="tag">dt</span> <span class="attr">class</span>="p-name"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="p-icon"&gt;👤&lt;/<span class="tag">span</span>&gt;Owner&lt;/<span class="tag">dt</span>&gt;&lt;<span class="tag">dd</span> <span class="attr">class</span>="p-value"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-avatar small"&gt;MK&lt;/<span class="tag">span</span>&gt;Marcel Karas&lt;/<span class="tag">dd</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-prop"&gt;&lt;<span class="tag">dt</span> <span class="attr">class</span>="p-name"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="p-icon"&gt;▰&lt;/<span class="tag">span</span>&gt;Progress&lt;/<span class="tag">dt</span>&gt;&lt;<span class="tag">dd</span> <span class="attr">class</span>="p-value"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-progress wide"&gt;&lt;<span class="tag">i</span> <span class="attr">style</span>="width:65%"&gt;&lt;/<span class="tag">i</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-progress-label"&gt;65 %&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">dd</span>&gt;&lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">dl</span>&gt;</pre></div></div>
+      <div><h4>After – one element</h4><div class="doc-compare"><div class="doc-preview"><nk-props>
+  <nk-prop label="Status" icon="◉"><nk-tag color="blue">In progress</nk-tag></nk-prop>
+  <nk-prop label="Owner" icon="👤"><nk-avatar size="small">MK</nk-avatar>Marcel Karas</nk-prop>
+  <nk-prop label="Progress" icon="▰"><nk-progress value="65" label="65 %" wide></nk-progress></nk-prop>
+</nk-props></div><pre class="doc-code">&lt;<span class="tag">nk-props</span>&gt;
+  &lt;<span class="tag">nk-prop</span> <span class="attr">label</span>="Status" <span class="attr">icon</span>="◉"&gt;&lt;<span class="tag">nk-tag</span> <span class="attr">color</span>="blue"&gt;In progress&lt;/<span class="tag">nk-tag</span>&gt;&lt;/<span class="tag">nk-prop</span>&gt;
+  &lt;<span class="tag">nk-prop</span> <span class="attr">label</span>="Owner" <span class="attr">icon</span>="👤"&gt;&lt;<span class="tag">nk-avatar</span> <span class="attr">size</span>="small"&gt;MK&lt;/<span class="tag">nk-avatar</span>&gt;Marcel Karas&lt;/<span class="tag">nk-prop</span>&gt;
+  &lt;<span class="tag">nk-prop</span> <span class="attr">label</span>="Progress" <span class="attr">icon</span>="▰"&gt;&lt;<span class="tag">nk-progress</span> <span class="attr">value</span>="65" <span class="attr">label</span>="65 %" wide&gt;&lt;/<span class="tag">nk-progress</span>&gt;&lt;/<span class="tag">nk-prop</span>&gt;
+&lt;/<span class="tag">nk-props</span>&gt;</pre></div></div>
+    </div>
   </section>
 
   <section class="land-section" id="features">
-    <div class="land-features"><div class="land-feature"><div class="i">🧩</div><b>Same word stem</b><p><code>.nk-callout</code> becomes <code>&lt;nk-callout&gt;</code>; a modifier class becomes an attribute, a state class a boolean attribute.</p></div><div class="land-feature"><div class="i">🎯</div><b>Pixel parity</b><p>Every element renders identically to its class markup – checked by a Playwright pixel test in light and dark.</p></div><div class="land-feature"><div class="i">🌗</div><b>One theme source</b><p><code>data-theme</code> on <code>&lt;html&gt;</code>; one observer mirrors it into every element. Brand once on <code>:root</code>, all elements follow.</p></div><div class="land-feature"><div class="i">📝</div><b>Real forms</b><p>Inputs, selects, switches, checks, radios and sliders take part in <code>FormData</code>, reset and validation.</p></div><div class="land-feature"><div class="i">🗃️</div><b>Data views</b><p>Give <code>&lt;nk-database&gt;</code> columns and rows; get a table and a board with polymorphic cells and drag &amp; drop.</p></div><div class="land-feature"><div class="i">⌘</div><b>Overlays that behave</b><p>Settings modal, ⌘K palette, menus, popovers and toasts with focus handling, <code>inert</code> and keyboard support.</p></div></div>
+    <div class="land-features"><div class="land-feature"><div class="i">🧩</div><b>Same word stem</b><p><code>.nk-callout</code> becomes <code>&lt;nk-callout&gt;</code>; a modifier class becomes an attribute, a state class a boolean attribute.</p></div><div class="land-feature"><div class="i">🎯</div><b>Pixel parity</b><p>Every element renders identically to its class markup – checked by a Playwright pixel test in light and dark.</p></div><div class="land-feature"><div class="i">🌗</div><b>One theme source</b><p><code>data-theme</code> on <code>&lt;html&gt;</code>; one observer mirrors it into every element. Brand once on <code>:root</code>, all elements follow.</p></div><div class="land-feature"><div class="i">📝</div><b>Real forms</b><p>Inputs, selects, switches, checks, radios and sliders take part in <code>FormData</code>, reset and validation.</p></div><div class="land-feature"><div class="i">🗃️</div><b>Data views</b><p>Give <code>&lt;nk-database&gt;</code> columns and rows; get a table, a board and a list with polymorphic cells and drag &amp; drop – and the same page’s properties with <code>&lt;nk-props&gt;</code>.</p></div><div class="land-feature"><div class="i">⌘</div><b>Overlays that behave</b><p>Settings modal, ⌘K palette, menus, popovers and toasts with focus handling, <code>inert</code> and keyboard support.</p></div></div>
   </section>
 
   <section class="land-section" id="quickstart">
     <h2>Quick start</h2>
     <div class="land-steps"><div class="land-step"><div>Load NotionKit CSS and the elements bundle</div></div><div class="land-step"><div>Put <code>class="nk-body"</code> on <code>&lt;body&gt;</code></div></div><div class="land-step"><div>Write elements</div></div></div>
-    <div class="doc-compare" style="margin-top:14px"><pre class="doc-code" style="border-top:0">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    <div class="doc-compare" style="margin-top:14px"><pre class="doc-code" style="border-top:0">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
   &lt;<span class="tag">nk-callout</span> <span class="attr">icon</span>="💡"&gt;A callout carries one thought that must not be missed.&lt;/<span class="tag">nk-callout</span>&gt;
@@ -192,7 +212,7 @@ body { margin: 0; }
     <h2>The NotionKit family</h2>
     <div class="land-family"><a href="https://notionkit.jungherz.com" class=""><b>NotionKit</b><small>CSS foundation – classes and tokens</small></a><a href="#" class="here"><b>NotionKit Elements<em>you are here</em></b><small>Web Components – this package</small></a><a href="https://notionkit-web.jungherz.com" class=""><b>NotionKit Web</b><small>Astro template – complete websites</small></a></div>
   </section>
-  <div class="site-footer">NotionKit Elements v1.5.3 · wrapping NotionKit CSS v1.5.3 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.6.0 · wrapping NotionKit CSS v1.6.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

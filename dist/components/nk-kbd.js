@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-kbd>⌘</nk-kbd> <nk-kbd>K</nk-kbd>  →  <kbd class="nk-kbd">
 class NkKbd extends NkElement {

@@ -1,4 +1,5 @@
-import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
+import { NkFormElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-switch name="notify" checked></nk-switch>
 // → <button class="nk-switch" role="switch" aria-checked="true">

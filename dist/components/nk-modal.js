@@ -1,5 +1,6 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
 import { l as lockScroll, i as inertOutside, f as firstFocusable, u as unlockScroll } from './shared/focus-DXrK9oLe.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-modal id="settings">
 //   <nk-settings-user slot="user" name="…" mail="…"></nk-settings-user>

@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-ai-thread><nk-ai-msg …>…</nk-ai-msg>…</nk-ai-thread>  →  <div class="nk-ai-thread">
 class NkAiThread extends NkElement {

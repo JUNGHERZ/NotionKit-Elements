@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-tab-bar-item icon="📥" value="inbox" active>Inbox</nk-tab-bar-item>
 // → <button class="nk-tab-bar-item active" type="button">

@@ -6,6 +6,12 @@
 
 export { NkElement, NkFormElement } from './base.js';
 
+// The component sheet the elements adopt, for a project's own views: a view
+// that adopts this instance shares it with every element instead of loading
+// NotionKit's stylesheet a second time next to the bundle
+// (NotionKitElements.componentsSheet from the <script> bundle).
+export { componentsSheet } from '@jungherz-de/notionkit/notionkit-styles.js';
+
 // Wave 1 – forms
 export { NkBtn } from './components/forms/nk-btn.js';
 export { NkInput } from './components/forms/nk-input.js';
@@ -59,6 +65,7 @@ export { NkSegmented } from './components/page/nk-segmented.js';
 export { NkStats } from './components/page/nk-stats.js';
 export { NkStat } from './components/page/nk-stat.js';
 export { NkAvatarGroup } from './components/page/nk-avatar-group.js';
+export { NkAvatar } from './components/page/nk-avatar.js';
 export { NkMention } from './components/page/nk-mention.js';
 export { NkTemplateBtn } from './components/page/nk-template-btn.js';
 export { NkModelCard } from './components/page/nk-model-card.js';
@@ -66,6 +73,12 @@ export { NkProfileRow } from './components/page/nk-profile-row.js';
 export { NkDangerZone } from './components/page/nk-danger-zone.js';
 export { NkMemberList } from './components/page/nk-member-list.js';
 export { NkMemberRow } from './components/page/nk-member-row.js';
+
+// 1.6.0 – app views
+export { NkProps } from './components/page/nk-props.js';
+export { NkProp } from './components/page/nk-prop.js';
+export { NkPanels } from './components/page/nk-panels.js';
+export { NkPanel } from './components/page/nk-panel.js';
 
 // Wave 4 – overlays
 export { NkModal } from './components/overlays/nk-modal.js';
@@ -82,6 +95,7 @@ export { NkToast } from './components/overlays/nk-toast.js';
 export { NkDatabase } from './components/data/nk-database.js';
 export { NkTableView } from './components/data/nk-table-view.js';
 export { NkBoardView } from './components/data/nk-board-view.js';
+export { NkListView } from './components/data/nk-list-view.js';
 export { NkFilterBar } from './components/data/nk-filter-bar.js';
 export { NkComments } from './components/data/nk-comments.js';
 export { NkComment } from './components/data/nk-comment.js';

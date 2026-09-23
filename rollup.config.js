@@ -21,6 +21,12 @@ const componentEntries = Object.fromEntries(
       .filter(f => f.startsWith('nk-') && f.endsWith('.js'))
       .map(f => [basename(f, '.js'), join(COMPONENT_ROOT, d.name, f)]))
 );
+// base.js is an entry of its own, not only a shared chunk: an entry keeps a
+// stable file name (dist/components/base.js – the `./base.js` export), and
+// Rollup never duplicates an entry module, so every component imports that one
+// file and a project's own element built on NkElement shares its identity. It
+// used to land in shared/base-<hash>.js, a name that changed with every build.
+if (Object.keys(componentEntries).length) componentEntries.base = 'src/base.js';
 
 const bundles = [
   // Full bundle (IIFE) — for CDN <script> usage
@@ -44,10 +50,17 @@ const bundles = [
 ];
 
 // Per-component ES modules — one entry per element, shared chunks extracted.
-// Skipped while there are no components yet (rollup rejects an empty input map).
+// NotionKit's stylesheet module stays an external import here: these files are
+// consumed through a bundler or an import map, and both resolve
+// '@jungherz-de/notionkit/notionkit-styles.js' to the one copy the project
+// already has. Inlined, the base chunk carried the whole sheet a second time
+// next to the project's own notionkit-styles import – LearnHub and Auxdesk
+// loaded it twice. The full bundles above keep inlining it: a <script> tag has
+// nothing to resolve against. Skipped while there are no components yet.
 if (Object.keys(componentEntries).length) {
   bundles.push({
     input: componentEntries,
+    external: ['@jungherz-de/notionkit/notionkit-styles.js'],
     output: {
       dir: 'dist/components',
       format: 'es',

@@ -1,4 +1,5 @@
-import { N as NkElement, g as getCurrentTheme } from './shared/base-C3eJwHKA.js';
+import { NkElement, getCurrentTheme } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-theme-toggle slot="actions"></nk-theme-toggle>
 // → <button class="nk-topbar-btn nk-theme-toggle">🌙</button>

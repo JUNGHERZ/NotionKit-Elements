@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.5.3) wrapping NotionKit CSS v1.5.3 – the calm, document-centric design system in the Notion idiom. 71 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.6.0) wrapping NotionKit CSS v1.6.0 – the calm, document-centric design system in the Notion idiom. 77 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.5.3) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -39,9 +39,19 @@ npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 ```js
 import '@jungherz-de/notionkit/notionkit.css';     // via your bundler, or a <link>
 import '@jungherz-de/notionkit-elements';           // registers every <nk-*> tag
-// or one element at a time (shared code is one extra chunk):
+// or one element at a time (shared code: base.js):
 import '@jungherz-de/notionkit-elements/components/nk-btn.js';
+// the sheet the elements adopt, for your own views – never a second copy:
+import { componentsSheet } from '@jungherz-de/notionkit-elements';
 ```
+
+The per-component files import NotionKit's sheet as `@jungherz-de/notionkit/notionkit-styles.js` instead of carrying a copy. A bundler resolves it; a build-free page maps it once:
+
+```html
+<script type="importmap">{ "imports": { "@jungherz-de/notionkit/notionkit-styles.js": "/node_modules/@jungherz-de/notionkit/notionkit-styles.js" } }</script>
+```
+
+Never mix the full bundle with the per-component files – each brings its own `NkElement`. With the bundle, take `componentsSheet` and `NkElement` from it (`NotionKitElements.componentsSheet` from the `<script>` build).
 
 
 # 2. Core Concepts
@@ -64,7 +74,7 @@ import '@jungherz-de/notionkit-elements/components/nk-btn.js';
 | Attributes are live | Every documented attribute re-renders when changed after connect (`stat.setAttribute('value', '129')`, `el.open = true`); properties reflect to attributes where a setter is listed. |
 
 
-# 3. Element Catalog (71 elements)
+# 3. Element Catalog (77 elements)
 
 ## Forms & controls (wave 1)
 
@@ -447,10 +457,11 @@ A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `
 | `value` | number | `0` | Current value. |
 | `max` | number | `100` | Maximum. |
 | `label` | string | – | Text after the bar. |
+| `wide` | boolean | – | Fills its row – a property value, a panel; in a flex row the label stays beside it. |
 
 
 
-**Replaces:** `.nk-progress`, `.nk-progress-label`
+**Replaces:** `.nk-progress`, `.nk-progress-label`, `.wide`
 
 ```html
 <!-- equivalent class markup -->
@@ -1081,6 +1092,8 @@ The document column: a scrolling wrapper, an optional cover, the 760px page with
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `icon` | string | – | Page emoji; click fires `nk-action`. |
+| `full` | boolean | – | Page option “Full width”: the column fills the window instead of stopping at 760px. |
+| `small` | boolean | – | Page option “Small text”: document text 14px instead of 16px; headings, lead, prose and editor follow. |
 | `cover` | boolean | – | Shows the cover strip; the icon then overlaps its bottom edge and the page drops its top padding (the stylesheet’s `covered` state, also set for a slotted `nk-page-cover`). Without it the icon sits in 24px top padding, fully visible. |
 | `narrow` | boolean | – | No scroll wrapper (landing / docs page). |
 
@@ -1088,7 +1101,7 @@ The document column: a scrolling wrapper, an optional cover, the 760px page with
 
 **Events:** `nk-action` `{ action: 'icon', value }` – Icon clicked (open an emoji picker).
 
-**Replaces:** `.nk-page-scroll`, `.nk-page`, `.nk-page-icon`, `.nk-cover`, `.lead`
+**Replaces:** `.nk-page-scroll`, `.nk-page`, `.nk-page-icon`, `.nk-cover`, `.lead`, `.full`, `.small`
 
 ```html
 <!-- equivalent class markup -->
@@ -1104,15 +1117,16 @@ The document column: a scrolling wrapper, an optional cover, the 760px page with
 
 ### 3.33 `<nk-page-cover>` – Page cover
 
-The 200px cover band. Without `src` it shows the token gradient; with `src` an image, covered and centred.
+The 200px cover band. Without `src` it shows the token gradient; with `src` a picture – an `<img>` inside the band, cropped rather than stretched. `position` moves the crop, as Notion’s “Reposition” does.
 
 ```html
-<nk-page-cover></nk-page-cover>
+<nk-page-cover src="/covers/meadow.svg"></nk-page-cover>
 ```
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `src` | URL | – | Cover image. |
+| `src` | URL | – | Cover picture. |
+| `position` | CSS object-position | `center` | Where the crop sits. |
 
 
 
@@ -1120,7 +1134,7 @@ The 200px cover band. Without `src` it shows the token gradient; with `src` an i
 
 ```html
 <!-- equivalent class markup -->
-<div class="nk-cover"></div>
+<div class="nk-cover"><img src="/covers/meadow.svg" alt=""></div>
 ```
 
 **Small screens:** Unchanged.
@@ -1175,7 +1189,122 @@ _No attributes._
 
 **Small screens:** Wraps naturally.
 
-### 3.36 `<nk-block-host>` – Block host
+### 3.36 `<nk-props>` – Page properties
+
+The properties under the title of a database page, the pattern Notion is known for: a list of `nk-prop` rows. The rows are hosts with `display: contents`, so each renders as a row of this list – no markup of their own around them.
+
+```html
+<nk-props style="max-width:520px">
+  <nk-prop label="Status" icon="◉"><nk-tag color="blue">In progress</nk-tag></nk-prop>
+  <nk-prop label="Owner" icon="👤"><nk-avatar size="small" color="purple">AL</nk-avatar>Ada Lovelace</nk-prop>
+  <nk-prop label="Due" icon="📅">2 June 2026</nk-prop>
+  <nk-prop label="Tags" icon="🏷️"><nk-tag color="purple">Design system</nk-tag><nk-tag>CSS</nk-tag></nk-prop>
+  <nk-prop label="Progress" icon="▰"><nk-progress value="65" label="65 %" wide></nk-progress></nk-prop>
+</nk-props>
+```
+
+_No attributes._
+
+**Slots:** `(default)` – `nk-prop` children.
+
+**Replaces:** `.nk-props`
+
+```html
+<!-- equivalent class markup -->
+<dl class="nk-props" style="max-width:520px">
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">◉</span>Status</dt><dd class="p-value"><span class="nk-tag blue">In progress</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">👤</span>Owner</dt><dd class="p-value"><span class="nk-avatar small purple">AL</span>Ada Lovelace</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>Due</dt><dd class="p-value">2 June 2026</dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">🏷️</span>Tags</dt><dd class="p-value"><span class="nk-tag purple">Design system</span><span class="nk-tag">CSS</span></dd></div>
+  <div class="nk-prop"><dt class="p-name"><span class="p-icon">▰</span>Progress</dt><dd class="p-value"><span class="nk-progress wide"><i style="width:65%"></i></span><span class="nk-progress-label">65 %</span></dd></div>
+</dl>
+```
+
+**Small screens:** Below 860px each property stacks: the name above its value.
+
+### 3.37 `<nk-prop>` – Page property
+
+One property: the name with its type icon in a 160px column, the value beside it, 34px with the hover wash on both halves. The value is the element’s content – tags, an avatar and a name, a date, `<nk-progress wide>`. A click fires `nk-action` with the half that was hit, the moment Notion opens the property’s editor.
+
+```html
+<nk-props style="max-width:520px"><nk-prop label="Due" icon="📅">2 June 2026</nk-prop></nk-props>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `label` | string | – | Property name. |
+| `icon` | string | – | Type icon. |
+
+**Slots:** `(default)` – The value. · `icon` – Icon node.
+
+**Events:** `nk-action` `{ action: 'name' | 'value', label }` – Name or value clicked.
+
+**Replaces:** `.nk-prop`, `.p-name`, `.p-icon`, `.p-value`
+
+```html
+<!-- equivalent class markup -->
+<dl class="nk-props" style="max-width:520px"><div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>Due</dt><dd class="p-value">2 June 2026</dd></div></dl>
+```
+
+**Small screens:** Stacks below 860px.
+
+### 3.38 `<nk-panels>` – Panels
+
+A grid of `nk-panel`s: columns of at least 200px that share the row. The panels are hosts with `display: contents`, so each is a cell of this grid.
+
+```html
+<nk-panels>
+  <nk-panel href="#" cover="/covers/aurora.svg" icon="🚀" title="NotionKit MVP"><p>2 min ago</p></nk-panel>
+  <nk-panel href="#" cover="/covers/dunes.svg" icon="📚" title="Knowledge base"><p>Yesterday</p></nk-panel>
+  <nk-panel title="Weekly review"><p>Three pages changed, one comment is waiting for an answer.</p></nk-panel>
+</nk-panels>
+```
+
+_No attributes._
+
+**Slots:** `(default)` – `nk-panel` children.
+
+**Replaces:** `.nk-panels`
+
+```html
+<!-- equivalent class markup -->
+<div class="nk-panels">
+  <a class="nk-panel" href="#"><div class="nk-cover"><img src="/covers/aurora.svg" alt=""></div><div class="nk-page-icon">🚀</div><h3>NotionKit MVP</h3><p>2 min ago</p></a>
+  <a class="nk-panel" href="#"><div class="nk-cover"><img src="/covers/dunes.svg" alt=""></div><div class="nk-page-icon">📚</div><h3>Knowledge base</h3><p>Yesterday</p></a>
+  <div class="nk-panel"><h3>Weekly review</h3><p>Three pages changed, one comment is waiting for an answer.</p></div>
+</div>
+```
+
+**Small screens:** Falls to one column as soon as two 200px columns no longer fit.
+
+### 3.39 `<nk-panel>` – Panel
+
+A neutral surface for content that belongs together – the cards on Notion’s Home, the boxes in its settings. `title` is the heading (never a tooltip); the content goes in as `<p>`s and blocks. `cover` without a value draws the gradient band, with a URL a picture; `icon` overlaps the cover as on a page – a page tile. With `href` the panel is a link.
+
+```html
+<div style="max-width:260px"><nk-panel href="#" cover icon="🚀" title="NotionKit MVP"><p>2 min ago</p></nk-panel></div>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `title` | string | – | Heading. |
+| `icon` | string | – | Page icon. |
+| `cover` | URL | empty | – | Cover band: empty for the gradient, a URL for a picture. |
+| `href` | URL | – | Makes the panel a link. |
+| `target` | string | – | Link target. |
+
+**Slots:** `(default)` – Content: `<p>`, a prose block, a progress bar.
+
+**Replaces:** `.nk-panel`, `.nk-cover`, `.nk-page-icon`
+
+```html
+<!-- equivalent class markup -->
+<div style="max-width:260px"><a class="nk-panel" href="#"><div class="nk-cover"></div><div class="nk-page-icon">🚀</div><h3>NotionKit MVP</h3><p>2 min ago</p></a></div>
+```
+
+**Small screens:** Takes the width of its grid cell.
+
+### 3.40 `<nk-block-host>` – Block host
 
 The optical shell for editor content: hover wash, focus ring, drop-target line, an optional drag handle. It stays behaviour-neutral – mount your editor into the light DOM; `nk-editor` (v1.1) will do that for TipTap.
 
@@ -1199,7 +1328,7 @@ The optical shell for editor content: hover wash, focus ring, drop-target line, 
 
 **Small screens:** The handle sits 26px left of the column and is hidden when there is no room.
 
-### 3.37 `<nk-banner>` – Banner
+### 3.41 `<nk-banner>` – Banner
 
 A tinted notice row. The colour modifier becomes `variant`; an action link goes into `slot="action"` and sits at the right edge.
 
@@ -1228,7 +1357,7 @@ A tinted notice row. The colour modifier becomes `variant`; an action link goes 
 
 **Small screens:** Wraps; the action drops below the text when needed.
 
-### 3.38 `<nk-empty>` – Empty state
+### 3.42 `<nk-empty>` – Empty state
 
 Dashed box with icon, title, description and whatever call to action you slot in.
 
@@ -1253,7 +1382,7 @@ Dashed box with icon, title, description and whatever call to action you slot in
 
 **Small screens:** Unchanged.
 
-### 3.39 `<nk-skeleton>` – Skeleton
+### 3.43 `<nk-skeleton>` – Skeleton
 
 Shimmering placeholder lines. `lines` renders several; `widths` gives each its own width.
 
@@ -1283,7 +1412,7 @@ Shimmering placeholder lines. `lines` renders several; `widths` gives each its o
 
 **Small screens:** Unchanged; respects reduced motion.
 
-### 3.40 `<nk-synced>` – Synced block
+### 3.44 `<nk-synced>` – Synced block
 
 Content that appears in several places, framed with a badge.
 
@@ -1306,7 +1435,7 @@ Content that appears in several places, framed with a badge.
 
 **Small screens:** Unchanged.
 
-### 3.41 `<nk-tabs>` – Tabs
+### 3.45 `<nk-tabs>` – Tabs
 
 A tab strip with panels. `nk-tab` children are the tabs; elements with `slot="panel"` and a matching `data-tab` are the panels – the tabs hide every panel but the active one through `hidden`. Arrow keys move between tabs.
 
@@ -1345,7 +1474,7 @@ A tab strip with panels. `nk-tab` children are the tabs; elements with `slot="pa
 
 **Small screens:** Strip stays on one line; keep labels short.
 
-### 3.42 `<nk-tab>` – Tab
+### 3.46 `<nk-tab>` – Tab
 
 One tab of `nk-tabs`. Standalone it toggles its own `active`.
 
@@ -1372,7 +1501,7 @@ One tab of `nk-tabs`. Standalone it toggles its own `active`.
 
 **Small screens:** Unchanged.
 
-### 3.43 `<nk-segmented>` – Segmented control
+### 3.47 `<nk-segmented>` – Segmented control
 
 Plain `<button value>` children stay in the light DOM (the stylesheet’s slotted twins shape them); the element moves `.active`, handles arrow keys and submits `value` with the form.
 
@@ -1405,7 +1534,7 @@ Plain `<button value>` children stay in the light DOM (the stylesheet’s slotte
 
 **Small screens:** One row by default, which five filter options overflow on a phone: `scroll` keeps one thumb-swipeable row capped at the parent width (scrollbar hidden), `wrap` breaks it onto further rows.
 
-### 3.44 `<nk-stats>` – Stat cards
+### 3.48 `<nk-stats>` – Stat cards
 
 `nk-stats` is the row; each `nk-stat` shows label, value and a trend line coloured by `trend`.
 
@@ -1439,7 +1568,7 @@ Plain `<button value>` children stay in the light DOM (the stylesheet’s slotte
 
 **Small screens:** The row wraps below 860px.
 
-### 3.45 `<nk-stat>` – Stat card
+### 3.49 `<nk-stat>` – Stat card
 
 One card; see `nk-stats` for the row.
 
@@ -1465,12 +1594,12 @@ One card; see `nk-stats` for the row.
 
 **Small screens:** Unchanged.
 
-### 3.46 `<nk-avatar-group>` – Avatar group
+### 3.50 `<nk-avatar-group>` – Avatar group
 
-Overlapping `.mini-avatar` children (light DOM, styled by the slotted twins) plus a “more” bubble from the attribute.
+Overlapping `.mini-avatar` children (light DOM, styled by the slotted twins) plus a “more” bubble from the attribute. Pass `.mini-avatar`, not `.nk-avatar`: the document rule of `.nk-avatar` sets its own 24px, and for slotted nodes the document wins over the group’s 26px.
 
 ```html
-<div style="display:flex;align-items:center;gap:12px"><nk-avatar-group more="+2"><span class="mini-avatar" style="background:linear-gradient(135deg,#9065b0,#529cca)">MK</span><span class="mini-avatar" style="background:#448361">SL</span><span class="mini-avatar" style="background:#d9730d">TW</span></nk-avatar-group><span style="font-size:12.5px;color:var(--nk-text-tertiary)">5 people have access</span></div>
+<div style="display:flex;align-items:center;gap:12px"><nk-avatar-group more="+2"><span class="mini-avatar" style="background:linear-gradient(135deg,var(--nk-decor-purple),var(--nk-decor-blue))">MK</span><span class="mini-avatar" style="background:var(--nk-color-green)">SL</span><span class="mini-avatar" style="background:var(--nk-color-orange)">TW</span></nk-avatar-group><span style="font-size:12.5px;color:var(--nk-text-tertiary)">5 people have access</span></div>
 ```
 
 | Attribute | Type | Default | Description |
@@ -1483,12 +1612,39 @@ Overlapping `.mini-avatar` children (light DOM, styled by the slotted twins) plu
 
 ```html
 <!-- equivalent class markup -->
-<div style="display:flex;align-items:center;gap:12px"><div class="nk-avatar-group"><span class="mini-avatar" style="background:linear-gradient(135deg,#9065b0,#529cca)">MK</span><span class="mini-avatar" style="background:#448361">SL</span><span class="mini-avatar" style="background:#d9730d">TW</span><span class="mini-avatar more">+2</span></div><span style="font-size:12.5px;color:var(--nk-text-tertiary)">5 people have access</span></div>
+<div style="display:flex;align-items:center;gap:12px"><div class="nk-avatar-group"><span class="nk-avatar">MK</span><span class="nk-avatar green">SL</span><span class="nk-avatar orange">TW</span><span class="mini-avatar more">+2</span></div><span style="font-size:12.5px;color:var(--nk-text-tertiary)">5 people have access</span></div>
 ```
 
 **Small screens:** Unchanged.
 
-### 3.47 `<nk-mention>` – Mention
+### 3.51 `<nk-avatar>` – Avatar
+
+A person or a workspace: initials, an emoji or a photo in a circle. `size` small (20px), default 24px, large (32px), xlarge (56px); `color` one of Notion’s nine names or any CSS background, without it the avatar gradient; `square` for a workspace icon. Without content the initials come from `name`; with `src` a photo fills the circle and `name` becomes its alt text.
+
+```html
+<div style="display:flex;align-items:center;gap:10px"><nk-avatar size="small" color="blue">TW</nk-avatar><nk-avatar>AL</nk-avatar><nk-avatar color="green">SL</nk-avatar><nk-avatar size="large" color="orange">MK</nk-avatar><nk-avatar size="xlarge" color="purple" name="Ada Lovelace"></nk-avatar><nk-avatar size="large" square>A</nk-avatar></div>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `size` | small | large | xlarge | – | Size; default 24px. |
+| `color` | colour name | CSS | – | gray, brown, orange, yellow, green, blue, purple, pink, red – or any CSS background. |
+| `square` | boolean | – | Corners instead of a circle. |
+| `name` | string | – | Initials when empty; alt text of the photo. |
+| `src` | URL | – | Photo. |
+
+**Slots:** `(default)` – Initials or an emoji.
+
+**Replaces:** `.nk-avatar`, `.small`, `.large`, `.xlarge`, `.square`, `.green`, `.blue`, `.orange`, `.purple`
+
+```html
+<!-- equivalent class markup -->
+<div style="display:flex;align-items:center;gap:10px"><span class="nk-avatar small blue">TW</span><span class="nk-avatar">AL</span><span class="nk-avatar green">SL</span><span class="nk-avatar large orange">MK</span><span class="nk-avatar xlarge purple">AL</span><span class="nk-avatar large square">A</span></div>
+```
+
+**Small screens:** Unchanged. A fixed size, so a row of avatars never reflows.
+
+### 3.52 `<nk-mention>` – Mention
 
 Inline chip for a person (with avatar slot), a page or a date.
 
@@ -1511,7 +1667,7 @@ Inline chip for a person (with avatar slot), a page or a date.
 
 **Small screens:** Unchanged; never wraps.
 
-### 3.48 `<nk-template-btn>` – Template button
+### 3.53 `<nk-template-btn>` – Template button
 
 Full-width, left-aligned button on the callout background – “insert a template”. Fires `nk-select` with `value`.
 
@@ -1542,7 +1698,7 @@ Full-width, left-aligned button on the callout background – “insert a templa
 
 **Small screens:** Unchanged.
 
-### 3.49 `<nk-model-card>` – Model card
+### 3.54 `<nk-model-card>` – Model card
 
 A radio-like card. Cards with the same `name` form a group; the selected one submits `value` with the form.
 
@@ -1574,7 +1730,7 @@ A radio-like card. Cards with the same `name` form a group; the selected one sub
 
 **Small screens:** Unchanged.
 
-### 3.50 `<nk-profile-row>` – Profile row
+### 3.55 `<nk-profile-row>` – Profile row
 
 A 56px gradient avatar with whatever you slot beside it – usually two buttons.
 
@@ -1597,7 +1753,7 @@ A 56px gradient avatar with whatever you slot beside it – usually two buttons.
 
 **Small screens:** Unchanged.
 
-### 3.51 `<nk-danger-zone>` – Danger zone
+### 3.56 `<nk-danger-zone>` – Danger zone
 
 Red-framed box for destructive settings.
 
@@ -1620,7 +1776,7 @@ Red-framed box for destructive settings.
 
 **Small screens:** Unchanged.
 
-### 3.52 `<nk-member-list>` – Member list
+### 3.57 `<nk-member-list>` – Member list
 
 Rows of `nk-member-row`; the list marks the last row so it loses its bottom border. Each row shows avatar (initials + `color`), name, mail and a `slot="role"` control on the right.
 
@@ -1653,12 +1809,12 @@ Rows of `nk-member-row`; the list marks the last row so it loses its bottom bord
 
 **Small screens:** Unchanged; the role select shrinks to 120px.
 
-### 3.53 `<nk-member-row>` – Member row
+### 3.58 `<nk-member-row>` – Member row
 
 One row; see `nk-member-list`.
 
 ```html
-<nk-member-row name="Sara Lindt" mail="sara@example.com" color="#448361" last></nk-member-row>
+<nk-member-row name="Sara Lindt" mail="sara@example.com" color="green" last></nk-member-row>
 ```
 
 | Attribute | Type | Default | Description |
@@ -1666,7 +1822,7 @@ One row; see `nk-member-list`.
 | `name` | string | – | Name. |
 | `mail` | string | – | Mail. |
 | `avatar` | string | – | Initials. |
-| `color` | CSS color | – | Avatar background. |
+| `color` | colour name | CSS | – | Avatar colour: one of the nine names (gray … red) or any CSS background; without it the avatar gradient. |
 | `last` | boolean | – | No bottom border. |
 
 **Slots:** `role` – Control on the right. · `avatar` – Custom avatar. · `(default)` – Extra content.
@@ -1675,14 +1831,14 @@ One row; see `nk-member-list`.
 
 ```html
 <!-- equivalent class markup -->
-<div class="nk-member-row last"><span class="mini-avatar" style="background:#448361">SL</span><div>Sara Lindt<div class="m-mail">sara@example.com</div></div></div>
+<div class="nk-member-row last"><span class="nk-avatar green">SL</span><div>Sara Lindt<div class="m-mail">sara@example.com</div></div></div>
 ```
 
 **Small screens:** Unchanged.
 
 ## Overlays (wave 4)
 
-### 3.54 `<nk-modal>` – Settings modal
+### 3.59 `<nk-modal>` – Settings modal
 
 The settings overlay: backdrop, a 960×640 dialog with a nav column and a content column. The nav rows are rendered by the modal from the panes’ `label`/`icon`/`group`, so the 27px rows and the 860px icon rail come straight from the stylesheet. Escape and the backdrop close it; focus moves in and back; the page behind is scroll-locked and inert. Place it directly under `<body>`.
 
@@ -1739,7 +1895,7 @@ The settings overlay: backdrop, a 960×640 dialog with a nav column and a conten
 
 **Small screens:** Below 860px the nav collapses to a 60px icon rail; the dialog takes 92vw × 86vh.
 
-### 3.55 `<nk-settings-pane>` – Settings pane
+### 3.60 `<nk-settings-pane>` – Settings pane
 
 One pane of the settings modal. `label`, `icon` and `group` feed the modal’s nav; `title` renders the pane heading. Slotted `<h2>`/`<h3>` are styled too.
 
@@ -1767,7 +1923,7 @@ One pane of the settings modal. `label`, `icon` and `group` feed the modal’s n
 
 **Small screens:** Content padding drops to 24px below 860px.
 
-### 3.56 `<nk-settings-user>` – Settings user
+### 3.61 `<nk-settings-user>` – Settings user
 
 The user card at the top of the settings nav.
 
@@ -1792,7 +1948,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Below 860px only the avatar remains.
 
-### 3.57 `<nk-cmdk>` – Command palette
+### 3.62 `<nk-cmdk>` – Command palette
 
 ⌘K. Feed it `palette.commands = [{ group, items: [{ id, icon, label, shortcut, keywords, action }] }]`; it searches fuzzily over label and keywords, keeps group order, moves the selection with ↑↓, picks with Enter or click (`nk-command` plus the item’s `action`), and closes on Escape or the backdrop. The hotkey is `mod+k` unless changed. Place it directly under `<body>`.
 
@@ -1848,7 +2004,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Full width (96vw) and closer to the top below 860px.
 
-### 3.58 `<nk-menu>` – Menu
+### 3.63 `<nk-menu>` – Menu
 
 A 230px context menu. Items are `nk-menu-item`s (`type="separator"` / `"label"` for the rest); ↑↓ move, Enter selects, `nk-select` bubbles up. Usually lives inside `nk-pop` or the workspace switcher.
 
@@ -1887,12 +2043,12 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.59 `<nk-menu-item>` – Menu item
+### 3.64 `<nk-menu-item>` – Menu item
 
-One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `type` switches to a separator or a group label.
+One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `type` switches to a separator or a group label, or to a row with a switch on the right – “Small text” in Notion’s page menu: a click flips `checked` and fires `nk-change`, so the menu stays open.
 
 ```html
-<nk-menu><nk-menu-item icon="✏️" shortcut="⌘E" value="rename">Rename</nk-menu-item></nk-menu>
+<nk-menu><nk-menu-item icon="✏️" shortcut="⌘E" value="rename">Rename</nk-menu-item><nk-menu-item type="switch" icon="🔡" value="small" checked>Small text</nk-menu-item></nk-menu>
 ```
 
 | Attribute | Type | Default | Description |
@@ -1901,23 +2057,24 @@ One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `
 | `shortcut` | string | – | Trailing shortcut text. |
 | `value` | string | – | Reported value (default: text). |
 | `danger` | boolean | – | Red text. |
-| `type` | item | separator | label | `item` | Row kind. |
+| `type` | item | separator | label | switch | `item` | Row kind. |
+| `checked` | boolean | – | The switch is on (type="switch"). |
 | `disabled` | boolean | – | Not selectable. |
 
 **Slots:** `(default)` – Label. · `icon` – Icon node.
 
-**Events:** `nk-select` `{ value, label, item }` – Clicked / Enter.
+**Events:** `nk-select` `{ value, label, item }` – Clicked / Enter. · `nk-change` `{ value, checked, item }` – A switch row flipped.
 
 **Replaces:** `.nk-menu-item`, `.danger`, `.nk-menu-sep`, `.nk-menu-label`
 
 ```html
 <!-- equivalent class markup -->
-<div class="nk-pop nk-menu"><div class="nk-menu-item"><span class="m-icon">✏️</span>Rename<span class="m-shortcut">⌘E</span></div></div>
+<div class="nk-pop nk-menu"><div class="nk-menu-item"><span class="m-icon">✏️</span>Rename<span class="m-shortcut">⌘E</span></div><div class="nk-menu-item" role="menuitemcheckbox" aria-checked="true"><span class="m-icon">🔡</span>Small text<span class="nk-switch" aria-hidden="true" aria-checked="true"></span></div></div>
 ```
 
 **Small screens:** Unchanged.
 
-### 3.60 `<nk-pop>` – Popover
+### 3.65 `<nk-pop>` – Popover
 
 Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` and toggles `open`; outside clicks, Escape and an `nk-select` from inside close it. Content is wrapped in `.nk-pop` unless it brings its own surface (`nk-menu`, `nk-emoji-picker`) or `bare` is set.
 
@@ -1952,7 +2109,7 @@ Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` an
 
 **Small screens:** Positioned relative to the trigger; keep it near the viewport edge in mind.
 
-### 3.61 `<nk-emoji-picker>` – Emoji picker
+### 3.66 `<nk-emoji-picker>` – Emoji picker
 
 Search field, 8-column grid, category strip. Ships with a built-in set (names for search); `picker.emojis = [{ char, name, cat }]` replaces it. A click fires `nk-select { emoji }`.
 
@@ -1978,7 +2135,7 @@ Search field, 8-column grid, category strip. Ships with a built-in set (names fo
 
 **Small screens:** 296px wide; fine on any phone.
 
-### 3.62 `<nk-toast>` – Toast
+### 3.67 `<nk-toast>` – Toast
 
 One inverted pill at the bottom centre, above every overlay; over a tab bar at the bottom of the screen it rises 12px above the bar. `toast.show("Saved")` shows it and hides it after `duration` ms; `open` is the state.
 
@@ -2009,7 +2166,7 @@ One inverted pill at the bottom centre, above every overlay; over a tab bar at t
 
 ## Data & collaboration (wave 5)
 
-### 3.63 `<nk-database>` – Database
+### 3.68 `<nk-database>` – Database
 
 The view switcher. Child views (`nk-table-view`, `nk-board-view`) become tabs; `columns` and `rows` are pushed into every view. `view` selects the active one; `count` on a view shows the row count as badge. No fetching: give it data, listen to events.
 
@@ -2027,12 +2184,13 @@ The view switcher. Child views (`nk-table-view`, `nk-board-view`) become tabs; `
     { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
     { key: 'due', label: 'Due', type: 'date', icon: '📅' },
     { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '08.05.2026', progress: 100 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '10.05.2026', progress: 100 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '20.05.2026', progress: 65 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
 }</script>
 ```
@@ -2055,12 +2213,12 @@ The view switcher. Child views (`nk-table-view`, `nk-board-view`) become tabs; `
 <div class="nk-database">
   <div class="nk-db-tabs"><span class="nk-db-tab active">▦ Table <span class="badge">4</span></span><span class="nk-db-tab">▤ Board</span><span class="nk-db-tab" style="color:var(--nk-text-tertiary)">＋</span></div>
   <div class="nk-table-wrap"><table class="nk-table">
-  <thead><tr><th><span class="th-icon">📄</span>Name</th><th><span class="th-icon">◉</span>Status</th><th><span class="th-icon">👤</span>Owner</th><th><span class="th-icon">📅</span>Due</th><th><span class="th-icon">▰</span>Progress</th></tr></thead>
+  <thead><tr><th><span class="th-icon">📄</span>Name</th><th><span class="th-icon">◉</span>Status</th><th><span class="th-icon">👤</span>Owner</th><th><span class="th-icon">📅</span>Due</th><th><span class="th-icon">▰</span>Progress</th><th><span class="th-icon">#</span>Effort (h)</th></tr></thead>
   <tbody>
-    <tr><td><span class="row-title">🧭 App shell & sidebar</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">📄 Page shell & typography</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">🗃️ Database table view</span></td><td><span class="nk-tag blue">In progress</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td></tr>
-    <tr><td><span class="row-title">▤ Board view & drag-and-drop</span></td><td><span class="nk-tag orange">Planned</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td></tr>
+    <tr><td><span class="row-title">🧭 App shell & sidebar</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>6.0</span></td></tr>
+    <tr><td><span class="row-title">📄 Page shell & typography</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>4.5</span></td></tr>
+    <tr><td><span class="row-title">🗃️ Database table view</span></td><td><span class="nk-tag blue">In progress</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td><td class="num"><span>12.5</span></td></tr>
+    <tr><td><span class="row-title">▤ Board view & drag-and-drop</span></td><td><span class="nk-tag orange">Planned</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td></tr>
   </tbody>
 </table><div class="nk-new-row">＋ New page</div></div>
 </div>
@@ -2068,9 +2226,9 @@ The view switcher. Child views (`nk-table-view`, `nk-board-view`) become tabs; `
 
 **Small screens:** Tables and boards scroll horizontally; nothing breaks.
 
-### 3.64 `<nk-table-view>` – Table view
+### 3.69 `<nk-table-view>` – Table view
 
-Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text`, `select`, `multi-select`, `date`, `person`, `checkbox`, `url`, `number`, `progress`) and rendered as plain markup by the exported `renderPropertyCell()` – every cell rule starts with `.nk-table`, so a cell element of its own would never be styled. Header clicks sort with `sortable`.
+Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text`, `select`, `multi-select`, `date`, `person`, `checkbox`, `url`, `number`, `progress`) and rendered as plain markup by the exported `renderPropertyCell()` – every cell rule starts with `.nk-table`, so a cell element of its own would never be styled. Header clicks sort with `sortable`. A `number` column stands right-aligned in figures of equal width, formatted by its `locale` and `format` (Intl.NumberFormat options); a person’s `color` takes one of the nine names.
 
 ```html
 <nk-table-view new-row sortable></nk-table-view>
@@ -2083,12 +2241,13 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
     { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
     { key: 'due', label: 'Due', type: 'date', icon: '📅' },
     { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '08.05.2026', progress: 100 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '10.05.2026', progress: 100 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '20.05.2026', progress: 65 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
 }</script>
 ```
@@ -2110,24 +2269,24 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
 
 **Properties:** `columns`, `rows`, `data` · **Methods:** `refresh()`
 
-**Replaces:** `.nk-table-wrap`, `.nk-table`, `.wrap`, `.th-icon`, `.row-title`, `.date-cell`, `.person-cell`, `.mini-avatar`, `.nk-new-row`
+**Replaces:** `.nk-table-wrap`, `.nk-table`, `.wrap`, `.th-icon`, `.row-title`, `.date-cell`, `.person-cell`, `.nk-avatar`, `.num`, `.nk-new-row`
 
 ```html
 <!-- equivalent class markup -->
 <div class="nk-table-wrap"><table class="nk-table">
-  <thead><tr><th><span class="th-icon">📄</span>Name</th><th><span class="th-icon">◉</span>Status</th><th><span class="th-icon">👤</span>Owner</th><th><span class="th-icon">📅</span>Due</th><th><span class="th-icon">▰</span>Progress</th></tr></thead>
+  <thead><tr><th><span class="th-icon">📄</span>Name</th><th><span class="th-icon">◉</span>Status</th><th><span class="th-icon">👤</span>Owner</th><th><span class="th-icon">📅</span>Due</th><th><span class="th-icon">▰</span>Progress</th><th><span class="th-icon">#</span>Effort (h)</th></tr></thead>
   <tbody>
-    <tr><td><span class="row-title">🧭 App shell & sidebar</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">📄 Page shell & typography</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td></tr>
-    <tr><td><span class="row-title">🗃️ Database table view</span></td><td><span class="nk-tag blue">In progress</span></td><td><span class="person-cell"><span class="mini-avatar" style="background:#9065b0">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td></tr>
-    <tr><td><span class="row-title">▤ Board view & drag-and-drop</span></td><td><span class="nk-tag orange">Planned</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td></tr>
+    <tr><td><span class="row-title">🧭 App shell & sidebar</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>6.0</span></td></tr>
+    <tr><td><span class="row-title">📄 Page shell & typography</span></td><td><span class="nk-tag green">Done</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>4.5</span></td></tr>
+    <tr><td><span class="row-title">🗃️ Database table view</span></td><td><span class="nk-tag blue">In progress</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td><td class="num"><span>12.5</span></td></tr>
+    <tr><td><span class="row-title">▤ Board view & drag-and-drop</span></td><td><span class="nk-tag orange">Planned</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td></tr>
   </tbody>
 </table><div class="nk-new-row">＋ New page</div></div>
 ```
 
 **Small screens:** Scrolls horizontally inside `.nk-table-wrap`.
 
-### 3.65 `<nk-board-view>` – Board view
+### 3.70 `<nk-board-view>` – Board view
 
 Groups rows by a select column (`group-by`, default: the first select column) into one column per option. Cards show the title column and the `meta-keys` (default: dates and progress). Drag a card onto another column: the row’s value changes and `nk-change` fires.
 
@@ -2142,12 +2301,13 @@ Groups rows by a select column (`group-by`, default: the first select column) in
     { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
     { key: 'due', label: 'Due', type: 'date', icon: '📅' },
     { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '08.05.2026', progress: 100 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '10.05.2026', progress: 100 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '20.05.2026', progress: 65 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
 }</script>
 ```
@@ -2178,7 +2338,60 @@ Groups rows by a select column (`group-by`, default: the first select column) in
 
 **Small screens:** Columns scroll horizontally.
 
-### 3.66 `<nk-filter-bar>` – Filter bar
+### 3.71 `<nk-list-view>` – List view
+
+The third database view: one line per row – icon and title, the `meta-keys` on the right (default: the select and date columns, in column order). Dates and text stand as text, selects as tags, a person as avatar and name. Rows fire `nk-select`; `new-row` adds the add row.
+
+```html
+<nk-list-view meta-keys="due,status"></nk-list-view>
+<script>{
+  const db = document.currentScript.previousElementSibling;
+  db.columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' }, { value: 'progress', label: 'In progress', color: 'blue' }, { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+  ];
+  db.rows = [
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+  ];
+}</script>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | string | – | View name. |
+| `label` | string | – | Tab label. |
+| `title-key` | string | – | Title column. |
+| `meta-keys` | list | – | Comma-separated columns on the right. |
+| `new-row` | boolean | – | Show the add row. |
+| `new-row-label` | string | `＋ New page` | Its text. |
+
+**Events:** `nk-select` `{ row, id }` – Row clicked or Enter. · `nk-action` `{ action: 'new-row' }` – Add row clicked.
+
+**Properties:** `columns`, `rows`, `data` · **Methods:** `refresh()`
+
+**Replaces:** `.nk-list`, `.nk-list-item`, `.l-icon`, `.l-title`, `.l-meta`
+
+```html
+<!-- equivalent class markup -->
+<div class="nk-list">
+  <div class="nk-list-item"><span class="l-icon">🧭</span><span class="l-title">App shell & sidebar</span><span class="l-meta">08.05.2026<span class="nk-tag green">Done</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">📄</span><span class="l-title">Page shell & typography</span><span class="l-meta">10.05.2026<span class="nk-tag green">Done</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">🗃️</span><span class="l-title">Database table view</span><span class="l-meta">20.05.2026<span class="nk-tag blue">In progress</span></span></div>
+  <div class="nk-list-item"><span class="l-icon">▤</span><span class="l-title">Board view & drag-and-drop</span><span class="l-meta">02.06.2026<span class="nk-tag orange">Planned</span></span></div>
+</div>
+```
+
+**Small screens:** Stays one line per row: the title ends in an ellipsis, the properties keep their place.
+
+### 3.72 `<nk-filter-bar>` – Filter bar
 
 A toolbar composed from existing classes: filter and sort buttons (`nk-action`), active filters as removable chips, an optional search field. `bar.apply(rows)` keeps rows where every chip matches by strict equality (`row[key] === value`, so use the option value) and the search text appears in any string field (a person’s `name`); the data logic stays yours.
 
@@ -2209,7 +2422,7 @@ A toolbar composed from existing classes: filter and sort buttons (`nk-action`),
 
 **Small screens:** Wraps onto two lines.
 
-### 3.67 `<nk-comments>` – Comment thread
+### 3.73 `<nk-comments>` – Comment thread
 
 A left-ruled thread of `nk-comment`s with an input row. Enter or the button fires `nk-submit { text }`; appending the new comment is yours.
 
@@ -2246,12 +2459,12 @@ A left-ruled thread of `nk-comment`s with an input row. Enter or the button fire
 
 **Small screens:** Unchanged.
 
-### 3.68 `<nk-comment>` – Comment
+### 3.74 `<nk-comment>` – Comment
 
 One comment: avatar (initials + `color`), bold author, time, body. `slot="head"` adds content after the name.
 
 ```html
-<nk-comments no-input><nk-comment author="Sara Lindt" time="1 hr ago" color="#448361">The board view already feels very close to the original. 👍</nk-comment></nk-comments>
+<nk-comments no-input><nk-comment author="Sara Lindt" time="1 hr ago" color="green">The board view already feels very close to the original. 👍</nk-comment></nk-comments>
 ```
 
 | Attribute | Type | Default | Description |
@@ -2259,7 +2472,7 @@ One comment: avatar (initials + `color`), bold author, time, body. `slot="head"`
 | `author` | string | – | Name. |
 | `time` | string | – | Relative time. |
 | `avatar` | string | – | Initials/emoji (default: from the author). |
-| `color` | CSS color | – | Avatar background. |
+| `color` | colour name | CSS | – | Avatar colour: one of the nine names or any CSS background; without it the avatar gradient. |
 
 **Slots:** `(default)` – Body. · `head` – After the name (tag, badge). · `avatar` – Custom avatar.
 
@@ -2267,12 +2480,12 @@ One comment: avatar (initials + `color`), bold author, time, body. `slot="head"`
 
 ```html
 <!-- equivalent class markup -->
-<div class="nk-comments"><div class="nk-comment"><span class="mini-avatar" style="background:#448361">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">The board view already feels very close to the original. 👍</div></div></div></div>
+<div class="nk-comments"><div class="nk-comment"><span class="nk-avatar green">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">The board view already feels very close to the original. 👍</div></div></div></div>
 ```
 
 **Small screens:** Unchanged.
 
-### 3.69 `<nk-ai-thread>` – AI thread
+### 3.75 `<nk-ai-thread>` – AI thread
 
 The conversation column: `nk-ai-msg` children (`role="user"` gets the gradient avatar), followed by an `nk-ai-input-row`. Action buttons in `slot="actions"` fire `nk-action { action, value }` – both carry the button’s `value` (or its text).
 
@@ -2305,12 +2518,12 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.70 `<nk-ai-msg>` – AI message
+### 3.76 `<nk-ai-msg>` – AI message
 
 One message. `role="user"` flips the avatar to the gradient; `badge` is the grey suffix after the name (“· AI”); plain `<button slot="actions">`s form the action row.
 
 ```html
-<nk-ai-thread><nk-ai-msg role="assistant" name="Mona" badge="· AI">Two tasks are open: the <b>table view</b> sits at 65 % (due 20 May), the <b>board with drag and drop</b> is planned.<button slot="actions" value="copy">📋 Copy</button></nk-ai-msg></nk-ai-thread>
+<nk-ai-thread><nk-ai-msg role="user" bubble>What is still open on this page?</nk-ai-msg><nk-ai-msg role="assistant" name="Mona" badge="· AI">Two tasks are open: the <b>table view</b> sits at 65 % (due 20 May), the <b>board with drag and drop</b> is planned.<button slot="actions" value="copy">📋 Copy</button></nk-ai-msg></nk-ai-thread>
 ```
 
 | Attribute | Type | Default | Description |
@@ -2320,21 +2533,22 @@ One message. `role="user"` flips the avatar to the gradient; `badge` is the grey
 | `badge` | string | – | Grey suffix. |
 | `avatar` | string | – | Initials/emoji. |
 | `color` | CSS color | – | Avatar background override. |
+| `bubble` | boolean | – | The message as a grey bubble without avatar or name; with `role="user"` on the right, as Notion’s AI chat shows your own question. |
 
 **Slots:** `(default)` – Message body (HTML allowed). · `actions` – `<button value>` children. · `avatar` – Custom avatar.
 
 **Events:** `nk-action` `{ action, value }` – Action button clicked.
 
-**Replaces:** `.nk-ai-msg`, `.user`, `.a-body`, `.a-name`, `.nk-ai-actions`
+**Replaces:** `.nk-ai-msg`, `.user`, `.bubble`, `.a-body`, `.a-name`, `.nk-ai-actions`
 
 ```html
 <!-- equivalent class markup -->
-<div class="nk-ai-thread"><div class="nk-ai-msg"><span class="mini-avatar">✨</span><div class="a-body"><div class="a-name">Mona <span>· AI</span></div>Two tasks are open: the <b>table view</b> sits at 65 % (due 20 May), the <b>board with drag and drop</b> is planned.<div class="nk-ai-actions"><button>📋 Copy</button></div></div></div></div>
+<div class="nk-ai-thread"><div class="nk-ai-msg user bubble"><div class="a-body">What is still open on this page?</div></div><div class="nk-ai-msg"><span class="mini-avatar">✨</span><div class="a-body"><div class="a-name">Mona <span>· AI</span></div>Two tasks are open: the <b>table view</b> sits at 65 % (due 20 May), the <b>board with drag and drop</b> is planned.<div class="nk-ai-actions"><button>📋 Copy</button></div></div></div></div>
 ```
 
 **Small screens:** Unchanged.
 
-### 3.71 `<nk-ai-input-row>` – AI input row
+### 3.77 `<nk-ai-input-row>` – AI input row
 
 The prompt field with ✨ and a send button. Enter or the button fires `nk-submit { text }` and clears the field.
 
@@ -2365,19 +2579,19 @@ The prompt field with ✨ and a send button. Enter or the button fires `nk-submi
 
 # 4. Composition Patterns (app skeletons)
 
-Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one, delete what you do not need.
+Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one, delete what you do not need.
 
 ## 4.1 Workspace app
 
-**When:** the default for Notion-like document apps – pages are the primary object, a tree on the left, one page on the right.
+**When:** the default for Notion-like document apps – pages are the primary object, a tree on the left, one page on the right. A page that is a database row shows its properties under the title and lists its sub-pages.
 
 ```html
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2409,13 +2623,21 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
     <nk-theme-toggle slot="actions"></nk-theme-toggle>
   </nk-topbar>
 
-  <!-- wave 3 replaces this with <nk-page> / <nk-page-title> / <nk-block-host> -->
-  <div class="nk-page-scroll"><div class="nk-cover"></div><div class="nk-page">
-    <div class="nk-page-icon">🚀</div>
-    <h1 class="nk-page-title">NotionKit MVP</h1>
+  <!-- Page options: add full (full width) or small (14px text) to <nk-page>. -->
+  <nk-page icon="🚀" cover>
+    <nk-page-title editable>NotionKit MVP</nk-page-title>
+    <nk-props>
+      <nk-prop label="Status" icon="◉"><nk-tag color="blue">In progress</nk-tag></nk-prop>
+      <nk-prop label="Owner" icon="👤"><nk-avatar size="small">AL</nk-avatar>Ada Lovelace</nk-prop>
+      <nk-prop label="Due" icon="📅">2 June 2026</nk-prop>
+    </nk-props>
     <p class="lead">A calm, document-centric workspace app – built from elements only.</p>
-    <nk-callout icon="💡">The tree, topbar and sidebar are elements; the page body is still class markup until wave 3.</nk-callout>
-  </div></div>
+    <nk-heading>Sub-pages</nk-heading>
+    <nk-list-view id="subpages" meta-keys="due,status"></nk-list-view>
+    <!-- The editor: mount TipTap into a light-DOM .nk-block-host (docs-editor.js).
+         Saved HTML shown read-only goes into <div class="nk-prose"> – same look. -->
+    <div class="nk-block-host" id="editor"></div>
+  </nk-page>
 
   <nk-tab-bar>
     <nk-tab-bar-item icon="🏠" value="home" active>Home</nk-tab-bar-item>
@@ -2427,12 +2649,18 @@ Six skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy one
 <script>
   tree.addEventListener('nk-select', e => console.log('open page', e.detail.value));
   tree.addEventListener('nk-action', e => console.log(e.detail.action, 'on', e.detail.value));
+  subpages.columns = [
+    { key: 'name', label: 'Name', title: true }, { key: 'due', label: 'Due', type: 'date' },
+    { key: 'status', label: 'Status', type: 'select', options: [{ value: 'done', label: 'Done', color: 'green' }, { value: 'open', label: 'Open', color: 'gray' }] },
+  ];
+  subpages.rows = [{ id: 1, icon: '📄', name: 'Hiring plan', due: '12 Aug', status: 'done' }, { id: 2, icon: '📄', name: 'Budget review', due: '2 Sep', status: 'open' }];
+  subpages.addEventListener('nk-select', e => console.log('open sub-page', e.detail.id));
 </script>
 </body>
 </html>
 ```
 
-Rules of the shell: `nk-sidebar`, `nk-topbar` and (from wave 3) `nk-page` are `display: contents` hosts – their inner boxes are direct flex children of `.nk-app` / `.nk-main`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and `sidebar.toggle()` opens it as a drawer. For phones and installed PWAs add `<nk-tab-bar>` as the last child of `<nk-app>`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a `drawer` item opens the sidebar. Never give it a `view-transition-name` – it stays put between pages.
+Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: contents` hosts – their inner boxes are direct flex children of `.nk-app` / `.nk-main`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and `sidebar.toggle()` opens it as a drawer. For phones and installed PWAs add `<nk-tab-bar>` as the last child of `<nk-app>`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a `drawer` item opens the sidebar. Never give it a `view-transition-name` – it stays put between pages.
 
 ## 4.2 Database app
 
@@ -2443,8 +2671,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and (from wave 3) `nk-page` are `d
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2510,8 +2738,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2570,8 +2798,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -2645,8 +2873,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -2691,8 +2919,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -2727,6 +2955,101 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 ```
 
 Note `narrow`: the page is the document, so there is no inner scroll wrapper – the browser scrolls. Inside `<nk-app>` leave it off.
+## 4.7 Home page
+
+**When:** the first screen after sign-in – a greeting, the pages someone comes back to, what is due next. Notion calls it Home; LearnHub builds it as “My courses”, Auxdesk as “Overview”. Full width and small text, panels with a picture cover, a list for what is next.
+
+```html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
+</head>
+<body class="nk-body">
+<nk-app>
+  <nk-sidebar slot="sidebar">
+    <nk-workspace-switcher slot="workspace" name="MonaHilft"></nk-workspace-switcher>
+    <nk-tree>
+      <nk-tree-item icon="🏠" value="home" active>Home</nk-tree-item>
+      <nk-tree-item icon="🚀" value="mvp">NotionKit MVP</nk-tree-item>
+    </nk-tree>
+  </nk-sidebar>
+  <nk-topbar><nk-breadcrumb><span>🏠 Home</span></nk-breadcrumb><nk-theme-toggle slot="actions"></nk-theme-toggle></nk-topbar>
+
+  <!-- An app view, not a document: the whole width, 14px text. -->
+  <nk-page full small>
+    <nk-page-title>Good morning, Ada</nk-page-title>
+    <nk-heading>🕘 Recently visited</nk-heading>
+    <nk-panels>
+      <nk-panel href="/roadmap" cover="covers/roadmap.jpg" icon="🚀" title="Roadmap"><p><nk-avatar size="small">AL</nk-avatar> 2 min ago</p></nk-panel>
+      <nk-panel href="/kb" cover icon="📚" title="Knowledge base"><p>Yesterday</p></nk-panel>
+      <nk-panel href="/onboarding" icon="🧭" title="Onboarding"><p>Monday</p></nk-panel>
+    </nk-panels>
+    <nk-heading>📌 Upcoming</nk-heading>
+    <nk-list-view id="upcoming" meta-keys="due,status"></nk-list-view>
+    <nk-heading>📊 This week</nk-heading>
+    <nk-panels>
+      <nk-panel title="Weekly review"><p>Three pages changed, one comment is waiting for an answer.</p><nk-progress value="60" label="60 %" wide></nk-progress></nk-panel>
+      <nk-panel title="Release notes"><div class="nk-prose"><p>Version 2.4 ships the list view. <a href="/changelog">Read more</a></p></div></nk-panel>
+    </nk-panels>
+  </nk-page>
+</nk-app>
+<script>
+  upcoming.columns = [
+    { key: 'name', label: 'Name', title: true }, { key: 'due', label: 'Due', type: 'date' },
+    { key: 'status', label: 'Status', type: 'select', options: [{ value: 'progress', label: 'In progress', color: 'blue' }, { value: 'planned', label: 'Planned', color: 'orange' }] },
+  ];
+  upcoming.rows = [{ id: 1, icon: '🗃️', name: 'Table view', due: '20 May', status: 'progress' }, { id: 2, icon: '▤', name: 'Board with drag and drop', due: '2 June', status: 'planned' }];
+  upcoming.addEventListener('nk-select', e => location.assign('/tasks/' + e.detail.id));
+</script>
+</body>
+</html>
+```
+
+`nk-panels` falls to one column on a phone; the list keeps one line per row and cuts the title first. A slotted `<p>` in a panel is styled by the panel – inside it, `<nk-avatar>` brings its own size.
+
+## 4.8 Sign-in page
+
+**When:** the page before the app – sign in with a provider or by email. A narrow centred column in a panel, no sidebar. Not an element on purpose: panel, field and buttons already are one.
+
+```html
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.6.0/dist/notionkit-elements.min.js"></script>
+</head>
+<body class="nk-body">
+<!-- A narrow column, centred: layout is yours, so it is inline. -->
+<nk-page narrow>
+  <div style="max-width:420px;margin:12vh auto 0;display:flex;flex-direction:column;gap:14px">
+    <div style="text-align:center">
+      <nk-avatar size="xlarge" square>A</nk-avatar>
+      <nk-page-title>Sign in to Acme</nk-page-title>
+      <div style="color:var(--nk-text-secondary)">Use your work account.</div>
+    </div>
+    <form id="signin">
+      <nk-panel>
+        <nk-btn variant="secondary" type="button">Continue with Google</nk-btn>
+        <nk-btn variant="secondary" type="button">Continue with Microsoft</nk-btn>
+        <nk-field label="Email" stacked><nk-input name="email" type="email" placeholder="ada@acme.com" required></nk-input></nk-field>
+        <nk-btn variant="primary" type="submit">Continue with email</nk-btn>
+      </nk-panel>
+    </form>
+    <nk-banner variant="success" id="sent" hidden>✉️ Check your inbox – we sent you a sign-in link.</nk-banner>
+  </div>
+</nk-page>
+<script>
+  signin.addEventListener('submit', e => { e.preventDefault(); sent.hidden = false; });
+</script>
+</body>
+</html>
+```
+
+The form takes part in `FormData` through `nk-input`; `hidden` on the banner works on every element.
 
 
 # 5. State & Event Overview
@@ -2789,7 +3112,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-field>` | forms | `label`, `desc`, `stacked`, `compact` | `(default)`, `label`, `desc` | – |
 | `<nk-fields>` | forms | – | `(default)` | – |
 | `<nk-tag>` | content | `color` | `(default)` | – |
-| `<nk-progress>` | content | `value`, `max`, `label` | – | – |
+| `<nk-progress>` | content | `value`, `max`, `label`, `wide` | – | – |
 | `<nk-callout>` | content | `icon` | `(default)`, `icon` | – |
 | `<nk-divider>` | content | – | – | – |
 | `<nk-heading>` | content | `level` | `(default)` | – |
@@ -2809,10 +3132,14 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-theme-toggle>` | shell | `storage-key`, `title` | – | `nk-change` |
 | `<nk-tab-bar>` | shell | `value`, `always`, `fixed`, `floating` | `(default)` | `nk-change`, `nk-select` |
 | `<nk-tab-bar-item>` | shell | `icon`, `value`, `label`, `href` | `(default)`, `icon` | `nk-select` |
-| `<nk-page>` | page | `icon`, `cover`, `narrow` | `(default)`, `cover`, `icon` | `nk-action` |
-| `<nk-page-cover>` | page | `src` | – | – |
+| `<nk-page>` | page | `icon`, `full`, `small`, `cover` | `(default)`, `cover`, `icon` | `nk-action` |
+| `<nk-page-cover>` | page | `src`, `position` | – | – |
 | `<nk-page-title>` | page | `editable`, `placeholder`, `value` | `(default)` | `nk-change` |
 | `<nk-page-actions>` | page | – | `(default)` | – |
+| `<nk-props>` | page | – | `(default)` | – |
+| `<nk-prop>` | page | `label`, `icon` | `(default)`, `icon` | `nk-action` |
+| `<nk-panels>` | page | – | `(default)` | – |
+| `<nk-panel>` | page | `title`, `icon`, `cover`, `href` | `(default)` | – |
 | `<nk-block-host>` | page | `handle`, `drop-target` | `(default)` | – |
 | `<nk-banner>` | page | `variant` | `(default)`, `action` | – |
 | `<nk-empty>` | page | `icon`, `title`, `desc` | `(default)`, `icon`, `title`, `desc` | – |
@@ -2824,6 +3151,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-stats>` | page | `label`, `value`, `delta`, `trend` | `(default)` | – |
 | `<nk-stat>` | page | `label`, `value`, `delta`, `trend` | `label`, `value`, `delta` | – |
 | `<nk-avatar-group>` | page | `more` | `(default)` | – |
+| `<nk-avatar>` | page | `size`, `color`, `square`, `name` | `(default)` | – |
 | `<nk-mention>` | page | `type` | `avatar`, `(default)` | – |
 | `<nk-template-btn>` | page | `icon`, `value`, `disabled` | `(default)` | `nk-select` |
 | `<nk-model-card>` | page | `title`, `desc`, `name`, `disabled` | `title`, `desc` | `nk-change`, `nk-select` |
@@ -2836,13 +3164,14 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-settings-user>` | overlays | `name`, `mail`, `avatar` | `avatar` | – |
 | `<nk-cmdk>` | overlays | `open`, `hotkey`, `placeholder` | `footer` | `nk-command`, `nk-toggle` |
 | `<nk-menu>` | overlays | – | `(default)` | `nk-select` |
-| `<nk-menu-item>` | overlays | `icon`, `shortcut`, `value`, `danger` | `(default)`, `icon` | `nk-select` |
+| `<nk-menu-item>` | overlays | `icon`, `shortcut`, `value`, `danger` | `(default)`, `icon` | `nk-select`, `nk-change` |
 | `<nk-pop>` | overlays | `open`, `placement`, `bare` | `trigger`, `(default)` | `nk-toggle` |
 | `<nk-emoji-picker>` | overlays | `placeholder`, `value` | – | `nk-select` |
 | `<nk-toast>` | overlays | `open`, `duration`, `icon` | `(default)` | `nk-toggle` |
 | `<nk-database>` | data | `view`, `add-view` | `(default)` | `nk-view-change`, `nk-action`, `nk-select / nk-change / nk-action` |
 | `<nk-table-view>` | data | `name`, `label`, `badge`, `count` | – | `nk-select`, `nk-change`, `nk-action` |
 | `<nk-board-view>` | data | `name`, `label`, `group-by`, `title-key` | – | `nk-select`, `nk-change`, `nk-action` |
+| `<nk-list-view>` | data | `name`, `label`, `title-key`, `meta-keys` | – | `nk-select`, `nk-action` |
 | `<nk-filter-bar>` | data | `search`, `placeholder`, `no-filter`, `no-sort` | `(default)` | `nk-change`, `nk-action` |
 | `<nk-comments>` | data | `placeholder`, `send-label`, `no-input`, `disabled` | `(default)` | `nk-submit` |
 | `<nk-comment>` | data | `author`, `time`, `avatar`, `color` | `(default)`, `head`, `avatar` | – |
@@ -2867,11 +3196,11 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Token injection | `src/base.js` – once per page, `@layer notionkit-defaults { tokensCss }` appended to `document.adoptedStyleSheets` |
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
-| Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries with a shared chunk (`dist/components/`) |
-| Peer | `@jungherz-de/notionkit >= 1.5.3` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
+| Peer | `@jungherz-de/notionkit >= 1.6.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.5.3 · wrapping NotionKit CSS v1.5.3 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.6.0 · wrapping NotionKit CSS v1.6.0 · MIT · Jungherz GmbH*

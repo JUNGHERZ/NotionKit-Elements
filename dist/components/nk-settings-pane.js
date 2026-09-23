@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-settings-pane name="profile" label="My profile" icon="👤" group="Account" title="My profile" active>…</nk-settings-pane>
 // `title` is the heading, never a tooltip – see NkElement.takeTitle().

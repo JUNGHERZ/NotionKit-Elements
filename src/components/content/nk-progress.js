@@ -1,9 +1,10 @@
 import { NkElement } from '../../base.js';
 
 // <nk-progress value="72" label="72%"></nk-progress>
+// <nk-progress value="72" label="72 %" wide></nk-progress>   → fills its row, the label stays beside it
 // The bar is `.nk-progress > i` — a child combinator, so both nodes live here.
 class NkProgress extends NkElement {
-  static get observedAttributes() { return ['value', 'max', 'label']; }
+  static get observedAttributes() { return ['value', 'max', 'label', 'wide']; }
 
   render() {
     this._bar = this.createElement('span', ['nk-progress'], { role: 'progressbar' });
@@ -22,6 +23,7 @@ class NkProgress extends NkElement {
     const max = Number(this.getAttribute('max')) || 100;
     const value = Math.min(max, Math.max(0, Number(this.getAttribute('value')) || 0));
     this._fill.style.width = `${(value / max) * 100}%`;
+    this._bar.classList.toggle('wide', this.getBoolAttr('wide'));
     this._bar.setAttribute('aria-valuenow', value);
     this._bar.setAttribute('aria-valuemin', 0);
     this._bar.setAttribute('aria-valuemax', max);

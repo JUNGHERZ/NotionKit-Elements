@@ -55,7 +55,7 @@ test('member list marks the last row; the mark moves when rows change', async ({
   await setStage(page, `<nk-member-list id="l"><nk-member-row id="r1" name="Ada Lovelace"></nk-member-row><nk-member-row id="r2" name="Grace Hopper"></nk-member-row></nk-member-list>`);
   const last = () => [...document.querySelectorAll('nk-member-row[last]')].map(r => r.id);
   expect(await page.evaluate(last)).toEqual(['r2']);
-  expect(await page.evaluate(() => document.getElementById('r1').shadowRoot.querySelector('.mini-avatar').textContent)).toBe('AL');
+  expect(await page.evaluate(() => document.getElementById('r1').shadowRoot.querySelector('.nk-avatar').textContent)).toBe('AL');
   await page.evaluate(() => document.getElementById('r2').remove());
   await page.waitForFunction(() => document.querySelectorAll('nk-member-row[last]').length === 1 && document.querySelector('nk-member-row[last]').id === 'r1');
   expect(await page.evaluate(() => getComputedStyle(document.getElementById('r1').shadowRoot.querySelector('.nk-member-row')).borderBottomStyle)).toBe('none');

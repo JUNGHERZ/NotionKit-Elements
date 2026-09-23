@@ -4,6 +4,81 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] – 2026-09-23
+
+Built against NotionKit CSS 1.6.0 (peer `>= 1.6.0`), the app-views release:
+six new elements for the base layer that LearnHub and Auxdesk each built on
+their own, and a per-component build that no longer carries its own copy
+of the stylesheet.
+
+### Added
+- **`<nk-props>` and `<nk-prop>`** – the properties under the title of a
+  database page: `label` and `icon` name the row, the content is the value
+  (tags, `<nk-avatar>`, a date, `<nk-progress wide>`). Rows are
+  `display: contents` hosts, so each renders as a row of the list; a click
+  fires `nk-action` with the half that was hit. Stacks below 860px.
+- **`<nk-list-view>`** – the third view of `<nk-database>`: one line per
+  row, icon and title, `meta-keys` on the right (default: the select and
+  date columns). Rows fire `nk-select`, also on Enter; works standalone
+  with `columns` and `rows`.
+- **`<nk-panels>` and `<nk-panel>`** – neutral surfaces in a grid that
+  falls to one column on a phone. `title` is the heading (taken off the
+  host, never a tooltip), `cover` draws the gradient band or a picture,
+  `icon` overlaps it – a page tile as on Notion's Home – and `href` makes
+  the panel a link.
+- **`<nk-avatar>`** – initials, an emoji or a photo: `size` small / large /
+  xlarge, `color` one of the nine names or any CSS background, `square`,
+  initials from `name`, a photo from `src` with `name` as its alt text.
+- `<nk-page full small>` – Notion's page options, full width and small
+  text, on the page itself.
+- `<nk-page-cover src position>` draws the picture as an `<img>`, cropped
+  rather than stretched; `position` moves the crop.
+- `<nk-ai-msg bubble>` – the message as a grey bubble without avatar or
+  name, on the right with `role="user"`, as Notion's AI chat shows your own
+  question.
+- `<nk-progress wide>` fills its row and keeps its label beside it.
+- `<nk-menu-item type="switch" checked>` – a row with a switch on the
+  right, like “Small text” in Notion's page menu. A click flips `checked`
+  and fires `nk-change`, not `nk-select`, so the menu stays open.
+- Number columns stand right-aligned in figures of equal width
+  (`td.num`), formatted by the column's `locale` and `format`
+  (Intl.NumberFormat options).
+- `componentsSheet` is exported from the bundle
+  (`NotionKitElements.componentsSheet` from the `<script>` build): a
+  project's own views adopt the same instance as the elements instead of
+  loading NotionKit's stylesheet a second time. LearnHub and Auxdesk loaded
+  it twice.
+- `@jungherz-de/notionkit-elements/base.js` – `NkElement` and
+  `NkFormElement` for per-component setups, from a stable file.
+- `test/app-views.spec.mjs`, 15 tests; six new parity pairs (twelve with
+  both themes).
+
+### Changed
+- **The per-component files import NotionKit's stylesheet instead of
+  inlining it.** The base chunk carried the whole sheet – 64 KB – under a
+  hashed name that changed with every build. It is now
+  `dist/components/base.js`, 13 KB, and imports
+  `@jungherz-de/notionkit/notionkit-styles.js`: a bundler resolves it from
+  `node_modules`, a build-free page adds one import-map entry, and the
+  sheet exists once. The full bundles keep inlining it – a `<script>` tag
+  has nothing to resolve against. (GlassKit Elements 1.14.0 and 1.15.0
+  did the same.)
+- `<nk-member-row>`, `<nk-comment>` and the person cells of the database
+  views draw their avatar as `.nk-avatar`. `color` takes the nine colour
+  names as classes – no hex value needed in markup – and still any CSS
+  background; **without `color` the avatar takes the gradient**, the
+  avatar component's default, instead of the tertiary grey.
+
+### Site
+- The reference app shows the same new placements as the NotionKit demo:
+  properties under the title, the ⋯ page menu with small text and full
+  width, “List” as third view and an “Effort” column, “Edit · Read” for the
+  editor, your own question as a grey bubble, members with named avatar
+  colours, and the start view behind “Home”. Against the class version at
+  1280px: 0.00 % pixel difference in both themes, the start view included.
+- Landing page: “Same look, a fraction of the markup” gets the page
+  properties as its second example; 77 elements.
+
 ## [1.5.3] – 2026-09-23
 
 Built against NotionKit CSS 1.5.3 (peer `>= 1.5.3`), the phone release.
@@ -307,6 +382,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.6.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.6.0
 [1.5.3]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.3
 [1.5.2]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.2
 [1.5.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.1

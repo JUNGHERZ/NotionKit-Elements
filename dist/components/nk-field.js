@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-field label="Display name" desc="Shown next to your comments">
 //   <nk-input value="Marcel"></nk-input>

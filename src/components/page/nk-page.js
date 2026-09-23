@@ -1,6 +1,6 @@
 import { NkElement } from '../../base.js';
 
-// <nk-page icon="🚀" cover>
+// <nk-page icon="🚀" cover full small>
 //   <nk-page-title>NotionKit MVP</nk-page-title>
 //   <nk-page-actions>…</nk-page-actions>
 //   <p class="lead">…</p>
@@ -12,9 +12,10 @@ import { NkElement } from '../../base.js';
 // The host is display:contents, so .nk-page-scroll is the flex child of
 // .nk-main that scrolls. `narrow` drops the scroll wrapper for pages that are
 // the document itself (landing / docs skeleton). The page icon is rendered
-// here because its ::slotted twin is keyed on the parent (.nk-page).
+// here because its ::slotted twin is keyed on the parent (.nk-page). `full` and
+// `small` are Notion's page options – full width, 14px text – set on the page.
 class NkPage extends NkElement {
-  static get observedAttributes() { return ['icon', 'cover', 'narrow']; }
+  static get observedAttributes() { return ['icon', 'cover', 'narrow', 'full', 'small']; }
 
   render() {
     this._page = this.createElement('div', ['nk-page']);
@@ -51,6 +52,8 @@ class NkPage extends NkElement {
     // (attribute or a slotted nk-page-cover) the icon sits in the padding.
     const slotted = this._coverSlot.assignedNodes().some(n => n.nodeType === Node.ELEMENT_NODE || n.data.trim());
     this._page.classList.toggle('covered', this.getBoolAttr('cover') || slotted);
+    this._page.classList.toggle('full', this.getBoolAttr('full'));
+    this._page.classList.toggle('small', this.getBoolAttr('small'));
   }
 
   setupEvents() {
@@ -72,6 +75,10 @@ class NkPage extends NkElement {
   set icon(v) { v == null ? this.removeAttribute('icon') : this.setAttribute('icon', v); }
   get cover() { return this.getBoolAttr('cover'); }
   set cover(v) { this.setBoolAttr('cover', v); }
+  get full() { return this.getBoolAttr('full'); }
+  set full(v) { this.setBoolAttr('full', v); }
+  get small() { return this.getBoolAttr('small'); }
+  set small(v) { this.setBoolAttr('small', v); }
 }
 
 customElements.define('nk-page', NkPage);

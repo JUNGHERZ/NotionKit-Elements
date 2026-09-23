@@ -1,4 +1,5 @@
-import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
+import { NkFormElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-select name="role" value="editor">
 //   <option value="viewer">Viewer</option>

@@ -1,20 +1,23 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-ai-msg role="user" name="You" avatar="MK">Summarise the open tasks.</nk-ai-msg>
 // <nk-ai-msg role="assistant" name="Mona" badge="· AI" avatar="✨">
 //   Two tasks are open …
 //   <button slot="actions" value="copy">📋 Copy</button><button slot="actions" value="retry">↻ Rephrase</button>
 // </nk-ai-msg>
+// <nk-ai-msg role="user" bubble>What is still open?</nk-ai-msg>   → a grey bubble on the right, as in Notion's AI chat
 // → <div class="nk-ai-msg user"><span class="mini-avatar">MK</span><div class="a-body"><div class="a-name">You</div>…<div class="nk-ai-actions">…</div></div></div>
 // Action buttons stay in the light DOM (slotted twins) and fire nk-action { action: value }.
 class NkAiMsg extends NkElement {
-  static get observedAttributes() { return ['role', 'name', 'badge', 'avatar', 'color']; }
+  static get observedAttributes() { return ['role', 'name', 'badge', 'avatar', 'color', 'bubble']; }
 
   render() {
     this._box = this.createElement('div', ['nk-ai-msg']);
     this._avatar = this.createElement('span', ['mini-avatar']);
     const avatarSlot = this.createElement('slot', [], { name: 'avatar' });
     avatarSlot.appendChild(this._avatar);
+    this._avatarSlot = avatarSlot;
     const body = this.createElement('div', ['a-body']);
     this._name = this.createElement('div', ['a-name']);
     this._nameText = document.createTextNode('');
@@ -31,12 +34,16 @@ class NkAiMsg extends NkElement {
 
   _sync() {
     const user = this.getAttribute('role') === 'user';
+    const bubble = this.getBoolAttr('bubble');
     this._box.classList.toggle('user', user);
+    this._box.classList.toggle('bubble', bubble);
     const name = this.getAttribute('name');
     this._nameText.data = name || '';
     const badge = this.getAttribute('badge');
     this._badge.textContent = badge ? ` ${badge}` : '';
-    this._name.style.display = name ? '' : 'none';
+    // A bubble stands without avatar and name; the text says who asked.
+    this._name.style.display = name && !bubble ? '' : 'none';
+    this._avatarSlot.style.display = bubble ? 'none' : '';
     this._avatar.textContent = this.getAttribute('avatar') || (user ? (name || 'U').slice(0, 2).toUpperCase() : '✨');
     const color = this.getAttribute('color');
     this._avatar.style.background = color || '';

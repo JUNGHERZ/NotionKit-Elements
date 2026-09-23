@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-member-list><nk-member-row …></nk-member-row>…</nk-member-list>
 // → <div class="nk-member-list">…</div>; the last row gets `last` (no border).

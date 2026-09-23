@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // Built-in emoji set for <nk-emoji-picker>: eight categories, names for
 // search. Override with `picker.emojis = [{ char, name, cat }]`.

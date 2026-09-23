@@ -1,5 +1,6 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
 import { l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-DXrK9oLe.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // Subsequence scoring for the command palette: every query character must
 // appear in order; consecutive hits, word starts and an early first hit score

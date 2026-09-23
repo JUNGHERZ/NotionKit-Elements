@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@…" avatar="MK"></nk-settings-user>
 // → <div class="nk-settings-user"><div class="avatar">MK</div><div class="u-text"><div class="name">…</div><div class="mail">…</div></div></div>

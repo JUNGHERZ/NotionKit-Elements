@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-tab value="notes" active>📝 Notes</nk-tab>  →  <span class="nk-tab active" role="tab">
 class NkTab extends NkElement {

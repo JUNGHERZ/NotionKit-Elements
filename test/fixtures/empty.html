@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head><meta charset="UTF-8"><title>empty harness – no bundle loaded</title></head>
+<head><meta charset="UTF-8"><title>empty harness – no bundle loaded</title>
+<!-- The per-component files import NotionKit's stylesheet module by its bare
+     name; a build-free page maps it once, as a project would. -->
+<script type="importmap">{ "imports": { "@jungherz-de/notionkit/notionkit-styles.js": "/node_modules/@jungherz-de/notionkit/notionkit-styles.js" } }</script>
+</head>
 <body><div id="stage"></div></body>
 </html>

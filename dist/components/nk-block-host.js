@@ -1,4 +1,5 @@
-import { N as NkElement } from './shared/base-C3eJwHKA.js';
+import { NkElement } from './base.js';
+import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-block-host handle><p>Editable content lives here.</p></nk-block-host>
 // → <div class="nk-block-host"><span class="nk-block-handle">⠿</span>…</div>

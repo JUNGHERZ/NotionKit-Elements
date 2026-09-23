@@ -44,6 +44,7 @@ jobs:
              CNAME README.md SKILL.md LICENSE sitemap.xml robots.txt llms.txt _site/
           cp de/*.html _site/de/
           cp -R dist/. _site/dist/
+          cp -R covers _site/
           touch _site/.nojekyll
           ls -la _site
       - uses: actions/configure-pages@v6

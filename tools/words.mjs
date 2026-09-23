@@ -37,6 +37,9 @@ export const WORDS = {
     p1: 'App shell & sidebar', p2: 'Page shell & typography', p3: 'Database table view', p4: 'Board view & drag-and-drop', statusDone: 'Done', statusProgress: 'In progress', statusPlanned: 'Planned',
     searchRows: 'Search rows …', filterDone: 'Status: Done', commentText1: 'The board view already feels very close to the original. 👍', commentText2: 'I have flagged the overdue entries and prepared a summary.', commentPlaceholder: 'Comment …', send: 'Send',
     you: 'You', aiName: 'Mona', aiBadge: '· AI', aiQuestion: 'Summarise the open tasks for this project.', aiAnswer: 'Two tasks are open: the <b>table view</b> sits at 65 % (due 20 May), the <b>board with drag and drop</b> is planned.', copy: '📋 Copy', rephrase: '↻ Rephrase', askAi: 'Ask Mona something …',
+    propStatus: 'Status', propOwner: 'Owner', propDue: 'Due', propTags: 'Tags', propProgress: 'Progress', dueDate: '2 June 2026', effort: 'Effort (h)',
+    list: '☰ List', smallText: 'Small text', fullWidth: 'Full width', minAgo: '2 min ago', yesterday: 'Yesterday',
+    weeklyReview: 'Weekly review', weeklyReviewText: 'Three pages changed, one comment is waiting for an answer.', bubbleQuestion: 'What is still open on this page?',
     toastText: 'Settings saved', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
   },
   de: {
@@ -75,6 +78,9 @@ export const WORDS = {
     p1: 'App-Shell & Sidebar', p2: 'Seiten-Shell & Typografie', p3: 'Datenbank-Tabellenansicht', p4: 'Board-Ansicht & Drag-and-Drop', statusDone: 'Erledigt', statusProgress: 'In Arbeit', statusPlanned: 'Geplant',
     searchRows: 'Zeilen durchsuchen …', filterDone: 'Status: Erledigt', commentText1: 'Die Board-Ansicht fühlt sich schon sehr nah am Original an. 👍', commentText2: 'Ich habe die überfälligen Einträge markiert und eine Zusammenfassung vorbereitet.', commentPlaceholder: 'Kommentieren …', send: 'Senden',
     you: 'Du', aiName: 'Mona', aiBadge: '· KI', aiQuestion: 'Fasse die offenen Aufgaben dieses Projekts zusammen.', aiAnswer: 'Zwei Aufgaben sind offen: die <b>Tabellenansicht</b> steht bei 65 % (fällig 20. Mai), das <b>Board mit Drag-and-Drop</b> ist geplant.', copy: '📋 Kopieren', rephrase: '↻ Umformulieren', askAi: 'Frag Mona etwas …',
+    propStatus: 'Status', propOwner: 'Verantwortlich', propDue: 'Fällig', propTags: 'Tags', propProgress: 'Fortschritt', dueDate: '2. Juni 2026', effort: 'Aufwand (h)',
+    list: '☰ Liste', smallText: 'Kleiner Text', fullWidth: 'Volle Breite', minAgo: 'vor 2 Min.', yesterday: 'Gestern',
+    weeklyReview: 'Wochenrückblick', weeklyReviewText: 'Drei Seiten haben sich geändert, ein Kommentar wartet auf Antwort.', bubbleQuestion: 'Was ist auf dieser Seite noch offen?',
     toastText: 'Einstellungen gespeichert', showToast: 'Toast zeigen', openModal: 'Einstellungen öffnen', openPalette2: 'Palette öffnen (⌘K)', pickEmoji: 'Icon wählen', navigate: 'navigieren', openHint: 'öffnen', toggleHint: 'umschalten',
   },
 };
