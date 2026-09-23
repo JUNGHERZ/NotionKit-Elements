@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-AWFyTskN.js';
+import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-segmented name="range" value="week">
 //   <button value="week">Week</button><button value="month">Month</button>

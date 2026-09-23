@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-comment author="Sara Lindt" time="1 hr ago" avatar="SL" color="#448361">The board view feels close.</nk-comment>
 // → <div class="nk-comment"><span class="mini-avatar">SL</span><div><div class="c-head"><b>Sara Lindt</b> · 1 hr ago</div><div class="c-body">…</div></div></div>

@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
@@ -26,6 +26,19 @@ body { margin: 0; }
 .site-nav a:hover { background: var(--nk-bg-hover); color: var(--nk-text); }
 .site-nav a.current { color: var(--nk-text); font-weight: 500; }
 .site-nav .site-spacer { flex: 1; }
+.site-nav-links { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+/* Phones: the links move into a second row that scrolls sideways; brand,
+   language and switches keep the first. The flat row used to make every
+   page 748px wide on a 390px phone. */
+@media (max-width: 860px) {
+  .site-nav { flex-wrap: wrap; height: auto; padding-top: 6px; row-gap: 2px; }
+  .site-nav-links { order: 3; flex: 1 0 100%; margin: 0 -16px; padding: 0 16px 6px; overflow-x: auto; scrollbar-width: none; }
+  .site-nav-links::-webkit-scrollbar { display: none; }
+  .site-nav-links a { flex-shrink: 0; }
+  .site-nav-links .site-spacer { display: none; }
+  .site-nav-links + a { margin-left: auto; }
+  .doc-entry { scroll-margin-top: 92px; }
+}
 .site-layout { display: flex; min-height: calc(100vh - 45px); }
 .site-toc { width: 250px; flex-shrink: 0; background: var(--nk-bg-sidebar); border-right: 1px solid var(--nk-border); padding: 12px 8px 40px; position: sticky; top: 45px; height: calc(100vh - 45px); overflow-y: auto; font-size: 13.5px; }
 .site-toc a { display: block; color: var(--nk-text-secondary); text-decoration: none; padding: 3px 10px; border-radius: var(--nk-radius); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -55,7 +68,8 @@ body { margin: 0; }
 .doc-code { margin: 0; padding: 12px 14px; font-family: var(--nk-font-mono); font-size: 12.5px; line-height: 1.55; white-space: pre; overflow-x: auto; background: var(--nk-bg-code); border-top: 1px solid var(--nk-border); color: var(--nk-text); }
 .doc-code[hidden] { display: none; }
 .doc-code .tag { color: var(--nk-accent); } .doc-code .attr { color: var(--nk-tag-orange-text); }
-.doc-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 14px; }
+.doc-table-wrap { overflow-x: auto; margin: 8px 0 14px; }
+.doc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .doc-table th { text-align: left; font-weight: 500; color: var(--nk-text-tertiary); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--nk-border); }
 .doc-table td { padding: 6px 8px; border-bottom: 1px solid var(--nk-border); vertical-align: top; line-height: 1.45; }
 .doc-table td:first-child code { white-space: nowrap; }
@@ -79,14 +93,16 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.5.2</span></a>
-  <a href="docs.html" class="current">Doku</a>
-  <a href="showcase.html">Showcase</a>
-  <a href="app.html">Demo-App</a>
-  <span class="site-spacer"></span>
-  <a href="https://notionkit.jungherz.com">NotionKit CSS</a>
-  <a href="https://notionkit-web.jungherz.com">NotionKit Web</a>
-  <a href="https://github.com/JUNGHERZ/NotionKit-Elements">GitHub</a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.5.3</span></a>
+  <div class="site-nav-links">
+    <a href="docs.html" class="current">Doku</a>
+    <a href="showcase.html">Showcase</a>
+    <a href="app.html">Demo-App</a>
+    <span class="site-spacer"></span>
+    <a href="https://notionkit.jungherz.com">NotionKit CSS</a>
+    <a href="https://notionkit-web.jungherz.com">NotionKit Web</a>
+    <a href="https://github.com/JUNGHERZ/NotionKit-Elements">GitHub</a>
+  </div>
   <a href="../docs.html">🇬🇧 EN</a>
   <button class="nk-topbar-btn nk-share-btn" id="brandToggle" aria-pressed="false" title="Branding: --nk-accent → grün">🎨</button>
   <button class="nk-topbar-btn nk-theme-toggle" id="themeToggle" title="Hell / dunkel umschalten">🌙</button>
@@ -99,8 +115,8 @@ body { margin: 0; }
   <p class="site-lead">Attribute, Slots, Events und das Klassen-Markup, das jedes Element ersetzt.</p>
   
 <section class="site-section" id="install"><h2>Installation</h2>
-  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.2/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
   <p class="doc-h4">npm</p><pre class="doc-code">npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 
 import '@jungherz-de/notionkit/notionkit.css';
@@ -109,8 +125,8 @@ import '@jungherz-de/notionkit-elements';</pre>
 </section>
 <section class="site-section" id="prereq"><h2>Voraussetzungen</h2><p class="doc-desc"><code>notionkit.css</code> auf dem Dokument laden und <code>class="nk-body"</code> auf <code>&lt;body&gt;</code> setzen. Die Shadow Roots erben Schrift, Farbe und den Scoped Reset von dort; die Elemente bringen kein eigenes visuelles CSS mit. Das Bundle injiziert zusätzlich die Design-Tokens als Cascade Layer (<code>@layer notionkit-defaults</code>): Eine Seite ohne Stylesheet rendert trotzdem, und jedes eigene, unlayered <code>:root { --nk-* }</code> gewinnt.</p><pre class="doc-code">&lt;<span class="tag">html</span> <span class="attr">lang</span>="en" <span class="attr">data-theme</span>="light"&gt;
   &lt;<span class="tag">head</span>&gt;
-    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css"&gt;
-    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.2/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css"&gt;
+    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.3/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
   &lt;/<span class="tag">head</span>&gt;
   &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
     &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="primary"&gt;Speichern&lt;/<span class="tag">nk-btn</span>&gt;
@@ -170,18 +186,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn danger small"&gt;Löschen&lt;/<span class="tag">button</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>variant</code></td><td><code>primary | secondary | danger | danger-solid | topbar | share</code></td><td>–</td><td>Optische Variante. <code>topbar</code> und <code>share</code> rendern <code>.nk-topbar-btn</code> für die Topbar.</td></tr>
 <tr><td><code>small</code></td><td><code>boolean</code></td><td>–</td><td>Kompaktes Padding und 12,5px Text.</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert; Klicks werden verschluckt.</td></tr>
 <tr><td><code>type</code></td><td><code>button | submit | reset</code></td><td><code>button</code></td><td>Bei <code>submit</code>/<code>reset</code> wird das umgebende <code>&lt;form&gt;</code> abgeschickt bzw. zurückgesetzt.</td></tr>
-<tr><td><code>href</code></td><td><code>URL</code></td><td>–</td><td>Rendert einen Link statt eines Buttons.</td></tr></table>
+<tr><td><code>href</code></td><td><code>URL</code></td><td>–</td><td>Rendert einen Link statt eines Buttons.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung und optionales <code>&lt;svg&gt;</code>-Icon.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung und optionales <code>&lt;svg&gt;</code>-Icon.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>click</code></td><td><code>(native, composed)</code></td><td>Der native Klick bubbelt aus dem Shadow Root.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>click</code></td><td><code>(native, composed)</code></td><td>Der native Klick bubbelt aus dem Shadow Root.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert. Der Button wächst mit seiner Beschriftung; in dichten Leisten <code>small</code> setzen.</span></div>
@@ -199,7 +215,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">input</span> <span class="attr">class</span>="nk-input" <span class="attr">name</span>="name" <span class="attr">value</span>="Ada Lovelace" <span class="attr">placeholder</span>="Anzeigename"&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Aktueller Wert; zugleich der Reset-Wert.</td></tr>
 <tr><td><code>type</code></td><td><code>text | email | password | number | date | …</code></td><td><code>text</code></td><td>Wird an das native Input durchgereicht.</td></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhaltertext.</td></tr>
@@ -207,13 +223,13 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>required</code></td><td><code>boolean</code></td><td>–</td><td>Pflichtfeld; die Validität wird auf den Host gespiegelt.</td></tr>
 <tr><td><code>readonly</code></td><td><code>boolean</code></td><td>–</td><td>Nur lesen.</td></tr>
-<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite (<code>.wide</code>).</td></tr></table>
+<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite (<code>.wide</code>).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Beim Übernehmen (Blur/Enter), wie das native change-Event.</td></tr>
-<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Bei jedem Tastendruck.</td></tr></table>
+<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Bei jedem Tastendruck.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code> <code>name</code> <code>disabled</code> <code>required</code> <code>form</code> <code>validity</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>focus()</code> <code>blur()</code> <code>select()</code> <code>checkValidity()</code> <code>reportValidity()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Mindestbreite 210px; <code>wide</code> füllt die Zeile.</span></div>
@@ -231,21 +247,21 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">textarea</span> <span class="attr">class</span>="nk-textarea" <span class="attr">name</span>="bio" <span class="attr">rows</span>="3" <span class="attr">placeholder</span>="Ein Satz über dich"&gt;&lt;/<span class="tag">textarea</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Aktueller Wert.</td></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhaltertext.</td></tr>
 <tr><td><code>rows</code></td><td><code>number</code></td><td>–</td><td>Sichtbare Zeilen.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>required</code></td><td><code>boolean</code></td><td>–</td><td>Pflichtfeld.</td></tr>
-<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite.</td></tr></table>
+<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Starttext (wenn kein <code>value</code> gesetzt ist).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Starttext (wenn kein <code>value</code> gesetzt ist).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Beim Übernehmen.</td></tr>
-<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Bei jedem Tastendruck.</td></tr></table>
+<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Bei jedem Tastendruck.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Nur vertikal veränderbar; <code>wide</code> füllt die Zeile.</span></div>
@@ -279,19 +295,19 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">select</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Ausgewählter Wert.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>required</code></td><td><code>boolean</code></td><td>–</td><td>Pflichtfeld.</td></tr>
 <tr><td><code>compact</code></td><td><code>boolean</code></td><td>–</td><td>120px Mindestbreite (<code>.compact</code>), z. B. in einer Mitgliederzeile.</td></tr>
-<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite (<code>.nk-select.wide</code>).</td></tr></table>
+<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>Volle Breite (<code>.nk-select.wide</code>).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>&lt;option&gt;</code>-/<code>&lt;optgroup&gt;</code>-Kinder – nur direkte Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>&lt;option&gt;</code>-/<code>&lt;optgroup&gt;</code>-Kinder – nur direkte Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Bei Auswahl.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Bei Auswahl.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code> <code>selectedIndex</code> <code>options</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>refresh()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Nutzt den nativen Picker der Plattform (<code>color-scheme</code> folgt dem Theme).</span></div>
@@ -313,19 +329,19 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">label</span> <span class="attr">class</span>="nk-switch-label"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-switch" <span class="attr">role</span>="switch" <span class="attr">aria-checked</span>="true"&gt;&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">span</span>&gt;Geplant&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">label</span>&gt;&lt;<span class="tag">label</span> <span class="attr">class</span>="nk-switch-label"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-switch" <span class="attr">role</span>="switch" <span class="attr">aria-checked</span>="false"&gt;&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">span</span>&gt;In Arbeit&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">label</span>&gt;&lt;<span class="tag">label</span> <span class="attr">class</span>="nk-switch-label"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-switch" <span class="attr">role</span>="switch" <span class="attr">aria-checked</span>="true"&gt;&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">span</span>&gt;Erledigt&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">label</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>checked</code></td><td><code>boolean</code></td><td>–</td><td>Ein/Aus-Zustand.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td><code>on</code></td><td>Gesendeter Wert, wenn eingeschaltet.</td></tr>
 <tr><td><code>text</code></td><td><code>string</code></td><td>–</td><td>Sichtbarer Text neben dem Schalter (alternativ zum Default-Slot).</td></tr>
-<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Barrierefreier Name (<code>aria-label</code>), wenn es keinen sichtbaren Text gibt.</td></tr></table>
+<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Barrierefreier Name (<code>aria-label</code>), wenn es keinen sichtbaren Text gibt.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Sichtbarer Text neben dem Schalter; gehört zur Trefferfläche. Ohne ihn rendert das Element den nackten Button.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Sichtbarer Text neben dem Schalter; gehört zur Trefferfläche. Ohne ihn rendert das Element den nackten Button.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>toggle()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>34×20px – unter dem 44px-Touch-Ziel. In einer Label-Zeile (<code>nk-field</code>) wächst die Trefferfläche.</span></div>
@@ -347,20 +363,20 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">label</span> <span class="attr">class</span>="nk-check"&gt;&lt;<span class="tag">input</span> <span class="attr">type</span>="checkbox" <span class="attr">name</span>="digest" <span class="attr">value</span>="mentions"&gt;Nur Erwähnungen&lt;/<span class="tag">label</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>checked</code></td><td><code>boolean</code></td><td>–</td><td>Angehakt.</td></tr>
 <tr><td><code>indeterminate</code></td><td><code>boolean</code></td><td>–</td><td>Teilzustand (beim nächsten Klick aufgehoben).</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td><code>on</code></td><td>Gesendeter Wert.</td></tr>
 <tr><td><code>required</code></td><td><code>boolean</code></td><td>–</td><td>Muss zum Absenden angehakt sein.</td></tr>
-<tr><td><code>text</code></td><td><code>string</code></td><td>–</td><td>Beschriftung (alternativ zum Default-Slot).</td></tr></table>
+<tr><td><code>text</code></td><td><code>string</code></td><td>–</td><td>Beschriftung (alternativ zum Default-Slot).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Zeilenhöhe ~24px; die ganze Beschriftung ist Trefferfläche.</span></div>
@@ -386,19 +402,19 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">label</span> <span class="attr">class</span>="nk-check"&gt;&lt;<span class="tag">input</span> <span class="attr">type</span>="radio" <span class="attr">name</span>="style" <span class="attr">value</span>="detailed"&gt;Ausführlich&lt;/<span class="tag">label</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>checked</code></td><td><code>boolean</code></td><td>–</td><td>Ausgewählt; das letzte <code>checked</code> im Markup gewinnt.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Gesendeter Wert.</td></tr>
 <tr><td><code>required</code></td><td><code>boolean</code></td><td>–</td><td>Eines der Gruppe muss gewählt sein.</td></tr>
-<tr><td><code>text</code></td><td><code>string</code></td><td>–</td><td>Beschriftung (alternativ zum Default-Slot).</td></tr></table>
+<tr><td><code>text</code></td><td><code>string</code></td><td>–</td><td>Beschriftung (alternativ zum Default-Slot).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Bei Auswahl, auch per Pfeiltaste.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Bei Auswahl, auch per Pfeiltaste.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Wie <code>nk-check</code>.</span></div>
@@ -416,7 +432,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">input</span> <span class="attr">type</span>="range" <span class="attr">class</span>="nk-slider" <span class="attr">name</span>="size" <span class="attr">min</span>="12" <span class="attr">max</span>="18" <span class="attr">value</span>="14"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-slider-value"&gt;14px&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>number</code></td><td>–</td><td>Aktueller Wert.</td></tr>
 <tr><td><code>min</code></td><td><code>number</code></td><td>–</td><td>Minimum.</td></tr>
 <tr><td><code>max</code></td><td><code>number</code></td><td>–</td><td>Maximum.</td></tr>
@@ -424,13 +440,13 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>show-value</code></td><td><code>boolean</code></td><td>–</td><td>Zeigt den Wert unter dem Regler.</td></tr>
-<tr><td><code>unit</code></td><td><code>string</code></td><td>–</td><td>Suffix für die Anzeige (z. B. <code>px</code>).</td></tr></table>
+<tr><td><code>unit</code></td><td><code>string</code></td><td>–</td><td>Suffix für die Anzeige (z. B. <code>px</code>).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Beim Loslassen.</td></tr>
-<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Während des Ziehens.</td></tr></table>
+<tr><td><code>nk-input</code></td><td><code>{ value, name }</code></td><td>Während des Ziehens.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>210px breit; der native Griff ist plattformseitig touch-tauglich.</span></div>
@@ -486,16 +502,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Beschriftung.</td></tr>
 <tr><td><code>desc</code></td><td><code>string</code></td><td>–</td><td>Erläuterung.</td></tr>
 <tr><td><code>stacked</code></td><td><code>boolean</code></td><td>–</td><td>Label über einem vollbreiten Control.</td></tr>
-<tr><td><code>compact</code></td><td><code>boolean</code></td><td>–</td><td>Kleines tertiäres Label, kein Zeilen-Padding.</td></tr></table>
+<tr><td><code>compact</code></td><td><code>boolean</code></td><td>–</td><td>Kleines tertiäres Label, kein Zeilen-Padding.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Das Control.</td></tr>
 <tr><td><code>label</code></td><td>Formatierte Beschriftung (statt Attribut).</td></tr>
-<tr><td><code>desc</code></td><td>Formatierte Erläuterung.</td></tr></table>
+<tr><td><code>desc</code></td><td>Formatierte Erläuterung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -533,8 +549,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-field</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-field</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -554,11 +570,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag"&gt;Nicht begonnen&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag brown"&gt;Archiv&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag orange"&gt;Geplant&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag yellow"&gt;Review&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag green"&gt;Erledigt&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag blue"&gt;In Arbeit&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag purple"&gt;Design&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag pink"&gt;Idee&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag red"&gt;Blockiert&lt;/<span class="tag">span</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>color</code></td><td><code>gray | brown | orange | yellow | green | blue | purple | pink | red</code></td><td>–</td><td>Farbpaar; ohne grau.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>color</code></td><td><code>gray | brown | orange | yellow | green | blue | purple | pink | red</code></td><td>–</td><td>Farbpaar; ohne grau.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Tag-Text.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Tag-Text.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -578,10 +594,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-progress"&gt;&lt;<span class="tag">i</span> <span class="attr">style</span>="width:72%"&gt;&lt;/<span class="tag">i</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-progress-label"&gt;72%&lt;/<span class="tag">span</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>number</code></td><td><code>0</code></td><td>Aktueller Wert.</td></tr>
 <tr><td><code>max</code></td><td><code>number</code></td><td><code>100</code></td><td>Maximum.</td></tr>
-<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Text hinter dem Balken.</td></tr></table>
+<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Text hinter dem Balken.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
@@ -603,12 +619,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-callout"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="c-icon"&gt;💡&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span>&gt;&lt;<span class="tag">b</span>&gt;Core idea:&lt;/<span class="tag">b</span>&gt; Ein Callout trägt einen Gedanken, der nicht untergehen darf.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>icon</code></td><td><code>string</code></td><td><code>💡</code></td><td>Emoji- oder Text-Icon.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>icon</code></td><td><code>string</code></td><td><code>💡</code></td><td>Emoji- oder Text-Icon.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Inhalt.</td></tr>
-<tr><td><code>icon</code></td><td>Icon-Knoten (z. B. <code>&lt;span slot="icon"&gt;📌&lt;/span&gt;</code>).</td></tr></table>
+<tr><td><code>icon</code></td><td>Icon-Knoten (z. B. <code>&lt;span slot="icon"&gt;📌&lt;/span&gt;</code>).</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -650,11 +666,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">h2</span> <span class="attr">class</span>="nk-heading"&gt;Abschnittsüberschrift&lt;/<span class="tag">h2</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>level</code></td><td><code>1 | 2 | 3 | 4</code></td><td><code>2</code></td><td>Überschriften-Ebene.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>level</code></td><td><code>1 | 2 | 3 | 4</code></td><td><code>2</code></td><td>Überschriften-Ebene.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Text.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Text.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -674,16 +690,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">details</span> <span class="attr">class</span>="nk-toggle" open&gt;&lt;<span class="tag">summary</span>&gt;Details&lt;/<span class="tag">summary</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="toggle-body"&gt;Hier steht der eingeklappte Inhalt.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">details</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Summary-Text.</td></tr>
-<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Aufgeklappt, in beide Richtungen gespiegelt.</td></tr></table>
+<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Aufgeklappt, in beide Richtungen gespiegelt.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Eingeklappter Inhalt.</td></tr>
-<tr><td><code>label</code></td><td>Formatierte Summary.</td></tr></table>
+<tr><td><code>label</code></td><td>Formatierte Summary.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Beim Auf-/Zuklappen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Beim Auf-/Zuklappen.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -705,17 +721,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">label</span> <span class="attr">class</span>="nk-todo"&gt;&lt;<span class="tag">input</span> <span class="attr">type</span>="checkbox"&gt;&lt;<span class="tag">span</span>&gt;Ausliefern&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">label</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>checked</code></td><td><code>boolean</code></td><td>–</td><td>Erledigt.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
-<tr><td><code>value</code></td><td><code>string</code></td><td><code>on</code></td><td>Gesendeter Wert.</td></tr></table>
+<tr><td><code>value</code></td><td><code>string</code></td><td><code>on</code></td><td>Gesendeter Wert.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Aufgabentext.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Aufgabentext.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ checked, value, name }</code></td><td>Beim Umschalten.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -735,8 +751,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Tastenbeschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Tastenbeschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -756,12 +772,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-code"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="lang"&gt;html&lt;/<span class="tag">span</span>&gt;&amp;lt;&lt;<span class="tag">span</span> <span class="attr">class</span>="tag"&gt;nk-btn&lt;/<span class="tag">span</span>&gt; &lt;<span class="tag">span</span> <span class="attr">class</span>="attr"&gt;variant&lt;/<span class="tag">span</span>&gt;="primary"&amp;gt;Speichern&amp;lt;/&lt;<span class="tag">span</span> <span class="attr">class</span>="tag"&gt;nk-btn&lt;/<span class="tag">span</span>&gt;&amp;gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>lang</code></td><td><code>string</code></td><td>–</td><td>Sprach-Badge oben rechts.</td></tr>
-<tr><td><code>highlight</code></td><td><code>boolean</code></td><td>–</td><td>HTML-Tags/-Attribute einfärben.</td></tr></table>
+<tr><td><code>highlight</code></td><td><code>boolean</code></td><td>–</td><td>HTML-Tags/-Attribute einfärben.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Der Code, als Text.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Der Code, als Text.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -781,11 +797,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">blockquote</span> <span class="attr">class</span>="nk-quote"&gt;Die beste Oberfläche ist die, die aus dem Weg geht.&lt;<span class="tag">cite</span> <span class="attr">class</span>="q-cite"&gt;Unbekannt&lt;/<span class="tag">cite</span>&gt;&lt;/<span class="tag">blockquote</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>cite</code></td><td><code>string</code></td><td>–</td><td>Quellenangabe.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>cite</code></td><td><code>string</code></td><td>–</td><td>Quellenangabe.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Zitattext.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Zitattext.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -799,7 +815,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-app"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
   <nk-sidebar slot=&quot;sidebar&quot;>
     <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
     <nk-tree>
@@ -819,7 +835,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <p class=&quot;lead&quot;>Eine ruhige, dokumentzentrierte Workspace-App – nur aus Elementen gebaut.</p>
   </div></div>
 </nk-app><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
   <aside class=&quot;nk-sidebar&quot;>
     <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
     <div class=&quot;nk-sidebar-scroll&quot;>
@@ -889,9 +905,9 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>sidebar</code></td><td>Eine <code>nk-sidebar</code>.</td></tr>
-<tr><td><code>(default)</code></td><td>Topbar, Seite – die Hauptspalte.</td></tr></table>
+<tr><td><code>(default)</code></td><td>Topbar, Seite – die Hauptspalte.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -905,7 +921,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sidebar"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar>
   <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon=&quot;🏠&quot; active>Start</nk-tree-item>
@@ -914,7 +930,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;⚙️&quot;>Einstellungen</nk-tree-item>
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;🗑️&quot;>Papierkorb</nk-tree-item>
 </nk-sidebar></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
   <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
   <div class=&quot;nk-sidebar-scroll&quot;>
     <div class=&quot;nk-tree-item active&quot;><span class=&quot;icon&quot;>🏠</span><span class=&quot;label&quot;>Start</span></div>
@@ -947,16 +963,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">aside</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Schubladen-Zustand auf kleinen Schirmen (ohne Wirkung am Desktop).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Schubladen-Zustand auf kleinen Schirmen (ohne Wirkung am Desktop).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>workspace</code></td><td><code>nk-workspace-switcher</code>.</td></tr>
 <tr><td><code>(default)</code></td><td>Der Baum (scrollt).</td></tr>
-<tr><td><code>footer</code></td><td>Fixierte Zeilen unten (Einstellungen, Papierkorb).</td></tr></table>
+<tr><td><code>footer</code></td><td>Fixierte Zeilen unten (Einstellungen, Papierkorb).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Schublade geöffnet/geschlossen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Schublade geöffnet/geschlossen.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>show()</code> <code>close()</code> <code>toggle()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unter 860px verborgen. <code>open</code> zeigt sie als Off-Canvas-Schublade mit Scrim; Escape und der Scrim schließen sie. Die Schublade gleitet in 240ms herein, der Scrim blendet ein, das Schließen läuft rückwärts – nur CSS (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; ältere Browser schalten hart, reduzierte Bewegung springt). Im Querformat wächst die Schublade um den linken Safe-Area-Inset, ihre Zeilen weichen der Dynamic Island aus.</span></div>
@@ -974,18 +990,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="background:var(--nk-bg-sidebar);border-radius:8px;max-width:260px"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-workspace"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="avatar"&gt;M&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">span</span>&gt;MonaHilft&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="chev"&gt;⌄&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Workspace-Name.</td></tr>
 <tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Avatar-Text (Standard: erster Buchstabe des Namens).</td></tr>
-<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Menü sichtbar.</td></tr></table>
+<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Menü sichtbar.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>avatar</code></td><td>Eigener Avatar-Knoten.</td></tr>
-<tr><td><code>menu</code></td><td>Der Popover-Inhalt.</td></tr></table>
+<tr><td><code>menu</code></td><td>Der Popover-Inhalt.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Menü geöffnet/geschlossen.</td></tr>
-<tr><td><code>nk-select</code></td><td><code>(from the menu)</code></td><td>Bubbelt aus einem Menüeintrag hoch; das Menü schließt.</td></tr></table>
+<tr><td><code>nk-select</code></td><td><code>(from the menu)</code></td><td>Bubbelt aus einem Menüeintrag hoch; das Menü schließt.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>show()</code> <code>close()</code> <code>toggle()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1003,15 +1019,15 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="background:var(--nk-bg-sidebar);border-radius:8px;max-width:244px;padding:0 8px 6px"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-section-label"&gt;Favoriten &lt;<span class="tag">span</span> <span class="attr">class</span>="plus"&gt;＋&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tree-item"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;📊&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;Projektübersicht&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="actions"&gt;&lt;<span class="tag">span</span>&gt;＋&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;⋯&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>addable</code></td><td><code>boolean</code></td><td>–</td><td>Zeigt das ＋ beim Hovern.</td></tr>
-<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Text (alternativ zum Slot).</td></tr></table>
+<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Text (alternativ zum Slot).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'add' }</code></td><td>＋ geklickt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'add' }</code></td><td>＋ geklickt.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1073,16 +1089,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>manual</code></td><td><code>boolean</code></td><td>–</td><td><code>active</code> nicht automatisch setzen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>manual</code></td><td><code>boolean</code></td><td>–</td><td><code>active</code> nicht automatisch setzen.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-tree-item</code>- und <code>nk-section-label</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-tree-item</code>- und <code>nk-section-label</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-select</code></td><td><code>{ value, label, href, item }</code></td><td>Bubbelt vom gewählten Eintrag.</td></tr>
 <tr><td><code>nk-toggle</code></td><td><code>{ open, value }</code></td><td>Ein Ast auf-/zugeklappt.</td></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action, value }</code></td><td>Hover-Aktion eines Eintrags.</td></tr></table>
+<tr><td><code>nk-action</code></td><td><code>{ action, value }</code></td><td>Hover-Aktion eines Eintrags.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>data</code> <code>activeItem</code> <code>value</code></p>
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Zeilen sind 28px; in einer Touch-Schublade die Trefferfläche selbst vergrößern.</span></div>
@@ -1116,7 +1132,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Emoji-/Text-Icon (oder <code>slot="icon"</code>).</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Label (alternativ zum Textinhalt).</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Wert in Events (Standard: Label).</td></tr>
@@ -1124,17 +1140,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 <tr><td><code>active</code></td><td><code>boolean</code></td><td>–</td><td>Aktueller Eintrag.</td></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Kinder aufgeklappt.</td></tr>
 <tr><td><code>compact</code></td><td><code>boolean</code></td><td>–</td><td>26px-Zeile (Footer, Settings-Nav).</td></tr>
-<tr><td><code>no-actions</code></td><td><code>boolean</code></td><td>–</td><td>Hover-Aktionen ＋/⋯ ausblenden.</td></tr></table>
+<tr><td><code>no-actions</code></td><td><code>boolean</code></td><td>–</td><td>Hover-Aktionen ＋/⋯ ausblenden.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Label-Text und verschachtelte <code>nk-tree-item</code>s.</td></tr>
 <tr><td><code>icon</code></td><td>Icon-Knoten.</td></tr>
-<tr><td><code>end</code></td><td>Inhalt am Zeilenende, z. B. <code>&lt;span slot="end" class="nk-kbd-hint"&gt;</code> mit <code>nk-kbd</code>s (blendet die Aktionen aus).</td></tr></table>
+<tr><td><code>end</code></td><td>Inhalt am Zeilenende, z. B. <code>&lt;span slot="end" class="nk-kbd-hint"&gt;</code> mit <code>nk-kbd</code>s (blendet die Aktionen aus).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-select</code></td><td><code>{ value, label, href, item }</code></td><td>Zeile geklickt / Enter. <code>preventDefault()</code> verhindert das Aktivieren.</td></tr>
 <tr><td><code>nk-toggle</code></td><td><code>{ open, value }</code></td><td>Pfeil geklickt.</td></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'add' | 'more', value }</code></td><td>Hover-Aktion geklickt.</td></tr></table>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'add' | 'more', value }</code></td><td>Hover-Aktion geklickt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>label</code> <code>value</code> <code>active</code> <code>open</code> <code>hasChildren</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>select()</code> <code>toggle()</code> <code>focus()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>28px-Zeilen (26px mit <code>compact</code>) – unter dem 44px-Touch-Ziel; der Baum erzwingt keine Höhe.</span></div>
@@ -1142,45 +1158,45 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 </article>
 <article class="doc-entry" id="nk-topbar">
   <h3><code>&lt;nk-topbar&gt;</code> Topbar</h3>
-  <p class="doc-desc">Die 45px-Leiste über der Seite: Breadcrumb im Default-Slot, Buttons im <code>actions</code>-Slot (rechtsbündig). Dort <code>nk-btn variant="topbar"</code> / <code>"share"</code> und <code>nk-theme-toggle</code> verwenden.</p>
+  <p class="doc-desc">Die 44px-Leiste über der Seite: Breadcrumb im Default-Slot, Buttons im <code>actions</code>-Slot (rechtsbündig). Dort <code>nk-btn variant="topbar"</code> / <code>"share"</code> und <code>nk-theme-toggle</code> verwenden, für reinen Text wie „Bearbeitet vor 2 Min.“ <code>&lt;span class="nk-topbar-meta"&gt;</code>.</p>
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-topbar"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 2</span></div>
     <div class="doc-preview" data-mode="element"><div style="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"><nk-topbar>
   <nk-breadcrumb><span>📊 Projektübersicht</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
-  <span slot="actions" class="nk-topbar-btn" style="color:var(--nk-text-tertiary);font-size:12.5px">Zuletzt bearbeitet vor 2 Min.</span>
+  <span slot="actions" class="nk-topbar-meta">Zuletzt bearbeitet vor 2 Min.</span>
   <nk-btn slot="actions" variant="share">Teilen</nk-btn>
   <nk-btn slot="actions" variant="topbar">⭐</nk-btn>
   <nk-theme-toggle slot="actions"></nk-theme-toggle>
 </nk-topbar></div></div>
     <div class="doc-preview" data-mode="class" hidden><div style="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"><div class="nk-topbar">
   <nav class="nk-breadcrumb"><span class="crumb">📊 Projektübersicht</span><span class="sep">/</span><span class="crumb current">🚀 NotionKit MVP</span></nav>
-  <div class="nk-topbar-actions"><span class="nk-topbar-btn" style="color:var(--nk-text-tertiary);font-size:12.5px">Zuletzt bearbeitet vor 2 Min.</span><button class="nk-topbar-btn nk-share-btn">Teilen</button><button class="nk-topbar-btn">⭐</button><button class="nk-topbar-btn nk-theme-toggle">🌙</button></div>
+  <div class="nk-topbar-actions"><span class="nk-topbar-meta">Zuletzt bearbeitet vor 2 Min.</span><button class="nk-topbar-btn nk-share-btn">Teilen</button><button class="nk-topbar-btn">⭐</button><button class="nk-topbar-btn nk-theme-toggle">🌙</button></div>
 </div></div></div>
     <pre class="doc-code" data-mode="element">&lt;<span class="tag">div</span> <span class="attr">style</span>="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"&gt;&lt;<span class="tag">nk-topbar</span>&gt;
   &lt;<span class="tag">nk-breadcrumb</span>&gt;&lt;<span class="tag">span</span>&gt;📊 Projektübersicht&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🚀 NotionKit MVP&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">nk-breadcrumb</span>&gt;
-  &lt;<span class="tag">span</span> <span class="attr">slot</span>="actions" <span class="attr">class</span>="nk-topbar-btn" <span class="attr">style</span>="color:var(--nk-text-tertiary);font-size:12.5px"&gt;Zuletzt bearbeitet vor 2 Min.&lt;/<span class="tag">span</span>&gt;
+  &lt;<span class="tag">span</span> <span class="attr">slot</span>="actions" <span class="attr">class</span>="nk-topbar-meta"&gt;Zuletzt bearbeitet vor 2 Min.&lt;/<span class="tag">span</span>&gt;
   &lt;<span class="tag">nk-btn</span> <span class="attr">slot</span>="actions" <span class="attr">variant</span>="share"&gt;Teilen&lt;/<span class="tag">nk-btn</span>&gt;
   &lt;<span class="tag">nk-btn</span> <span class="attr">slot</span>="actions" <span class="attr">variant</span>="topbar"&gt;⭐&lt;/<span class="tag">nk-btn</span>&gt;
   &lt;<span class="tag">nk-theme-toggle</span> <span class="attr">slot</span>="actions"&gt;&lt;/<span class="tag">nk-theme-toggle</span>&gt;
 &lt;/<span class="tag">nk-topbar</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-topbar"&gt;
   &lt;<span class="tag">nav</span> <span class="attr">class</span>="nk-breadcrumb"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="crumb"&gt;📊 Projektübersicht&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="sep"&gt;/&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="crumb current"&gt;🚀 NotionKit MVP&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">nav</span>&gt;
-  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-topbar-actions"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-topbar-btn" <span class="attr">style</span>="color:var(--nk-text-tertiary);font-size:12.5px"&gt;Zuletzt bearbeitet vor 2 Min.&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn nk-share-btn"&gt;Teilen&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn"&gt;⭐&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn nk-theme-toggle"&gt;🌙&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-topbar-actions"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-topbar-meta"&gt;Zuletzt bearbeitet vor 2 Min.&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn nk-share-btn"&gt;Teilen&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn"&gt;⭐&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn nk-theme-toggle"&gt;🌙&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Breadcrumb / Titel.</td></tr>
-<tr><td><code>actions</code></td><td>Buttons rechts.</td></tr></table>
+<tr><td><code>actions</code></td><td>Buttons rechts.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
   
-  <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert; lange Breadcrumbs werden gekürzt.</span></div>
-  <div class="doc-classes"><span class="doc-meta"><b>Ersetzt</b></span><code>.nk-topbar</code><code>.nk-topbar-actions</code><code>.nk-topbar-btn</code><code>.nk-share-btn</code></div>
+  <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unter 860px bleibt nur der letzte Crumb und endet mit Auslassungspunkten, <code>nk-topbar-meta</code> wird ausgeblendet, die Aktionen bleiben einzeilig – wie in Notions Mobil-App.</span></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Ersetzt</b></span><code>.nk-topbar</code><code>.nk-topbar-actions</code><code>.nk-topbar-btn</code><code>.nk-topbar-meta</code><code>.nk-share-btn</code></div>
 </article>
 <article class="doc-entry" id="nk-breadcrumb">
   <h3><code>&lt;nk-breadcrumb&gt;</code> Breadcrumb</h3>
@@ -1194,14 +1210,14 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">nav</span> <span class="attr">class</span>="nk-breadcrumb"&gt;&lt;<span class="tag">a</span> <span class="attr">class</span>="crumb" <span class="attr">href</span>="#"&gt;📊 Projektübersicht&lt;/<span class="tag">a</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="sep"&gt;/&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="crumb current"&gt;🚀 NotionKit MVP&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">nav</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>separator</code></td><td><code>string</code></td><td><code>/</code></td><td>Trennzeichen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>separator</code></td><td><code>string</code></td><td><code>/</code></td><td>Trennzeichen.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Crumb-Kinder (nur direkte Kinder, ohne <code>slot</code>-Attribut).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Crumb-Kinder (nur direkte Kinder, ohne <code>slot</code>-Attribut).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ index, value, label, href, current }</code></td><td>Crumb geklickt; <code>preventDefault()</code> unterbindet den weitergereichten Klick.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ index, value, label, href, current }</code></td><td>Crumb geklickt; <code>preventDefault()</code> unterbindet den weitergereichten Klick.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>refresh()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Bleibt einzeilig; Einträge kurz halten.</span></div>
@@ -1219,14 +1235,14 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn nk-theme-toggle"&gt;🌙&lt;/<span class="tag">button</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>storage-key</code></td><td><code>string</code></td><td><code>nk-theme</code></td><td>localStorage-Schlüssel.</td></tr>
-<tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Tooltip.</td></tr></table>
+<tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Tooltip.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ value: 'light' | 'dark' }</code></td><td>Theme gesetzt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ value: 'light' | 'dark' }</code></td><td>Theme gesetzt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>apply(theme)</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1268,19 +1284,19 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">nav</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Aktiver Wert (Standard: Eintrag mit <code>active</code>, sonst der erste).</td></tr>
 <tr><td><code>always</code></td><td><code>boolean</code></td><td>–</td><td>In jeder Breite sichtbar, nicht nur unter 860px.</td></tr>
 <tr><td><code>fixed</code></td><td><code>boolean</code></td><td>–</td><td>An den unteren Viewport-Rand geheftet statt in der Spalte – für Standalone-PWAs; ein Platzhalter hält ihre Höhe (<code>--nk-tab-bar-height</code> + Safe-Area) im Fluss frei.</td></tr>
 <tr><td><code>floating</code></td><td><code>boolean</code></td><td>–</td><td>Eine fixierte Kapsel mit runden Ecken statt der vollbreiten Leiste.</td></tr>
-<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td><code>aria-label</code> des <code>nav</code>.</td></tr></table>
+<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td><code>aria-label</code> des <code>nav</code>.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-tab-bar-item</code>-Kinder, bis zu fünf.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-tab-bar-item</code>-Kinder, bis zu fünf.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value }</code></td><td>Aktiver Eintrag gewechselt.</td></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label, href, item, drawer }</code></td><td>Bubbelt vom getippten Eintrag; abbrechbar.</td></tr></table>
+<tr><td><code>nk-select</code></td><td><code>{ value, label, href, item, drawer }</code></td><td>Bubbelt vom getippten Eintrag; abbrechbar.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code> <code>items</code></p>
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Hier ist ihr Platz: über 860px verborgen (dort ist die Sidebar die Navigation), darunter sichtbar. <code>always</code> zeigt sie in jeder Breite – Vorschauen, Telefon-Rahmen. Das untere Padding ist das Größere aus 6px und <code>env(safe-area-inset-bottom)</code>; im Querformat wächst das seitliche Padding auf die linken/rechten Insets.</span></div>
@@ -1298,21 +1314,21 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"&gt;&lt;<span class="tag">nav</span> <span class="attr">class</span>="nk-tab-bar always"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-tab-bar-item active"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;🏠&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;Start&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-tab-bar-item"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;📥&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;Eingang&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">nav</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Emoji oder Glyphe (Alternative: <code>slot="icon"</code>).</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Wert (Standard: die Beschriftung).</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Beschriftung (alternativ zum Default-Slot).</td></tr>
 <tr><td><code>href</code></td><td><code>string</code></td><td>–</td><td>Navigiert nach <code>nk-select</code>.</td></tr>
 <tr><td><code>active</code></td><td><code>boolean</code></td><td>–</td><td>Das aktuelle Ziel (<code>aria-current="page"</code>).</td></tr>
 <tr><td><code>drawer</code></td><td><code>boolean</code></td><td>–</td><td>Öffnet die Sidebar-Schublade, statt aktiv zu werden.</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Beschriftung.</td></tr>
-<tr><td><code>icon</code></td><td>Icon-Knoten statt des Attributs.</td></tr></table>
+<tr><td><code>icon</code></td><td>Icon-Knoten statt des Attributs.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label, href, item, drawer }</code></td><td>Getippt; abbrechbar.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ value, label, href, item, drawer }</code></td><td>Getippt; abbrechbar.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>select()</code> <code>focus()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Für den Daumen gemacht: 20px-Icon, 10,5px-Beschriftung, die ganze Spalte ist Trefferfläche.</span></div>
@@ -1324,12 +1340,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-page"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 3</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
   <nk-page-title>NotionKit MVP</nk-page-title>
   <nk-page-actions><span>👤 Marcel Karas</span><span>📅 Erstellt am 12. Mai 2026</span><span>🏷️ <nk-tag color=&quot;purple&quot;>Designsystem</nk-tag></span></nk-page-actions>
   <p class=&quot;lead&quot;>Eine ruhige, dokumentzentrierte Workspace-App – nur aus Elementen gebaut.</p>
 </nk-page></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
   <div class=&quot;nk-page-icon&quot;>🚀</div>
   <h1 class=&quot;nk-page-title&quot;>NotionKit MVP</h1>
   <div class=&quot;nk-page-meta&quot;><span>👤 Marcel Karas</span><span>📅 Erstellt am 12. Mai 2026</span><span>🏷️ <span class=&quot;nk-tag purple&quot;>Designsystem</span></span></div>
@@ -1348,18 +1364,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Seiten-Emoji; Klick feuert <code>nk-action</code>.</td></tr>
 <tr><td><code>cover</code></td><td><code>boolean</code></td><td>–</td><td>Zeigt den Cover-Streifen; das Icon überlappt dann dessen Unterkante und die Seite verliert ihr oberes Padding (der <code>covered</code>-Zustand des Stylesheets, auch bei geslottetem <code>nk-page-cover</code>). Ohne Cover sitzt das Icon in 24px oberem Padding, ganz sichtbar.</td></tr>
-<tr><td><code>narrow</code></td><td><code>boolean</code></td><td>–</td><td>Ohne Scroll-Wrapper (Landing-/Doku-Seite).</td></tr></table>
+<tr><td><code>narrow</code></td><td><code>boolean</code></td><td>–</td><td>Ohne Scroll-Wrapper (Landing-/Doku-Seite).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Titel, Meta, Blöcke – ein <code>&lt;p class="lead"&gt;</code> wird zum Vorspann.</td></tr>
 <tr><td><code>cover</code></td><td>Ein <code>nk-page-cover</code> (statt des <code>cover</code>-Attributs).</td></tr>
-<tr><td><code>icon</code></td><td>Eigener Icon-Knoten.</td></tr></table>
+<tr><td><code>icon</code></td><td>Eigener Icon-Knoten.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'icon', value }</code></td><td>Icon geklickt (Emoji-Picker öffnen).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'icon', value }</code></td><td>Icon geklickt (Emoji-Picker öffnen).</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Seitenabstand sinkt unter 860px auf 24px.</span></div>
@@ -1377,8 +1393,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-cover"&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>src</code></td><td><code>URL</code></td><td>–</td><td>Cover-Bild.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>src</code></td><td><code>URL</code></td><td>–</td><td>Cover-Bild.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
@@ -1400,16 +1416,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">h1</span> <span class="attr">class</span>="nk-page-title" <span class="attr">contenteditable</span>="plaintext-only" <span class="attr">spellcheck</span>="false"&gt;NotionKit MVP&lt;/<span class="tag">h1</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>editable</code></td><td><code>boolean</code></td><td>–</td><td>Direkt bearbeitbar.</td></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Wird angezeigt, wenn leer (editable).</td></tr>
-<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Titeltext (alternativ zum Inhalt).</td></tr></table>
+<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Titeltext (alternativ zum Inhalt).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Titeltext.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Titeltext.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ value }</code></td><td>Bearbeiteter Titel übernommen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ value }</code></td><td>Bearbeiteter Titel übernommen.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code></p>
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert; lange Titel brechen um.</span></div>
@@ -1429,8 +1445,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Meta-Einträge.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Meta-Einträge.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1450,12 +1466,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-block-host"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-block-handle"&gt;⠿&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">p</span> <span class="attr">style</span>="margin:0" <span class="attr">contenteditable</span>="true"&gt;Hier steht Block-Inhalt – klicken zum Fokussieren.&lt;/<span class="tag">p</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>handle</code></td><td><code>boolean</code></td><td>–</td><td>Drag-Griff ⠿ rendern (bei Hover sichtbar).</td></tr>
-<tr><td><code>drop-target</code></td><td><code>boolean</code></td><td>–</td><td>Drop-Indikator-Linie über dem Block.</td></tr></table>
+<tr><td><code>drop-target</code></td><td><code>boolean</code></td><td>–</td><td>Drop-Indikator-Linie über dem Block.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Block-Inhalt / Editor-Wurzel.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Block-Inhalt / Editor-Wurzel.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1487,12 +1503,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-banner danger"&gt;⛔ &lt;<span class="tag">span</span>&gt;Die Verbindung zu Notion ist abgerissen.&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>variant</code></td><td><code>info | success | warning | danger</code></td><td>–</td><td>Tönung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>variant</code></td><td><code>info | success | warning | danger</code></td><td>–</td><td>Tönung.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Icon und Text.</td></tr>
-<tr><td><code>action</code></td><td>Aktions-Link (unterstrichen, rechts).</td></tr></table>
+<tr><td><code>action</code></td><td>Aktions-Link (unterstrichen, rechts).</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1512,16 +1528,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-empty"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="e-icon"&gt;🗂️&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="e-title"&gt;Noch keine Einträge&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="e-desc"&gt;Lege den ersten Eintrag an oder importiere Daten.&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="e-actions"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn primary small"&gt;＋ Neuer Eintrag&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn secondary small"&gt;Importieren&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Emoji.</td></tr>
 <tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Titel. Wird einmal gelesen und vom Host genommen, erscheint also nie als Tooltip.</td></tr>
-<tr><td><code>desc</code></td><td><code>string</code></td><td>–</td><td>Beschreibung.</td></tr></table>
+<tr><td><code>desc</code></td><td><code>string</code></td><td>–</td><td>Beschreibung.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Handlungsaufforderung – mehrere Knöpfe stehen in einer zentrierten Zeile, 8px auseinander.</td></tr>
 <tr><td><code>icon</code></td><td>Formatiertes Icon.</td></tr>
 <tr><td><code>title</code></td><td>Formatierter Titel.</td></tr>
-<tr><td><code>desc</code></td><td>Formatierte Beschreibung.</td></tr></table>
+<tr><td><code>desc</code></td><td>Formatierte Beschreibung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1549,11 +1565,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-skeleton" <span class="attr">style</span>="height:13px;width:40%"&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>lines</code></td><td><code>number</code></td><td><code>1</code></td><td>Anzahl Zeilen.</td></tr>
 <tr><td><code>height</code></td><td><code>px | CSS length</code></td><td><code>13</code></td><td>Zeilenhöhe.</td></tr>
 <tr><td><code>width</code></td><td><code>CSS length</code></td><td>–</td><td>Breite für jede Zeile.</td></tr>
-<tr><td><code>widths</code></td><td><code>list</code></td><td>–</td><td>Kommagetrennte Breite je Zeile.</td></tr></table>
+<tr><td><code>widths</code></td><td><code>list</code></td><td>–</td><td>Kommagetrennte Breite je Zeile.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
@@ -1575,11 +1591,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-synced"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="synced-badge"&gt;⟳ 3 Orte&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span> <span class="attr">style</span>="font-size:14px;line-height:1.55"&gt;&lt;<span class="tag">b</span>&gt;Unsere Mission:&lt;/<span class="tag">b</span>&gt; Dem Arbeitstag echtes Gewicht nehmen – ruhig, klar, wirksam.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>badge</code></td><td><code>string</code></td><td><code>⟳ synced</code></td><td>Badge-Text.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>badge</code></td><td><code>string</code></td><td><code>⟳ synced</code></td><td>Badge-Text.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Inhalt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Inhalt.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1623,16 +1639,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tab-panel"&gt;Freie Notizen zum Projekt – Protokolle, Ideen, Entwürfe.&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Aktiver Tab-Wert (Standard: Tab mit <code>active</code>, sonst der erste).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Aktiver Tab-Wert (Standard: Tab mit <code>active</code>, sonst der erste).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td><code>nk-tab</code>-Kinder.</td></tr>
-<tr><td><code>panel</code></td><td>Panels mit <code>data-tab</code>.</td></tr></table>
+<tr><td><code>panel</code></td><td>Panels mit <code>data-tab</code>.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value }</code></td><td>Aktiver Tab gewechselt.</td></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Vom geklickten Tab.</td></tr></table>
+<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Vom geklickten Tab.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code></p>
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Leiste bleibt einzeilig; Labels kurz halten.</span></div>
@@ -1650,16 +1666,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tabs"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tab active"&gt;📝 Notizen&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tab"&gt;✅ Aufgaben&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Wert (Standard: Text).</td></tr>
 <tr><td><code>active</code></td><td><code>boolean</code></td><td>–</td><td>Aktiv.</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Geklickt / Enter.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Geklickt / Enter.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1685,18 +1701,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">div</span> <span class="attr">style</span>="max-width:300px;margin-top:12px"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-segmented wrap"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="active"&gt;Alle&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span>&gt;⚠️ Aufmerksamkeit&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span>&gt;Fehlgeschlagen&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span>&gt;Gelesen&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span>&gt;Ignoriert&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Gewählter Wert (Standard: Button mit <code>.active</code>, sonst der erste).</td></tr>
 <tr><td><code>scroll</code></td><td><code>boolean</code></td><td>–</td><td>Horizontal scrollbare Zeile, Scrollleiste versteckt.</td></tr>
 <tr><td><code>wrap</code></td><td><code>boolean</code></td><td>–</td><td>Segmente brechen in weitere Zeilen um.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>&lt;button value="…"&gt;</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>&lt;button value="…"&gt;</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Auswahl geändert.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-change</code></td><td><code>{ value, name }</code></td><td>Auswahl geändert.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Standard ist eine Zeile, die fünf Filteroptionen auf dem Telefon sprengen: <code>scroll</code> hält eine wischbare Zeile, begrenzt auf die Elternbreite (Scrollleiste versteckt), <code>wrap</code> bricht um.</span></div>
@@ -1730,14 +1746,14 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>(nk-stat) Label.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>(nk-stat) Große Zahl.</td></tr>
 <tr><td><code>delta</code></td><td><code>string</code></td><td>–</td><td>(nk-stat) Trendtext.</td></tr>
-<tr><td><code>trend</code></td><td><code>up | down</code></td><td>–</td><td>(nk-stat) Färbt das Delta.</td></tr></table>
+<tr><td><code>trend</code></td><td><code>up | down</code></td><td>–</td><td>(nk-stat) Färbt das Delta.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>(nk-stats) <code>nk-stat</code>-Kinder; (nk-stat) Slots <code>label</code>, <code>value</code>, <code>delta</code> für formatierten Inhalt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>(nk-stats) <code>nk-stat</code>-Kinder; (nk-stat) Slots <code>label</code>, <code>value</code>, <code>delta</code> für formatierten Inhalt.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1757,16 +1773,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-stats"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-stat"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="s-label"&gt;Aktive Seiten&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="s-value"&gt;128&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="s-delta up"&gt;▲ 12 diese Woche&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Label.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Wert.</td></tr>
 <tr><td><code>delta</code></td><td><code>string</code></td><td>–</td><td>Trendtext.</td></tr>
-<tr><td><code>trend</code></td><td><code>up | down</code></td><td>–</td><td>Delta-Farbe.</td></tr></table>
+<tr><td><code>trend</code></td><td><code>up | down</code></td><td>–</td><td>Delta-Farbe.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>label</code></td><td>Formatiertes Label.</td></tr>
 <tr><td><code>value</code></td><td>Formatierter Wert.</td></tr>
-<tr><td><code>delta</code></td><td>Formatiertes Delta (mit <code>class="up"</code> / <code>"down"</code>).</td></tr></table>
+<tr><td><code>delta</code></td><td>Formatiertes Delta (mit <code>class="up"</code> / <code>"down"</code>).</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1786,11 +1802,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;align-items:center;gap:12px"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-avatar-group"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:linear-gradient(135deg,#9065b0,#529cca)"&gt;MK&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:#448361"&gt;SL&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:#d9730d"&gt;TW&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar more"&gt;+2&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">span</span> <span class="attr">style</span>="font-size:12.5px;color:var(--nk-text-tertiary)"&gt;5 Personen haben Zugriff&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>more</code></td><td><code>string</code></td><td>–</td><td>Text der letzten Blase, z. B. <code>+2</code>.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>more</code></td><td><code>string</code></td><td>–</td><td>Text der letzten Blase, z. B. <code>+2</code>.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>&lt;span class="mini-avatar" style="background:…"&gt;</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>&lt;span class="mini-avatar" style="background:…"&gt;</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1810,12 +1826,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">p</span> <span class="attr">style</span>="margin:0;line-height:1.7"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-mention person"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:#448361"&gt;SL&lt;/<span class="tag">span</span>&gt;Sara Lindt&lt;/<span class="tag">span</span>&gt; · &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-mention page"&gt;📄 Onboarding&lt;/<span class="tag">span</span>&gt; · &lt;<span class="tag">span</span> <span class="attr">class</span>="nk-mention date"&gt;📅 20. Mai&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">p</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>type</code></td><td><code>person | page | date</code></td><td>–</td><td>Art der Erwähnung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>type</code></td><td><code>person | page | date</code></td><td>–</td><td>Art der Erwähnung.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>avatar</code></td><td><code>.mini-avatar</code> für Personen.</td></tr>
-<tr><td><code>(default)</code></td><td>Text.</td></tr></table>
+<tr><td><code>(default)</code></td><td>Text.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1843,16 +1859,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">button</span> <span class="attr">class</span>="nk-template-btn"&gt;🔁 Retro-Board einfügen&lt;/<span class="tag">button</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Emoji vorn.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Gemeldeter Wert (Standard: Text).</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Beschriftung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Geklickt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Geklickt.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1874,21 +1890,21 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-model-card"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="m-radio"&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="m-name"&gt;Mona Fast&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="m-desc"&gt;Schnelle Antworten, geringere Kosten.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Namenszeile. Wird einmal gelesen und vom Host genommen, erscheint also nie als Tooltip.</td></tr>
 <tr><td><code>desc</code></td><td><code>string</code></td><td>–</td><td>Beschreibung.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name des Formularfelds (FormData-Schlüssel).</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert das Control.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Gesendeter Wert.</td></tr>
-<tr><td><code>selected</code></td><td><code>boolean</code></td><td>–</td><td>Ausgewählt.</td></tr></table>
+<tr><td><code>selected</code></td><td><code>boolean</code></td><td>–</td><td>Ausgewählt.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>title</code></td><td>Formatierte Namenszeile (z. B. mit <code>nk-tag</code>).</td></tr>
-<tr><td><code>desc</code></td><td>Formatierte Beschreibung.</td></tr></table>
+<tr><td><code>desc</code></td><td>Formatierte Beschreibung.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ value, name, checked }</code></td><td>Ausgewählt.</td></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Ausgewählt.</td></tr></table>
+<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Ausgewählt.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -1906,12 +1922,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-profile-row"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="big-avatar"&gt;MK&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn secondary small"&gt;Foto ändern&lt;/<span class="tag">button</span>&gt; &lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn danger small"&gt;Entfernen&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>avatar</code></td><td>Eigener Avatar (z. B. ein Bild).</td></tr>
-<tr><td><code>(default)</code></td><td>Inhalt neben dem Avatar.</td></tr></table>
+<tr><td><code>(default)</code></td><td>Inhalt neben dem Avatar.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1931,11 +1947,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-danger-zone"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="dz-title"&gt;Gefahrenzone&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-field"&gt;&lt;<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-label"&gt;Workspace löschen&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-desc"&gt;Das Löschen des Workspace entfernt alle Seiten.&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-control"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn danger-solid small"&gt;Löschen&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
-<tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Rote Überschrift. Wird einmal gelesen und vom Host genommen, erscheint also nie als Tooltip.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Rote Überschrift. Wird einmal gelesen und vom Host genommen, erscheint also nie als Tooltip.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Felder und Buttons.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Felder und Buttons.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1967,17 +1983,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>(row) Name.</td></tr>
 <tr><td><code>mail</code></td><td><code>string</code></td><td>–</td><td>(row) Mail-Zeile.</td></tr>
 <tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>(row) Initialen (Standard: aus dem Namen).</td></tr>
 <tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>(row) Avatar-Hintergrund.</td></tr>
-<tr><td><code>last</code></td><td><code>boolean</code></td><td>–</td><td>(row) Kein unterer Rand – setzt die Liste.</td></tr></table>
+<tr><td><code>last</code></td><td><code>boolean</code></td><td>–</td><td>(row) Kein unterer Rand – setzt die Liste.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>(list) Zeilen; (row) Zusatzinhalt.</td></tr>
 <tr><td><code>role</code></td><td>(row) Ein Control rechts, z. B. <code>nk-select compact</code>.</td></tr>
-<tr><td><code>avatar</code></td><td>(row) Eigener Avatar.</td></tr></table>
+<tr><td><code>avatar</code></td><td>(row) Eigener Avatar.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -1997,17 +2013,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-member-row last"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:#448361"&gt;SL&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span>&gt;Sara Lindt&lt;<span class="tag">div</span> <span class="attr">class</span>="m-mail"&gt;sara@example.com&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name.</td></tr>
 <tr><td><code>mail</code></td><td><code>string</code></td><td>–</td><td>Mail.</td></tr>
 <tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen.</td></tr>
 <tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>Avatar-Hintergrund.</td></tr>
-<tr><td><code>last</code></td><td><code>boolean</code></td><td>–</td><td>Kein unterer Rand.</td></tr></table>
+<tr><td><code>last</code></td><td><code>boolean</code></td><td>–</td><td>Kein unterer Rand.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>role</code></td><td>Control rechts.</td></tr>
 <tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr>
-<tr><td><code>(default)</code></td><td>Zusatzinhalt.</td></tr></table>
+<tr><td><code>(default)</code></td><td>Zusatzinhalt.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -2021,7 +2037,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-modal"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
   <nk-settings-user slot=&quot;user&quot; name=&quot;Marcel Karas&quot; mail=&quot;marcel@monahilft.de&quot;></nk-settings-user>
   <nk-settings-pane name=&quot;profile&quot; group=&quot;Konto&quot; icon=&quot;👤&quot; label=&quot;Mein Profil&quot; title=&quot;Mein Profil&quot; active>
     <nk-profile-row avatar=&quot;MK&quot;><nk-btn variant=&quot;secondary&quot; small>Foto ändern</nk-btn></nk-profile-row>
@@ -2035,7 +2051,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-member-list><nk-member-row name=&quot;Sara Lindt&quot; mail=&quot;sara@example.com&quot; color=&quot;#448361&quot;></nk-member-row></nk-member-list>
   </nk-settings-pane>
 </nk-modal><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
   <nav class=&quot;nk-settings-nav&quot;>
     <div class=&quot;nk-settings-user&quot;><div class=&quot;avatar&quot;>MK</div><div class=&quot;u-text&quot;><div class=&quot;name&quot;>Marcel Karas</div><div class=&quot;mail&quot;>marcel@monahilft.de</div></div></div>
     <div class=&quot;nk-section-label&quot;>Konto</div>
@@ -2085,18 +2101,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar.</td></tr>
-<tr><td><code>pane</code></td><td><code>string</code></td><td>–</td><td>Name des aktiven Panes (Standard: Pane mit <code>active</code>, sonst das erste).</td></tr></table>
+<tr><td><code>pane</code></td><td><code>string</code></td><td>–</td><td>Name des aktiven Panes (Standard: Pane mit <code>active</code>, sonst das erste).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td><code>nk-settings-pane</code>-Kinder.</td></tr>
 <tr><td><code>user</code></td><td><code>nk-settings-user</code> oben in der Nav.</td></tr>
-<tr><td><code>nav</code></td><td>Zusätzlicher Nav-Inhalt unter den generierten Zeilen (860px-Regeln erreichen geslottete Elemente nicht).</td></tr></table>
+<tr><td><code>nav</code></td><td>Zusätzlicher Nav-Inhalt unter den generierten Zeilen (860px-Regeln erreichen geslottete Elemente nicht).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Geöffnet / geschlossen.</td></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Pane gewechselt.</td></tr></table>
+<tr><td><code>nk-select</code></td><td><code>{ value, label }</code></td><td>Pane gewechselt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>open</code> <code>pane</code> <code>panes</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>show(pane?)</code> <code>close()</code> <code>toggle()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unter 860px wird die Nav zur 60px-Icon-Leiste; der Dialog nimmt 92vw × 86vh.</span></div>
@@ -2114,16 +2130,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">section</span> <span class="attr">class</span>="nk-settings-pane active"&gt;&lt;<span class="tag">h2</span>&gt;Benachrichtigungen&lt;/<span class="tag">h2</span>&gt;&lt;<span class="tag">h3</span>&gt;E-Mail&lt;/<span class="tag">h3</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-field"&gt;&lt;<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-label"&gt;E-Mail-Benachrichtigungen&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="f-control"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-switch" <span class="attr">role</span>="switch" <span class="attr">aria-checked</span>="true"&gt;&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">section</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Kennung für <code>pane</code>.</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Nav-Beschriftung (ohne Label keine Nav-Zeile).</td></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Nav-Icon.</td></tr>
 <tr><td><code>group</code></td><td><code>string</code></td><td>–</td><td>Abschnittsbeschriftung über den Nav-Zeilen.</td></tr>
 <tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Pane-Überschrift. Wird einmal gelesen und vom Host genommen, erscheint also nie als Tooltip.</td></tr>
-<tr><td><code>active</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar (vom Modal verwaltet).</td></tr></table>
+<tr><td><code>active</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar (vom Modal verwaltet).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Felder, Überschriften, alles.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Felder, Überschriften, alles.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -2143,13 +2159,13 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="background:var(--nk-bg-sidebar);border-radius:8px;max-width:230px;padding:10px 8px"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-settings-user"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="avatar"&gt;MK&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="u-text"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="name"&gt;Marcel Karas&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="mail"&gt;marcel@monahilft.de&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Name.</td></tr>
 <tr><td><code>mail</code></td><td><code>string</code></td><td>–</td><td>Mail.</td></tr>
-<tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen (Standard: aus dem Namen).</td></tr></table>
+<tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen (Standard: aus dem Namen).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -2163,7 +2179,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-cmdk"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Suchen oder Befehl eingeben …&quot;></nk-cmdk>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Suchen oder Befehl eingeben …&quot;></nk-cmdk>
 <script>
   document.querySelector('nk-cmdk').commands = [
     { group: 'Seiten', items: [
@@ -2178,7 +2194,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     ]},
   ];
 </script><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
   <div class=&quot;nk-cmdk-input-row&quot;><span style=&quot;font-size:15px&quot;>🔍</span><input placeholder=&quot;Suchen oder Befehl eingeben …&quot;><kbd class=&quot;nk-kbd&quot;>esc</kbd></div>
   <div class=&quot;nk-cmdk-list&quot;>
     <div class=&quot;nk-cmdk-group&quot;>Seiten</div>
@@ -2223,17 +2239,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar.</td></tr>
 <tr><td><code>hotkey</code></td><td><code>string</code></td><td><code>mod+k</code></td><td>Globaler Shortcut, z. B. <code>mod+k</code>, <code>mod+shift+p</code>.</td></tr>
-<tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhalter des Eingabefelds.</td></tr></table>
+<tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhalter des Eingabefelds.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>footer</code></td><td>Ersetzt die Standard-Tastenhinweise.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>footer</code></td><td>Ersetzt die Standard-Tastenhinweise.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-command</code></td><td><code>{ id, item, query }</code></td><td>Ein Eintrag wurde gewählt; <code>preventDefault()</code> überspringt <code>item.action</code>.</td></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Geöffnet / geschlossen.</td></tr></table>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Geöffnet / geschlossen.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>commands</code> <code>open</code> <code>query</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>show()</code> <code>close()</code> <code>toggle()</code> <code>results()</code> <code>pick(index?)</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unter 860px volle Breite (96vw) und näher am oberen Rand.</span></div>
@@ -2281,11 +2297,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-menu-item</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-menu-item</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label, item }</code></td><td>Vom gewählten Eintrag.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ value, label, item }</code></td><td>Vom gewählten Eintrag.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>focusFirst()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2303,20 +2319,20 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-pop nk-menu"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-menu-item"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="m-icon"&gt;✏️&lt;/<span class="tag">span</span>&gt;Umbenennen&lt;<span class="tag">span</span> <span class="attr">class</span>="m-shortcut"&gt;⌘E&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>icon</code></td><td><code>string</code></td><td>–</td><td>Icon vorn.</td></tr>
 <tr><td><code>shortcut</code></td><td><code>string</code></td><td>–</td><td>Shortcut-Text hinten.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Gemeldeter Wert (Standard: Text).</td></tr>
 <tr><td><code>danger</code></td><td><code>boolean</code></td><td>–</td><td>Roter Text.</td></tr>
 <tr><td><code>type</code></td><td><code>item | separator | label</code></td><td><code>item</code></td><td>Zeilenart.</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Nicht wählbar.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Beschriftung.</td></tr>
-<tr><td><code>icon</code></td><td>Icon-Knoten.</td></tr></table>
+<tr><td><code>icon</code></td><td>Icon-Knoten.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ value, label, item }</code></td><td>Geklickt / Enter.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ value, label, item }</code></td><td>Geklickt / Enter.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2346,17 +2362,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar.</td></tr>
 <tr><td><code>placement</code></td><td><code>bottom-start | bottom-end | top-start | top-end</code></td><td><code>bottom-start</code></td><td>Wo die Fläche aufgeht.</td></tr>
-<tr><td><code>bare</code></td><td><code>boolean</code></td><td>–</td><td>Kein <code>.nk-pop</code>-Wrapper.</td></tr></table>
+<tr><td><code>bare</code></td><td><code>boolean</code></td><td>–</td><td>Kein <code>.nk-pop</code>-Wrapper.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>trigger</code></td><td>Der Button.</td></tr>
-<tr><td><code>(default)</code></td><td>Der schwebende Inhalt.</td></tr></table>
+<tr><td><code>(default)</code></td><td>Der schwebende Inhalt.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Geöffnet / geschlossen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Geöffnet / geschlossen.</td></tr></table></div>
   
   <p class="doc-meta"><b>Methoden:</b> <code>show()</code> <code>close()</code> <code>toggle()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Relativ zum Auslöser positioniert; Viewport-Rand im Blick behalten.</span></div>
@@ -2374,14 +2390,14 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-pop"&gt;&lt;<span class="tag">input</span> <span class="attr">class</span>="nk-emoji-search" <span class="attr">placeholder</span>="Suche…"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-emoji-grid"&gt;&lt;<span class="tag">span</span>&gt;😀&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😊&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😂&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🙂&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😉&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😍&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🤔&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😎&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🥳&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😴&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🤯&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😅&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🙃&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😇&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🤗&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;😢&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-emoji-cats"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="active"&gt;😀&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;👋&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🌿&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;☕&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🎯&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;🚀&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;💡&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;✅&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Such-Platzhalter.</td></tr>
-<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Zuletzt gewähltes Emoji.</td></tr></table>
+<tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Zuletzt gewähltes Emoji.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-select</code></td><td><code>{ emoji, value }</code></td><td>Emoji gewählt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ emoji, value }</code></td><td>Emoji gewählt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>emojis</code> <code>value</code></p>
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>296px breit; passt auf jedes Telefon.</span></div>
@@ -2393,22 +2409,22 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-toast"><button class="active" data-mode="element">Nachher – ein Element</button><button data-mode="class">Vorher – .nk-*-Klassen</button></div>
     <span class="site-spacer"></span><span>Welle 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Einstellungen gespeichert</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Einstellungen gespeichert</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Einstellungen gespeichert</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;de&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.3/notionkit.min.css&quot;><script src=&quot;../dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Einstellungen gespeichert</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
     <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-toast</span> open <span class="attr">duration</span>="0"&gt;Einstellungen gespeichert&lt;/<span class="tag">nk-toast</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-toast show"&gt;✓ &lt;<span class="tag">span</span>&gt;Einstellungen gespeichert&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Sichtbar.</td></tr>
 <tr><td><code>duration</code></td><td><code>ms</code></td><td><code>2200</code></td><td>Ausblend-Verzögerung (0 = bleibt).</td></tr>
-<tr><td><code>icon</code></td><td><code>string</code></td><td><code>✓</code></td><td>Zeichen vorn.</td></tr></table>
+<tr><td><code>icon</code></td><td><code>string</code></td><td><code>✓</code></td><td>Zeichen vorn.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Statischer Inhalt (wenn <code>show()</code> keine Nachricht bekommt).</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Statischer Inhalt (wenn <code>show()</code> keine Nachricht bekommt).</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Gezeigt / verborgen.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Gezeigt / verborgen.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>open</code> <code>message</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>show(message?, { duration })</code> <code>close()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2488,17 +2504,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>view</code></td><td><code>string</code></td><td>–</td><td>Name der aktiven View.</td></tr>
-<tr><td><code>add-view</code></td><td><code>boolean</code></td><td>–</td><td>Ein ＋-Tab zeigen (feuert <code>nk-action</code>).</td></tr></table>
+<tr><td><code>add-view</code></td><td><code>boolean</code></td><td>–</td><td>Ein ＋-Tab zeigen (feuert <code>nk-action</code>).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>View-Elemente.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>View-Elemente.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-view-change</code></td><td><code>{ view }</code></td><td>Tab gewechselt.</td></tr>
 <tr><td><code>nk-action</code></td><td><code>{ action: 'add-view' }</code></td><td>＋ geklickt.</td></tr>
-<tr><td><code>nk-select / nk-change / nk-action</code></td><td><code>(from the views)</code></td><td>Bubbeln aus der aktiven View hoch.</td></tr></table>
+<tr><td><code>nk-select / nk-change / nk-action</code></td><td><code>(from the views)</code></td><td>Bubbeln aus der aktiven View hoch.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>columns</code> <code>rows</code> <code>view</code> <code>views</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>refresh()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Tabellen und Boards scrollen horizontal; nichts bricht.</span></div>
@@ -2566,7 +2582,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">table</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-new-row"&gt;＋ New page&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>View-Name (Tab-Kennung).</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Tab-Beschriftung.</td></tr>
 <tr><td><code>badge</code></td><td><code>string</code></td><td>–</td><td>Tab-Badge.</td></tr>
@@ -2576,14 +2592,14 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 <tr><td><code>sortable</code></td><td><code>boolean</code></td><td>–</td><td>Kopfklick sortiert lokal.</td></tr>
 <tr><td><code>sort-key</code></td><td><code>string</code></td><td>–</td><td>Sortierte Spalte.</td></tr>
 <tr><td><code>sort-dir</code></td><td><code>asc | desc</code></td><td>–</td><td>Richtung.</td></tr>
-<tr><td><code>wrap</code></td><td><code>boolean</code></td><td>–</td><td>Zellentext darf umbrechen (Notions „Spalte umbrechen“).</td></tr></table>
+<tr><td><code>wrap</code></td><td><code>boolean</code></td><td>–</td><td>Zellentext darf umbrechen (Notions „Spalte umbrechen“).</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-select</code></td><td><code>{ row, id }</code></td><td>Zeile geklickt.</td></tr>
 <tr><td><code>nk-change</code></td><td><code>{ row, key, value }</code></td><td>Checkbox-Zelle umgeschaltet (Zeile direkt aktualisiert).</td></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'sort' | 'new-row', key?, value? }</code></td><td>Kopf oder Hinzufügen-Zeile geklickt.</td></tr></table>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'sort' | 'new-row', key?, value? }</code></td><td>Kopf oder Hinzufügen-Zeile geklickt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>columns</code> <code>rows</code> <code>data</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>refresh()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Scrollt horizontal in <code>.nk-table-wrap</code>.</span></div>
@@ -2643,20 +2659,20 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>View-Name.</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Tab-Beschriftung.</td></tr>
 <tr><td><code>group-by</code></td><td><code>string</code></td><td>–</td><td>Schlüssel der Select-Spalte.</td></tr>
 <tr><td><code>title-key</code></td><td><code>string</code></td><td>–</td><td>Titelspalte der Karte.</td></tr>
 <tr><td><code>meta-keys</code></td><td><code>list</code></td><td>–</td><td>Kommagetrennte Meta-Spalten.</td></tr>
-<tr><td><code>new-row</code></td><td><code>boolean</code></td><td>–</td><td>＋ je Spalte zeigen.</td></tr></table>
+<tr><td><code>new-row</code></td><td><code>boolean</code></td><td>–</td><td>＋ je Spalte zeigen.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-select</code></td><td><code>{ row, id }</code></td><td>Karte geklickt.</td></tr>
 <tr><td><code>nk-change</code></td><td><code>{ row, key, value }</code></td><td>Karte in andere Spalte gezogen.</td></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'new-row', value }</code></td><td>＋ geklickt (value = Spalte).</td></tr></table>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'new-row', value }</code></td><td>＋ geklickt (value = Spalte).</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>columns</code> <code>rows</code> <code>data</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>move(id, value)</code> <code>refresh()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Spalten scrollen horizontal.</span></div>
@@ -2676,18 +2692,18 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn secondary small"&gt;⚲ Filter&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn secondary small"&gt;↕ Sort&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">span</span> <span class="attr">style</span>="display:inline-flex;gap:4px"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag green" <span class="attr">style</span>="cursor:pointer"&gt;Status: Erledigt ×&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">input</span> <span class="attr">class</span>="nk-input" <span class="attr">type</span>="search" <span class="attr">placeholder</span>="Zeilen durchsuchen …" <span class="attr">style</span>="margin-left:auto"&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>search</code></td><td><code>boolean</code></td><td>–</td><td>Suchfeld zeigen.</td></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Such-Platzhalter.</td></tr>
 <tr><td><code>no-filter</code></td><td><code>boolean</code></td><td>–</td><td>Filter-Button ausblenden.</td></tr>
-<tr><td><code>no-sort</code></td><td><code>boolean</code></td><td>–</td><td>Sortier-Button ausblenden.</td></tr></table>
+<tr><td><code>no-sort</code></td><td><code>boolean</code></td><td>–</td><td>Sortier-Button ausblenden.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td>Zusätzliche Controls zwischen Chips und Suche.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td>Zusätzliche Controls zwischen Chips und Suche.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
 <tr><td><code>nk-change</code></td><td><code>{ filters, search }</code></td><td>Chip entfernt oder gesucht.</td></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action: 'filter' | 'sort' }</code></td><td>Button geklickt.</td></tr></table>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'filter' | 'sort' }</code></td><td>Button geklickt.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>filters</code> <code>value</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>apply(rows)</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Bricht auf zwei Zeilen um.</span></div>
@@ -2719,17 +2735,17 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhalter.</td></tr>
 <tr><td><code>send-label</code></td><td><code>string</code></td><td><code>Send</code></td><td>Button-Text.</td></tr>
 <tr><td><code>no-input</code></td><td><code>boolean</code></td><td>–</td><td>Nur lesen.</td></tr>
-<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Eingabe deaktiviert.</td></tr></table>
+<tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Eingabe deaktiviert.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-comment</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-comment</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-submit</code></td><td><code>{ text }</code></td><td>Neuer Kommentar; <code>preventDefault()</code> behält den Text.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-submit</code></td><td><code>{ text }</code></td><td>Neuer Kommentar; <code>preventDefault()</code> behält den Text.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>submit()</code> <code>focus()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2747,16 +2763,16 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-comments"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-comment"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar" <span class="attr">style</span>="background:#448361"&gt;SL&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="c-head"&gt;&lt;<span class="tag">b</span>&gt;Sara Lindt&lt;/<span class="tag">b</span>&gt; · 1 hr ago&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="c-body"&gt;Die Board-Ansicht fühlt sich schon sehr nah am Original an. 👍&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>author</code></td><td><code>string</code></td><td>–</td><td>Name.</td></tr>
 <tr><td><code>time</code></td><td><code>string</code></td><td>–</td><td>Relative Zeit.</td></tr>
 <tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen/Emoji (Standard: aus dem Autor).</td></tr>
-<tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>Avatar-Hintergrund.</td></tr></table>
+<tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>Avatar-Hintergrund.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Text.</td></tr>
 <tr><td><code>head</code></td><td>Hinter dem Namen (Tag, Badge).</td></tr>
-<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table>
+<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <p class="doc-meta">keine</p>
   
@@ -2798,11 +2814,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-h4">Attribute</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
-<tr><td><code>(default)</code></td><td><code>nk-ai-msg</code>-Kinder.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+<tr><td><code>(default)</code></td><td><code>nk-ai-msg</code>-Kinder.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action }</code></td><td>Action-Button einer Nachricht.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-action</code></td><td><code>{ action }</code></td><td>Action-Button einer Nachricht.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2820,20 +2836,20 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-ai-thread"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-ai-msg"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="mini-avatar"&gt;✨&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="a-body"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="a-name"&gt;Mona &lt;<span class="tag">span</span>&gt;· KI&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;Zwei Aufgaben sind offen: die &lt;<span class="tag">b</span>&gt;Tabellenansicht&lt;/<span class="tag">b</span>&gt; steht bei 65 % (fällig 20. Mai), das &lt;<span class="tag">b</span>&gt;Board mit Drag-and-Drop&lt;/<span class="tag">b</span>&gt; ist geplant.&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-ai-actions"&gt;&lt;<span class="tag">button</span>&gt;📋 Kopieren&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>role</code></td><td><code>user | assistant</code></td><td><code>assistant</code></td><td>Wer spricht.</td></tr>
 <tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>Namenszeile.</td></tr>
 <tr><td><code>badge</code></td><td><code>string</code></td><td>–</td><td>Graues Suffix.</td></tr>
 <tr><td><code>avatar</code></td><td><code>string</code></td><td>–</td><td>Initialen/Emoji.</td></tr>
-<tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>Avatar-Hintergrund.</td></tr></table>
+<tr><td><code>color</code></td><td><code>CSS color</code></td><td>–</td><td>Avatar-Hintergrund.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
-  <table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Beschreibung</th></tr>
 <tr><td><code>(default)</code></td><td>Nachrichtentext (HTML erlaubt).</td></tr>
 <tr><td><code>actions</code></td><td><code>&lt;button value&gt;</code>-Kinder.</td></tr>
-<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table>
+<tr><td><code>avatar</code></td><td>Eigener Avatar.</td></tr></table></div>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-action</code></td><td><code>{ action, value }</code></td><td>Action-Button geklickt.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-action</code></td><td><code>{ action, value }</code></td><td>Action-Button geklickt.</td></tr></table></div>
   
   
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
@@ -2851,22 +2867,22 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-ai-input-row"&gt;&lt;<span class="tag">span</span> <span class="attr">style</span>="font-size:14px"&gt;✨&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">input</span> <span class="attr">placeholder</span>="Frag Mona etwas …"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-ai-send"&gt;↑&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attribute</p>
-  <table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribut</th><th>Typ</th><th>Standard</th><th>Beschreibung</th></tr>
 <tr><td><code>placeholder</code></td><td><code>string</code></td><td>–</td><td>Platzhalter.</td></tr>
 <tr><td><code>value</code></td><td><code>string</code></td><td>–</td><td>Vorbelegter Text.</td></tr>
 <tr><td><code>disabled</code></td><td><code>boolean</code></td><td>–</td><td>Deaktiviert, während der Assistent antwortet.</td></tr>
-<tr><td><code>icon</code></td><td><code>string</code></td><td><code>✨</code></td><td>Zeichen vorn.</td></tr></table>
+<tr><td><code>icon</code></td><td><code>string</code></td><td><code>✨</code></td><td>Zeichen vorn.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <p class="doc-meta">keine</p>
   <p class="doc-h4">Events</p>
-  <table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
-<tr><td><code>nk-submit</code></td><td><code>{ text }</code></td><td>Prompt gesendet.</td></tr></table>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Beschreibung</th></tr>
+<tr><td><code>nk-submit</code></td><td><code>{ text }</code></td><td>Prompt gesendet.</td></tr></table></div>
   <p class="doc-meta"><b>Properties:</b> <code>value</code></p>
   <p class="doc-meta"><b>Methoden:</b> <code>submit()</code> <code>focus()</code></p>
   <div class="doc-meta"><b>Auf kleinem Schirm:</b><span>Unverändert.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Ersetzt</b></span><code>.nk-ai-input-row</code><code>.nk-ai-send</code></div>
 </article></section>
-  <div class="site-footer">NotionKit Elements v1.5.2 · wrapping NotionKit CSS v1.5.2 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.5.3 · wrapping NotionKit CSS v1.5.3 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

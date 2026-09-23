@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-section-label addable>Favourites</nk-section-label>
 // → <div class="nk-section-label">Favourites <span class="plus">＋</span></div>

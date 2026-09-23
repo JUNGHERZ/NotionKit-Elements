@@ -4,6 +4,32 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.3] – 2026-09-23
+
+Built against NotionKit CSS 1.5.3 (peer `>= 1.5.3`), the phone release.
+
+### Fixed
+- Through NotionKit 1.5.3: on phones `<nk-topbar>` keeps to one row – only
+  the last crumb of `<nk-breadcrumb>` stays, ending in an ellipsis, and
+  passive text steps aside. `<nk-field>` rows wrap, so the settings modal
+  keeps to the screen – five of the six panes in the demo ran up to 66px
+  past a 390px screen. `<nk-member-row>` ends a long address in an
+  ellipsis instead of pushing the role select out.
+- Demo and docs use `<span class="nk-topbar-meta">` for passive text in the
+  topbar, new in NotionKit 1.5.3, instead of an inline-styled
+  `nk-topbar-btn`. The topbar is documented as 44px, not 45px.
+
+### Added
+- `test/phone.spec.mjs`: at 390px no page of the site scrolls sideways,
+  every settings pane keeps to the screen, and the topbar keeps to one row.
+
+### Site
+- Navigation on phones: the links move into a second row that scrolls
+  sideways. The flat row made every page 748px wide on a 390px phone.
+  Anchors in the docs land below the taller bar.
+- Docs: attribute and event tables scroll inside their own box; the
+  database entry's table made the docs page 437px wide on a phone.
+
 ## [1.5.2] – 2026-09-23
 
 Built against NotionKit CSS 1.5.2 (peer `>= 1.5.2`). Two fixes GlassKit
@@ -281,6 +307,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.5.3]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.3
 [1.5.2]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.2
 [1.5.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.1
 [1.5.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.0

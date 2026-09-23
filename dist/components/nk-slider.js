@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-AWFyTskN.js';
+import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-slider name="size" min="12" max="18" value="14" show-value></nk-slider>
 // → <input type="range" class="nk-slider"> <div class="nk-slider-value">14</div>

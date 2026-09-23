@@ -533,23 +533,23 @@ export const CATALOG = [
 </div>`,
 },
 {
-  tag: 'nk-topbar', group: 'shell', classes: ['nk-topbar', 'nk-topbar-actions', 'nk-topbar-btn', 'nk-share-btn'], wide: true,
+  tag: 'nk-topbar', group: 'shell', classes: ['nk-topbar', 'nk-topbar-actions', 'nk-topbar-btn', 'nk-topbar-meta', 'nk-share-btn'], wide: true,
   title: t('Top bar', 'Topbar'),
-  desc: t('The 45px bar above the page: breadcrumb in the default slot, buttons in the <code>actions</code> slot (right-aligned). Use <code>nk-btn variant="topbar"</code> / <code>"share"</code> and <code>nk-theme-toggle</code> there.', 'Die 45px-Leiste über der Seite: Breadcrumb im Default-Slot, Buttons im <code>actions</code>-Slot (rechtsbündig). Dort <code>nk-btn variant="topbar"</code> / <code>"share"</code> und <code>nk-theme-toggle</code> verwenden.'),
-  mobile: t('Unchanged; long breadcrumbs truncate.', 'Unverändert; lange Breadcrumbs werden gekürzt.'),
+  desc: t('The 44px bar above the page: breadcrumb in the default slot, buttons in the <code>actions</code> slot (right-aligned). Use <code>nk-btn variant="topbar"</code> / <code>"share"</code> and <code>nk-theme-toggle</code> there, and <code>&lt;span class="nk-topbar-meta"&gt;</code> for passive text such as “Edited 2 min ago”.', 'Die 44px-Leiste über der Seite: Breadcrumb im Default-Slot, Buttons im <code>actions</code>-Slot (rechtsbündig). Dort <code>nk-btn variant="topbar"</code> / <code>"share"</code> und <code>nk-theme-toggle</code> verwenden, für reinen Text wie „Bearbeitet vor 2 Min.“ <code>&lt;span class="nk-topbar-meta"&gt;</code>.'),
+  mobile: t('Below 860px only the last crumb stays and ends in an ellipsis, <code>nk-topbar-meta</code> hides, and the actions keep to one line – as in Notion’s mobile app.', 'Unter 860px bleibt nur der letzte Crumb und endet mit Auslassungspunkten, <code>nk-topbar-meta</code> wird ausgeblendet, die Aktionen bleiben einzeilig – wie in Notions Mobil-App.'),
   attrs: [],
   slots: [{ name: '(default)', desc: t('Breadcrumb / title.', 'Breadcrumb / Titel.') }, { name: 'actions', desc: t('Buttons on the right.', 'Buttons rechts.') }],
   events: [],
   example: W => `<div style="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"><nk-topbar>
   <nk-breadcrumb><span>📊 ${W.projectOverview}</span><span>🚀 ${W.mvp}</span></nk-breadcrumb>
-  <span slot="actions" class="nk-topbar-btn" style="color:var(--nk-text-tertiary);font-size:12.5px">${W.lastEdited}</span>
+  <span slot="actions" class="nk-topbar-meta">${W.lastEdited}</span>
   <nk-btn slot="actions" variant="share">${W.share}</nk-btn>
   <nk-btn slot="actions" variant="topbar">⭐</nk-btn>
   <nk-theme-toggle slot="actions"></nk-theme-toggle>
 </nk-topbar></div>`,
   classMarkup: W => `<div style="border:1px solid var(--nk-border);border-radius:8px;display:flex;flex-direction:column"><div class="nk-topbar">
   <nav class="nk-breadcrumb"><span class="crumb">📊 ${W.projectOverview}</span><span class="sep">/</span><span class="crumb current">🚀 ${W.mvp}</span></nav>
-  <div class="nk-topbar-actions"><span class="nk-topbar-btn" style="color:var(--nk-text-tertiary);font-size:12.5px">${W.lastEdited}</span><button class="nk-topbar-btn nk-share-btn">${W.share}</button><button class="nk-topbar-btn">⭐</button><button class="nk-topbar-btn nk-theme-toggle">🌙</button></div>
+  <div class="nk-topbar-actions"><span class="nk-topbar-meta">${W.lastEdited}</span><button class="nk-topbar-btn nk-share-btn">${W.share}</button><button class="nk-topbar-btn">⭐</button><button class="nk-topbar-btn nk-theme-toggle">🌙</button></div>
 </div></div>`,
 },
 {

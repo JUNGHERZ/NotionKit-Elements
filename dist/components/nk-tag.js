@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-tag color="blue">Text</nk-tag>  —  modifier class .blue becomes color="blue".
 // Notion's nine select colours; without `color` the stylesheet draws the grey tag.

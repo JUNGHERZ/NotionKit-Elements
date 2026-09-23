@@ -1,4 +1,4 @@
-import { a as NkFormElement } from './shared/base-AWFyTskN.js';
+import { a as NkFormElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-todo name="task" value="1" checked>Write the docs</nk-todo>
 // → <label class="nk-todo"><input type="checkbox"><span>Write the docs</span></label>

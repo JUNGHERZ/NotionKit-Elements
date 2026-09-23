@@ -20,8 +20,9 @@ const code = (src) => `<pre class="doc-code">${highlightHtml(src)}</pre>`;
 
 function table(t, rows, cols) {
   if (!rows.length) return `<p class="doc-meta">${t.none}</p>`;
-  return `<table class="doc-table"><tr>${cols.map(c => `<th>${c[0]}</th>`).join('')}</tr>
-${rows.map(r => `<tr>${cols.map(c => `<td>${c[1](r)}</td>`).join('')}</tr>`).join('\n')}</table>`;
+  // The wrapper scrolls a table that is wider than a phone; the page never does.
+  return `<div class="doc-table-wrap"><table class="doc-table"><tr>${cols.map(c => `<th>${c[0]}</th>`).join('')}</tr>
+${rows.map(r => `<tr>${cols.map(c => `<td>${c[1](r)}</td>`).join('')}</tr>`).join('\n')}</table></div>`;
 }
 
 function entryDoc(t, W, e) {

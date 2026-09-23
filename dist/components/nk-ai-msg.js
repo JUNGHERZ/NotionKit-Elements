@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-ai-msg role="user" name="You" avatar="MK">Summarise the open tasks.</nk-ai-msg>
 // <nk-ai-msg role="assistant" name="Mona" badge="· AI" avatar="✨">

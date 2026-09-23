@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-danger-zone title="Danger zone">…</nk-danger-zone>
 // → <div class="nk-danger-zone"><div class="dz-title">Danger zone</div>…</div>

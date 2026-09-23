@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-settings-pane name="profile" label="My profile" icon="👤" group="Account" title="My profile" active>…</nk-settings-pane>
 // `title` is the heading, never a tooltip – see NkElement.takeTitle().

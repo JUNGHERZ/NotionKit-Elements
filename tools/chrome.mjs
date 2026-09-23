@@ -20,6 +20,19 @@ body { margin: 0; }
 .site-nav a:hover { background: var(--nk-bg-hover); color: var(--nk-text); }
 .site-nav a.current { color: var(--nk-text); font-weight: 500; }
 .site-nav .site-spacer { flex: 1; }
+.site-nav-links { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+/* Phones: the links move into a second row that scrolls sideways; brand,
+   language and switches keep the first. The flat row used to make every
+   page 748px wide on a 390px phone. */
+@media (max-width: 860px) {
+  .site-nav { flex-wrap: wrap; height: auto; padding-top: 6px; row-gap: 2px; }
+  .site-nav-links { order: 3; flex: 1 0 100%; margin: 0 -16px; padding: 0 16px 6px; overflow-x: auto; scrollbar-width: none; }
+  .site-nav-links::-webkit-scrollbar { display: none; }
+  .site-nav-links a { flex-shrink: 0; }
+  .site-nav-links .site-spacer { display: none; }
+  .site-nav-links + a { margin-left: auto; }
+  .doc-entry { scroll-margin-top: 92px; }
+}
 .site-layout { display: flex; min-height: calc(100vh - 45px); }
 .site-toc { width: 250px; flex-shrink: 0; background: var(--nk-bg-sidebar); border-right: 1px solid var(--nk-border); padding: 12px 8px 40px; position: sticky; top: 45px; height: calc(100vh - 45px); overflow-y: auto; font-size: 13.5px; }
 .site-toc a { display: block; color: var(--nk-text-secondary); text-decoration: none; padding: 3px 10px; border-radius: var(--nk-radius); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -49,7 +62,8 @@ body { margin: 0; }
 .doc-code { margin: 0; padding: 12px 14px; font-family: var(--nk-font-mono); font-size: 12.5px; line-height: 1.55; white-space: pre; overflow-x: auto; background: var(--nk-bg-code); border-top: 1px solid var(--nk-border); color: var(--nk-text); }
 .doc-code[hidden] { display: none; }
 .doc-code .tag { color: var(--nk-accent); } .doc-code .attr { color: var(--nk-tag-orange-text); }
-.doc-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 14px; }
+.doc-table-wrap { overflow-x: auto; margin: 8px 0 14px; }
+.doc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .doc-table th { text-align: left; font-weight: 500; color: var(--nk-text-tertiary); font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--nk-border); }
 .doc-table td { padding: 6px 8px; border-bottom: 1px solid var(--nk-border); vertical-align: top; line-height: 1.45; }
 .doc-table td:first-child code { white-space: nowrap; }
@@ -127,13 +141,15 @@ export function nav(t, current) {
   const link = (href, label, key) => `<a href="${href}"${current === key ? ' class="current"' : ''}>${label}</a>`;
   return `<nav class="site-nav">
   <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v${pkg.version}</span></a>
-  ${link('docs.html', t.navDocs, 'docs')}
-  ${link('showcase.html', t.navShowcase, 'showcase')}
-  ${link('app.html', t.navApp, 'app')}
-  <span class="site-spacer"></span>
-  <a href="https://notionkit.jungherz.com">${t.navFoundation}</a>
-  <a href="https://notionkit-web.jungherz.com">${t.navWeb}</a>
-  <a href="https://github.com/JUNGHERZ/NotionKit-Elements">${t.navGitHub}</a>
+  <div class="site-nav-links">
+    ${link('docs.html', t.navDocs, 'docs')}
+    ${link('showcase.html', t.navShowcase, 'showcase')}
+    ${link('app.html', t.navApp, 'app')}
+    <span class="site-spacer"></span>
+    <a href="https://notionkit.jungherz.com">${t.navFoundation}</a>
+    <a href="https://notionkit-web.jungherz.com">${t.navWeb}</a>
+    <a href="https://github.com/JUNGHERZ/NotionKit-Elements">${t.navGitHub}</a>
+  </div>
   <a href="${t.other.href}${current}.html">${t.other.label}</a>
   <button class="nk-topbar-btn nk-share-btn" id="brandToggle" aria-pressed="false" title="${t.brandToggle}">🎨</button>
   <button class="nk-topbar-btn nk-theme-toggle" id="themeToggle" title="${t.themeToggle}">🌙</button>

@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // <nk-avatar-group more="+2">
 //   <span class="mini-avatar" style="background:#448361">SL</span>…

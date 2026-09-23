@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-AWFyTskN.js';
+import { N as NkElement } from './shared/base-C3eJwHKA.js';
 
 // Minimal HTML highlighter emitting the .tag / .attr hooks .nk-code styles.
 // Mirrors tools/highlight.mjs in the NotionKit foundation – no third-party
