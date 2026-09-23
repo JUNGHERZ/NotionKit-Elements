@@ -236,6 +236,25 @@ export class NkElement extends HTMLElement {
 
   // ── Utilities ──
 
+  /**
+   * For elements whose heading arrives as `title` – nk-settings-pane,
+   * nk-danger-zone, nk-empty, nk-model-card. `title` is also the global HTML
+   * attribute, and a title on the host shows as a browser tooltip over the
+   * whole element. So the value is read into this._titleText and the
+   * attribute is taken off the host; a later setAttribute('title') arrives
+   * through attributeChangedCallback and is taken the same way. The removal
+   * fires the callback with null, which is ignored – only '' clears the
+   * heading. The element's own `title` accessor answers from the stored
+   * value, so a framework that binds `title` as a property never puts an
+   * attribute on the host at all. Returns whether a value was taken.
+   */
+  takeTitle(value = this.getAttribute('title')) {
+    if (value === null) return false;
+    this._titleText = value;
+    this.removeAttribute('title');
+    return true;
+  }
+
   getBoolAttr(name) {
     return this.hasAttribute(name);
   }

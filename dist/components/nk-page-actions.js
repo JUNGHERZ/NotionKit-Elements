@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-page-actions><span>👤 Ada</span><span>📅 12 May</span><span>🏷️ <nk-tag color="purple">Design</nk-tag></span></nk-page-actions>
 // → <div class="nk-page-meta">…</div>  – the meta row under the title

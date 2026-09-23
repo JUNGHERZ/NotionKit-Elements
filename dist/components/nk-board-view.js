@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-CtXQpUjQ.js';
 
 // <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>

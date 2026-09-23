@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.1/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -192,7 +192,7 @@
 
       <div class="nk-g-item">
         <h4>Leerzustand</h4>
-        <nk-empty icon="🗂️" title="Noch keine Einträge" desc="Lege den ersten Eintrag an oder importiere Daten."><nk-btn variant="primary" small id="emptyNew">＋ Neuer Eintrag</nk-btn></nk-empty>
+        <nk-empty icon="🗂️" title="Noch keine Einträge" desc="Lege den ersten Eintrag an oder importiere Daten."><nk-btn variant="primary" small id="emptyNew">＋ Neuer Eintrag</nk-btn><nk-btn variant="secondary" small id="emptyImport">Importieren</nk-btn></nk-empty>
       </div>
 
       <div class="nk-g-item">
@@ -292,7 +292,7 @@
     <h3>Per E-Mail</h3>
     <nk-check checked>Erwähnungen und Kommentare</nk-check>
     <nk-check checked>Wöchentliche Zusammenfassung</nk-check>
-    <nk-check>Produktneuigkeiten</nk-check>
+    <nk-check>Produktneuheiten und Einladungen zu Beta-Programmen – höchstens einmal im Monat, jederzeit mit einem Klick abbestellbar</nk-check>
     <h3>Push</h3>
     <nk-field label="Push-Benachrichtigungen" desc="Direkt im Browser, wenn sich auf geteilten Seiten etwas tut."><nk-switch checked></nk-switch></nk-field>
     <nk-field label="Nur Erwähnungen" desc="Alles andere landet leise im Eingang."><nk-switch></nk-switch></nk-field>
@@ -463,6 +463,7 @@
   document.querySelectorAll('nk-template-btn').forEach(b => b.addEventListener('nk-select', e => toast.show(`Vorlage „${e.detail.value}“ eingefügt`)));
   range.addEventListener('nk-change', e => toast.show(`Zeitraum: ${e.detail.value}`));
   emptyNew.addEventListener('click', () => toast.show('Neuer Eintrag'));
+  emptyImport.addEventListener('click', () => toast.show('Import gestartet'));
   comments.addEventListener('nk-submit', e => {
     const c = document.createElement('nk-comment');
     c.setAttribute('author', 'Marcel Karas'); c.setAttribute('time', 'gerade eben'); c.setAttribute('color', '#9065b0');

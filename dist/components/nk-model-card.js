@@ -1,9 +1,10 @@
-import { a as NkFormElement } from './shared/base-BPIvRI6K.js';
+import { a as NkFormElement } from './shared/base-AWFyTskN.js';
 
 // <nk-model-card name="model" value="gpt" title="Mona Pro" desc="Best for long documents" selected></nk-model-card>
 // → <div class="nk-model-card selected"><div class="m-radio"></div><div><div class="m-name">…</div><div class="m-desc">…</div></div></div>
 // Cards with the same `name` in the same tree behave like radios and submit
-// the selected value with the form.
+// the selected value with the form. `title` is the card's name, never a
+// tooltip – see NkElement.takeTitle().
 class NkModelCard extends NkFormElement {
   static get observedAttributes() { return ['name', 'value', 'title', 'desc', 'selected', 'disabled']; }
 
@@ -21,6 +22,7 @@ class NkModelCard extends NkFormElement {
     this._card.appendChild(text);
     this._wrapper.appendChild(this._card);
     this._defaultSelected = this.getBoolAttr('selected');
+    this.takeTitle();
     this._sync();
     if (this.getBoolAttr('selected')) this._unselectPeers();
   }
@@ -30,7 +32,7 @@ class NkModelCard extends NkFormElement {
     this._card.classList.toggle('selected', on);
     this._card.setAttribute('aria-checked', on ? 'true' : 'false');
     this._card.setAttribute('aria-disabled', this.getBoolAttr('disabled') ? 'true' : 'false');
-    this._name.textContent = this.getAttribute('title') || '';
+    this._name.textContent = this._titleText || '';
     const desc = this.getAttribute('desc');
     this._desc.textContent = desc || '';
     this._desc.style.display = desc ? '' : 'none';
@@ -64,11 +66,12 @@ class NkModelCard extends NkFormElement {
     if (this.getBoolAttr('disabled') || this.getBoolAttr('selected')) return;
     this.setBoolAttr('selected', true);
     this.emit('nk-change', { value: this.value, name: this.name, checked: true });
-    this.emit('nk-select', { value: this.value, label: this.getAttribute('title') });
+    this.emit('nk-select', { value: this.value, label: this.title });
     this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
-  onAttributeChanged(name) {
+  onAttributeChanged(name, _old, value) {
+    if (name === 'title' && !this.takeTitle(value)) return;
     this._sync();
     if (name === 'selected' && this.getBoolAttr('selected')) this._unselectPeers();
   }
@@ -76,6 +79,8 @@ class NkModelCard extends NkFormElement {
   resetValue() { this.setBoolAttr('selected', this._defaultSelected); }
   focus(o) { this._card?.focus(o); }
 
+  get title() { return this._titleText ?? ''; }
+  set title(v) { this._titleText = v == null ? '' : String(v); if (this._initialized) this._sync(); }
   get selected() { return this.getBoolAttr('selected'); }
   set selected(v) { this.setBoolAttr('selected', v); }
   get value() { return this.getAttribute('value') || 'on'; }

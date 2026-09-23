@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-divider></nk-divider>  →  <hr class="nk-divider">
 class NkDivider extends NkElement {

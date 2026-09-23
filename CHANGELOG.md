@@ -4,6 +4,48 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.2] – 2026-09-23
+
+Built against NotionKit CSS 1.5.2 (peer `>= 1.5.2`). Two fixes GlassKit
+Elements had made before, plus the foundation's five fixes by rebuild.
+
+### Fixed
+- **`title` showed as a browser tooltip.** `<nk-settings-pane>`,
+  `<nk-danger-zone>`, `<nk-empty>` and `<nk-model-card>` take their
+  heading from `title` – which is also the global HTML attribute, so
+  hovering a settings pane floated its heading over the whole pane, and the
+  model cards and the danger zone did the same. The elements now read the
+  attribute and take it off the host (`NkElement.takeTitle()`): a later
+  `setAttribute('title', …)` is taken the same way, `el.title` answers
+  from the stored value, and setting it never writes the attribute – so a
+  framework that binds `title` as a property (hybrids, lit's `.title`)
+  never puts one on the host. The API is unchanged, `title="…"` stays the
+  documented attribute; what changes is that `getAttribute('title')`
+  returns `null` after upgrade. `<nk-model-card>` still reports its name
+  in `nk-select`. (GlassKit Elements 1.16.1.)
+- **Several actions in `<nk-empty>` touched.** The default slot now sits
+  in `.e-actions`, a centred row that wraps with 8px between the buttons
+  (NotionKit 1.5.2).
+- **`<nk-toast>` lay behind the tab bar on a phone.** notionkit.css lifts a
+  class-markup toast above a visible tab bar with `:has()`, which cannot
+  see into shadow roots, so the element measures the bar when it opens and
+  sits 12px above it – the app's own bar at the bottom of the screen,
+  sticky, fixed or floating. A tab bar previewed somewhere inside a page
+  does not lift it.
+- Through NotionKit 1.5.2: `hidden` hides every nk- element and slotted
+  node, the toast paints above dialog and palette and keeps a short message
+  on one line on a phone, date and time fields keep to their column on iOS,
+  and checkbox and switch sit beside the first line of a wrapping label.
+
+### Added
+- `test/regressions-152.spec.mjs`: the title handling of all four
+  elements, including a title set as a property before upgrade, the
+  empty-state action row and the toast over the app's tab bar. Against the
+  1.5.1 bundle seven of the nine tests fail.
+- Demo app: "Import" next to "New entry" in the empty state, and a
+  two-line product-news checkbox in the notification settings – the same
+  changes as in the NotionKit demo.
+
 ## [1.5.1] – 2026-09-14
 
 Built against NotionKit CSS 1.5.1 (peer `>= 1.5.1`).
@@ -239,6 +281,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.5.2]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.2
 [1.5.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.1
 [1.5.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.0
 [1.3.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.3.1

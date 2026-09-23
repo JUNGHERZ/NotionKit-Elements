@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-database id="db" view="table" add-view>
 //   <nk-table-view name="table" label="▦ Table" count></nk-table-view>

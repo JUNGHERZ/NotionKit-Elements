@@ -1,8 +1,11 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-toast id="toast"></nk-toast>   …   toast.show('Saved');
 // → <div class="nk-toast show">✓ Saved</div>
 // One node, bottom-centred, auto-hides after `duration` ms (default 2200).
+// Above a tab bar at the bottom of the screen it rises 12px over the bar:
+// notionkit.css does that for class markup with :has(), which cannot see
+// into shadow roots, so the element measures the bar when it opens.
 class NkToast extends NkElement {
   static get observedAttributes() { return ['open', 'duration', 'icon']; }
 
@@ -16,10 +19,25 @@ class NkToast extends NkElement {
   }
 
   _sync() {
+    if (this.getBoolAttr('open')) this._lift();
     this._box.classList.toggle('show', this.getBoolAttr('open'));
     const icon = this.getAttribute('icon') ?? '✓';
     this._icon.textContent = icon;
     this._icon.style.display = icon ? '' : 'none';
+  }
+
+  // A bar counts when it is rendered and ends near the bottom of the viewport –
+  // the app's own bar, fixed, sticky or floating. A tab bar shown as a preview
+  // somewhere in a page does not lift the toast.
+  _lift() {
+    const bars = [...document.querySelectorAll('.nk-tab-bar')];
+    for (const host of document.querySelectorAll('nk-tab-bar')) {
+      const bar = host.shadowRoot?.querySelector('.nk-tab-bar');
+      if (bar) bars.push(bar);
+    }
+    const rect = bars.map(b => b.getBoundingClientRect())
+      .find(r => r.height > 0 && r.top < innerHeight && r.bottom > innerHeight - 60);
+    this._box.style.bottom = rect ? `${Math.round(innerHeight - rect.top + 12)}px` : '';
   }
 
   /** Shows `message` (or the slotted content when omitted) and hides it again after `duration`. */

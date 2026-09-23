@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-callout icon="💡">text</nk-callout>
 // <nk-callout><span slot="icon">📌</span>text</nk-callout>

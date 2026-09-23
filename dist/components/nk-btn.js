@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-btn variant="primary" small>Save</nk-btn>   →  <button class="nk-btn primary small">
 // <nk-btn href="/docs" variant="secondary">Docs</nk-btn>  →  <a class="nk-btn secondary">

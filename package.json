@@ -1,6 +1,6 @@
 {
   "name": "@jungherz-de/notionkit-elements",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Vanilla JavaScript Web Components wrapping the NotionKit CSS foundation – <nk-*> custom elements with Shadow DOM, automatic theme sync and native form participation.",
   "license": "MIT",
   "author": "Jungherz GmbH <info@jungherz.com> (https://www.jungherz.com)",
@@ -58,10 +58,10 @@
     "dark-mode"
   ],
   "peerDependencies": {
-    "@jungherz-de/notionkit": ">=1.5.1"
+    "@jungherz-de/notionkit": ">=1.5.2"
   },
   "devDependencies": {
-    "@jungherz-de/notionkit": "^1.5.1",
+    "@jungherz-de/notionkit": "^1.5.2",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0",
     "rollup": "^4.0.0",

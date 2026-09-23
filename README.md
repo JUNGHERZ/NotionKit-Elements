@@ -1,11 +1,11 @@
 <h1 align="center">🧩 NotionKit Elements</h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.5.1-2383e2?style=flat-square" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.5.2-2383e2?style=flat-square" alt="Version"></a>
   <a href="#"><img src="https://img.shields.io/badge/vanilla_JS-no_dependencies-448361?style=flat-square" alt="Vanilla JS"></a>
   <a href="#"><img src="https://img.shields.io/badge/elements-71-529cca?style=flat-square" alt="71 Elements"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-9065b0?style=flat-square" alt="MIT License"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.5.1-lightgrey?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.5.2-lightgrey?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/npm-%40jungherz--de%2Fnotionkit--elements-cb3837?style=flat-square&logo=npm" alt="npm"></a>
 </p>
 
@@ -71,8 +71,8 @@ It is the **app layer** of the NotionKit family – three layers, one design lan
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.1/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.5.2/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-field label="Display name" desc="Shown next to your comments">

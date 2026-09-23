@@ -1,4 +1,4 @@
-import { N as NkElement } from './shared/base-BPIvRI6K.js';
+import { N as NkElement } from './shared/base-AWFyTskN.js';
 
 // <nk-skeleton height="18" width="60%"></nk-skeleton>
 // <nk-skeleton lines="3" widths="100%,85%,40%"></nk-skeleton>

@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.1/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.5.2/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -192,7 +192,7 @@
 
       <div class="nk-g-item">
         <h4>Empty state</h4>
-        <nk-empty icon="🗂️" title="No entries yet" desc="Create the first entry or import existing data."><nk-btn variant="primary" small id="emptyNew">＋ New entry</nk-btn></nk-empty>
+        <nk-empty icon="🗂️" title="No entries yet" desc="Create the first entry or import existing data."><nk-btn variant="primary" small id="emptyNew">＋ New entry</nk-btn><nk-btn variant="secondary" small id="emptyImport">Import</nk-btn></nk-empty>
       </div>
 
       <div class="nk-g-item">
@@ -292,7 +292,7 @@
     <h3>By email</h3>
     <nk-check checked>Mentions and comments</nk-check>
     <nk-check checked>Weekly digest</nk-check>
-    <nk-check>Product news</nk-check>
+    <nk-check>Product news and invitations to beta programmes – at most once a month, and you can unsubscribe with a single click at any time</nk-check>
     <h3>Push</h3>
     <nk-field label="Push notifications" desc="Straight in the browser when shared pages see activity."><nk-switch checked></nk-switch></nk-field>
     <nk-field label="Mentions only" desc="Everything else lands quietly in the inbox."><nk-switch></nk-switch></nk-field>
@@ -463,6 +463,7 @@
   document.querySelectorAll('nk-template-btn').forEach(b => b.addEventListener('nk-select', e => toast.show(`Template “${e.detail.value}” inserted`)));
   range.addEventListener('nk-change', e => toast.show(`Range: ${e.detail.value}`));
   emptyNew.addEventListener('click', () => toast.show('New entry'));
+  emptyImport.addEventListener('click', () => toast.show('Import started'));
   comments.addEventListener('nk-submit', e => {
     const c = document.createElement('nk-comment');
     c.setAttribute('author', 'Marcel Karas'); c.setAttribute('time', 'just now'); c.setAttribute('color', '#9065b0');
