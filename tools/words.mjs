@@ -40,6 +40,8 @@ export const WORDS = {
     propStatus: 'Status', propOwner: 'Owner', propDue: 'Due', propTags: 'Tags', propProgress: 'Progress', dueDate: '2 June 2026', effort: 'Effort (h)',
     list: '☰ List', smallText: 'Small text', fullWidth: 'Full width', minAgo: '2 min ago', yesterday: 'Yesterday',
     weeklyReview: 'Weekly review', weeklyReviewText: 'Three pages changed, one comment is waiting for an answer.', bubbleQuestion: 'What is still open on this page?',
+    filter: 'Filter', sort: 'Sort', newBtn: 'New', statusOpen: 'Status: Open', addFilter: '＋ Filter', removeFilter: 'Remove filter',
+    stepsLabel: 'Connect your own model', stepProvider: 'Choose a provider', stepProviderDesc: 'Anthropic', stepKey: 'Enter the API key', stepTest: 'Test the connection',
     toastText: 'Settings saved', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
   },
   de: {
@@ -81,6 +83,8 @@ export const WORDS = {
     propStatus: 'Status', propOwner: 'Verantwortlich', propDue: 'Fällig', propTags: 'Tags', propProgress: 'Fortschritt', dueDate: '2. Juni 2026', effort: 'Aufwand (h)',
     list: '☰ Liste', smallText: 'Kleiner Text', fullWidth: 'Volle Breite', minAgo: 'vor 2 Min.', yesterday: 'Gestern',
     weeklyReview: 'Wochenrückblick', weeklyReviewText: 'Drei Seiten haben sich geändert, ein Kommentar wartet auf Antwort.', bubbleQuestion: 'Was ist auf dieser Seite noch offen?',
+    filter: 'Filter', sort: 'Sortieren', newBtn: 'Neu', statusOpen: 'Status: Offen', addFilter: '＋ Filter', removeFilter: 'Filter entfernen',
+    stepsLabel: 'Eigenes Modell verbinden', stepProvider: 'Anbieter wählen', stepProviderDesc: 'Anthropic', stepKey: 'API-Schlüssel eintragen', stepTest: 'Verbindung testen',
     toastText: 'Einstellungen gespeichert', showToast: 'Toast zeigen', openModal: 'Einstellungen öffnen', openPalette2: 'Palette öffnen (⌘K)', pickEmoji: 'Icon wählen', navigate: 'navigieren', openHint: 'öffnen', toggleHint: 'umschalten',
   },
 };

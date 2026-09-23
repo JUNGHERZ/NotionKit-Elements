@@ -80,20 +80,27 @@ test('board view: one column per option, counts, move() re-groups and reports', 
   expect(events).toEqual([['change', '3:status=done']]);
 });
 
-test('filter bar: chips, search, apply()', async ({ page }) => {
+test('filter bar: pills, search, apply()', async ({ page }) => {
   await openHarness(page);
-  await setStage(page, `<nk-filter-bar id="f" search></nk-filter-bar>`);
+  await setStage(page, `<nk-filter-bar id="f" search add></nk-filter-bar>`);
   await page.evaluate(`${DATA} const f = document.getElementById('f'); f.filters = [{ key: 'status', value: 'done', label: 'Status: Done' }]; window.rows = rows;`);
   expect(await page.evaluate(() => document.getElementById('f').apply(window.rows).map(r => r.id))).toEqual([1]);
-  const changes = [];
-  await page.exposeFunction('chg', v => changes.push(v));
-  await page.evaluate(() => document.getElementById('f').addEventListener('nk-change', e => window.chg(e.detail.filters.length + ':' + e.detail.search)));
-  await page.evaluate(() => document.getElementById('f').shadowRoot.querySelector('[data-index]').click());
+  // op: 'is-not' keeps the other rows.
+  expect(await page.evaluate(() => { const f = document.getElementById('f'); f.filters = [{ key: 'status', value: 'done', op: 'is-not', label: 'Status: Open' }]; return f.apply(window.rows).map(r => r.id); })).toEqual([2, 3]);
+  // NotionKit's pill markup, no inline style.
+  expect(await page.evaluate(() => { const r = document.getElementById('f').shadowRoot; return { row: !!r.querySelector('.nk-filter-row'), pill: r.querySelector('.nk-filter-pill.active').textContent, add: r.querySelector('.nk-filter-pill.add').textContent, styled: r.querySelectorAll('[style]').length }; }))
+    .toEqual({ row: true, pill: 'Status: Open×', add: '＋ Filter', styled: 0 });
+  const seen = [];
+  await page.exposeFunction('seen', v => seen.push(v));
+  await page.evaluate(() => { const f = document.getElementById('f'); f.addEventListener('nk-change', e => window.seen(e.detail.filters.length + ':' + e.detail.search)); f.addEventListener('nk-action', e => window.seen(e.detail.action + (e.detail.index ?? ''))); });
+  await page.evaluate(() => document.getElementById('f').shadowRoot.querySelector('[data-edit]').click());
+  await page.evaluate(() => document.getElementById('f').shadowRoot.querySelector('.nk-filter-pill.add').click());
+  await page.evaluate(() => document.getElementById('f').shadowRoot.querySelector('.fp-remove').click());
   expect(await page.evaluate(() => document.getElementById('f').filters.length)).toBe(0);
   await page.locator('#f input').fill('tab');
   await page.waitForTimeout(250);
   expect(await page.evaluate(() => document.getElementById('f').apply(window.rows).map(r => r.id))).toEqual([2]);
-  expect(changes).toEqual(['0:', '0:tab']);
+  expect(seen).toEqual(['edit0', 'add', '0:', '0:tab']);
 });
 
 test('comments and AI input fire nk-submit and clear', async ({ page }) => {

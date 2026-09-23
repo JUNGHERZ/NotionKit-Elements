@@ -25,7 +25,7 @@ test('every settings pane keeps to the screen at 390px', async ({ page }) => {
   await page.goto('/app.html');
   await ready(page);
   const overflow = await page.evaluate(async () => {
-    const modal = document.getElementById('settings');
+    const modal = document.getElementById('settingsModal');
     modal.show();
     await new Promise(r => setTimeout(r, 400));
     const content = modal.shadowRoot.querySelector('.nk-settings-content');

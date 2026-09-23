@@ -4,6 +4,80 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0] – 2026-09-24
+
+Built against NotionKit CSS 1.7.1 (peer `>= 1.7.1`), the mobile-and-filter
+release: menus that float in and become sheets on a phone, a sheet of its
+own, the drawer from the stylesheet, Notion's database toolbar with filter
+pills, and steps. 1.7.1, not 1.7.0: clean-css broke the minified files of
+1.7.0, and those are what the elements adopt – every phone rule after the
+drawer applied on the desktop too (see NotionKit's changelog).
+
+### Added
+- **`<nk-sheet>`** – Notion's mobile surface, the phone's twin of
+  `<nk-modal>` with its contract: `show()`, `close()`, `toggle()`; Escape
+  and the backdrop close it; focus moves in and back; the page behind is
+  scroll-locked and inert; `nk-toggle`. The panel rises from the bottom edge
+  with a grabber, `title` stands under it and names the dialog (taken off
+  the host, never a tooltip), rows inside are 40px. A chosen row does not
+  close it – `nk-select` bubbles out and the app decides.
+- **`<nk-steps>`** – a short flow, vertical: done steps with a check on the
+  green tag, the current one ringed in the accent and marked
+  `aria-current="step"`. `current` counts from 1 and `next()` moves on;
+  `steps` is a comma-separated list or, as a property, strings and
+  `{ label, desc }` objects; `label` names the list.
+- **`<nk-menu floating sheet>`** – a menu over the page of its own:
+  `menu.show(button)` opens it under the button, right edges aligned
+  (`align="start"`: left edges), and it fades in like the palette. A tap
+  outside closes it and reaches nothing else; Escape and a chosen item close
+  it, a switch or check row keeps it open; opened from the keyboard, focus
+  moves to the first item and back; `aria-expanded` on the button follows.
+  With `sheet` it is a bottom sheet below 860px, whatever position `show()`
+  wrote. `nk-toggle` when it opens and closes.
+- **`<nk-menu-item type="check">`** – a ✓ where the shortcut stands,
+  `menuitemcheckbox`: a click flips `checked` and fires `nk-change`, and the
+  menu stays open – the rows of a filter menu.
+- **The database toolbar.** `<nk-database>` renders NotionKit's
+  `.nk-db-toolbar`: the view tabs on the left, `slot="tools"` on the right,
+  `slot="filters"` under it. `<nk-btn variant="tool">` is a tool, `active`
+  gives it the accent. The ＋ tab is `.nk-db-tab.add`, no inline style.
+- **`<nk-btn variant="sidebar">`** – the ☰, `.nk-topbar-btn.nk-sidebar-toggle`:
+  shown below 860px only, a click opens the `nk-sidebar` of its app as a
+  drawer, and `aria-expanded` follows however the drawer closes.
+- `<nk-segmented scroll>` keeps the chosen option in view – after the first
+  layout, on every change and when the row's width changes – by scrolling
+  the row, never the page, the least distance, right to left as well.
+- `<nk-btn aria-haspopup>` reaches the button, like `aria-label`.
+
+### Changed
+- **`<nk-filter-bar>` is NotionKit's filter pills** (`.nk-filter-row`,
+  `.nk-filter-pill`, `.fp-remove`, `.add`) instead of tags laid out by
+  inline styles: a pill per filter with its ×, the `add` pill at the end;
+  its own Filter and Sort are `.nk-db-tool`s. A pill's label fires
+  `nk-action { action: 'edit', index, filter, anchor }`, the add pill
+  `{ action: 'add', anchor }` – `anchor` is the clicked button, for
+  `menu.show(anchor)`. A filter takes `op: 'is-not'`; `color` is no longer
+  read, a pill has one look. The texts are attributes: `filter-label`,
+  `sort-label`, `add-label`, `remove-label`.
+- **The sidebar drawer is the stylesheet's.** `<nk-sidebar open>` sets
+  NotionKit 1.7.0's `.nk-sidebar.open` and `.nk-sidebar-backdrop.open`; the
+  element's own drawer CSS is gone. Same slide and scrim; with reduced
+  motion the stylesheet shortens the transition to .01ms.
+- Overlays return focus to the control that had it, also when it sits in a
+  shadow root (`nk-sheet`, `nk-menu`); a floating menu's Escape is handled
+  before a modal's or a sheet's around it.
+- Demo: the database toolbar with live filter pills – "Status: Open" set –
+  on table, board and list, a filter menu, Sort, search and New; the ⋯ page
+  menu is `<nk-menu floating sheet>` (the positioned wrapper is gone); More
+  opens an `<nk-sheet>`; the ☰ is `variant="sidebar"`; the steps in the AI
+  pane for a custom model; six ranges in a scrolling segmented control;
+  `#menu`, `#filter`, `#more` and `#settings` open that state. The modal is
+  `id="settingsModal"`, the sheet `id="moreSheet"`: an id equal to the hash
+  made the browser scroll to it and take the focus it had just been given.
+  The app matches the class demo at 0.00 % on the desktop, in the menus and
+  in the phone's sheets and drawer.
+- Peer `@jungherz-de/notionkit >= 1.7.1`.
+
 ## [1.6.0] – 2026-09-23
 
 Built against NotionKit CSS 1.6.0 (peer `>= 1.6.0`), the app-views release:
@@ -382,6 +456,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.7.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.7.0
 [1.6.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.6.0
 [1.5.3]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.3
 [1.5.2]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.2

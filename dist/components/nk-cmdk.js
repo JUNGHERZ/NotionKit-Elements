@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-DXrK9oLe.js';
+import { l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-BNAChOXO.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // Subsequence scoring for the command palette: every query character must

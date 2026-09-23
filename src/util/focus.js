@@ -1,6 +1,7 @@
-// Overlay plumbing shared by nk-modal and nk-cmdk: body scroll lock with a
-// refcount, and `inert` on everything outside the overlay so focus and
-// assistive technology stay inside – nested shadow roots included.
+// Overlay plumbing shared by nk-modal, nk-sheet, nk-cmdk and nk-menu: body
+// scroll lock with a refcount, `inert` on everything outside the overlay so
+// focus and assistive technology stay inside – nested shadow roots included –
+// and the focused element behind shadow hosts, to return focus to.
 let locks = 0, previousOverflow = '';
 
 export function lockScroll() {
@@ -29,6 +30,13 @@ export function inertOutside(el) {
     node = parent instanceof ShadowRoot ? parent.host : parent;
   }
   return () => { for (const c of made) c.inert = false; };
+}
+
+/** The focused element itself, looking into shadow roots (document.activeElement stops at the host). */
+export function deepActiveElement() {
+  let el = document.activeElement;
+  while (el?.shadowRoot?.activeElement) el = el.shadowRoot.activeElement;
+  return el;
 }
 
 /** The first tabbable element inside a light-DOM subtree, looking into shadow roots. */

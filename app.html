@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.7.1/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -63,13 +63,13 @@
 
   <!-- ================= MAIN ================= -->
   <nk-topbar>
-    <nk-btn variant="topbar" id="menuBtn" aria-label="Menu" style="display:none">☰</nk-btn>
+    <nk-btn variant="sidebar" id="menuBtn" aria-label="Menu">☰</nk-btn>
     <nk-breadcrumb id="crumbs"><span>📊 Project overview</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
     <span slot="actions" class="nk-topbar-meta" id="lastEdited">Last edited 2 min ago</span>
     <nk-btn slot="actions" variant="share">Share</nk-btn>
     <nk-btn slot="actions" variant="topbar" title="Favourite">⭐</nk-btn>
     <nk-theme-toggle slot="actions" id="themeToggle"></nk-theme-toggle>
-    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Page options">⋯</nk-btn>
+    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-label="Page options">⋯</nk-btn>
   </nk-topbar>
 
   <nk-page id="page" icon="🚀" cover>
@@ -94,6 +94,11 @@
 
     <nk-heading>🗃️ Project database</nk-heading>
     <nk-database id="db" view="table" add-view>
+      <nk-btn slot="tools" variant="tool" id="filterBtn" aria-haspopup="menu" active>Filter</nk-btn>
+      <nk-btn slot="tools" variant="tool" id="sortBtn">Sort</nk-btn>
+      <nk-btn slot="tools" variant="tool" id="searchBtn" aria-label="Search">🔍</nk-btn>
+      <nk-btn slot="tools" variant="primary" small id="newBtn">New</nk-btn>
+      <nk-filter-bar slot="filters" id="filterBar" add no-filter no-sort remove-label="Remove filter"></nk-filter-bar>
       <nk-table-view name="table" label="▦ Table" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
       <nk-list-view name="list" label="☰ List" meta-keys="due,status"></nk-list-view>
@@ -172,7 +177,7 @@
 
       <div class="nk-g-item">
         <h4>Segmented control</h4>
-        <nk-segmented id="range" value="week"><button value="week">Week</button><button value="month">Month</button><button value="quarter">Quarter</button></nk-segmented>
+        <nk-segmented id="range" value="week" scroll><button value="day">Day</button><button value="week">Week</button><button value="month">Month</button><button value="quarter">Quarter</button><button value="half-year">Half-year</button><button value="year">Year</button></nk-segmented>
         <div style="margin-top:10px;font-size:12.5px;color:var(--nk-text-tertiary)">For time ranges, perspectives or density levels.</div>
       </div>
 
@@ -270,13 +275,15 @@
     <nk-tab-bar-item icon="📥" value="inbox">Inbox</nk-tab-bar-item>
     <nk-tab-bar-item icon="🔍" value="search">Search</nk-tab-bar-item>
     <nk-tab-bar-item icon="⚙️" value="settings">Settings</nk-tab-bar-item>
-    <nk-tab-bar-item icon="☰" drawer>More</nk-tab-bar-item>
+    <nk-tab-bar-item icon="☰" value="more" id="moreTab">More</nk-tab-bar-item>
   </nk-tab-bar>
 
 </nk-app>
 
 <!-- ================= SETTINGS MODAL ================= -->
-<nk-modal id="settings">
+<!-- Not id="settings": the #settings anchor would make the modal the fragment
+     target, and scrolling to it takes the focus the open modal just gave. -->
+<nk-modal id="settingsModal">
   <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK"></nk-settings-user>
 
   <nk-settings-pane name="profile" group="Account" icon="👤" label="My profile" title="My profile" active>
@@ -326,14 +333,15 @@
     <nk-model-card name="model" value="standard" desc="A balanced model for everyday work. Fast, calm, dependable." selected><span slot="title">Mona Standard <span class="nk-tag green">Recommended</span></span></nk-model-card>
     <nk-model-card name="model" value="deep" title="Mona Deep" desc="More depth of thought for complex analysis and long documents. Answers more slowly."></nk-model-card>
     <nk-model-card name="model" value="custom" desc="Connect your own API key (OpenAI, Anthropic, Azure)."><span slot="title">Custom model <span class="nk-tag purple">API</span></span></nk-model-card>
+    <nk-steps id="modelSteps" label="Connect your own model" current="2" hidden></nk-steps>
     <h3>Reply style</h3>
     <nk-radio name="style" value="concise" checked>Calm &amp; concise</nk-radio>
     <nk-radio name="style" value="detailed">Detailed &amp; explanatory</nk-radio>
     <nk-radio name="style" value="bullets">Bullet points only</nk-radio>
     <div style="margin-top:14px"><nk-field label="API key" desc="Only needed for a custom model. Stays stored locally."><nk-input type="password" placeholder="sk-…"></nk-input></nk-field></div>
     <div style="display:flex;gap:8px;margin-top:18px">
-      <nk-btn variant="primary" data-save>Save</nk-btn>
-      <nk-btn variant="secondary">Test connection</nk-btn>
+      <nk-btn variant="primary" id="aiSave">Save</nk-btn>
+      <nk-btn variant="secondary" id="aiTest">Test connection</nk-btn>
     </div>
   </nk-settings-pane>
 
@@ -364,10 +372,8 @@
 <nk-cmdk id="palette" placeholder="Search or type a command …"></nk-cmdk>
 
 <!-- ================= PAGE MENU (⋯) ================= -->
-<!-- <nk-menu> is a display: contents host with no box of its own, so a plain
-     fixed box around it carries the position under the ⋯ button. -->
-<div id="pageOptionsBox" hidden style="position:fixed;z-index:60">
-<nk-menu id="pageOptions" aria-label="Page options">
+<!-- floating: fades in under the ⋯ like the palette; sheet: a bottom sheet on a phone -->
+<nk-menu floating sheet id="pageOptions" aria-label="Page options">
   <nk-menu-item type="label">Page</nk-menu-item>
   <nk-menu-item type="switch" icon="🔡" value="small">Small text</nk-menu-item>
   <nk-menu-item type="switch" icon="↔️" value="full">Full width</nk-menu-item>
@@ -377,7 +383,28 @@
   <nk-menu-item type="separator"></nk-menu-item>
   <nk-menu-item icon="🗑️" danger value="trash">Move to trash</nk-menu-item>
 </nk-menu>
-</div>
+
+<!-- ================= FILTER MENU ================= -->
+<nk-menu floating sheet id="filterMenu" aria-label="Filter">
+  <nk-menu-item type="label">Filter by</nk-menu-item>
+  <nk-menu-item type="check" icon="◉" value="open">Status: Open</nk-menu-item>
+  <nk-menu-item type="check" icon="◉" value="done">Status: Done</nk-menu-item>
+  <nk-menu-item type="check" icon="👤" value="mine">Owner: Marcel</nk-menu-item>
+</nk-menu>
+
+<!-- ================= MORE (phone) ================= -->
+<nk-sheet id="moreSheet" title="More">
+  <nk-tree manual id="moreTree">
+    <nk-section-label>Favourites</nk-section-label>
+    <nk-tree-item icon="🚀" value="mvp" no-actions>NotionKit MVP</nk-tree-item>
+    <nk-tree-item icon="🎙️" value="voh" no-actions>Voice-Office-Hub</nk-tree-item>
+    <nk-section-label>Workspace</nk-section-label>
+    <nk-tree-item icon="🧠" value="kb" no-actions>Knowledge base</nk-tree-item>
+    <nk-tree-item icon="🎨" value="design" no-actions>Design system</nk-tree-item>
+    <nk-tree-item icon="🗓️" value="editorial" no-actions>Editorial plan</nk-tree-item>
+    <nk-tree-item icon="🗑️" value="trash" no-actions>Trash</nk-tree-item>
+  </nk-tree>
+</nk-sheet>
 
 <nk-toast id="toast"></nk-toast>
 
@@ -402,7 +429,25 @@
     { id: 4, icon: '▤', name: 'Board-View & Drag-and-Drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
   db.columns = columns;
-  db.rows = projects;
+
+  /* ============ Filters and sort: they act on table, board and list ============ */
+  const FILTERS = {
+    open: { id: 'open', key: 'status', value: 'done', op: 'is-not', label: 'Status: Open' },
+    done: { id: 'done', key: 'status', value: 'done', label: 'Status: Done' },
+    mine: { id: 'mine', key: 'owner', value: marcel, label: 'Owner: Marcel' },
+  };
+  let filters = new Set(['open']);
+  let sortByDue = false;
+  const dueKey = p => p.due.split('.').reverse().join('');
+  function renderAll() {
+    filterBar.filters = [...filters].map(f => FILTERS[f]);
+    const shown = filterBar.apply(projects);
+    db.rows = sortByDue ? [...shown].sort((a, b) => dueKey(a).localeCompare(dueKey(b))) : shown;
+    filterBtn.active = filters.size > 0;
+    sortBtn.active = sortByDue;
+    filterMenu.querySelectorAll('nk-menu-item[type="check"]').forEach(item => { item.checked = filters.has(item.value); });
+  }
+  renderAll();
 
   /* ============ Start view: what is due, as a list ============ */
   upcoming.columns = [
@@ -421,12 +466,13 @@
 
   /* ============ Database events ============ */
   let counter = 1;
+  function newRow(status) {
+    projects.push({ id: Date.now(), icon: '📄', name: 'Untitled ' + counter++, status: status || 'planned', due: '—', progress: 0, effort: '—' });
+    renderAll();
+    toast.show('New page created');
+  }
   db.addEventListener('nk-action', e => {
-    if (e.detail.action === 'new-row') {
-      projects.push({ id: Date.now(), icon: '📄', name: 'Untitled ' + counter++, status: e.detail.value || 'planned', due: '—', progress: 0, effort: '—' });
-      db.rows = projects;
-      toast.show('New page created');
-    }
+    if (e.detail.action === 'new-row') newRow(e.detail.value);
     if (e.detail.action === 'add-view') toast.show('Views: table, board and list – more in your app');
     if (e.detail.action === 'sort') toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`);
   });
@@ -441,7 +487,7 @@
     home.hidden = name !== 'home';
     crumbs.innerHTML = name === 'home' ? '<span>🏠 Home</span>' : pageCrumbs;
     lastEdited.hidden = name === 'home';
-    closePageMenu();
+    pageOptions.close();
   }
   home.addEventListener('click', e => {
     const panel = e.target.closest('nk-panel, nk-list-view');
@@ -458,20 +504,16 @@
   });
   tree.addEventListener('nk-action', e => toast.show(`${e.detail.action === 'add' ? 'Add page under' : 'Options for'} “${e.detail.label}”`));
   sidebar.addEventListener('nk-select', e => {
-    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); }
+    if (e.detail.value === 'settings') { e.preventDefault(); settingsModal.show(); }
     if (e.detail.value === 'trash') { e.preventDefault(); toast.show('Trash is empty'); }
   });
   sidebar.addEventListener('nk-select', e => { if (e.target.localName === 'nk-menu-item') toast.show(`Workspace: ${e.detail.label}`); });
-  menuBtn.addEventListener('click', () => sidebar.toggle());
   tabBar.addEventListener('nk-select', e => {
-    if (e.detail.drawer) return;                       // opens the sidebar drawer by itself
-    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); return; }
+    if (e.detail.value === 'more') { e.preventDefault(); moreSheet.show(); return; }
+    if (e.detail.value === 'settings') { e.preventDefault(); settingsModal.show(); return; }
     if (e.detail.value === 'home') { showView('home'); return; }
     toast.show(`Tab: ${e.detail.label}`);
   });
-  const narrow = matchMedia('(max-width: 860px)');
-  const syncMenuBtn = () => { menuBtn.style.display = narrow.matches ? '' : 'none'; };
-  narrow.addEventListener('change', syncMenuBtn); syncMenuBtn();
 
   /* ============ Theme ============ */
   themeToggle.addEventListener('nk-change', e => toast.show(e.detail.value === 'dark' ? 'Dark mode on' : 'Light mode on'));
@@ -506,36 +548,69 @@
   fontSizeSlider.addEventListener('nk-change', e => toast.show('Text size set to ' + e.detail.value + ' %'));
   document.querySelectorAll('[data-save]').forEach(b => b.addEventListener('click', () => toast.show('Settings saved')));
   document.querySelectorAll('[data-save-danger]').forEach(b => b.addEventListener('click', () => toast.show('Just a preview – nothing was deleted')));
-  settings.addEventListener('nk-select', e => console.log('pane', e.detail.value));
+  settingsModal.addEventListener('nk-select', e => console.log('pane', e.detail.value));
 
   /* ============ Page menu: small text, full width ============ */
   const currentPage = () => (home.hidden ? page : home);
   function syncPageMenu() {
     pageOptions.querySelectorAll('nk-menu-item[type="switch"]').forEach(item => { item.checked = currentPage().hasAttribute(item.value); });
   }
-  function openPageMenu() {
-    // Measured on the inner button: the nk-btn host has no box.
-    const r = pageMenuBtn.shadowRoot.querySelector('button').getBoundingClientRect();
-    pageOptionsBox.style.top = (r.bottom + 6) + 'px';
-    pageOptionsBox.style.right = Math.max(8, innerWidth - r.right) + 'px';
-    syncPageMenu();
-    pageOptionsBox.hidden = false;
-    pageMenuBtn.setAttribute('aria-expanded', 'true');
-  }
-  function closePageMenu() {
-    pageOptionsBox.hidden = true;
-    pageMenuBtn.setAttribute('aria-expanded', 'false');
-  }
-  pageMenuBtn.addEventListener('click', e => { e.stopPropagation(); pageOptionsBox.hidden ? openPageMenu() : closePageMenu(); });
-  pageOptions.addEventListener('click', e => e.stopPropagation());
+  // The menu positions itself under the button, closes on a tap outside,
+  // Escape or a chosen item; a switch row keeps it open.
+  pageMenuBtn.addEventListener('click', () => { syncPageMenu(); pageOptions.toggle(pageMenuBtn); });
   pageOptions.addEventListener('nk-change', e => {
     currentPage().toggleAttribute(e.detail.value, e.detail.checked);
     const msgs = { small: ['Small text on', 'Small text off'], full: ['Full width on', 'Full width off'] };
     toast.show(msgs[e.detail.value][e.detail.checked ? 0 : 1]);
   });
-  pageOptions.addEventListener('nk-select', () => closePageMenu());
-  document.addEventListener('click', () => closePageMenu());
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePageMenu(); });
+
+  /* ============ Toolbar and filter pills ============ */
+  filterBtn.addEventListener('click', () => filterMenu.toggle(filterBtn));
+  filterMenu.addEventListener('nk-change', e => {
+    e.detail.checked ? filters.add(e.detail.value) : filters.delete(e.detail.value);
+    renderAll();
+    toast.show((e.detail.checked ? 'Filter on: ' : 'Filter off: ') + FILTERS[e.detail.value].label);
+  });
+  filterBar.addEventListener('nk-action', e => filterMenu.show(e.detail.anchor));   // a pill or ＋ Filter
+  filterBar.addEventListener('nk-change', e => {
+    const kept = new Set(e.detail.filters.map(f => f.id));
+    const removed = [...filters].find(f => !kept.has(f));
+    filters = kept;
+    renderAll();
+    if (removed) toast.show('Filter off: ' + FILTERS[removed].label);
+  });
+  sortBtn.addEventListener('click', () => { sortByDue = !sortByDue; renderAll(); toast.show(sortByDue ? 'Sorted by due date' : 'Original order'); });
+  searchBtn.addEventListener('click', () => toast.show('Search in this database'));
+  newBtn.addEventListener('click', () => newRow());
+
+  /* ============ More (phone): the rest of the sidebar as a sheet ============ */
+  moreSheet.addEventListener('nk-select', e => {
+    e.preventDefault();
+    moreSheet.close();
+    if (e.detail.value === 'mvp') showView('mvp');
+    else toast.show(e.detail.label);
+  });
+
+  /* ============ AI assistant: steps for your own model ============ */
+  modelSteps.steps = [{ label: 'Choose a provider', desc: 'Anthropic' }, 'Enter the API key', 'Test the connection'];
+  document.querySelectorAll('nk-model-card').forEach(card => card.addEventListener('nk-select', () => { modelSteps.hidden = card.value !== 'custom'; }));
+  aiSave.addEventListener('click', () => {
+    if (!modelSteps.hidden) { modelSteps.current = 3; toast.show('API key saved'); } else toast.show('Settings saved');
+  });
+  aiTest.addEventListener('click', () => { if (!modelSteps.hidden) modelSteps.current = 4; toast.show('Connection works'); });
+
+  /* ============ Anchors: #menu, #filter, #more, #settings open that state ============ */
+  // The landing page shows app.html#menu: a popover on the desktop, a sheet
+  // on the phone – one markup, two presentations.
+  function openFromHash() {
+    const h = location.hash;
+    if (h === '#menu') { syncPageMenu(); pageOptions.show(pageMenuBtn); }
+    if (h === '#filter') { filterBtn.shadowRoot.querySelector('button').scrollIntoView({ block: 'center' }); filterMenu.show(filterBtn); }
+    if (h === '#more') moreSheet.show();
+    if (h === '#settings') settingsModal.show();
+  }
+  requestAnimationFrame(openFromHash);
+  addEventListener('hashchange', openFromHash);
 
   /* ============ Editor: edit or read ============ */
   const editorHost = document.getElementById('tiptap-demo');
@@ -560,7 +635,7 @@
     { group: 'Actions', items: [
       { id: 'new', icon: '＋', label: 'Create new page', shortcut: '⌘N' },
       { id: 'theme', icon: '🌙', label: 'Toggle theme', shortcut: '⌘⇧L', action: () => themeToggle.apply(themeToggle.value === 'dark' ? 'light' : 'dark') },
-      { id: 'settings', icon: '⚙️', label: 'Open settings', shortcut: '⌘,', action: () => settings.show() },
+      { id: 'settings', icon: '⚙️', label: 'Open settings', shortcut: '⌘,', action: () => settingsModal.show() },
       { id: 'export', icon: '📤', label: 'Export page …' },
     ]},
   ];

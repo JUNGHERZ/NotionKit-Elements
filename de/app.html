@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.6.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.7.1/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -63,13 +63,13 @@
 
   <!-- ================= MAIN ================= -->
   <nk-topbar>
-    <nk-btn variant="topbar" id="menuBtn" aria-label="Menu" style="display:none">☰</nk-btn>
+    <nk-btn variant="sidebar" id="menuBtn" aria-label="Menü">☰</nk-btn>
     <nk-breadcrumb id="crumbs"><span>📊 Projektübersicht</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
     <span slot="actions" class="nk-topbar-meta" id="lastEdited">Zuletzt bearbeitet vor 2 Min.</span>
     <nk-btn slot="actions" variant="share">Teilen</nk-btn>
     <nk-btn slot="actions" variant="topbar" title="Favorit">⭐</nk-btn>
     <nk-theme-toggle slot="actions" id="themeToggle"></nk-theme-toggle>
-    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Seitenoptionen">⋯</nk-btn>
+    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-label="Seitenoptionen">⋯</nk-btn>
   </nk-topbar>
 
   <nk-page id="page" icon="🚀" cover>
@@ -94,6 +94,11 @@
 
     <nk-heading>🗃️ Projektdatenbank</nk-heading>
     <nk-database id="db" view="table" add-view>
+      <nk-btn slot="tools" variant="tool" id="filterBtn" aria-haspopup="menu" active>Filter</nk-btn>
+      <nk-btn slot="tools" variant="tool" id="sortBtn">Sortieren</nk-btn>
+      <nk-btn slot="tools" variant="tool" id="searchBtn" aria-label="Suche">🔍</nk-btn>
+      <nk-btn slot="tools" variant="primary" small id="newBtn">Neu</nk-btn>
+      <nk-filter-bar slot="filters" id="filterBar" add no-filter no-sort remove-label="Filter entfernen"></nk-filter-bar>
       <nk-table-view name="table" label="▦ Tabelle" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
       <nk-list-view name="list" label="☰ Liste" meta-keys="due,status"></nk-list-view>
@@ -172,7 +177,7 @@
 
       <div class="nk-g-item">
         <h4>Segment-Schalter</h4>
-        <nk-segmented id="range" value="week"><button value="week">Woche</button><button value="month">Monat</button><button value="quarter">Quartal</button></nk-segmented>
+        <nk-segmented id="range" value="week" scroll><button value="day">Tag</button><button value="week">Woche</button><button value="month">Monat</button><button value="quarter">Quartal</button><button value="half-year">Halbjahr</button><button value="year">Jahr</button></nk-segmented>
         <div style="margin-top:10px;font-size:12.5px;color:var(--nk-text-tertiary)">Für Zeiträume, Perspektiven oder Dichtestufen.</div>
       </div>
 
@@ -270,13 +275,15 @@
     <nk-tab-bar-item icon="📥" value="inbox">Eingang</nk-tab-bar-item>
     <nk-tab-bar-item icon="🔍" value="search">Suche</nk-tab-bar-item>
     <nk-tab-bar-item icon="⚙️" value="settings">Einstellungen</nk-tab-bar-item>
-    <nk-tab-bar-item icon="☰" drawer>Mehr</nk-tab-bar-item>
+    <nk-tab-bar-item icon="☰" value="more" id="moreTab">Mehr</nk-tab-bar-item>
   </nk-tab-bar>
 
 </nk-app>
 
 <!-- ================= SETTINGS MODAL ================= -->
-<nk-modal id="settings">
+<!-- Not id="settings": the #settings anchor would make the modal the fragment
+     target, and scrolling to it takes the focus the open modal just gave. -->
+<nk-modal id="settingsModal">
   <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK"></nk-settings-user>
 
   <nk-settings-pane name="profile" group="Konto" icon="👤" label="Mein Profil" title="Mein Profil" active>
@@ -326,14 +333,15 @@
     <nk-model-card name="model" value="standard" desc="Ein ausgewogenes Modell für den Alltag. Schnell, ruhig, verlässlich." selected><span slot="title">Mona Standard <span class="nk-tag green">Empfohlen</span></span></nk-model-card>
     <nk-model-card name="model" value="deep" title="Mona Deep" desc="Mehr Denktiefe für komplexe Analysen und lange Dokumente. Antwortet langsamer."></nk-model-card>
     <nk-model-card name="model" value="custom" desc="Eigenen API-Schlüssel verbinden (OpenAI, Anthropic, Azure)."><span slot="title">Eigenes Modell <span class="nk-tag purple">API</span></span></nk-model-card>
+    <nk-steps id="modelSteps" label="Eigenes Modell verbinden" current="2" hidden></nk-steps>
     <h3>Antwortstil</h3>
     <nk-radio name="style" value="concise" checked>Ruhig &amp; knapp</nk-radio>
     <nk-radio name="style" value="detailed">Ausführlich &amp; erklärend</nk-radio>
     <nk-radio name="style" value="bullets">Nur Stichpunkte</nk-radio>
     <div style="margin-top:14px"><nk-field label="API-Schlüssel" desc="Nur für ein eigenes Modell nötig. Bleibt lokal gespeichert."><nk-input type="password" placeholder="sk-…"></nk-input></nk-field></div>
     <div style="display:flex;gap:8px;margin-top:18px">
-      <nk-btn variant="primary" data-save>Speichern</nk-btn>
-      <nk-btn variant="secondary">Verbindung testen</nk-btn>
+      <nk-btn variant="primary" id="aiSave">Speichern</nk-btn>
+      <nk-btn variant="secondary" id="aiTest">Verbindung testen</nk-btn>
     </div>
   </nk-settings-pane>
 
@@ -364,10 +372,8 @@
 <nk-cmdk id="palette" placeholder="Suchen oder Befehl eingeben …"></nk-cmdk>
 
 <!-- ================= PAGE MENU (⋯) ================= -->
-<!-- <nk-menu> is a display: contents host with no box of its own, so a plain
-     fixed box around it carries the position under the ⋯ button. -->
-<div id="pageOptionsBox" hidden style="position:fixed;z-index:60">
-<nk-menu id="pageOptions" aria-label="Seitenoptionen">
+<!-- floating: fades in under the ⋯ like the palette; sheet: a bottom sheet on a phone -->
+<nk-menu floating sheet id="pageOptions" aria-label="Seitenoptionen">
   <nk-menu-item type="label">Seite</nk-menu-item>
   <nk-menu-item type="switch" icon="🔡" value="small">Kleiner Text</nk-menu-item>
   <nk-menu-item type="switch" icon="↔️" value="full">Volle Breite</nk-menu-item>
@@ -377,7 +383,28 @@
   <nk-menu-item type="separator"></nk-menu-item>
   <nk-menu-item icon="🗑️" danger value="trash">In den Papierkorb</nk-menu-item>
 </nk-menu>
-</div>
+
+<!-- ================= FILTER MENU ================= -->
+<nk-menu floating sheet id="filterMenu" aria-label="Filter">
+  <nk-menu-item type="label">Filtern nach</nk-menu-item>
+  <nk-menu-item type="check" icon="◉" value="open">Status: Offen</nk-menu-item>
+  <nk-menu-item type="check" icon="◉" value="done">Status: Erledigt</nk-menu-item>
+  <nk-menu-item type="check" icon="👤" value="mine">Verantwortlich: Marcel</nk-menu-item>
+</nk-menu>
+
+<!-- ================= MORE (phone) ================= -->
+<nk-sheet id="moreSheet" title="Mehr">
+  <nk-tree manual id="moreTree">
+    <nk-section-label>Favoriten</nk-section-label>
+    <nk-tree-item icon="🚀" value="mvp" no-actions>NotionKit MVP</nk-tree-item>
+    <nk-tree-item icon="🎙️" value="voh" no-actions>Voice-Office-Hub</nk-tree-item>
+    <nk-section-label>Workspace</nk-section-label>
+    <nk-tree-item icon="🧠" value="kb" no-actions>Wissensbasis</nk-tree-item>
+    <nk-tree-item icon="🎨" value="design" no-actions>Designsystem</nk-tree-item>
+    <nk-tree-item icon="🗓️" value="editorial" no-actions>Redaktionsplan</nk-tree-item>
+    <nk-tree-item icon="🗑️" value="trash" no-actions>Papierkorb</nk-tree-item>
+  </nk-tree>
+</nk-sheet>
 
 <nk-toast id="toast"></nk-toast>
 
@@ -402,7 +429,25 @@
     { id: 4, icon: '▤', name: 'Board-View & Drag-and-Drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
   ];
   db.columns = columns;
-  db.rows = projects;
+
+  /* ============ Filters and sort: they act on table, board and list ============ */
+  const FILTERS = {
+    open: { id: 'open', key: 'status', value: 'done', op: 'is-not', label: 'Status: Offen' },
+    done: { id: 'done', key: 'status', value: 'done', label: 'Status: Erledigt' },
+    mine: { id: 'mine', key: 'owner', value: marcel, label: 'Verantwortlich: Marcel' },
+  };
+  let filters = new Set(['open']);
+  let sortByDue = false;
+  const dueKey = p => p.due.split('.').reverse().join('');
+  function renderAll() {
+    filterBar.filters = [...filters].map(f => FILTERS[f]);
+    const shown = filterBar.apply(projects);
+    db.rows = sortByDue ? [...shown].sort((a, b) => dueKey(a).localeCompare(dueKey(b))) : shown;
+    filterBtn.active = filters.size > 0;
+    sortBtn.active = sortByDue;
+    filterMenu.querySelectorAll('nk-menu-item[type="check"]').forEach(item => { item.checked = filters.has(item.value); });
+  }
+  renderAll();
 
   /* ============ Start view: what is due, as a list ============ */
   upcoming.columns = [
@@ -421,12 +466,13 @@
 
   /* ============ Database events ============ */
   let counter = 1;
+  function newRow(status) {
+    projects.push({ id: Date.now(), icon: '📄', name: 'Unbenannt ' + counter++, status: status || 'planned', due: '—', progress: 0, effort: '—' });
+    renderAll();
+    toast.show('Neue Seite angelegt');
+  }
   db.addEventListener('nk-action', e => {
-    if (e.detail.action === 'new-row') {
-      projects.push({ id: Date.now(), icon: '📄', name: 'Unbenannt ' + counter++, status: e.detail.value || 'planned', due: '—', progress: 0, effort: '—' });
-      db.rows = projects;
-      toast.show('Neue Seite angelegt');
-    }
+    if (e.detail.action === 'new-row') newRow(e.detail.value);
     if (e.detail.action === 'add-view') toast.show('Ansichten: Tabelle, Board und Liste – mehr in deiner App');
     if (e.detail.action === 'sort') toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`);
   });
@@ -441,7 +487,7 @@
     home.hidden = name !== 'home';
     crumbs.innerHTML = name === 'home' ? '<span>🏠 Start</span>' : pageCrumbs;
     lastEdited.hidden = name === 'home';
-    closePageMenu();
+    pageOptions.close();
   }
   home.addEventListener('click', e => {
     const panel = e.target.closest('nk-panel, nk-list-view');
@@ -458,20 +504,16 @@
   });
   tree.addEventListener('nk-action', e => toast.show(`${e.detail.action === 'add' ? 'Seite anlegen unter' : 'Optionen für'} „${e.detail.label}“`));
   sidebar.addEventListener('nk-select', e => {
-    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); }
+    if (e.detail.value === 'settings') { e.preventDefault(); settingsModal.show(); }
     if (e.detail.value === 'trash') { e.preventDefault(); toast.show('Der Papierkorb ist leer'); }
   });
   sidebar.addEventListener('nk-select', e => { if (e.target.localName === 'nk-menu-item') toast.show(`Workspace: ${e.detail.label}`); });
-  menuBtn.addEventListener('click', () => sidebar.toggle());
   tabBar.addEventListener('nk-select', e => {
-    if (e.detail.drawer) return;                       // opens the sidebar drawer by itself
-    if (e.detail.value === 'settings') { e.preventDefault(); settings.show(); return; }
+    if (e.detail.value === 'more') { e.preventDefault(); moreSheet.show(); return; }
+    if (e.detail.value === 'settings') { e.preventDefault(); settingsModal.show(); return; }
     if (e.detail.value === 'home') { showView('home'); return; }
     toast.show(`Tab: ${e.detail.label}`);
   });
-  const narrow = matchMedia('(max-width: 860px)');
-  const syncMenuBtn = () => { menuBtn.style.display = narrow.matches ? '' : 'none'; };
-  narrow.addEventListener('change', syncMenuBtn); syncMenuBtn();
 
   /* ============ Theme ============ */
   themeToggle.addEventListener('nk-change', e => toast.show(e.detail.value === 'dark' ? 'Dunkelmodus an' : 'Hellmodus an'));
@@ -506,36 +548,69 @@
   fontSizeSlider.addEventListener('nk-change', e => toast.show('Textgröße auf ' + e.detail.value + ' % gesetzt'));
   document.querySelectorAll('[data-save]').forEach(b => b.addEventListener('click', () => toast.show('Einstellungen gespeichert')));
   document.querySelectorAll('[data-save-danger]').forEach(b => b.addEventListener('click', () => toast.show('Nur eine Vorschau – nichts wurde gelöscht')));
-  settings.addEventListener('nk-select', e => console.log('pane', e.detail.value));
+  settingsModal.addEventListener('nk-select', e => console.log('pane', e.detail.value));
 
   /* ============ Page menu: small text, full width ============ */
   const currentPage = () => (home.hidden ? page : home);
   function syncPageMenu() {
     pageOptions.querySelectorAll('nk-menu-item[type="switch"]').forEach(item => { item.checked = currentPage().hasAttribute(item.value); });
   }
-  function openPageMenu() {
-    // Measured on the inner button: the nk-btn host has no box.
-    const r = pageMenuBtn.shadowRoot.querySelector('button').getBoundingClientRect();
-    pageOptionsBox.style.top = (r.bottom + 6) + 'px';
-    pageOptionsBox.style.right = Math.max(8, innerWidth - r.right) + 'px';
-    syncPageMenu();
-    pageOptionsBox.hidden = false;
-    pageMenuBtn.setAttribute('aria-expanded', 'true');
-  }
-  function closePageMenu() {
-    pageOptionsBox.hidden = true;
-    pageMenuBtn.setAttribute('aria-expanded', 'false');
-  }
-  pageMenuBtn.addEventListener('click', e => { e.stopPropagation(); pageOptionsBox.hidden ? openPageMenu() : closePageMenu(); });
-  pageOptions.addEventListener('click', e => e.stopPropagation());
+  // The menu positions itself under the button, closes on a tap outside,
+  // Escape or a chosen item; a switch row keeps it open.
+  pageMenuBtn.addEventListener('click', () => { syncPageMenu(); pageOptions.toggle(pageMenuBtn); });
   pageOptions.addEventListener('nk-change', e => {
     currentPage().toggleAttribute(e.detail.value, e.detail.checked);
     const msgs = { small: ['Kleiner Text an', 'Kleiner Text aus'], full: ['Volle Breite an', 'Volle Breite aus'] };
     toast.show(msgs[e.detail.value][e.detail.checked ? 0 : 1]);
   });
-  pageOptions.addEventListener('nk-select', () => closePageMenu());
-  document.addEventListener('click', () => closePageMenu());
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePageMenu(); });
+
+  /* ============ Toolbar and filter pills ============ */
+  filterBtn.addEventListener('click', () => filterMenu.toggle(filterBtn));
+  filterMenu.addEventListener('nk-change', e => {
+    e.detail.checked ? filters.add(e.detail.value) : filters.delete(e.detail.value);
+    renderAll();
+    toast.show((e.detail.checked ? 'Filter an: ' : 'Filter aus: ') + FILTERS[e.detail.value].label);
+  });
+  filterBar.addEventListener('nk-action', e => filterMenu.show(e.detail.anchor));   // a pill or ＋ Filter
+  filterBar.addEventListener('nk-change', e => {
+    const kept = new Set(e.detail.filters.map(f => f.id));
+    const removed = [...filters].find(f => !kept.has(f));
+    filters = kept;
+    renderAll();
+    if (removed) toast.show('Filter aus: ' + FILTERS[removed].label);
+  });
+  sortBtn.addEventListener('click', () => { sortByDue = !sortByDue; renderAll(); toast.show(sortByDue ? 'Nach Fälligkeit sortiert' : 'Ursprüngliche Reihenfolge'); });
+  searchBtn.addEventListener('click', () => toast.show('Suche in dieser Datenbank'));
+  newBtn.addEventListener('click', () => newRow());
+
+  /* ============ More (phone): the rest of the sidebar as a sheet ============ */
+  moreSheet.addEventListener('nk-select', e => {
+    e.preventDefault();
+    moreSheet.close();
+    if (e.detail.value === 'mvp') showView('mvp');
+    else toast.show(e.detail.label);
+  });
+
+  /* ============ AI assistant: steps for your own model ============ */
+  modelSteps.steps = [{ label: 'Anbieter wählen', desc: 'Anthropic' }, 'API-Schlüssel eintragen', 'Verbindung testen'];
+  document.querySelectorAll('nk-model-card').forEach(card => card.addEventListener('nk-select', () => { modelSteps.hidden = card.value !== 'custom'; }));
+  aiSave.addEventListener('click', () => {
+    if (!modelSteps.hidden) { modelSteps.current = 3; toast.show('API-Schlüssel gespeichert'); } else toast.show('Einstellungen gespeichert');
+  });
+  aiTest.addEventListener('click', () => { if (!modelSteps.hidden) modelSteps.current = 4; toast.show('Verbindung steht'); });
+
+  /* ============ Anchors: #menu, #filter, #more, #settings open that state ============ */
+  // The landing page shows app.html#menu: a popover on the desktop, a sheet
+  // on the phone – one markup, two presentations.
+  function openFromHash() {
+    const h = location.hash;
+    if (h === '#menu') { syncPageMenu(); pageOptions.show(pageMenuBtn); }
+    if (h === '#filter') { filterBtn.shadowRoot.querySelector('button').scrollIntoView({ block: 'center' }); filterMenu.show(filterBtn); }
+    if (h === '#more') moreSheet.show();
+    if (h === '#settings') settingsModal.show();
+  }
+  requestAnimationFrame(openFromHash);
+  addEventListener('hashchange', openFromHash);
 
   /* ============ Editor: edit or read ============ */
   const editorHost = document.getElementById('tiptap-demo');
@@ -560,7 +635,7 @@
     { group: 'Aktionen', items: [
       { id: 'new', icon: '＋', label: 'Neue Seite anlegen', shortcut: '⌘N' },
       { id: 'theme', icon: '🌙', label: 'Theme wechseln', shortcut: '⌘⇧L', action: () => themeToggle.apply(themeToggle.value === 'dark' ? 'light' : 'dark') },
-      { id: 'settings', icon: '⚙️', label: 'Einstellungen öffnen', shortcut: '⌘,', action: () => settings.show() },
+      { id: 'settings', icon: '⚙️', label: 'Einstellungen öffnen', shortcut: '⌘,', action: () => settingsModal.show() },
       { id: 'export', icon: '📤', label: 'Seite exportieren …' },
     ]},
   ];

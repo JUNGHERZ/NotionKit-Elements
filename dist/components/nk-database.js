@@ -7,16 +7,24 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // </nk-database>
 // db.columns = [{ key: 'name', label: 'Name', type: 'text', icon: '📄', title: true }, { key: 'status', type: 'select', options: [...] }, …];
 // db.rows = [{ id: 1, icon: '🧭', name: '…', status: 'done', … }];
-// → <div class="nk-database"><div class="nk-db-tabs">…</div>…active view…</div>
+// <nk-btn slot="tools" variant="tool">Filter</nk-btn> … sit right of the tabs,
+// <nk-filter-bar slot="filters"> under them (NotionKit 1.7.0's toolbar).
+// → <div class="nk-database"><div class="nk-db-toolbar"><div class="nk-db-tabs">…</div>
+//     <div class="tools">…</div></div>…filters…active view…</div>
 // The tabs come from the child views; data is pushed into every view.
 class NkDatabase extends NkElement {
   static get observedAttributes() { return ['view', 'add-view']; }
 
   render() {
     this._box = this.createElement('div', ['nk-database']);
+    this._toolbar = this.createElement('div', ['nk-db-toolbar']);
     this._tabs = this.createElement('div', ['nk-db-tabs'], { role: 'tablist' });
+    const tools = this.createElement('div', ['tools']);
+    this._toolsSlot = this.createElement('slot', [], { name: 'tools' });
+    tools.appendChild(this._toolsSlot);
+    this._toolbar.append(this._tabs, tools);
     this._slot = document.createElement('slot');
-    this._box.append(this._tabs, this._slot);
+    this._box.append(this._toolbar, this.createElement('slot', [], { name: 'filters' }), this._slot);
     this._wrapper.appendChild(this._box);
     this._columns = []; this._rows = [];
     this._sync();
@@ -44,12 +52,11 @@ class NkDatabase extends NkElement {
       v.setData?.(this._columns, this._rows);
     }
     if (this.getBoolAttr('add-view')) {
-      const add = this.createElement('span', ['nk-db-tab'], { role: 'button', 'data-add': '', tabindex: '0' });
-      add.style.color = 'var(--nk-text-tertiary)';
+      const add = this.createElement('span', ['nk-db-tab', 'add'], { role: 'button', 'data-add': '', tabindex: '0' });
       add.textContent = '＋';
       this._tabs.appendChild(add);
     }
-    this._tabs.style.display = views.length ? '' : 'none';
+    this._toolbar.hidden = !views.length && !this._toolsSlot.assignedElements().length;
     this._current = current;
   }
 
@@ -71,6 +78,7 @@ class NkDatabase extends NkElement {
     this._tabs.addEventListener('click', this._onClick);
     this._tabs.addEventListener('keydown', this._onKey);
     this._slot.addEventListener('slotchange', this._onSlot);
+    this._toolsSlot.addEventListener('slotchange', this._onSlot);
     this._sync();
   }
 
@@ -78,6 +86,7 @@ class NkDatabase extends NkElement {
     this._tabs?.removeEventListener('click', this._onClick);
     this._tabs?.removeEventListener('keydown', this._onKey);
     this._slot?.removeEventListener('slotchange', this._onSlot);
+    this._toolsSlot?.removeEventListener('slotchange', this._onSlot);
   }
 
   onAttributeChanged(name) {

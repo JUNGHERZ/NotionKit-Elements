@@ -16,7 +16,7 @@ const PAIRS = [
   ['value="kb">Knowledge base', 'value="kb">Wissensbasis'], ['value="design">Design system<', 'value="design">Designsystem<'], ['value="editorial">Editorial plan<', 'value="editorial">Redaktionsplan<'], ['value="clients">Client projects<', 'value="clients">Kundenprojekte<'],
   ['<nk-section-label>Team spaces</nk-section-label>', '<nk-section-label>Team-Bereiche</nk-section-label>'],
   ['no-actions>Settings<', 'no-actions>Einstellungen<'], ['no-actions>Trash<', 'no-actions>Papierkorb<'],
-  ['value="search">Search<', 'value="search">Suche<'], ['value="settings">Settings<', 'value="settings">Einstellungen<'], ['drawer>More<', 'drawer>Mehr<'],
+  ['value="search">Search<', 'value="search">Suche<'], ['value="settings">Settings<', 'value="settings">Einstellungen<'], ['id="moreTab">More<', 'id="moreTab">Mehr<'],
   ['<span>📊 Project overview</span>', '<span>📊 Projektübersicht</span>'], ['>Last edited 2 min ago<', '>Zuletzt bearbeitet vor 2 Min.<'], ['variant="share">Share<', 'variant="share">Teilen<'], ['title="Favourite"', 'title="Favorit"'],
   ['<nk-tag color="purple">Design system</nk-tag>', '<nk-tag color="purple">Designsystem</nk-tag>'],
   ['A calm UI framework in the Notion idiom – as web components, without a build step. This page is the living preview: sidebar, page tree, callouts, todos, toggles and database views in one shell.', 'Ein ruhiges UI-Framework im Notion-Stil – als Web Components, ohne Build-Schritt. Diese Seite ist die lebende Vorschau: Sidebar, Seitenbaum, Callouts, Todos, Toggles und Datenbank-Ansichten in einer Hülle.'],
@@ -64,7 +64,7 @@ const PAIRS = [
   ['desc="A balanced model for everyday work. Fast, calm, dependable." selected><span slot="title">Mona Standard <span class="nk-tag green">Recommended</span></span>', 'desc="Ein ausgewogenes Modell für den Alltag. Schnell, ruhig, verlässlich." selected><span slot="title">Mona Standard <span class="nk-tag green">Empfohlen</span></span>'],
   ['title="Mona Deep" desc="More depth of thought for complex analysis and long documents. Answers more slowly."', 'title="Mona Deep" desc="Mehr Denktiefe für komplexe Analysen und lange Dokumente. Antwortet langsamer."'], ['desc="Connect your own API key (OpenAI, Anthropic, Azure)."><span slot="title">Custom model', 'desc="Eigenen API-Schlüssel verbinden (OpenAI, Anthropic, Azure)."><span slot="title">Eigenes Modell'],
   ['<h3>Reply style</h3>', '<h3>Antwortstil</h3>'], ['checked>Calm &amp; concise<', 'checked>Ruhig &amp; knapp<'], ['value="detailed">Detailed &amp; explanatory<', 'value="detailed">Ausführlich &amp; erklärend<'], ['value="bullets">Bullet points only<', 'value="bullets">Nur Stichpunkte<'],
-  ['label="API key" desc="Only needed for a custom model. Stays stored locally."', 'label="API-Schlüssel" desc="Nur für ein eigenes Modell nötig. Bleibt lokal gespeichert."'], ['data-save>Save</nk-btn>', 'data-save>Speichern</nk-btn>'], ['<nk-btn variant="secondary">Test connection</nk-btn>', '<nk-btn variant="secondary">Verbindung testen</nk-btn>'],
+  ['label="API key" desc="Only needed for a custom model. Stays stored locally."', 'label="API-Schlüssel" desc="Nur für ein eigenes Modell nötig. Bleibt lokal gespeichert."'], ['id="aiSave">Save<', 'id="aiSave">Speichern<'], ['id="aiTest">Test connection<', 'id="aiTest">Verbindung testen<'],
   ['group="Workspace" icon="⚙️" label="General" title="Workspace settings"', 'group="Workspace" icon="⚙️" label="Allgemein" title="Workspace-Einstellungen"'], ['label="Workspace name"', 'label="Workspace-Name"'], ['label="Domain" desc="Public pages appear under this address."', 'label="Domain" desc="Öffentliche Seiten erscheinen unter dieser Adresse."'], ['label="Public home page" desc="Visitors may view shared pages without signing in."', 'label="Öffentliche Startseite" desc="Besucher sehen geteilte Seiten ohne Anmeldung."'],
   ['title="⚠️ Danger zone"', 'title="⚠️ Gefahrenzone"'], ['label="Delete workspace" desc="Irreversibly removes all pages, databases and members."', 'label="Workspace löschen" desc="Entfernt unwiderruflich alle Seiten, Datenbanken und Mitglieder."'], ['data-save-danger>Delete<', 'data-save-danger>Löschen<'],
   ['group="Workspace" icon="👥" label="Members" title="Members"', 'group="Workspace" icon="👥" label="Mitglieder" title="Mitglieder"'], ['placeholder="Invite an email address …"', 'placeholder="E-Mail-Adresse einladen …"'], ['data-save>Invite<', 'data-save>Einladen<'], ['mail="Virtual co-founder"', 'mail="Virtuelle Mitgründerin"'],
@@ -95,6 +95,18 @@ const PAIRS = [
   ["due: '20 May'", "due: '20. Mai'"], ["due: '2 June'", "due: '2. Juni'"], ["due: '5 June'", "due: '5. Juni'"], ["name: 'Data model for tree & database'", "name: 'Datenmodell für Baum & Datenbank'"],
   ["'<span>🏠 Home</span>'", "'<span>🏠 Start</span>'"],
   ["small: ['Small text on', 'Small text off'], full: ['Full width on', 'Full width off']", "small: ['Kleiner Text an', 'Kleiner Text aus'], full: ['Volle Breite an', 'Volle Breite aus']"],
+  // 1.7.0 – mobile and filter
+  ['id="menuBtn" aria-label="Menu"', 'id="menuBtn" aria-label="Menü"'],
+  ['id="sortBtn">Sort<', 'id="sortBtn">Sortieren<'], ['id="searchBtn" aria-label="Search"', 'id="searchBtn" aria-label="Suche"'], ['id="newBtn">New<', 'id="newBtn">Neu<'], ['remove-label="Remove filter"', 'remove-label="Filter entfernen"'],
+  ['type="label">Filter by<', 'type="label">Filtern nach<'], ['value="open">Status: Open<', 'value="open">Status: Offen<'], ['value="done">Status: Done<', 'value="done">Status: Erledigt<'], ['value="mine">Owner: Marcel<', 'value="mine">Verantwortlich: Marcel<'],
+  ["label: 'Status: Open' }", "label: 'Status: Offen' }"], ["label: 'Status: Done' }", "label: 'Status: Erledigt' }"], ["label: 'Owner: Marcel' }", "label: 'Verantwortlich: Marcel' }"],
+  ["(e.detail.checked ? 'Filter on: ' : 'Filter off: ')", "(e.detail.checked ? 'Filter an: ' : 'Filter aus: ')"], ["toast.show('Filter off: ' + FILTERS[removed].label)", "toast.show('Filter aus: ' + FILTERS[removed].label)"],
+  ["toast.show(sortByDue ? 'Sorted by due date' : 'Original order')", "toast.show(sortByDue ? 'Nach Fälligkeit sortiert' : 'Ursprüngliche Reihenfolge')"], ["toast.show('Search in this database')", "toast.show('Suche in dieser Datenbank')"],
+  ['value="day">Day<', 'value="day">Tag<'], ['value="half-year">Half-year<', 'value="half-year">Halbjahr<'], ['value="year">Year<', 'value="year">Jahr<'],
+  ['<nk-sheet id="moreSheet" title="More">', '<nk-sheet id="moreSheet" title="Mehr">'], ['<nk-section-label>Favourites</nk-section-label>', '<nk-section-label>Favoriten</nk-section-label>'],
+  ['value="kb" no-actions>Knowledge base<', 'value="kb" no-actions>Wissensbasis<'], ['value="design" no-actions>Design system<', 'value="design" no-actions>Designsystem<'], ['value="editorial" no-actions>Editorial plan<', 'value="editorial" no-actions>Redaktionsplan<'],
+  ['label="Connect your own model"', 'label="Eigenes Modell verbinden"'], ["[{ label: 'Choose a provider', desc: 'Anthropic' }, 'Enter the API key', 'Test the connection']", "[{ label: 'Anbieter wählen', desc: 'Anthropic' }, 'API-Schlüssel eintragen', 'Verbindung testen']"],
+  ["toast.show('API key saved')", "toast.show('API-Schlüssel gespeichert')"], ["toast.show('Connection works')", "toast.show('Verbindung steht')"],
 ];
 
 let html = readFileSync('app.html', 'utf-8');

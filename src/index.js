@@ -80,6 +80,10 @@ export { NkProp } from './components/page/nk-prop.js';
 export { NkPanels } from './components/page/nk-panels.js';
 export { NkPanel } from './components/page/nk-panel.js';
 
+// 1.7.0 – mobile and filter
+export { NkSheet } from './components/overlays/nk-sheet.js';
+export { NkSteps } from './components/page/nk-steps.js';
+
 // Wave 4 – overlays
 export { NkModal } from './components/overlays/nk-modal.js';
 export { NkSettingsPane } from './components/overlays/nk-settings-pane.js';

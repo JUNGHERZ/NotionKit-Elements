@@ -7,6 +7,9 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // → <div class="nk-segmented">…</div> with .active on the chosen button.
 // The buttons stay in the light DOM (their look comes from the ::slotted
 // twins); the element sets type/role, moves .active and submits the value.
+// With `scroll` the chosen option is kept in view – after the first layout,
+// on every change and when the row's width changes – by scrolling the row
+// alone, never the page, by a relative distance, so right-to-left works too.
 const KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
 
 class NkSegmented extends NkFormElement {
@@ -50,6 +53,19 @@ class NkSegmented extends NkFormElement {
     }
     this._value = value;
     this.setFormValue(value);
+    this._reveal(this._revealed ? 'smooth' : 'instant');
+  }
+
+  /** Scrolls the row the least distance that shows the chosen button whole. */
+  _reveal(behavior) {
+    if (!this.getBoolAttr('scroll') || !this._box?.clientWidth) return;
+    const btn = this.buttons.find(b => b.classList.contains('active'));
+    if (!btn) return;
+    const row = this._box.getBoundingClientRect(), r = btn.getBoundingClientRect(), pad = 8;
+    const delta = r.left < row.left ? r.left - row.left - pad : r.right > row.right ? r.right - row.right + pad : 0;
+    const smooth = behavior === 'smooth' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (delta) this._box.scrollBy({ left: delta, behavior: smooth ? 'smooth' : 'instant' });
+    this._revealed = true;
   }
 
   setupEvents() {
@@ -73,6 +89,8 @@ class NkSegmented extends NkFormElement {
     this._slot.addEventListener('slotchange', this._onSlot);
     this.addEventListener('click', this._onClick);
     this.addEventListener('keydown', this._onKey);
+    this._resize = new ResizeObserver(() => this._reveal('instant'));
+    this._resize.observe(this._box);
     this._sync();
   }
 
@@ -80,6 +98,7 @@ class NkSegmented extends NkFormElement {
     this._slot?.removeEventListener('slotchange', this._onSlot);
     this.removeEventListener('click', this._onClick);
     this.removeEventListener('keydown', this._onKey);
+    this._resize?.disconnect();
   }
 
   _choose(value) {

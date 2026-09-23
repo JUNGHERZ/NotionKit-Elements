@@ -5,10 +5,12 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // <nk-menu-item type="separator"></nk-menu-item>   <nk-menu-item type="label">Danger</nk-menu-item>
 // <nk-menu-item icon="🗑️" danger value="delete">Delete</nk-menu-item>
 // <nk-menu-item type="switch" icon="🔡" value="small" checked>Small text</nk-menu-item>
+// <nk-menu-item type="check" icon="◉" value="open" checked>Status: Open</nk-menu-item>
 // → <div class="nk-menu-item danger"><span class="m-icon">🗑️</span>Delete<span class="m-shortcut">…</span></div>
 // A switch item carries a .nk-switch on the right, as "Small text" does in
-// Notion's page menu: a click flips `checked` and fires nk-change { value,
-// checked } instead of nk-select, so the menu around it stays open.
+// Notion's page menu; a check item a ✓ where the shortcut stands, as in a
+// filter menu. A click on either flips `checked` and fires nk-change
+// { value, checked } instead of nk-select, so the menu around it stays open.
 class NkMenuItem extends NkElement {
   static get observedAttributes() { return ['icon', 'shortcut', 'danger', 'value', 'type', 'disabled', 'checked']; }
 
@@ -24,7 +26,8 @@ class NkMenuItem extends NkElement {
       el.appendChild(document.createElement('slot'));
     } else {
       const isSwitch = type === 'switch';
-      el = this.createElement('div', ['nk-menu-item'], { role: isSwitch ? 'menuitemcheckbox' : 'menuitem', tabindex: '-1' });
+      this._check = type === 'check';
+      el = this.createElement('div', ['nk-menu-item'], { role: isSwitch || this._check ? 'menuitemcheckbox' : 'menuitem', tabindex: '-1' });
       this._icon = this.createElement('span', ['m-icon']);
       const iconSlot = this.createElement('slot', [], { name: 'icon' });
       iconSlot.appendChild(this._icon);
@@ -49,10 +52,11 @@ class NkMenuItem extends NkElement {
     this._shortcut.style.display = sc ? '' : 'none';
     this._el.classList.toggle('danger', this.getBoolAttr('danger'));
     this._el.setAttribute('aria-disabled', this.getBoolAttr('disabled') ? 'true' : 'false');
-    if (this._switch) {
+    if (this._switch || this._check) {
       const on = this.getBoolAttr('checked') ? 'true' : 'false';
       this._el.setAttribute('aria-checked', on);
-      this._switch.setAttribute('aria-checked', on);
+      if (this._switch) this._switch.setAttribute('aria-checked', on);
+      if (this._check) { this._shortcut.textContent = on === 'true' ? '✓' : ''; this._shortcut.style.display = ''; }
     }
   }
 
@@ -65,7 +69,7 @@ class NkMenuItem extends NkElement {
 
   select() {
     if (!this._el.classList.contains('nk-menu-item') || this.getBoolAttr('disabled')) return;
-    if (this._switch) {
+    if (this._switch || this._check) {
       this.checked = !this.checked;
       this.emit('nk-change', { value: this.value, checked: this.checked, item: this });
       return;

@@ -68,13 +68,14 @@ const dbBoardClass = W => `<div class="nk-board active">
 export const CATALOG = [
 // ============================================================ WAVE 1 · FORMS
 {
-  tag: 'nk-btn', group: 'forms', classes: ['nk-btn', 'primary', 'secondary', 'danger', 'danger-solid', 'small', 'nk-topbar-btn', 'nk-share-btn'],
+  tag: 'nk-btn', group: 'forms', classes: ['nk-btn', 'primary', 'secondary', 'danger', 'danger-solid', 'small', 'nk-topbar-btn', 'nk-share-btn', 'nk-db-tool', 'active', 'nk-sidebar-toggle'],
   title: t('Button', 'Button'),
   desc: t('Renders <code>button.nk-btn</code>, or <code>a.nk-btn</code> when <code>href</code> is set. Modifier classes become attributes. A slotted <code>&lt;svg&gt;</code> is sized by the stylesheet – pass it directly, never wrapped.',
           'Rendert <code>button.nk-btn</code>, mit <code>href</code> ein <code>a.nk-btn</code>. Modifikator-Klassen werden Attribute. Ein geslottetes <code>&lt;svg&gt;</code> bekommt seine Größe aus dem Stylesheet – direkt übergeben, nie verpackt.'),
   mobile: t('Unchanged. The button grows with its label; combine with <code>small</code> in dense toolbars.', 'Unverändert. Der Button wächst mit seiner Beschriftung; in dichten Leisten <code>small</code> setzen.'),
   attrs: [
-    str('variant', 'primary | secondary | danger | danger-solid | topbar | share', 'Visual variant. <code>topbar</code> and <code>share</code> render <code>.nk-topbar-btn</code> for the top bar.', 'Optische Variante. <code>topbar</code> und <code>share</code> rendern <code>.nk-topbar-btn</code> für die Topbar.'),
+    str('variant', 'primary | secondary | danger | danger-solid | topbar | share | tool | sidebar', 'Visual variant. <code>topbar</code> and <code>share</code> render <code>.nk-topbar-btn</code> for the top bar. <code>tool</code> renders <code>.nk-db-tool</code>, a tool in the database toolbar (<code>slot="tools"</code> of <code>nk-database</code>). <code>sidebar</code> is the ☰ <code>.nk-topbar-btn.nk-sidebar-toggle</code>: shown below 860px only, a click opens the <code>nk-sidebar</code> of its app as a drawer and sets <code>aria-expanded</code>.', 'Optische Variante. <code>topbar</code> und <code>share</code> rendern <code>.nk-topbar-btn</code> für die Topbar. <code>tool</code> rendert <code>.nk-db-tool</code>, ein Werkzeug der Datenbank-Leiste (<code>slot="tools"</code> von <code>nk-database</code>). <code>sidebar</code> ist das ☰ <code>.nk-topbar-btn.nk-sidebar-toggle</code>: nur unter 860px sichtbar, ein Klick öffnet die <code>nk-sidebar</code> seiner App als Schublade und setzt <code>aria-expanded</code>.'),
+    bool('active', 'A tool in effect – a set filter – takes the accent (<code>variant="tool"</code>).', 'Ein wirkendes Werkzeug – ein gesetzter Filter – bekommt den Akzent (<code>variant="tool"</code>).'),
     bool('small', 'Compact padding and 12.5px text.', 'Kompaktes Padding und 12,5px Text.'),
     bool('disabled', 'Disabled; clicks are swallowed.', 'Deaktiviert; Klicks werden verschluckt.'),
     str('type', 'button | submit | reset', 'For <code>submit</code>/<code>reset</code> the surrounding <code>&lt;form&gt;</code> is submitted or reset.', 'Bei <code>submit</code>/<code>reset</code> wird das umgebende <code>&lt;form&gt;</code> abgeschickt bzw. zurückgesetzt.', { default: 'button' }),
@@ -428,11 +429,11 @@ export const CATALOG = [
 </div>`,
 },
 {
-  tag: 'nk-sidebar', group: 'shell', classes: ['nk-sidebar', 'nk-sidebar-scroll', 'nk-sidebar-footer'], frame: 260,
+  tag: 'nk-sidebar', group: 'shell', classes: ['nk-sidebar', 'nk-sidebar-scroll', 'nk-sidebar-footer', 'nk-sidebar-backdrop', 'open'], frame: 260,
   title: t('Sidebar', 'Sidebar'),
   desc: t('The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get <code>compact</code> (26px rows). The host is <code>display: contents</code>, so the <code>aside</code> is a direct flex child of the app – exactly like the class markup.',
           'Die linke Leiste: Workspace-Slot oben, ein scrollender Default-Slot für den Baum, ein fixierter Footer-Slot. Footer-Einträge bekommen automatisch <code>compact</code> (26px-Zeilen). Der Host ist <code>display: contents</code>, das <code>aside</code> also direktes Flex-Kind der App – wie im Klassen-Markup.'),
-  mobile: t('Hidden below 860px. <code>open</code> shows it as an off-canvas drawer with a scrim; Escape and the scrim close it. The drawer slides in over 240ms and the scrim fades, closing runs backwards – CSS only (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; older browsers switch hard, reduced motion snaps). In landscape the drawer grows by the left safe-area inset, so its rows clear the Dynamic Island.', 'Unter 860px verborgen. <code>open</code> zeigt sie als Off-Canvas-Schublade mit Scrim; Escape und der Scrim schließen sie. Die Schublade gleitet in 240ms herein, der Scrim blendet ein, das Schließen läuft rückwärts – nur CSS (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; ältere Browser schalten hart, reduzierte Bewegung springt). Im Querformat wächst die Schublade um den linken Safe-Area-Inset, ihre Zeilen weichen der Dynamic Island aus.'),
+  mobile: t('Hidden below 860px. <code>open</code> shows it as a drawer over the page with a scrim – NotionKit’s own rules since 1.7.0 (<code>.nk-sidebar.open</code>, <code>.nk-sidebar-backdrop</code>), the same as the class markup’s; <code>&lt;nk-btn variant="sidebar"&gt;</code> in the topbar is the ☰ that opens it. Escape and the scrim close it. The drawer slides in over 240ms and the scrim fades, closing runs backwards – CSS only (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; older browsers switch hard, reduced motion snaps). In landscape the drawer grows by the left safe-area inset, so its rows clear the Dynamic Island.', 'Unter 860px verborgen. <code>open</code> zeigt sie als Schublade über der Seite mit Scrim – NotionKits eigene Regeln seit 1.7.0 (<code>.nk-sidebar.open</code>, <code>.nk-sidebar-backdrop</code>), dieselben wie im Klassen-Markup; <code>&lt;nk-btn variant="sidebar"&gt;</code> in der Topbar ist das ☰, das sie öffnet. Escape und der Scrim schließen sie. Die Schublade gleitet in 240ms herein, der Scrim blendet ein, das Schließen läuft rückwärts – nur CSS (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; ältere Browser schalten hart, reduzierte Bewegung springt). Im Querformat wächst die Schublade um den linken Safe-Area-Inset, ihre Zeilen weichen der Dynamic Island aus.'),
   attrs: [bool('open', 'Drawer state on small screens (no effect on desktop).', 'Schubladen-Zustand auf kleinen Schirmen (ohne Wirkung am Desktop).')],
   slots: [{ name: 'workspace', desc: t('<code>nk-workspace-switcher</code>.', '<code>nk-workspace-switcher</code>.') }, { name: '(default)', desc: t('The tree (scrolls).', 'Der Baum (scrollt).') }, { name: 'footer', desc: t('Pinned bottom rows (Settings, Trash).', 'Fixierte Zeilen unten (Einstellungen, Papierkorb).') }],
   events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Drawer opened/closed.', 'Schublade geöffnet/geschlossen.') }],
@@ -840,7 +841,7 @@ export const CATALOG = [
 {
   tag: 'nk-segmented', group: 'page', classes: ['nk-segmented', 'active', 'scroll', 'wrap'],
   title: t('Segmented control', 'Segment-Schalter'),
-  desc: t('Plain <code>&lt;button value&gt;</code> children stay in the light DOM (the stylesheet’s slotted twins shape them); the element moves <code>.active</code>, handles arrow keys and submits <code>value</code> with the form.', 'Einfache <code>&lt;button value&gt;</code>-Kinder bleiben im Light DOM (die Slot-Zwillinge des Stylesheets formen sie); das Element bewegt <code>.active</code>, behandelt Pfeiltasten und sendet <code>value</code> mit dem Formular.'),
+  desc: t('Plain <code>&lt;button value&gt;</code> children stay in the light DOM (the stylesheet’s slotted twins shape them); the element moves <code>.active</code>, handles arrow keys and submits <code>value</code> with the form. With <code>scroll</code> the chosen option stays in view: after the first layout, on every change and when the row’s width changes, the row – never the page – scrolls the least distance, right to left as well.', 'Einfache <code>&lt;button value&gt;</code>-Kinder bleiben im Light DOM (die Slot-Zwillinge des Stylesheets formen sie); das Element bewegt <code>.active</code>, behandelt Pfeiltasten und sendet <code>value</code> mit dem Formular. Mit <code>scroll</code> bleibt die gewählte Option im Blick: nach dem ersten Layout, bei jeder Änderung und wenn sich die Breite der Zeile ändert, scrollt die Zeile – nie die Seite – den kürzesten Weg, auch von rechts nach links.'),
   mobile: t('One row by default, which five filter options overflow on a phone: <code>scroll</code> keeps one thumb-swipeable row capped at the parent width (scrollbar hidden), <code>wrap</code> breaks it onto further rows.', 'Standard ist eine Zeile, die fünf Filteroptionen auf dem Telefon sprengen: <code>scroll</code> hält eine wischbare Zeile, begrenzt auf die Elternbreite (Scrollleiste versteckt), <code>wrap</code> bricht um.'),
   attrs: [str('value', 'string', 'Selected value (default: the button with <code>.active</code>, else the first).', 'Gewählter Wert (Standard: Button mit <code>.active</code>, sonst der erste).'), bool('scroll', 'Horizontally scrollable row, scrollbar hidden.', 'Horizontal scrollbare Zeile, Scrollleiste versteckt.'), bool('wrap', 'Segments wrap onto further rows.', 'Segmente brechen in weitere Zeilen um.'), ...formAttrs],
   slots: [{ name: '(default)', desc: t('<code>&lt;button value="…"&gt;</code> children.', '<code>&lt;button value="…"&gt;</code>-Kinder.') }],
@@ -851,6 +852,24 @@ export const CATALOG = [
   classMarkup: W => `<div class="nk-segmented"><button class="active">${W.week}</button><button>${W.month}</button><button>${W.quarter}</button></div>
 <div style="max-width:300px;margin-top:12px"><div class="nk-segmented scroll"><button class="active">${W.all}</button><button>⚠️ ${W.attention}</button><button>${W.failed}</button><button>${W.read}</button><button>${W.ignored}</button></div></div>
 <div style="max-width:300px;margin-top:12px"><div class="nk-segmented wrap"><button class="active">${W.all}</button><button>⚠️ ${W.attention}</button><button>${W.failed}</button><button>${W.read}</button><button>${W.ignored}</button></div></div>`,
+},
+{
+  tag: 'nk-steps', group: 'page', classes: ['nk-steps', 'nk-step', 'st-mark', 'st-desc', 'done', 'current'],
+  title: t('Steps', 'Schritte'),
+  desc: t('A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked <code>aria-current="step"</code>. <code>current</code> counts from 1; one past the last marks every step done, and <code>next()</code> moves on. The <code>steps</code> attribute is a comma-separated list; the property also takes <code>{ label, desc }</code> objects for a line under the label.',
+          'Ein kurzer Ablauf – ein Konto verbinden, ein Modell einrichten –, ruhig und vertikal: ein nummerierter Kreis pro Schritt, verbunden durch eine Haarlinie, erledigte Schritte mit Haken auf dem grünen Tag, der aktuelle im Akzent umrandet und mit <code>aria-current="step"</code> markiert. <code>current</code> zählt ab 1; einer hinter dem letzten markiert alle Schritte als erledigt, <code>next()</code> geht weiter. Das Attribut <code>steps</code> ist eine kommagetrennte Liste; die Property nimmt auch <code>{ label, desc }</code>-Objekte für eine Zeile unter dem Label.'),
+  mobile: t('Unchanged: vertical, so it never runs out of width.', 'Unverändert: vertikal, die Breite geht also nie aus.'),
+  attrs: [str('steps', 'list', 'Comma-separated step labels.', 'Kommagetrennte Schritt-Labels.'), str('current', 'number', 'The current step, from 1.', 'Der aktuelle Schritt, ab 1.', { default: '1' }), str('label', 'string', 'The list’s accessible name.', 'Der zugängliche Name der Liste.')],
+  slots: [],
+  events: [],
+  props: ['steps', 'current'], methods: ['next()'],
+  example: W => `<nk-steps label="${W.stepsLabel}" current="2"></nk-steps>
+<script>{ document.currentScript.previousElementSibling.steps = [{ label: '${W.stepProvider}', desc: '${W.stepProviderDesc}' }, '${W.stepKey}', '${W.stepTest}']; }</script>`,
+  classMarkup: W => `<ol class="nk-steps" aria-label="${W.stepsLabel}">
+  <li class="nk-step done"><span class="st-mark">✓</span><span>${W.stepProvider}<span class="st-desc">${W.stepProviderDesc}</span></span></li>
+  <li class="nk-step current" aria-current="step"><span class="st-mark">2</span><span>${W.stepKey}</span></li>
+  <li class="nk-step"><span class="st-mark">3</span><span>${W.stepTest}</span></li>
+</ol>`,
 },
 {
   tag: 'nk-stats', group: 'page', classes: ['nk-stats', 'nk-stat', 's-label', 's-value', 's-delta', 'up', 'down'],
@@ -1038,6 +1057,37 @@ export const CATALOG = [
 </div></div>`,
 },
 {
+  tag: 'nk-sheet', group: 'overlays', classes: ['nk-sheet-backdrop', 'open', 'nk-sheet', 'sh-grabber', 'sh-title'], frame: 360, overlay: true,
+  title: t('Sheet', 'Sheet'),
+  desc: t('Notion’s mobile surface for menus, properties and more – the phone’s twin of the modal, with its contract: <code>show()</code>, <code>close()</code>, <code>toggle()</code>; Escape and the backdrop close it; focus moves in and back; the page behind is scroll-locked and inert. The panel rises from the bottom edge with a grabber, <code>title</code> sits under it and names the dialog. Rows inside are 40px, a thumb’s height. Choosing a row does not close the sheet – <code>nk-select</code> bubbles out and the app decides. For a menu that is a popover on the desktop and a sheet on the phone, use <code>&lt;nk-menu floating sheet&gt;</code>. Place it directly under <code>&lt;body&gt;</code>.',
+          'Notions Mobil-Fläche für Menüs, Eigenschaften und mehr – der Telefon-Zwilling des Modals, mit dessen Vertrag: <code>show()</code>, <code>close()</code>, <code>toggle()</code>; Escape und der Backdrop schließen es; der Fokus wandert hinein und zurück; die Seite dahinter ist scroll-gesperrt und inert. Das Panel steigt mit einem Griff von der Unterkante auf, <code>title</code> steht darunter und benennt den Dialog. Zeilen darin sind 40px hoch, eine Daumenhöhe. Eine gewählte Zeile schließt das Sheet nicht – <code>nk-select</code> bubbelt hinaus, die App entscheidet. Für ein Menü, das auf dem Desktop Popover und auf dem Telefon Sheet ist, <code>&lt;nk-menu floating sheet&gt;</code> nehmen. Direkt unter <code>&lt;body&gt;</code> platzieren.'),
+  mobile: t('Made for the phone: full width, above the tab bar, bottom padding from the safe area; the content scrolls inside the sheet. On larger screens at most 640px wide, centred.', 'Fürs Telefon gemacht: volle Breite, über der Tab-Leiste, unteres Padding aus der Safe Area; der Inhalt scrollt im Sheet. Auf größeren Schirmen höchstens 640px breit, zentriert.'),
+  attrs: [bool('open', 'Shown.', 'Sichtbar.'), str('title', 'string', 'Heading under the grabber and the dialog’s name – never a tooltip.', 'Überschrift unter dem Griff und Name des Dialogs – nie ein Tooltip.')],
+  slots: [{ name: '(default)', desc: t('The content: an <code>nk-tree</code>, menu items, fields.', 'Der Inhalt: ein <code>nk-tree</code>, Menüeinträge, Felder.') }],
+  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Opened / closed.', 'Geöffnet / geschlossen.') }],
+  props: ['open', 'title'], methods: ['show()', 'close()', 'toggle()'],
+  example: W => `<nk-sheet open title="${W.more}">
+  <nk-tree manual>
+    <nk-section-label>${W.favourites}</nk-section-label>
+    <nk-tree-item icon="🚀">${W.mvp}</nk-tree-item>
+    <nk-tree-item icon="🎙️">${W.voh}</nk-tree-item>
+    <nk-section-label>${W.workspaceSection}</nk-section-label>
+    <nk-tree-item icon="🧠">${W.knowledgeBase}</nk-tree-item>
+    <nk-tree-item icon="🗑️">${W.trash}</nk-tree-item>
+  </nk-tree>
+</nk-sheet>`,
+  classMarkup: W => `<div class="nk-sheet-backdrop open"><div class="nk-sheet" role="dialog" aria-modal="true" aria-label="${W.more}">
+  <div class="sh-grabber"></div>
+  <div class="sh-title">${W.more}</div>
+  <div class="nk-section-label">${W.favourites}</div>
+  <div class="nk-tree-item"><span class="icon">🚀</span><span class="label">${W.mvp}</span></div>
+  <div class="nk-tree-item"><span class="icon">🎙️</span><span class="label">${W.voh}</span></div>
+  <div class="nk-section-label">${W.workspaceSection}</div>
+  <div class="nk-tree-item"><span class="icon">🧠</span><span class="label">${W.knowledgeBase}</span></div>
+  <div class="nk-tree-item"><span class="icon">🗑️</span><span class="label">${W.trash}</span></div>
+</div></div>`,
+},
+{
   tag: 'nk-settings-pane', group: 'overlays', classes: ['nk-settings-pane', 'active'],
   title: t('Settings pane', 'Einstellungs-Pane'),
   desc: t('One pane of the settings modal. <code>label</code>, <code>icon</code> and <code>group</code> feed the modal’s nav; <code>title</code> renders the pane heading. Slotted <code>&lt;h2&gt;</code>/<code>&lt;h3&gt;</code> are styled too.', 'Ein Pane des Einstellungs-Modals. <code>label</code>, <code>icon</code> und <code>group</code> speisen die Nav des Modals; <code>title</code> rendert die Pane-Überschrift. Geslottete <code>&lt;h2&gt;</code>/<code>&lt;h3&gt;</code> werden ebenfalls gestylt.'),
@@ -1100,14 +1150,20 @@ export const CATALOG = [
 </div></div>`,
 },
 {
-  tag: 'nk-menu', group: 'overlays', classes: ['nk-pop', 'nk-menu', 'nk-menu-item', 'm-icon', 'm-shortcut', 'danger', 'nk-menu-sep', 'nk-menu-label'],
+  tag: 'nk-menu', group: 'overlays', classes: ['nk-pop', 'nk-menu', 'nk-menu-item', 'm-icon', 'm-shortcut', 'danger', 'nk-menu-sep', 'nk-menu-label', 'floating', 'sheet', 'open'],
   title: t('Menu', 'Menü'),
-  desc: t('A 230px context menu. Items are <code>nk-menu-item</code>s (<code>type="separator"</code> / <code>"label"</code> for the rest); ↑↓ move, Enter selects, <code>nk-select</code> bubbles up. Usually lives inside <code>nk-pop</code> or the workspace switcher.', 'Ein 230px-Kontextmenü. Einträge sind <code>nk-menu-item</code>s (<code>type="separator"</code> / <code>"label"</code> für den Rest); ↑↓ bewegen, Enter wählt, <code>nk-select</code> bubbelt hoch. Lebt meist in <code>nk-pop</code> oder im Workspace-Umschalter.'),
-  mobile: t('Unchanged.', 'Unverändert.'),
-  attrs: [],
+  desc: t('A 230px context menu. Items are <code>nk-menu-item</code>s (<code>type="separator"</code> / <code>"label"</code> for the rest); ↑↓ move, Enter selects, <code>nk-select</code> bubbles up. Inside <code>nk-pop</code> or the workspace switcher it is part of their surface. With <code>floating</code> it is a menu over the page of its own, NotionKit’s <code>.nk-pop.floating</code>: <code>menu.show(button)</code> opens it under the button, right edges aligned (<code>align="start"</code>: left edges), and it fades in like the palette. A tap outside closes it and reaches nothing else; Escape and a chosen item close it, a switch row keeps it open. Opened from the keyboard, focus moves to the first item and back when it closes. Put it directly under <code>&lt;body&gt;</code>, like the other overlays.',
+          'Ein 230px-Kontextmenü. Einträge sind <code>nk-menu-item</code>s (<code>type="separator"</code> / <code>"label"</code> für den Rest); ↑↓ bewegen, Enter wählt, <code>nk-select</code> bubbelt hoch. In <code>nk-pop</code> oder im Workspace-Umschalter ist es Teil ihrer Fläche. Mit <code>floating</code> ist es ein eigenes Menü über der Seite, NotionKits <code>.nk-pop.floating</code>: <code>menu.show(button)</code> öffnet es unter dem Button, rechte Kanten bündig (<code>align="start"</code>: linke Kanten), und es blendet ein wie die Palette. Ein Tipp daneben schließt es und erreicht sonst nichts; Escape und ein gewählter Eintrag schließen es, eine Schalter-Zeile lässt es offen. Per Tastatur geöffnet, wandert der Fokus zum ersten Eintrag und beim Schließen zurück. Direkt unter <code>&lt;body&gt;</code> platzieren, wie die anderen Overlays.'),
+  mobile: t('With <code>sheet</code> the floating menu is a bottom sheet below 860px – full width, a grabber, 40px rows, the page dimmed – whatever position <code>show()</code> wrote: one markup, two presentations, as Notion’s mobile app opens every menu.', 'Mit <code>sheet</code> ist das schwebende Menü unter 860px ein Bottom Sheet – volle Breite, ein Griff, 40px-Zeilen, die Seite abgedunkelt –, egal welche Position <code>show()</code> geschrieben hat: ein Markup, zwei Darstellungen, wie Notions Mobil-App jedes Menü öffnet.'),
+  attrs: [
+    bool('floating', 'A menu over the page: fixed, closed until <code>open</code>, fades in.', 'Ein Menü über der Seite: fixiert, geschlossen bis <code>open</code>, blendet ein.'),
+    bool('sheet', 'Below 860px a bottom sheet (with <code>floating</code>).', 'Unter 860px ein Bottom Sheet (mit <code>floating</code>).'),
+    bool('open', 'Shown (with <code>floating</code>).', 'Sichtbar (mit <code>floating</code>).'),
+    str('align', 'end | start', 'Which edges <code>show(anchor)</code> aligns.', 'Welche Kanten <code>show(anchor)</code> bündig setzt.', { default: 'end' }),
+  ],
   slots: [{ name: '(default)', desc: t('<code>nk-menu-item</code> children.', '<code>nk-menu-item</code>-Kinder.') }],
-  events: [{ name: 'nk-select', detail: '{ value, label, item }', desc: t('From the chosen item.', 'Vom gewählten Eintrag.') }],
-  methods: ['focusFirst()'],
+  events: [{ name: 'nk-select', detail: '{ value, label, item }', desc: t('From the chosen item.', 'Vom gewählten Eintrag.') }, { name: 'nk-toggle', detail: '{ open }', desc: t('A floating menu opened / closed.', 'Ein schwebendes Menü geöffnet / geschlossen.') }],
+  props: ['open', 'items'], methods: ['show(anchor?)', 'close()', 'toggle(anchor?)', 'focusFirst()'],
   example: W => `<nk-menu>
   <nk-menu-item type="label">${W.page}</nk-menu-item>
   <nk-menu-item icon="✏️" shortcut="⌘E" value="rename">${W.rename}</nk-menu-item>
@@ -1181,22 +1237,28 @@ export const CATALOG = [
 
 // ============================================================ WAVE 5 · DATA
 {
-  tag: 'nk-database', group: 'data', classes: ['nk-database', 'nk-db-tabs', 'nk-db-tab', 'active', 'badge'], wide: true, script: true,
+  tag: 'nk-database', group: 'data', classes: ['nk-database', 'nk-db-toolbar', 'nk-db-tabs', 'nk-db-tab', 'active', 'badge', 'add', 'tools'], wide: true, script: true,
   title: t('Database', 'Datenbank'),
-  desc: t('The view switcher. Child views (<code>nk-table-view</code>, <code>nk-board-view</code>) become tabs; <code>columns</code> and <code>rows</code> are pushed into every view. <code>view</code> selects the active one; <code>count</code> on a view shows the row count as badge. No fetching: give it data, listen to events.',
-          'Der Ansichts-Umschalter. Kind-Views (<code>nk-table-view</code>, <code>nk-board-view</code>) werden Tabs; <code>columns</code> und <code>rows</code> werden in jede View gepusht. <code>view</code> wählt die aktive; <code>count</code> an einer View zeigt die Zeilenzahl als Badge. Kein Fetching: Daten reingeben, Events hören.'),
-  mobile: t('Tables and boards scroll horizontally; nothing breaks.', 'Tabellen und Boards scrollen horizontal; nichts bricht.'),
+  desc: t('The view switcher with Notion’s toolbar: child views (<code>nk-table-view</code>, <code>nk-board-view</code>, <code>nk-list-view</code>) become the tabs on the left, <code>slot="tools"</code> holds the view’s tools on the right – <code>&lt;nk-btn variant="tool"&gt;</code> for Filter, Sort and search, then “New” – and <code>slot="filters"</code> the <code>nk-filter-bar</code> under them. <code>columns</code> and <code>rows</code> are pushed into every view. <code>view</code> selects the active one; <code>count</code> on a view shows the row count as badge. No fetching: give it data, listen to events.',
+          'Der Ansichts-Umschalter mit Notions Werkzeugleiste: Kind-Views (<code>nk-table-view</code>, <code>nk-board-view</code>, <code>nk-list-view</code>) werden die Reiter links, <code>slot="tools"</code> hält rechts die Werkzeuge der Ansicht – <code>&lt;nk-btn variant="tool"&gt;</code> für Filter, Sortieren und Suche, dann „Neu“ – und <code>slot="filters"</code> die <code>nk-filter-bar</code> darunter. <code>columns</code> und <code>rows</code> werden in jede View gepusht. <code>view</code> wählt die aktive; <code>count</code> an einer View zeigt die Zeilenzahl als Badge. Kein Fetching: Daten reingeben, Events hören.'),
+  mobile: t('The tabs scroll sideways when the row gets narrow; the tools keep their place. Tables and boards scroll horizontally; nothing breaks.', 'Wird die Zeile schmal, scrollen die Reiter seitwärts; die Werkzeuge behalten ihren Platz. Tabellen und Boards scrollen horizontal; nichts bricht.'),
   attrs: [str('view', 'string', 'Name of the active view.', 'Name der aktiven View.'), bool('add-view', 'Show a ＋ tab (fires <code>nk-action</code>).', 'Ein ＋-Tab zeigen (feuert <code>nk-action</code>).')],
-  slots: [{ name: '(default)', desc: t('View elements.', 'View-Elemente.') }],
+  slots: [{ name: '(default)', desc: t('View elements.', 'View-Elemente.') }, { name: 'tools', desc: t('The tools right of the tabs: <code>&lt;nk-btn variant="tool"&gt;</code>, a small primary “New”.', 'Die Werkzeuge rechts der Reiter: <code>&lt;nk-btn variant="tool"&gt;</code>, ein kleines primäres „Neu“.') }, { name: 'filters', desc: t('Under the toolbar: <code>nk-filter-bar</code>.', 'Unter der Leiste: <code>nk-filter-bar</code>.') }],
   events: [{ name: 'nk-view-change', detail: '{ view }', desc: t('Tab switched.', 'Tab gewechselt.') }, { name: 'nk-action', detail: "{ action: 'add-view' }", desc: t('＋ clicked.', '＋ geklickt.') }, { name: 'nk-select / nk-change / nk-action', detail: '(from the views)', desc: t('Bubble up from the active view.', 'Bubbeln aus der aktiven View hoch.') }],
   props: ['columns', 'rows', 'view', 'views'], methods: ['refresh()'],
   example: W => `<nk-database view="table" add-view>
+  <nk-btn slot="tools" variant="tool" active>${W.filter}</nk-btn>
+  <nk-btn slot="tools" variant="tool">${W.sort}</nk-btn>
+  <nk-btn slot="tools" variant="primary" small>${W.newBtn}</nk-btn>
   <nk-table-view name="table" label="${W.table}" count new-row sortable></nk-table-view>
   <nk-board-view name="board" label="${W.board}" group-by="status" new-row></nk-board-view>
 </nk-database>
 ${dbScript(W)}`,
   classMarkup: W => `<div class="nk-database">
-  <div class="nk-db-tabs"><span class="nk-db-tab active">${W.table} <span class="badge">4</span></span><span class="nk-db-tab">${W.board}</span><span class="nk-db-tab" style="color:var(--nk-text-tertiary)">＋</span></div>
+  <div class="nk-db-toolbar">
+    <div class="nk-db-tabs"><span class="nk-db-tab active">${W.table} <span class="badge">4</span></span><span class="nk-db-tab">${W.board}</span><span class="nk-db-tab add">＋</span></div>
+    <div class="tools"><button class="nk-db-tool active">${W.filter}</button><button class="nk-db-tool">${W.sort}</button><button class="nk-btn primary small">${W.newBtn}</button></div>
+  </div>
   ${dbTableClass(W)}
 </div>`,
 },
@@ -1242,17 +1304,24 @@ ${dbScript(W)}`,
   classMarkup: dbListClass,
 },
 {
-  tag: 'nk-filter-bar', group: 'data', classes: ['nk-btn', 'secondary', 'small', 'nk-tag', 'nk-input'], wide: true,
+  tag: 'nk-filter-bar', group: 'data', classes: ['nk-filter-row', 'nk-filter-pill', 'active', 'add', 'fp-remove', 'nk-db-tool', 'nk-input'], wide: true,
   title: t('Filter bar', 'Filterleiste'),
-  desc: t('A toolbar composed from existing classes: filter and sort buttons (<code>nk-action</code>), active filters as removable chips, an optional search field. <code>bar.apply(rows)</code> keeps rows where every chip matches by strict equality (<code>row[key] === value</code>, so use the option <em>value</em>) and the search text appears in any string field (a person’s <code>name</code>); the data logic stays yours.', 'Eine Werkzeugleiste aus vorhandenen Klassen: Filter- und Sortier-Button (<code>nk-action</code>), aktive Filter als entfernbare Chips, optionales Suchfeld. <code>bar.apply(rows)</code> behält Zeilen, bei denen jeder Chip strikt gleich ist (<code>row[key] === value</code>, also den Options-<em>Wert</em> nutzen) und der Suchtext in einem String-Feld vorkommt (bei Personen der <code>name</code>); die Datenlogik bleibt deine.'),
-  mobile: t('Wraps onto two lines.', 'Bricht auf zwei Zeilen um.'),
-  attrs: [bool('search', 'Show the search field.', 'Suchfeld zeigen.'), str('placeholder', 'string', 'Search placeholder.', 'Such-Platzhalter.'), bool('no-filter', 'Hide the filter button.', 'Filter-Button ausblenden.'), bool('no-sort', 'Hide the sort button.', 'Sortier-Button ausblenden.')],
-  slots: [{ name: '(default)', desc: t('Extra controls between chips and search.', 'Zusätzliche Controls zwischen Chips und Suche.') }],
-  events: [{ name: 'nk-change', detail: '{ filters, search }', desc: t('Chip removed or search typed.', 'Chip entfernt oder gesucht.') }, { name: 'nk-action', detail: "{ action: 'filter' | 'sort' }", desc: t('Button clicked.', 'Button geklickt.') }],
+  desc: t('The filters in effect as NotionKit’s filter pills – <code>.active</code> with an accent tint, a × to remove each, a quiet <code>add</code> pill at the end – with no inline style. In <code>slot="filters"</code> of <code>nk-database</code> the row sits under the toolbar. A pill’s label fires <code>nk-action { action: "edit" }</code>, the add pill <code>{ action: "add" }</code>, each with the clicked button as <code>anchor</code> for <code>menu.show(anchor)</code>. <code>bar.apply(rows)</code> keeps rows where every filter matches by strict equality (<code>row[key] === value</code>, so use the option <em>value</em>) – or differs with <code>op: "is-not"</code> – and the search text appears in any string field (a person’s <code>name</code>); the data logic stays yours. Its own Filter and Sort tools and the search field are there for a bar without a database toolbar.',
+          'Die wirkenden Filter als NotionKits Filter-Pills – <code>.active</code> mit Akzent-Tönung, je ein × zum Entfernen, am Ende eine ruhige <code>add</code>-Pill –, ohne Inline-Style. In <code>slot="filters"</code> von <code>nk-database</code> steht die Zeile unter der Werkzeugleiste. Das Label einer Pill feuert <code>nk-action { action: "edit" }</code>, die Add-Pill <code>{ action: "add" }</code>, jeweils mit dem geklickten Button als <code>anchor</code> für <code>menu.show(anchor)</code>. <code>bar.apply(rows)</code> behält Zeilen, bei denen jeder Filter strikt gleich ist (<code>row[key] === value</code>, also den Options-<em>Wert</em> nutzen) – oder mit <code>op: "is-not"</code> verschieden – und der Suchtext in einem String-Feld vorkommt (bei Personen der <code>name</code>); die Datenlogik bleibt deine. Eigene Filter- und Sortier-Werkzeuge und das Suchfeld sind für eine Leiste ohne Datenbank-Werkzeugleiste da.'),
+  mobile: t('The pills wrap onto further rows.', 'Die Pills brechen in weitere Zeilen um.'),
+  attrs: [
+    bool('add', 'Show the add pill.', 'Die Add-Pill zeigen.'), str('add-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ Filter' }),
+    bool('no-filter', 'Hide the Filter tool.', 'Das Filter-Werkzeug ausblenden.'), bool('no-sort', 'Hide the Sort tool.', 'Das Sortier-Werkzeug ausblenden.'),
+    str('filter-label', 'string', 'Text of the Filter tool.', 'Text des Filter-Werkzeugs.', { default: 'Filter' }), str('sort-label', 'string', 'Text of the Sort tool.', 'Text des Sortier-Werkzeugs.', { default: 'Sort' }),
+    str('remove-label', 'string', 'The ×’s name, followed by the pill’s text.', 'Name des ×, gefolgt vom Text der Pill.', { default: 'Remove filter' }),
+    bool('search', 'Show the search field.', 'Suchfeld zeigen.'), str('placeholder', 'string', 'Search placeholder.', 'Such-Platzhalter.'),
+  ],
+  slots: [{ name: '(default)', desc: t('Extra pills or controls between the pills and the search.', 'Zusätzliche Pills oder Controls zwischen Pills und Suche.') }],
+  events: [{ name: 'nk-change', detail: '{ filters, search }', desc: t('A filter removed or the search typed.', 'Ein Filter entfernt oder gesucht.') }, { name: 'nk-action', detail: "{ action: 'edit' | 'add' | 'filter' | 'sort', index?, filter?, anchor }", desc: t('A pill or a tool clicked.', 'Eine Pill oder ein Werkzeug geklickt.') }],
   props: ['filters', 'value'], methods: ['apply(rows)'],
-  example: W => `<nk-filter-bar search placeholder="${W.searchRows}"></nk-filter-bar>
-<script>{ document.currentScript.previousElementSibling.filters = [{ key: 'status', value: 'done', label: '${W.filterDone}', color: 'green' }]; }</script>`,
-  classMarkup: W => `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0"><button class="nk-btn secondary small">⚲ Filter</button><button class="nk-btn secondary small">↕ Sort</button><span style="display:inline-flex;gap:4px"><span class="nk-tag green" style="cursor:pointer">${W.filterDone} ×</span></span><input class="nk-input" type="search" placeholder="${W.searchRows}" style="margin-left:auto"></div>`,
+  example: W => `<nk-filter-bar add no-filter no-sort remove-label="${W.removeFilter}"></nk-filter-bar>
+<script>{ document.currentScript.previousElementSibling.filters = [{ key: 'status', value: 'done', op: 'is-not', label: '${W.statusOpen}' }]; }</script>`,
+  classMarkup: W => `<div class="nk-filter-row"><span class="nk-filter-pill active"><button>${W.statusOpen}</button><button class="fp-remove" aria-label="${W.removeFilter}">×</button></span><button class="nk-filter-pill add">${W.addFilter}</button></div>`,
 },
 {
   tag: 'nk-comments', group: 'data', classes: ['nk-comments', 'nk-comment', 'mini-avatar', 'c-head', 'c-body', 'nk-comment-input'],

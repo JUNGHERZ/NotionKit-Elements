@@ -274,10 +274,11 @@ test('sidebar drawer: slides in from the left, scrim fades, display is held whil
   await page.waitForTimeout(300);
   expect(await page.evaluate(() => window.probe())).toMatchObject({ display: 'none', backdrop: 'none' });
 
-  // Reduced motion: no transition in either direction.
+  // Reduced motion: the stylesheet shortens every transition to .01ms, so two frames later it has ended either way.
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  expect(await page.evaluate(() => { document.getElementById('sb').show(); return window.probe(); })).toMatchObject({ display: 'flex', x: 0, opacity: 1 });
-  expect(await page.evaluate(() => { document.getElementById('sb').close(); return window.probe(); })).toMatchObject({ display: 'none', backdrop: 'none' });
+  const frames = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  expect(await page.evaluate(async (f) => { document.getElementById('sb').show(); await (0, eval)(f)(); return window.probe(); }, frames.toString())).toMatchObject({ display: 'flex', x: 0, opacity: 1 });
+  expect(await page.evaluate(async (f) => { document.getElementById('sb').close(); await (0, eval)(f)(); return window.probe(); }, frames.toString())).toMatchObject({ display: 'none', backdrop: 'none' });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
 });
 

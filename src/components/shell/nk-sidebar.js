@@ -10,42 +10,12 @@ import { NkElement } from '../../base.js';
 //
 // The host is display:contents so the <aside> is a direct flex child of
 // .nk-app, exactly like the class markup. Below 860px notionkit.css hides the
-// aside; `open` brings it back as an off-canvas drawer (position only – the
-// look is still the stylesheet's).
-//
-// The drawer slides and the scrim fades without a line of JavaScript:
-// `display` transitions with transition-behavior: allow-discrete (the old
-// value is held for the whole duration, so closing animates too) and
-// @starting-style gives the first frame after display: none its start
-// values. `position: fixed` lives on the plain .nk-sidebar, not on the open
-// state – while closing, the aside is still displayed and must not fall
-// back into the flow. Browsers without either feature switch hard, as
-// before; prefers-reduced-motion switches hard on purpose.
-const drawerSheet = new CSSStyleSheet();
-drawerSheet.replaceSync(`
-  .nk-sidebar-backdrop { display: none; position: fixed; inset: 0; z-index: 59; background: var(--nk-scrim-soft); }
-  @media (max-width: 860px) {
-    .nk-sidebar {
-      position: fixed; inset: 0 auto 0 0; z-index: 60;
-      transform: translateX(-100%);
-      transition: background .25s ease, transform .24s cubic-bezier(.2, .8, .25, 1), display .24s;
-      transition-behavior: allow-discrete;
-    }
-    :host([open]) .nk-sidebar { display: flex; transform: none; }
-    @starting-style { :host([open]) .nk-sidebar { transform: translateX(-100%); } }
-    .nk-sidebar-backdrop {
-      opacity: 0;
-      transition: opacity .24s ease, display .24s;
-      transition-behavior: allow-discrete;
-    }
-    :host([open]) .nk-sidebar-backdrop { display: block; opacity: 1; }
-    @starting-style { :host([open]) .nk-sidebar-backdrop { opacity: 0; } }
-  }
-  @media (prefers-reduced-motion: reduce) { .nk-sidebar, .nk-sidebar-backdrop { transition: none; } }
-`);
-
+// aside; `open` brings it back as a drawer over the page. The drawer is the
+// stylesheet's since NotionKit 1.7.0 (.nk-sidebar.open, .nk-sidebar-backdrop
+// .open) – the sidebar slides and the scrim fades by the same rules as the
+// class markup; the element toggles the two classes. <nk-btn variant="sidebar">
+// in the topbar is the ☰ that opens it.
 class NkSidebar extends NkElement {
-  static get hostStyles() { return drawerSheet; }
   static get observedAttributes() { return ['open']; }
 
   render() {
@@ -62,6 +32,13 @@ class NkSidebar extends NkElement {
     this._wrapper.appendChild(this._backdrop);
     this._wrapper.appendChild(this._aside);
     this._syncFooter();
+    this._syncOpen();
+  }
+
+  _syncOpen() {
+    const open = this.getBoolAttr('open');
+    this._aside.classList.toggle('open', open);
+    this._backdrop.classList.toggle('open', open);
   }
 
   _syncFooter() {
@@ -88,7 +65,9 @@ class NkSidebar extends NkElement {
   }
 
   onAttributeChanged(name) {
-    if (name === 'open') this.emit('nk-toggle', { open: this.getBoolAttr('open') });
+    if (name !== 'open') return;
+    this._syncOpen();
+    this.emit('nk-toggle', { open: this.getBoolAttr('open') });
   }
 
   show() { this.setBoolAttr('open', true); }

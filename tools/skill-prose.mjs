@@ -107,7 +107,7 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
   </nk-sidebar>
 
   <nk-topbar>
-    <nk-btn variant="topbar" onclick="sidebar.toggle()" aria-label="Menu">☰</nk-btn>
+    <nk-btn variant="sidebar" aria-label="Menu">☰</nk-btn>
     <nk-breadcrumb><span>📊 ${W.projectOverview}</span><span>🚀 ${W.mvp}</span></nk-breadcrumb>
     <nk-btn slot="actions" variant="share">${W.share}</nk-btn>
     <nk-theme-toggle slot="actions"></nk-theme-toggle>
@@ -150,7 +150,7 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 </html>
 \`\`\`
 
-Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. The ☰ button only matters below 860px, where the sidebar is hidden and \`sidebar.toggle()\` opens it as a drawer. For phones and installed PWAs add \`<nk-tab-bar>\` as the last child of \`<nk-app>\`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a \`drawer\` item opens the sidebar. Never give it a \`view-transition-name\` – it stays put between pages.
+Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display: contents\` hosts – their inner boxes are direct flex children of \`.nk-app\` / \`.nk-main\`, so do not style the hosts. \`<nk-btn variant="sidebar">\` is the ☰: shown below 860px only, where the sidebar is hidden, it opens it as a drawer – NotionKit’s own drawer rules, no script. For phones and installed PWAs add \`<nk-tab-bar>\` as the last child of \`<nk-app>\`: it lands below the page in the main column, is hidden above 860px (the sidebar is the navigation there) and shown below; a \`drawer\` item opens the sidebar. For Notion’s “More” – the rest of the sidebar as a list from the bottom edge – put an \`<nk-sheet>\` under \`<body>\` and open it from the item’s \`nk-select\` after \`e.preventDefault()\`. Never give the bar a \`view-transition-name\` – it stays put between pages.
 
 ## 4.2 Database app
 
@@ -182,13 +182,20 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
   </nk-topbar>
   <nk-page icon="🗃️">
     <nk-page-title>Projects</nk-page-title>
-    <nk-filter-bar id="filters" search placeholder="${W.searchRows}"></nk-filter-bar>
     <nk-database id="db" view="table" add-view>
+      <nk-btn slot="tools" variant="tool" id="filterBtn" aria-haspopup="menu">${W.filter}</nk-btn>
+      <nk-btn slot="tools" variant="primary" small id="newBtn">${W.newBtn}</nk-btn>
+      <nk-filter-bar slot="filters" id="filters" add no-filter no-sort></nk-filter-bar>
       <nk-table-view name="table" label="${W.table}" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="${W.board}" group-by="status" new-row></nk-board-view>
     </nk-database>
   </nk-page>
 </nk-app>
+<!-- a popover on the desktop, a bottom sheet on a phone -->
+<nk-menu floating sheet id="filterMenu">
+  <nk-menu-item type="label">Filter by</nk-menu-item>
+  <nk-menu-item type="check" icon="◉" value="done">${W.dbStatus}: ${W.statusDone}</nk-menu-item>
+</nk-menu>
 <nk-toast id="toast"></nk-toast>
 <script>
   const columns = [
@@ -206,18 +213,32 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
     { id: 2, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: '#9065b0' }, due: '20.05.2026', progress: 65 },
     { id: 3, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0 },
   ];
+  const FILTERS = { done: { key: 'status', value: 'done', label: '${W.dbStatus}: ${W.statusDone}' } };
+  function render() {
+    db.rows = filters.apply(rows);
+    filterBtn.active = filters.filters.length > 0;
+    filterMenu.querySelectorAll('nk-menu-item[type="check"]').forEach(i => { i.checked = filters.filters.includes(FILTERS[i.value]); });
+  }
   db.columns = columns;
-  db.rows = rows;
-  filters.addEventListener('nk-change', () => { db.rows = filters.apply(rows); });
+  render();
+  filterBtn.addEventListener('click', () => filterMenu.toggle(filterBtn));
+  filters.addEventListener('nk-action', e => filterMenu.show(e.detail.anchor));      // a pill or ＋ Filter
+  filterMenu.addEventListener('nk-change', e => {
+    const f = FILTERS[e.detail.value];
+    filters.filters = e.detail.checked ? [...filters.filters, f] : filters.filters.filter(x => x !== f);
+    render();
+  });
+  filters.addEventListener('nk-change', render);                                     // × on a pill
+  newBtn.addEventListener('click', () => { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: 'planned', due: '—', progress: 0 }); render(); });
   db.addEventListener('nk-select', e => console.log('open row', e.detail.row));
   db.addEventListener('nk-change', e => toast.show(\`\${e.detail.row.name} → \${e.detail.value}\`));
-  db.addEventListener('nk-action', e => { if (e.detail.action === 'new-row') { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: e.detail.value || 'planned', due: '—', progress: 0 }); db.rows = filters.apply(rows); } });
+  db.addEventListener('nk-action', e => { if (e.detail.action === 'new-row') { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: e.detail.value || 'planned', due: '—', progress: 0 }); render(); } });
 </script>
 </body>
 </html>
 \`\`\`
 
-Data contract: \`columns\` describe the properties (\`type\`: text | select | multi-select | date | person | checkbox | url | number | progress; a \`select\` carries \`options: [{ value, label, color }]\`; the title column has \`title: true\`), \`rows\` are plain objects keyed by \`column.key\` (a \`person\` is \`{ name, initials, color }\` or a string; \`icon\` on a row prefixes the title). The elements render what they get – filtering, sorting on the server, persistence are yours. Assign a new array (\`db.rows = …\`) or call \`db.refresh()\` after mutating rows in place.
+Data contract: \`columns\` describe the properties (\`type\`: text | select | multi-select | date | person | checkbox | url | number | progress; a \`select\` carries \`options: [{ value, label, color }]\`; the title column has \`title: true\`), \`rows\` are plain objects keyed by \`column.key\` (a \`person\` is \`{ name, initials, color }\` or a string; \`icon\` on a row prefixes the title). The elements render what they get – filtering, sorting on the server, persistence are yours; \`filters.apply(rows)\` is the local filter, \`op: 'is-not'\` on a filter keeps the other rows. Assign a new array (\`db.rows = …\`) or call \`db.refresh()\` after mutating rows in place.
 
 ## 4.4 AI chat page
 
@@ -281,7 +302,7 @@ Data contract: \`columns\` describe the properties (\`type\`: text | select | mu
 
 ## 4.3 Settings modal integration
 
-**When:** you have an app already and need the settings overlay – plus the command palette and a toast, since they share the "overlay under body" rule.
+**When:** you have an app already and need the settings overlay – plus the command palette and a toast, since they share the "overlay under body" rule (so do \`<nk-sheet>\` and a floating \`<nk-menu>\`).
 
 \`\`\`html
 <!DOCTYPE html>
@@ -370,6 +391,7 @@ The open/close contract is one attribute: \`settings.open = true\`, \`settings.s
 <div class="nk-page" style="padding-top:48px">
   <h1 class="nk-page-title">Set up your workspace</h1>
   <p class="lead">Three short steps. Everything can be changed later in Settings.</p>
+  <nk-steps id="progress" label="Set up your workspace" current="1" steps="Profile, Notifications, Assistant style"></nk-steps>
 
   <form id="onboarding">
     <nk-heading>1 · Profile</nk-heading>
@@ -585,6 +607,9 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | \`<button class="nk-btn">\` inside \`<nk-btn>\` | The element renders the button – slot only the label and icon |
 | Loading the bundle without \`notionkit.css\` and wondering about the serif font | The token layer only covers colours and metrics; typography comes from \`.nk-body\` |
 | \`<nk-btn style="margin-top:16px">\` or \`nk-callout { margin: … }\` | Hosts are \`display: contents\` and have no box – put spacing on a wrapper you own |
+| A positioned wrapper around \`<nk-menu>\` to open it under a button | \`<nk-menu floating sheet>\` and \`menu.show(button)\`: it measures the button, closes on a tap outside and is a sheet on a phone |
+| \`<nk-sheet id="more">\` opened from \`app.html#more\` | Give the overlay an id other than the hash: the browser scrolls to the fragment target and takes the focus the overlay just gave |
+| \`<nk-btn variant="topbar" onclick="sidebar.toggle()">☰</nk-btn>\` plus a script that hides it on the desktop | \`<nk-btn variant="sidebar">☰</nk-btn>\` – shown below 860px only, opens the drawer |
 `,
 
   integration: () => `# 8. Framework Integration

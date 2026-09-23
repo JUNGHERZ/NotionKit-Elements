@@ -4,13 +4,16 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // <nk-btn variant="primary" small>Save</nk-btn>   →  <button class="nk-btn primary small">
 // <nk-btn href="/docs" variant="secondary">Docs</nk-btn>  →  <a class="nk-btn secondary">
 // <nk-btn variant="topbar">⭐</nk-btn>  →  <button class="nk-topbar-btn">
+// <nk-btn variant="tool" active>Filter</nk-btn>  →  <button class="nk-db-tool active">  (slot="tools" of nk-database)
+// <nk-btn variant="sidebar" aria-label="Menu">☰</nk-btn>  →  <button class="nk-topbar-btn nk-sidebar-toggle">:
+//   shown on phones only, it opens the page's <nk-sidebar> as a drawer.
 //
 // Modifier classes become attributes. A slotted <svg> is sized by the
 // `.nk-btn ::slotted(svg)` twin; pass the icon itself, never wrapped.
 const VARIANTS = ['primary', 'secondary', 'danger', 'danger-solid', 'topbar', 'share'];
 
 class NkBtn extends NkElement {
-  static get observedAttributes() { return ['variant', 'small', 'disabled', 'type', 'href', 'title', 'aria-label']; }
+  static get observedAttributes() { return ['variant', 'small', 'disabled', 'type', 'href', 'title', 'aria-label', 'aria-haspopup', 'active']; }
 
   render() {
     this._build();
@@ -38,13 +41,22 @@ class NkBtn extends NkElement {
     else el.setAttribute('aria-disabled', disabled ? 'true' : 'false');
     const title = this.getAttribute('title');
     title ? el.setAttribute('title', title) : el.removeAttribute('title');
-    const label = this.getAttribute('aria-label');
-    label ? el.setAttribute('aria-label', label) : el.removeAttribute('aria-label');
+    // The accessible name and the popup hint belong on the button itself.
+    for (const name of ['aria-label', 'aria-haspopup']) {
+      const v = this.getAttribute(name);
+      v ? el.setAttribute(name, v) : el.removeAttribute(name);
+    }
+    if (this.getAttribute('variant') === 'sidebar') el.setAttribute('aria-expanded', this._sidebar()?.open ? 'true' : 'false');
+    else el.removeAttribute('aria-expanded');
   }
+
+  /** The sidebar the ☰ opens: the one in its own app, else the page's. */
+  _sidebar() { return this.closest('nk-app')?.querySelector('nk-sidebar') ?? document.querySelector('nk-sidebar'); }
 
   setupEvents() {
     this._onClick = (e) => {
       if (this.getBoolAttr('disabled')) { e.preventDefault(); e.stopPropagation(); return; }
+      if (this.getAttribute('variant') === 'sidebar') { this._sidebar()?.toggle?.(); return; }
       // A button inside a shadow root is not a submit button of the outer
       // form; forward the intent to the form the host sits in.
       const type = this.getAttribute('type');
@@ -53,11 +65,17 @@ class NkBtn extends NkElement {
         if (form) type === 'submit' ? form.requestSubmit() : form.reset();
       }
     };
+    // The ☰ says whether its drawer is open, however the drawer closed.
+    this._onToggle = (e) => {
+      if (this.getAttribute('variant') === 'sidebar' && e.target === this._sidebar()) this._btn.setAttribute('aria-expanded', e.detail.open ? 'true' : 'false');
+    };
     this._btn.addEventListener('click', this._onClick);
+    document.addEventListener('nk-toggle', this._onToggle);
   }
 
   teardownEvents() {
     this._btn?.removeEventListener('click', this._onClick);
+    document.removeEventListener('nk-toggle', this._onToggle);
   }
 
   onAttributeChanged(name) {
@@ -67,7 +85,11 @@ class NkBtn extends NkElement {
         this._build();
         break;
       case 'variant':
+        this._btn.className = this._computeClasses().join(' ');
+        this._applyState(this._btn);
+        break;
       case 'small':
+      case 'active':
         this._btn.className = this._computeClasses().join(' ');
         break;
       case 'type':
@@ -82,6 +104,8 @@ class NkBtn extends NkElement {
     const variant = this.getAttribute('variant');
     if (variant === 'topbar') return ['nk-topbar-btn'];
     if (variant === 'share') return ['nk-topbar-btn', 'nk-share-btn'];
+    if (variant === 'sidebar') return ['nk-topbar-btn', 'nk-sidebar-toggle'];
+    if (variant === 'tool') return this.getBoolAttr('active') ? ['nk-db-tool', 'active'] : ['nk-db-tool'];
     const classes = ['nk-btn'];
     if (VARIANTS.includes(variant)) classes.push(variant);
     if (this.getBoolAttr('small')) classes.push('small');
@@ -93,6 +117,8 @@ class NkBtn extends NkElement {
 
   get variant() { return this.getAttribute('variant'); }
   set variant(v) { v ? this.setAttribute('variant', v) : this.removeAttribute('variant'); }
+  get active() { return this.getBoolAttr('active'); }
+  set active(v) { this.setBoolAttr('active', v); }
   get small() { return this.getBoolAttr('small'); }
   set small(v) { this.setBoolAttr('small', v); }
   get disabled() { return this.getBoolAttr('disabled'); }

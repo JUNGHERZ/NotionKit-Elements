@@ -247,7 +247,8 @@ test('app.html: the ⋯ menu switches the page options, Home opens the start vie
   await page.goto('/app.html');
   await page.waitForFunction(() => customElements.get('nk-menu-item') && customElements.get('nk-page'));
   await page.click('#pageMenuBtn');
-  await expect(page.locator('#pageOptionsBox')).toBeVisible();
+  await page.waitForTimeout(300);
+  expect(await page.evaluate(() => document.getElementById('pageOptions').open)).toBe(true);
   // Right under the ⋯ button, right edges aligned – not somewhere in the flow.
   const pos = await page.evaluate(() => {
     const b = document.getElementById('pageMenuBtn').shadowRoot.querySelector('button').getBoundingClientRect();
@@ -258,7 +259,7 @@ test('app.html: the ⋯ menu switches the page options, Home opens the start vie
   await page.evaluate(() => document.querySelector('#pageOptions nk-menu-item[value="full"]').shadowRoot.querySelector('.nk-menu-item').click());
   expect(await page.evaluate(() => document.getElementById('page').hasAttribute('full'))).toBe(true);
   await page.keyboard.press('Escape');
-  await expect(page.locator('#pageOptionsBox')).toBeHidden();
+  expect(await page.evaluate(() => document.getElementById('pageOptions').open)).toBe(false);
   await page.evaluate(() => document.querySelector('nk-tree-item[value="home"]').select());
   await expect(page.locator('#home')).toBeVisible();
   await expect(page.locator('#page')).toBeHidden();

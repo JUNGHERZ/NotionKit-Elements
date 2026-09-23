@@ -1,6 +1,7 @@
-// Overlay plumbing shared by nk-modal and nk-cmdk: body scroll lock with a
-// refcount, and `inert` on everything outside the overlay so focus and
-// assistive technology stay inside – nested shadow roots included.
+// Overlay plumbing shared by nk-modal, nk-sheet, nk-cmdk and nk-menu: body
+// scroll lock with a refcount, `inert` on everything outside the overlay so
+// focus and assistive technology stay inside – nested shadow roots included –
+// and the focused element behind shadow hosts, to return focus to.
 let locks = 0, previousOverflow = '';
 
 function lockScroll() {
@@ -31,6 +32,13 @@ function inertOutside(el) {
   return () => { for (const c of made) c.inert = false; };
 }
 
+/** The focused element itself, looking into shadow roots (document.activeElement stops at the host). */
+function deepActiveElement() {
+  let el = document.activeElement;
+  while (el?.shadowRoot?.activeElement) el = el.shadowRoot.activeElement;
+  return el;
+}
+
 /** The first tabbable element inside a light-DOM subtree, looking into shadow roots. */
 function firstFocusable(root) {
   const SEL = 'a[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable="true"], [contenteditable="plaintext-only"]';
@@ -44,4 +52,4 @@ function firstFocusable(root) {
   return walk(root);
 }
 
-export { firstFocusable as f, inertOutside as i, lockScroll as l, unlockScroll as u };
+export { deepActiveElement as d, firstFocusable as f, inertOutside as i, lockScroll as l, unlockScroll as u };
