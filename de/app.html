@@ -364,7 +364,10 @@
 <nk-cmdk id="palette" placeholder="Suchen oder Befehl eingeben …"></nk-cmdk>
 
 <!-- ================= PAGE MENU (⋯) ================= -->
-<nk-menu id="pageOptions" aria-label="Seitenoptionen" hidden style="position:fixed;z-index:60">
+<!-- <nk-menu> is a display: contents host with no box of its own, so a plain
+     fixed box around it carries the position under the ⋯ button. -->
+<div id="pageOptionsBox" hidden style="position:fixed;z-index:60">
+<nk-menu id="pageOptions" aria-label="Seitenoptionen">
   <nk-menu-item type="label">Seite</nk-menu-item>
   <nk-menu-item type="switch" icon="🔡" value="small">Kleiner Text</nk-menu-item>
   <nk-menu-item type="switch" icon="↔️" value="full">Volle Breite</nk-menu-item>
@@ -374,6 +377,7 @@
   <nk-menu-item type="separator"></nk-menu-item>
   <nk-menu-item icon="🗑️" danger value="trash">In den Papierkorb</nk-menu-item>
 </nk-menu>
+</div>
 
 <nk-toast id="toast"></nk-toast>
 
@@ -510,18 +514,19 @@
     pageOptions.querySelectorAll('nk-menu-item[type="switch"]').forEach(item => { item.checked = currentPage().hasAttribute(item.value); });
   }
   function openPageMenu() {
-    const r = pageMenuBtn.getBoundingClientRect();
-    pageOptions.style.top = (r.bottom + 6) + 'px';
-    pageOptions.style.right = Math.max(8, innerWidth - r.right) + 'px';
+    // Measured on the inner button: the nk-btn host has no box.
+    const r = pageMenuBtn.shadowRoot.querySelector('button').getBoundingClientRect();
+    pageOptionsBox.style.top = (r.bottom + 6) + 'px';
+    pageOptionsBox.style.right = Math.max(8, innerWidth - r.right) + 'px';
     syncPageMenu();
-    pageOptions.hidden = false;
+    pageOptionsBox.hidden = false;
     pageMenuBtn.setAttribute('aria-expanded', 'true');
   }
   function closePageMenu() {
-    pageOptions.hidden = true;
+    pageOptionsBox.hidden = true;
     pageMenuBtn.setAttribute('aria-expanded', 'false');
   }
-  pageMenuBtn.addEventListener('click', e => { e.stopPropagation(); pageOptions.hidden ? openPageMenu() : closePageMenu(); });
+  pageMenuBtn.addEventListener('click', e => { e.stopPropagation(); pageOptionsBox.hidden ? openPageMenu() : closePageMenu(); });
   pageOptions.addEventListener('click', e => e.stopPropagation());
   pageOptions.addEventListener('nk-change', e => {
     currentPage().toggleAttribute(e.detail.value, e.detail.checked);
