@@ -4,6 +4,17 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.11.1] – 2026-09-24
+
+Built against NotionKit CSS 1.11.1 (peer `>= 1.11.0`).
+
+### Fixed
+- **The package carries SKILL.md and CHANGELOG.md.** `files` in package.json listed `dist/`, `src/` and `LICENSE` only, so no release since 1.0.0 had them. LearnHub found them missing while moving to 1.11.0: an agent that reads SKILL.md from `node_modules` had to fetch it from GitHub.
+- **The bundles name no source map.** They embed NotionKit's stylesheet, whose CSS ended in a `sourceMappingURL` comment, so DevTools looked for `notionkit.min.css.map` on the server of every app that loads Elements. NotionKit 1.11.1 drops the comment from the embedded copy.
+
+### Added
+- `npm run check:package`, in CI too: it packs the package without publishing and fails when an entry point of package.json, SKILL.md, CHANGELOG.md or a source map named by a shipped file is missing.
+
 ## [1.11.0] – 2026-09-24
 
 Built against NotionKit CSS 1.11.0 (peer `>= 1.11.0`). SupaGantt's first weeks on Elements turned up thirteen findings; this release answers all of them. One matters beyond SupaGantt: an `<nk-switch>` without content froze Safari – the demo, the landing page, the docs and the showcase among the pages it hung.
@@ -609,6 +620,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.11.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.1
 [1.11.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.0
 [1.10.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.1
 [1.10.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.0

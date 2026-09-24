@@ -1,6 +1,6 @@
 {
   "name": "@jungherz-de/notionkit-elements",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Vanilla JavaScript Web Components wrapping the NotionKit CSS foundation – <nk-*> custom elements with Shadow DOM, automatic theme sync and native form participation.",
   "license": "MIT",
   "author": "Jungherz GmbH <info@jungherz.com> (https://www.jungherz.com)",
@@ -27,7 +27,9 @@
   "files": [
     "dist/",
     "src/",
-    "LICENSE"
+    "LICENSE",
+    "SKILL.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "prebuild": "node -e \"require('fs').rmSync('dist/components',{recursive:true,force:true})\"",
@@ -38,6 +40,7 @@
     "build:all": "npm run build && npm run build:pages && npm run build:landing && npm run build:app && npm run build:skill && npm run build:meta",
     "check:versions": "node check-versions.mjs",
     "check:coverage": "node tools/check-coverage.mjs",
+    "check:package": "node tools/check-package.mjs",
     "test": "playwright test",
     "dev": "rollup -c --watch",
     "serve": "npx serve .",
@@ -62,7 +65,7 @@
     "@jungherz-de/notionkit": ">=1.11.0"
   },
   "devDependencies": {
-    "@jungherz-de/notionkit": "^1.11.0",
+    "@jungherz-de/notionkit": "^1.11.1",
     "@playwright/test": "^1.50.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0",
