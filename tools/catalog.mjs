@@ -65,6 +65,66 @@ const dbBoardClass = W => `<div class="nk-board active">
   <div class="nk-board-col"><div class="nk-board-col-header"><span class="nk-tag green">${W.statusDone}</span><span class="count">2</span></div><div class="nk-card" draggable="true"><div class="card-title">🧭 ${W.p1}</div><div class="card-meta"><span>📅 08.05.2026</span><span>▰ 100%</span></div></div><div class="nk-card" draggable="true"><div class="card-title">📄 ${W.p2}</div><div class="card-meta"><span>📅 10.05.2026</span><span>▰ 100%</span></div></div><div class="nk-new-row" style="padding:6px 10px">＋</div></div>
 </div>`;
 
+// Month sheets for nk-calendar and nk-calendar-view, written out the way the
+// elements draw them – weeks from Monday, `today` fixed so the docs do not
+// change from day to day. The same helpers as in NotionKit's catalog.
+const pad2 = n => String(n).padStart(2, '0');
+const isoDay = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+function isoWeekOf(d) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+  return Math.ceil(((t - Date.UTC(t.getUTCFullYear(), 0, 1)) / 864e5 + 1) / 7);
+}
+const CHEVRON = { prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>', next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' };
+function monthOf(W, month) {
+  const fmt = (o, d) => new Intl.DateTimeFormat(W.locale, o).format(d);
+  const [y, m] = month.split('-').map(Number), first = new Date(y, m - 1, 1), offset = (first.getDay() + 6) % 7;
+  const weekdays = Array.from({ length: 7 }, (_, i) => fmt({ weekday: 'short' }, new Date(2026, 5, 1 + i)).replace('.', ''));
+  return { fmt, m, first, weekdays, day: i => new Date(y, m - 1, 1 - offset + i), rows: Math.ceil((offset + new Date(y, m, 0).getDate()) / 7) };
+}
+const calHead = (W, title, cls) => `<div class="${cls}-head"><div class="${cls}-title">${title}</div><button class="cal-nav">${W.calToday}</button><button class="cal-nav" aria-label="${W.calPrev}">${CHEVRON.prev}</button><button class="cal-nav" aria-label="${W.calNext}">${CHEVRON.next}</button></div>`;
+function calendarClass(W, { month, value, start, end, today, off = {}, marks = {}, foot = '' }) {
+  const g = monthOf(W, month);
+  const rows = [`<span class="cal-wd">${W.calWeek}</span>` + g.weekdays.map(w => `<span class="cal-wd">${w.slice(0, 2)}</span>`).join('')];
+  for (let r = 0; r < 6; r++) {
+    let row = `<span class="cal-week">${isoWeekOf(g.day(r * 7))}</span>`;
+    for (let c = 0; c < 7; c++) {
+      const d = g.day(r * 7 + c), iso = isoDay(d), dots = (marks[iso] || []).map(t => `<i class="${t}"></i>`).join('');
+      const cls = ['cal-day', d.getMonth() !== g.m - 1 && 'out', (d.getDay() % 6 === 0 || off[iso]) && 'off', iso === today && 'today',
+        iso === value && 'selected', iso === start && 'start', iso === end && 'end', start && end && iso > start && iso < end && 'in-range'].filter(Boolean).join(' ');
+      row += `<button class="${cls}"${off[iso] ? ` title="${off[iso]}"` : ''}>${d.getDate()}${dots ? `<span class="cal-marks">${dots}</span>` : ''}</button>`;
+    }
+    rows.push(row);
+  }
+  return `<div class="nk-calendar weeks">
+    ${calHead(W, g.fmt({ month: 'long', year: 'numeric' }, g.first), 'cal')}
+    <div class="cal-grid">
+      ${rows.join('\n      ')}
+    </div>${foot}
+  </div>`;
+}
+function calendarViewClass(W, { month, today, items = {} }) {
+  const g = monthOf(W, month);
+  const rows = [`<div class="cv-wd">${W.calWeek}</div>` + g.weekdays.map(w => `<div class="cv-wd">${w}</div>`).join('')];
+  for (let r = 0; r < g.rows; r++) {
+    let row = `<div class="cv-week">${isoWeekOf(g.day(r * 7))}</div>`;
+    for (let c = 0; c < 7; c++) {
+      const d = g.day(r * 7 + c), iso = isoDay(d);
+      const cls = ['cv-day', d.getMonth() !== g.m - 1 && 'out', iso === today && 'today'].filter(Boolean).join(' ');
+      row += `<div class="${cls}"><span class="cv-num">${d.getDate()}</span>${(items[iso] || []).map(t => `<button class="cv-item">${t}</button>`).join('')}</div>`;
+    }
+    rows.push(row);
+  }
+  return `<div class="nk-calendar-view weeks">
+  ${calHead(W, g.fmt({ month: 'long', year: 'numeric' }, g.first), 'cv')}
+  <div class="cv-grid">
+    ${rows.join('\n    ')}
+  </div>
+</div>`;
+}
+// A holiday and the marks of the picker example, as the `days` of nk-calendar.
+const calDays = W => ({ '2026-06-04': { off: true, label: W.holidayCorpus }, '2026-06-02': { marks: ['blue'] }, '2026-06-11': { marks: ['orange', 'red'] }, '2026-06-24': { marks: ['green'] } });
+
 export const CATALOG = [
 // ============================================================ WAVE 1 · FORMS
 {
@@ -144,6 +204,57 @@ export const CATALOG = [
 <nk-image-picker square src="/favicon.svg" change-label="${W.changeImage}" remove-label="${W.remove}"></nk-image-picker>`,
   classMarkup: W => `<div class="nk-profile-row"><div class="big-avatar">AL</div><div class="pr-actions"><button class="nk-btn secondary small">${W.uploadImage}</button></div></div>
 <div class="nk-profile-row"><div class="big-avatar square"><img src="/favicon.svg" alt=""></div><div class="pr-actions"><button class="nk-btn secondary small">${W.changeImage}</button><button class="nk-btn secondary small pr-remove">${W.remove}</button></div></div>`,
+},
+{
+  tag: 'nk-calendar', group: 'forms', classes: ['nk-calendar', 'weeks', 'cal-head', 'cal-title', 'cal-nav', 'cal-grid', 'cal-wd', 'cal-week', 'cal-day', 'out', 'off', 'today', 'selected', 'start', 'end', 'in-range', 'cal-marks', 'cal-foot', 'nk-pop', 'floating', 'sheet', 'open'],
+  title: t('Date picker', 'Datumsauswahl'),
+  desc: t('Notion’s date picker as one element (NotionKit 1.9.0): a month with Today and ‹ ›, the keys, bounds and a form value. The value is a day (<code>YYYY-MM-DD</code>); with <code>range</code> an interval <code>start/end</code>, picked in two clicks in either order; with <code>time</code> a day and a time (<code>YYYY-MM-DDTHH:MM</code>). <code>weeks</code> puts the ISO calendar week in front of each row (“KW” in German), <code>weekend</code> greys the days not worked, the <code>days</code> property adds holidays (<code>off</code> with a <code>label</code>) and up to three <code>marks</code> per day in the nine colours – deadlines, milestones. Days outside <code>min</code>/<code>max</code> are announced as unavailable and cannot be picked. Arrows move by a day or a week, Home/End to the ends of the week, PageUp/PageDown by a month (with Shift a year), Enter or Space picks; one day is in the tab order. Month names, weekdays and the first day of the week come from the page’s language; <code>week-start="1"</code> fixes Monday. With <code>floating sheet</code> it is a popover that <code>show(anchor)</code> opens under a property or a cell, and a bottom sheet on a phone; a pick closes it.',
+          'Notions Datumsauswahl als ein Element (NotionKit 1.9.0): ein Monat mit Heute und ‹ ›, Tasten, Grenzen und einem Formularwert. Der Wert ist ein Tag (<code>YYYY-MM-DD</code>); mit <code>range</code> ein Zeitraum <code>start/ende</code>, in zwei Klicks in beliebiger Reihenfolge gewählt; mit <code>time</code> ein Tag mit Uhrzeit (<code>YYYY-MM-DDTHH:MM</code>). <code>weeks</code> stellt jeder Reihe die ISO-Kalenderwoche voran („KW“ auf Deutsch), <code>weekend</code> graut die Tage ohne Arbeit, die Property <code>days</code> ergänzt Feiertage (<code>off</code> mit <code>label</code>) und bis zu drei <code>marks</code> je Tag in den neun Farben – Fristen, Meilensteine. Tage außerhalb von <code>min</code>/<code>max</code> werden als nicht verfügbar angesagt und lassen sich nicht wählen. Pfeile gehen einen Tag oder eine Woche weiter, Pos1/Ende an die Enden der Woche, Bild↑/Bild↓ einen Monat (mit Umschalt ein Jahr), Enter oder Leertaste wählt; ein Tag steht in der Tab-Reihenfolge. Monatsnamen, Wochentage und den ersten Wochentag liefert die Sprache der Seite; <code>week-start="1"</code> legt Montag fest. Mit <code>floating sheet</code> ist es ein Popover, das <code>show(anchor)</code> unter einer Eigenschaft oder Zelle öffnet, und auf dem Telefon ein Bottom Sheet; eine Wahl schließt es.'),
+  mobile: t('Floating with <code>sheet</code>: a bottom sheet with 44px cells, a thumb’s width; seven days and the week column still fit a 390px screen.', 'Schwebend mit <code>sheet</code>: ein Bottom Sheet mit 44px-Zellen, eine Daumenbreite; sieben Tage und die Wochenspalte passen weiter auf einen 390px-Schirm.'),
+  attrs: [
+    str('value', 'YYYY-MM-DD | start/end | …THH:MM', 'The day, the range or the day and time; also the reset value.', 'Der Tag, der Zeitraum oder Tag und Uhrzeit; zugleich der Reset-Wert.'),
+    str('month', 'YYYY-MM', 'The month shown first; default the value’s, else today’s.', 'Der zuerst gezeigte Monat; Standard der des Werts, sonst der heutige.'),
+    str('min', 'YYYY-MM-DD', 'First day that can be picked.', 'Erster wählbarer Tag.'), str('max', 'YYYY-MM-DD', 'Last day that can be picked.', 'Letzter wählbarer Tag.'),
+    bool('range', 'Two picks make a range <code>start/end</code>.', 'Zwei Klicks ergeben einen Zeitraum <code>start/ende</code>.'),
+    bool('time', 'A time field under the month – single days only.', 'Ein Zeitfeld unter dem Monat – nur für einzelne Tage.'),
+    bool('clearable', 'A Clear button under the month.', 'Ein Löschen-Button unter dem Monat.'),
+    bool('weeks', 'The ISO calendar week in front of each row.', 'Die ISO-Kalenderwoche vor jeder Reihe.'),
+    str('week-start', '0–6', 'First day of the week: 0 Sunday, 1 Monday …', 'Erster Wochentag: 0 Sonntag, 1 Montag …', { default: 'Intl' }),
+    str('weekend', 'list', 'Weekdays not worked, greyed – <code>6,0</code>.', 'Wochentage ohne Arbeit, gegraut – <code>6,0</code>.'),
+    str('days', 'JSON', 'Per day <code>{ off, label, marks }</code>; also the property.', 'Je Tag <code>{ off, label, marks }</code>; auch als Property.'),
+    str('today', 'YYYY-MM-DD', 'Another today – for tests and docs.', 'Ein anderes Heute – für Tests und Doku.'),
+    str('locale', 'BCP 47', 'Language of the names and the week.', 'Sprache der Namen und der Woche.', { default: 'lang' }),
+    bool('floating', 'A popover over the page: <code>show(anchor)</code>, <code>close()</code>.', 'Ein Popover über der Seite: <code>show(anchor)</code>, <code>close()</code>.'),
+    bool('sheet', 'Floating: a bottom sheet on a phone.', 'Schwebend: ein Bottom Sheet auf dem Telefon.'),
+    bool('open', 'Floating: shown.', 'Schwebend: gezeigt.'),
+    str('align', 'end | start', 'Floating: right or left edge on the anchor’s.', 'Schwebend: rechte oder linke Kante an der des Ankers.', { default: 'end' }),
+    str('label', 'string', 'Names the month group for screen readers.', 'Benennt die Monatsgruppe für Screenreader.'),
+    str('today-label', 'string', 'Today button.', 'Heute-Button.', { default: 'Today' }),
+    str('prev-label', 'string', 'Names ‹.', 'Benennt ‹.', { default: 'Previous month' }), str('next-label', 'string', 'Names ›.', 'Benennt ›.', { default: 'Next month' }),
+    str('week-label', 'string', 'Head of the week column.', 'Kopf der Wochenspalte.', { default: 'W · KW' }),
+    str('time-label', 'string', 'Names the time field.', 'Benennt das Zeitfeld.', { default: 'Time' }), str('clear-label', 'string', 'Clear button.', 'Löschen-Button.', { default: 'Clear' }),
+    ...formAttrs,
+    bool('required', 'A value is required; validity is set on the host.', 'Ein Wert ist Pflicht; die Validität steht am Host.'),
+  ],
+  slots: [],
+  events: [
+    { name: 'nk-change', detail: '{ value, start, end, time }', desc: t('The value changed: a day picked – for a range the second one –, a new time, or Clear. The same day again is no change.', 'Der Wert hat sich geändert: ein Tag gewählt – beim Zeitraum der zweite –, eine neue Uhrzeit oder Löschen. Derselbe Tag noch einmal ist keine Änderung.') },
+    { name: 'nk-month', detail: '{ month }', desc: t('Another month shown.', 'Ein anderer Monat gezeigt.') },
+    { name: 'nk-toggle', detail: '{ open }', desc: t('Floating: opened or closed.', 'Schwebend: geöffnet oder geschlossen.') },
+  ],
+  props: ['value', 'start', 'end', 'month', 'days', 'open', 'form', 'validity'], methods: ['show(anchor)', 'close()', 'toggle(anchor)', 'focusDay()', 'checkValidity()'],
+  example: W => `<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+<div class="nk-pop"><nk-calendar name="due" value="2026-06-02T09:30" time clearable weeks week-start="1" weekend="6,0" today="2026-06-17" today-label="${W.calToday}" time-label="${W.calTime}" clear-label="${W.calClear}" days='${JSON.stringify(calDays(W))}'></nk-calendar></div>
+<div class="nk-pop"><nk-calendar name="sprint" range value="2026-06-08/2026-06-12" weeks week-start="1" weekend="6,0" today="2026-06-17" today-label="${W.calToday}" days='${JSON.stringify({ '2026-06-04': calDays(W)['2026-06-04'] })}'></nk-calendar></div>
+</div>`,
+  classMarkup: W => `<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+<div class="nk-pop">
+  ${calendarClass(W, { month: '2026-06', value: '2026-06-02', today: '2026-06-17', off: { '2026-06-04': W.holidayCorpus }, marks: { '2026-06-02': ['blue'], '2026-06-11': ['orange', 'red'], '2026-06-24': ['green'] }, foot: `\n    <div class="cal-foot"><input class="nk-input" type="time" value="09:30" aria-label="${W.calTime}"><button class="cal-nav">${W.calClear}</button></div>` })}
+</div>
+<div class="nk-pop">
+  ${calendarClass(W, { month: '2026-06', start: '2026-06-08', end: '2026-06-12', today: '2026-06-17', off: { '2026-06-04': W.holidayCorpus } })}
+</div>
+</div>`,
 },
 {
   tag: 'nk-textarea', group: 'forms', classes: ['nk-textarea', 'wide'],
@@ -1376,6 +1487,32 @@ ${dbScript(W)}`,
   example: W => `<nk-list-view meta-keys="due,status"></nk-list-view>
 ${dbScript(W)}`,
   classMarkup: dbListClass,
+},
+{
+  tag: 'nk-calendar-view', group: 'data', classes: ['nk-calendar-view', 'weeks', 'cv-head', 'cv-title', 'cal-nav', 'cv-grid', 'cv-wd', 'cv-week', 'cv-day', 'out', 'off', 'today', 'cv-num', 'cv-item'], wide: true, script: true,
+  title: t('Calendar view', 'Kalenderansicht'),
+  desc: t('The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their dates. <code>date-key</code> names the date column (default: the first one) – <code>YYYY-MM-DD</code> or <code>D.M.YYYY</code>, a range on its start. Today sits on a red pill, days of other months are washed; <code>weeks</code> puts the calendar week in front, <code>weekend</code> washes the days not worked. A card fires <code>nk-select</code> like a row of the table; Today and ‹ › change the month (<code>nk-month</code>). In <code>nk-database</code> it is a tab like the others and shows the same rows.',
+          'Die vierte Datenbank-Ansicht (NotionKit 1.9.0): ein Monat, die Zeilen als Karten an ihren Tagen. <code>date-key</code> nennt die Datumsspalte (Standard: die erste) – <code>YYYY-MM-DD</code> oder <code>D.M.YYYY</code>, ein Zeitraum an seinem Anfang. Heute steht auf einer roten Pille, Tage anderer Monate sind hinterlegt; <code>weeks</code> stellt die Kalenderwoche voran, <code>weekend</code> hinterlegt die Tage ohne Arbeit. Eine Karte feuert <code>nk-select</code> wie eine Tabellenzeile; Heute und ‹ › wechseln den Monat (<code>nk-month</code>). In <code>nk-database</code> ist sie ein Tab wie die anderen und zeigt dieselben Zeilen.'),
+  mobile: t('Keeps seven columns; the days get lower (64px) and the cards smaller.', 'Behält sieben Spalten; die Tage werden niedriger (64px), die Karten kleiner.'),
+  attrs: [
+    str('name', 'string', 'View name.', 'View-Name.', { default: 'calendar' }), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'),
+    str('date-key', 'string', 'Date column.', 'Datumsspalte.'), str('title-key', 'string', 'Title column.', 'Titelspalte.'),
+    str('month', 'YYYY-MM', 'The month shown; default today’s.', 'Der gezeigte Monat; Standard der heutige.'),
+    bool('weeks', 'The ISO calendar week in front of each row.', 'Die ISO-Kalenderwoche vor jeder Reihe.'),
+    str('week-start', '0–6', 'First day of the week: 0 Sunday, 1 Monday …', 'Erster Wochentag: 0 Sonntag, 1 Montag …', { default: 'Intl' }),
+    str('weekend', 'list', 'Weekdays not worked, washed – <code>6,0</code>.', 'Wochentage ohne Arbeit, hinterlegt – <code>6,0</code>.'),
+    str('today', 'YYYY-MM-DD', 'Another today – for tests and docs.', 'Ein anderes Heute – für Tests und Doku.'),
+    str('locale', 'BCP 47', 'Language of the names and the week.', 'Sprache der Namen und der Woche.', { default: 'lang' }),
+    str('today-label', 'string', 'Today button.', 'Heute-Button.', { default: 'Today' }),
+    str('prev-label', 'string', 'Names ‹.', 'Benennt ‹.', { default: 'Previous month' }), str('next-label', 'string', 'Names ›.', 'Benennt ›.', { default: 'Next month' }),
+    str('week-label', 'string', 'Head of the week column.', 'Kopf der Wochenspalte.', { default: 'W · KW' }),
+  ],
+  slots: [],
+  events: [{ name: 'nk-select', detail: '{ row, id }', desc: t('Card clicked or Enter.', 'Karte geklickt oder Enter.') }, { name: 'nk-month', detail: '{ month }', desc: t('Another month shown.', 'Ein anderer Monat gezeigt.') }],
+  props: ['columns', 'rows', 'data', 'month'], methods: ['refresh()'],
+  example: W => `<nk-calendar-view date-key="due" month="2026-05" today="2026-05-20" weeks week-start="1" today-label="${W.calToday}"></nk-calendar-view>
+${dbScript(W)}`,
+  classMarkup: W => calendarViewClass(W, { month: '2026-05', today: '2026-05-20', items: { '2026-05-08': [`🧭 ${W.p1}`], '2026-05-10': [`📄 ${W.p2}`], '2026-05-20': [`🗃️ ${W.p3}`] } }),
 },
 {
   tag: 'nk-filter-bar', group: 'data', classes: ['nk-filter-row', 'nk-filter-pill', 'active', 'add', 'fp-remove', 'nk-db-tool', 'nk-input'], wide: true,

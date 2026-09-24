@@ -1,5 +1,6 @@
 import { NkElement } from './base.js';
 import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
+import { p as placeUnder } from './shared/floating-B8CwbXnV.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-menu>
@@ -20,16 +21,6 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // to the first item; closing returns it to where it was.
 const floatSheet = new CSSStyleSheet();
 floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; z-index: 60; pointer-events: none; }`);
-
-/** The border box of an element, or of the first descendant with one (display: contents hosts). */
-function boxOf(el) {
-  if (el.getClientRects().length) return el.getBoundingClientRect();
-  for (const child of [...(el.shadowRoot?.children ?? []), ...el.children]) {
-    const r = boxOf(child);
-    if (r.width || r.height) return r;
-  }
-  return el.getBoundingClientRect();
-}
 
 class NkMenu extends NkElement {
   static get hostStyles() { return floatSheet; }
@@ -71,10 +62,7 @@ class NkMenu extends NkElement {
   show(anchor) {
     if (anchor) {
       this._anchor = anchor;
-      const r = boxOf(anchor);
-      this.style.top = `${r.bottom + 6}px`;
-      if (this.getAttribute('align') === 'start') { this.style.left = `${r.left}px`; this.style.right = ''; }
-      else { this.style.right = `${Math.max(8, innerWidth - r.right)}px`; this.style.left = ''; }
+      placeUnder(this, anchor, this.getAttribute('align'));
     }
     this.setBoolAttr('open', true);
   }

@@ -4,6 +4,58 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] – 2026-09-24
+
+Built against NotionKit CSS 1.9.0 (peer `>= 1.9.0`), dates: a date picker
+and a calendar view – 85 elements in all. SupaGantt, a planning tool about
+to start on NotionKit, asked for both: start and end, constraints and
+deadlines, with calendar weeks, working days and holidays.
+
+### Added
+- **`<nk-calendar>`** – Notion's date picker (forms): a month with Today
+  and ‹ ›, form-associated. The value is a day (`YYYY-MM-DD`); with `range`
+  an interval `start/end`, picked in two clicks in either order; with
+  `time` a day and a time (`YYYY-MM-DDTHH:MM`) from a time field under the
+  month; `clearable` adds Clear. `weeks` puts the ISO calendar week in front
+  of each row – “KW” in German –, `weekend` greys the days not worked, and
+  the `days` property (or JSON attribute) adds holidays (`off` with a
+  `label`, which is also announced) and up to three `marks` per day in the
+  nine colours. Days outside `min`/`max` are `aria-disabled`: in the arrow
+  path and announced, never picked. After GlassKit Elements'
+  `<glk-calendar>`: arrows move by a day or a week, Home/End to the ends of
+  the week, PageUp/PageDown by a month (with Shift a year) – moving picks
+  nothing –, Enter or Space picks; one day is in the tab order; month names,
+  weekdays and the first day of the week come from `Intl` and the page's
+  language, `week-start` overrides; a new value brings its month;
+  `nk-change { value, start, end, time }` only when the value changes,
+  `nk-month`, `required`, reset. `floating sheet` makes it a popover that
+  `show(anchor)` puts under a property or a cell – a bottom sheet with 44px
+  cells on a phone – with `<nk-menu floating>`'s contract: a tap outside
+  closes it and reaches nothing else, Escape closes it, focus goes in when
+  opened from the keyboard and comes back; a pick closes it, the second of a
+  range.
+- **`<nk-calendar-view>`** – the fourth database view: a month, the rows as
+  cards on their dates (`date-key`, default the first date column;
+  `YYYY-MM-DD`, `D.M.YYYY` or a range on its start). Today on a red pill,
+  days of other months washed, `weeks`, `weekend`, `week-start`; a card
+  fires `nk-select` like a row of the table, Today and ‹ › `nk-month`. In
+  `<nk-database>` a tab like the others, with the same rows.
+- `nk-select` of `<nk-table-view>` says which cell was hit: `key` names its
+  column and `cell` is the `<td>`, to open an editor there – the date picker
+  under a due date.
+
+### Changed
+- Demo: Due under the title and the table's due dates open one
+  `<nk-calendar floating sheet weeks>` – on the month of the date, weekends
+  and holidays greyed, the projects' due dates dotted –, a new date reaches
+  table, board, list and calendar; the database has a 📅 Calendar tab whose
+  cards open the side peek; `#date` and `#calendar` open those states. The
+  app matches the class demo at 0.00 % – the picker on the desktop and as a
+  sheet on a phone, the calendar view in two months included.
+- `<nk-menu floating>` and `<nk-calendar floating>` share their placement
+  (`src/util/floating.js`).
+- Peer `@jungherz-de/notionkit >= 1.9.0`.
+
 ## [1.8.0] – 2026-09-24
 
 Built against NotionKit CSS 1.8.0 (peer `>= 1.8.0`), links and peeks: four
@@ -508,6 +560,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.9.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.9.0
 [1.8.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.8.0
 [1.7.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.7.0
 [1.6.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.6.0

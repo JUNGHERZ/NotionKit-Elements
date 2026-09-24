@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.8.0) wrapping NotionKit CSS v1.8.0 – the calm, document-centric design system in the Notion idiom. 83 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.9.0) wrapping NotionKit CSS v1.9.0 – the calm, document-centric design system in the Notion idiom. 85 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.8.0) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -74,7 +74,7 @@ Never mix the full bundle with the per-component files – each brings its own `
 | Attributes are live | Every documented attribute re-renders when changed after connect (`stat.setAttribute('value', '129')`, `el.open = true`); properties reflect to attributes where a setter is listed. |
 
 
-# 3. Element Catalog (83 elements)
+# 3. Element Catalog (85 elements)
 
 ## Forms & controls (wave 1)
 
@@ -216,7 +216,91 @@ A picture for a person or a workspace, on NotionKit’s profile row: round, or `
 
 **Small screens:** Unchanged; the actions stay beside the picture.
 
-### 3.5 `<nk-textarea>` – Textarea
+### 3.5 `<nk-calendar>` – Date picker
+
+Notion’s date picker as one element (NotionKit 1.9.0): a month with Today and ‹ ›, the keys, bounds and a form value. The value is a day (`YYYY-MM-DD`); with `range` an interval `start/end`, picked in two clicks in either order; with `time` a day and a time (`YYYY-MM-DDTHH:MM`). `weeks` puts the ISO calendar week in front of each row (“KW” in German), `weekend` greys the days not worked, the `days` property adds holidays (`off` with a `label`) and up to three `marks` per day in the nine colours – deadlines, milestones. Days outside `min`/`max` are announced as unavailable and cannot be picked. Arrows move by a day or a week, Home/End to the ends of the week, PageUp/PageDown by a month (with Shift a year), Enter or Space picks; one day is in the tab order. Month names, weekdays and the first day of the week come from the page’s language; `week-start="1"` fixes Monday. With `floating sheet` it is a popover that `show(anchor)` opens under a property or a cell, and a bottom sheet on a phone; a pick closes it.
+
+```html
+<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+<div class="nk-pop"><nk-calendar name="due" value="2026-06-02T09:30" time clearable weeks week-start="1" weekend="6,0" today="2026-06-17" today-label="Today" time-label="Time" clear-label="Clear" days='{"2026-06-04":{"off":true,"label":"Corpus Christi"},"2026-06-02":{"marks":["blue"]},"2026-06-11":{"marks":["orange","red"]},"2026-06-24":{"marks":["green"]}}'></nk-calendar></div>
+<div class="nk-pop"><nk-calendar name="sprint" range value="2026-06-08/2026-06-12" weeks week-start="1" weekend="6,0" today="2026-06-17" today-label="Today" days='{"2026-06-04":{"off":true,"label":"Corpus Christi"}}'></nk-calendar></div>
+</div>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `value` | YYYY-MM-DD | start/end | …THH:MM | – | The day, the range or the day and time; also the reset value. |
+| `month` | YYYY-MM | – | The month shown first; default the value’s, else today’s. |
+| `min` | YYYY-MM-DD | – | First day that can be picked. |
+| `max` | YYYY-MM-DD | – | Last day that can be picked. |
+| `range` | boolean | – | Two picks make a range `start/end`. |
+| `time` | boolean | – | A time field under the month – single days only. |
+| `clearable` | boolean | – | A Clear button under the month. |
+| `weeks` | boolean | – | The ISO calendar week in front of each row. |
+| `week-start` | 0–6 | `Intl` | First day of the week: 0 Sunday, 1 Monday … |
+| `weekend` | list | – | Weekdays not worked, greyed – `6,0`. |
+| `days` | JSON | – | Per day `{ off, label, marks }`; also the property. |
+| `today` | YYYY-MM-DD | – | Another today – for tests and docs. |
+| `locale` | BCP 47 | `lang` | Language of the names and the week. |
+| `floating` | boolean | – | A popover over the page: `show(anchor)`, `close()`. |
+| `sheet` | boolean | – | Floating: a bottom sheet on a phone. |
+| `open` | boolean | – | Floating: shown. |
+| `align` | end | start | `end` | Floating: right or left edge on the anchor’s. |
+| `label` | string | – | Names the month group for screen readers. |
+| `today-label` | string | `Today` | Today button. |
+| `prev-label` | string | `Previous month` | Names ‹. |
+| `next-label` | string | `Next month` | Names ›. |
+| `week-label` | string | `W · KW` | Head of the week column. |
+| `time-label` | string | `Time` | Names the time field. |
+| `clear-label` | string | `Clear` | Clear button. |
+| `name` | string | – | Form field name (FormData key). |
+| `disabled` | boolean | – | Disables the control. |
+| `required` | boolean | – | A value is required; validity is set on the host. |
+
+**Events:** `nk-change` `{ value, start, end, time }` – The value changed: a day picked – for a range the second one –, a new time, or Clear. The same day again is no change. · `nk-month` `{ month }` – Another month shown. · `nk-toggle` `{ open }` – Floating: opened or closed.
+
+**Properties:** `value`, `start`, `end`, `month`, `days`, `open`, `form`, `validity` · **Methods:** `show(anchor)`, `close()`, `toggle(anchor)`, `focusDay()`, `checkValidity()`
+
+**Replaces:** `.nk-calendar`, `.weeks`, `.cal-head`, `.cal-title`, `.cal-nav`, `.cal-grid`, `.cal-wd`, `.cal-week`, `.cal-day`, `.out`, `.off`, `.today`, `.selected`, `.start`, `.end`, `.in-range`, `.cal-marks`, `.cal-foot`, `.nk-pop`, `.floating`, `.sheet`, `.open`
+
+```html
+<!-- equivalent class markup -->
+<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+<div class="nk-pop">
+  <div class="nk-calendar weeks">
+    <div class="cal-head"><div class="cal-title">June 2026</div><button class="cal-nav">Today</button><button class="cal-nav" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="cal-nav" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="cal-grid">
+      <span class="cal-wd">W</span><span class="cal-wd">Mo</span><span class="cal-wd">Tu</span><span class="cal-wd">We</span><span class="cal-wd">Th</span><span class="cal-wd">Fr</span><span class="cal-wd">Sa</span><span class="cal-wd">Su</span>
+      <span class="cal-week">23</span><button class="cal-day">1</button><button class="cal-day selected">2<span class="cal-marks"><i class="blue"></i></span></button><button class="cal-day">3</button><button class="cal-day off" title="Corpus Christi">4</button><button class="cal-day">5</button><button class="cal-day off">6</button><button class="cal-day off">7</button>
+      <span class="cal-week">24</span><button class="cal-day">8</button><button class="cal-day">9</button><button class="cal-day">10</button><button class="cal-day">11<span class="cal-marks"><i class="orange"></i><i class="red"></i></span></button><button class="cal-day">12</button><button class="cal-day off">13</button><button class="cal-day off">14</button>
+      <span class="cal-week">25</span><button class="cal-day">15</button><button class="cal-day">16</button><button class="cal-day today">17</button><button class="cal-day">18</button><button class="cal-day">19</button><button class="cal-day off">20</button><button class="cal-day off">21</button>
+      <span class="cal-week">26</span><button class="cal-day">22</button><button class="cal-day">23</button><button class="cal-day">24<span class="cal-marks"><i class="green"></i></span></button><button class="cal-day">25</button><button class="cal-day">26</button><button class="cal-day off">27</button><button class="cal-day off">28</button>
+      <span class="cal-week">27</span><button class="cal-day">29</button><button class="cal-day">30</button><button class="cal-day out">1</button><button class="cal-day out">2</button><button class="cal-day out">3</button><button class="cal-day out off">4</button><button class="cal-day out off">5</button>
+      <span class="cal-week">28</span><button class="cal-day out">6</button><button class="cal-day out">7</button><button class="cal-day out">8</button><button class="cal-day out">9</button><button class="cal-day out">10</button><button class="cal-day out off">11</button><button class="cal-day out off">12</button>
+    </div>
+    <div class="cal-foot"><input class="nk-input" type="time" value="09:30" aria-label="Time"><button class="cal-nav">Clear</button></div>
+  </div>
+</div>
+<div class="nk-pop">
+  <div class="nk-calendar weeks">
+    <div class="cal-head"><div class="cal-title">June 2026</div><button class="cal-nav">Today</button><button class="cal-nav" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="cal-nav" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="cal-grid">
+      <span class="cal-wd">W</span><span class="cal-wd">Mo</span><span class="cal-wd">Tu</span><span class="cal-wd">We</span><span class="cal-wd">Th</span><span class="cal-wd">Fr</span><span class="cal-wd">Sa</span><span class="cal-wd">Su</span>
+      <span class="cal-week">23</span><button class="cal-day">1</button><button class="cal-day">2</button><button class="cal-day">3</button><button class="cal-day off" title="Corpus Christi">4</button><button class="cal-day">5</button><button class="cal-day off">6</button><button class="cal-day off">7</button>
+      <span class="cal-week">24</span><button class="cal-day start">8</button><button class="cal-day in-range">9</button><button class="cal-day in-range">10</button><button class="cal-day in-range">11</button><button class="cal-day end">12</button><button class="cal-day off">13</button><button class="cal-day off">14</button>
+      <span class="cal-week">25</span><button class="cal-day">15</button><button class="cal-day">16</button><button class="cal-day today">17</button><button class="cal-day">18</button><button class="cal-day">19</button><button class="cal-day off">20</button><button class="cal-day off">21</button>
+      <span class="cal-week">26</span><button class="cal-day">22</button><button class="cal-day">23</button><button class="cal-day">24</button><button class="cal-day">25</button><button class="cal-day">26</button><button class="cal-day off">27</button><button class="cal-day off">28</button>
+      <span class="cal-week">27</span><button class="cal-day">29</button><button class="cal-day">30</button><button class="cal-day out">1</button><button class="cal-day out">2</button><button class="cal-day out">3</button><button class="cal-day out off">4</button><button class="cal-day out off">5</button>
+      <span class="cal-week">28</span><button class="cal-day out">6</button><button class="cal-day out">7</button><button class="cal-day out">8</button><button class="cal-day out">9</button><button class="cal-day out">10</button><button class="cal-day out off">11</button><button class="cal-day out off">12</button>
+    </div>
+  </div>
+</div>
+</div>
+```
+
+**Small screens:** Floating with `sheet`: a bottom sheet with 44px cells, a thumb’s width; seven days and the week column still fit a 390px screen.
+
+### 3.6 `<nk-textarea>` – Textarea
 
 Multi-line sibling of `nk-input`. The initial value is the `value` attribute or the element’s text content.
 
@@ -247,7 +331,7 @@ Multi-line sibling of `nk-input`. The initial value is the `value` attribute or 
 
 **Small screens:** Resizes vertically only; `wide` fills the row.
 
-### 3.6 `<nk-select>` – Select
+### 3.7 `<nk-select>` – Select
 
 Light-DOM `<option>` and `<optgroup>` children are copied into the shadow `<select>` and kept in step when a framework swaps them. The empty string is a valid value; a `value` naming no option leaves the selection alone.
 
@@ -287,7 +371,7 @@ Light-DOM `<option>` and `<optgroup>` children are copied into the shadow `<sele
 
 **Small screens:** Uses the native picker of the platform (`color-scheme` follows the theme).
 
-### 3.7 `<nk-switch>` – Switch
+### 3.8 `<nk-switch>` – Switch
 
 Renders `button.nk-switch[role=switch]`; the stylesheet keys the knob on `aria-checked`, the element does the toggling. Submits `value` (default `on`) when checked, nothing otherwise – like a checkbox.
 
@@ -321,7 +405,7 @@ Renders `button.nk-switch[role=switch]`; the stylesheet keys the knob on `aria-c
 
 **Small screens:** 34×20px – below the 44px touch target. Give it a label row (`nk-field`) to enlarge the hit area.
 
-### 3.8 `<nk-check>` – Checkbox
+### 3.9 `<nk-check>` – Checkbox
 
 A `label.nk-check` with a custom-drawn checkbox; the label text is slotted, so clicking it toggles the box.
 
@@ -354,7 +438,7 @@ A `label.nk-check` with a custom-drawn checkbox; the label text is slotted, so c
 
 **Small screens:** Row height ~24px; the whole label is the hit area.
 
-### 3.9 `<nk-radio>` – Radio
+### 3.10 `<nk-radio>` – Radio
 
 Same optics as `nk-check` with a round mark. Radios with the same `name` in the same tree and form form one group – across shadow roots, which native radios cannot do. One tab stop per group; arrow keys move, wrap and skip disabled entries. There is deliberately no `nk-radio-group`.
 
@@ -388,7 +472,7 @@ Same optics as `nk-check` with a round mark. Radios with the same `name` in the 
 
 **Small screens:** As `nk-check`.
 
-### 3.10 `<nk-slider>` – Slider
+### 3.11 `<nk-slider>` – Slider
 
 A range input with `accent-color` from the tokens, plus an optional value readout below.
 
@@ -418,7 +502,7 @@ A range input with `accent-color` from the tokens, plus an optional value readou
 
 **Small screens:** 210px wide; the native thumb is touch-sized by the platform.
 
-### 3.11 `<nk-field>` – Field row
+### 3.12 `<nk-field>` – Field row
 
 The settings row: label and description left, control right. Put any control – `nk-input`, `nk-switch`, `nk-select` – in the default slot. `stacked` puts the label above a full-width control (textareas, long descriptions) and sets `wide` on the control for you; `compact` shrinks the label to 12px tertiary text. Inside `nk-fields` both are on by default.
 
@@ -463,7 +547,7 @@ The settings row: label and description left, control right. Put any control –
 
 **Small screens:** Stays a row; long descriptions wrap under the label. Use `stacked` where the control needs the whole width.
 
-### 3.12 `<nk-fields>` – Field grid
+### 3.13 `<nk-fields>` – Field grid
 
 Several short fields in one row: a grid of `minmax(150px, 1fr)` columns that wraps as the width allows. Every `nk-field` inside renders itself stacked and compact – a 12px label above a full-width control – so nothing collides.
 
@@ -494,7 +578,7 @@ _No attributes._
 
 ## Content elements (wave 1)
 
-### 3.13 `<nk-tag>` – Tag
+### 3.14 `<nk-tag>` – Tag
 
 The select option as Notion draws it, in its nine colours. The colour modifier class becomes the `color` attribute; without one it is the grey tag. Each pair is tuned per theme.
 
@@ -517,7 +601,7 @@ The select option as Notion draws it, in its nine colours. The colour modifier c
 
 **Small screens:** Unchanged.
 
-### 3.14 `<nk-progress>` – Progress
+### 3.15 `<nk-progress>` – Progress
 
 A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `role="progressbar"`.
 
@@ -543,7 +627,7 @@ A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `
 
 **Small screens:** Unchanged.
 
-### 3.15 `<nk-callout>` – Callout
+### 3.16 `<nk-callout>` – Callout
 
 One thought that must not be missed. The icon comes from the `icon` attribute or a `slot="icon"` node – the node itself, never wrapped.
 
@@ -566,7 +650,7 @@ One thought that must not be missed. The icon comes from the `icon` attribute or
 
 **Small screens:** Unchanged; wraps with the text.
 
-### 3.16 `<nk-bookmark>` – Bookmark
+### 3.17 `<nk-bookmark>` – Bookmark
 
 Notion’s link block, filled from what you know of the page – `og:title`, `og:description`, `og:image`: title, two lines of description and the address with its icon on the left, the image on the right in a third, 240px at most. `title` is the heading, never a tooltip; without it the host name stands in. `url` shows an address other than `href`. Opens in a new tab unless `target` says otherwise; a part without a value is left out.
 
@@ -597,7 +681,7 @@ Notion’s link block, filled from what you know of the page – `og:title`, `og
 
 **Small screens:** The image keeps its third and is cropped at the centre; title and address end in an ellipsis.
 
-### 3.17 `<nk-divider>` – Divider
+### 3.18 `<nk-divider>` – Divider
 
 A hairline `<hr>` with block spacing.
 
@@ -618,7 +702,7 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.18 `<nk-heading>` – Heading
+### 3.19 `<nk-heading>` – Heading
 
 A section heading. `level` chooses the real heading element (h1–h4), so the document outline stays honest.
 
@@ -641,7 +725,7 @@ A section heading. `level` chooses the real heading element (h1–h4), so the do
 
 **Small screens:** Unchanged.
 
-### 3.19 `<nk-toggle>` – Toggle block
+### 3.20 `<nk-toggle>` – Toggle block
 
 A `<details>` block. The summary is rendered inside the element (its marker is a pseudo-element and cannot be styled on slotted content); the body is slotted.
 
@@ -667,7 +751,7 @@ A `<details>` block. The summary is rendered inside the element (its marker is a
 
 **Small screens:** Unchanged.
 
-### 3.20 `<nk-todo>` – To-do
+### 3.21 `<nk-todo>` – To-do
 
 Checkbox line with strike-through when done. Form-associated like `nk-check`.
 
@@ -697,7 +781,7 @@ Checkbox line with strike-through when done. Form-associated like `nk-check`.
 
 **Small screens:** Unchanged.
 
-### 3.21 `<nk-kbd>` – Key cap
+### 3.22 `<nk-kbd>` – Key cap
 
 A keyboard key, e.g. in shortcut hints.
 
@@ -718,7 +802,7 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.22 `<nk-code>` – Code block
+### 3.23 `<nk-code>` – Code block
 
 Pre-formatted block with a language badge. Whitespace is kept as written; escape `<` as `&lt;`. With `highlight`, HTML tags and attributes are coloured.
 
@@ -742,7 +826,7 @@ Pre-formatted block with a language badge. Whitespace is kept as written; escape
 
 **Small screens:** Scrolls horizontally instead of wrapping.
 
-### 3.23 `<nk-quote>` – Quote
+### 3.24 `<nk-quote>` – Quote
 
 A block quote with an optional citation line.
 
@@ -767,7 +851,7 @@ A block quote with an optional citation line.
 
 ## App shell & navigation (wave 2)
 
-### 3.24 `<nk-app>` – App shell
+### 3.25 `<nk-app>` – App shell
 
 The outermost element of a workspace app: a full-height flex row with the sidebar slot left and `main.nk-main` right. Everything in the default slot – `nk-topbar`, `nk-page` – becomes a flex child of the main column.
 
@@ -829,7 +913,7 @@ _No attributes._
 
 **Small screens:** Below 860px the sidebar is hidden; open it as a drawer with `sidebar.open = true`.
 
-### 3.25 `<nk-sidebar>` – Sidebar
+### 3.26 `<nk-sidebar>` – Sidebar
 
 The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get `compact` (26px rows). The host is `display: contents`, so the `aside` is a direct flex child of the app – exactly like the class markup.
 
@@ -874,7 +958,7 @@ The left rail: workspace slot on top, a scrolling default slot for the tree, a p
 
 **Small screens:** Hidden below 860px. `open` shows it as a drawer over the page with a scrim – NotionKit’s own rules since 1.7.0 (`.nk-sidebar.open`, `.nk-sidebar-backdrop`), the same as the class markup’s; `<nk-btn variant="sidebar">` in the topbar is the ☰ that opens it. Escape and the scrim close it. The drawer slides in over 240ms and the scrim fades, closing runs backwards – CSS only (`transition-behavior: allow-discrete` + `@starting-style`; older browsers switch hard, reduced motion snaps). In landscape the drawer grows by the left safe-area inset, so its rows clear the Dynamic Island.
 
-### 3.26 `<nk-workspace-switcher>` – Workspace switcher
+### 3.27 `<nk-workspace-switcher>` – Workspace switcher
 
 The row at the very top of the sidebar. A click toggles `open` and shows whatever sits in the `menu` slot below it (an `nk-menu`, from wave 4); outside clicks and Escape close it.
 
@@ -903,7 +987,7 @@ The row at the very top of the sidebar. A click toggles `open` and shows whateve
 
 **Small screens:** Unchanged.
 
-### 3.27 `<nk-section-label>` – Section label
+### 3.28 `<nk-section-label>` – Section label
 
 Small uppercase-ish heading between tree sections. With `addable` a ＋ appears on hover and fires `nk-action`.
 
@@ -929,7 +1013,7 @@ Small uppercase-ish heading between tree sections. With `addable` a ＋ appears 
 
 **Small screens:** Unchanged.
 
-### 3.28 `<nk-tree>` – Tree
+### 3.29 `<nk-tree>` – Tree
 
 Container for `nk-tree-item`s: keeps exactly one item `active` (listening to `nk-select` at any depth), gives the whole tree a single tab stop with arrow-key navigation (↑↓ move, → expands or enters, ← collapses or leaves, Home/End), and renders items from `tree.data`. `tree.value` is read-only – select programmatically with `item.select()` or the `active` attribute. Section labels may sit between items; their ＋ fires `nk-action { action: 'add' }` without a value.
 
@@ -978,7 +1062,7 @@ Container for `nk-tree-item`s: keeps exactly one item `active` (listening to `nk
 
 **Small screens:** Rows are 28px; raise the hit area in a touch drawer via the sidebar’s `open` state styling of your own.
 
-### 3.29 `<nk-tree-item>` – Tree item
+### 3.30 `<nk-tree-item>` – Tree item
 
 One row of the page tree – and its children box. Text content is the label, nested `nk-tree-item`s are the children (the arrow appears only then), `slot="icon"` and `slot="end"` go where they say. Hover actions ＋/⋯ report through `nk-action`; a click fires `nk-select` (cancelable). Outside an `nk-tree` (sidebar footer) an item marks itself `active` on click unless the event is cancelled.
 
@@ -1020,7 +1104,7 @@ One row of the page tree – and its children box. Text content is the label, ne
 
 **Small screens:** 28px rows (26px with `compact`) – below the 44px touch target; the tree does not force a height.
 
-### 3.30 `<nk-topbar>` – Top bar
+### 3.31 `<nk-topbar>` – Top bar
 
 The 44px bar above the page: breadcrumb in the default slot, buttons in the `actions` slot (right-aligned). Use `nk-btn variant="topbar"` / `"share"` and `nk-theme-toggle` there, and `<span class="nk-topbar-meta">` for passive text such as “Edited 2 min ago”.
 
@@ -1050,7 +1134,7 @@ _No attributes._
 
 **Small screens:** Below 860px only the last crumb stays and ends in an ellipsis, `nk-topbar-meta` hides, and the actions keep to one line – as in Notion’s mobile app.
 
-### 3.31 `<nk-breadcrumb>` – Breadcrumb
+### 3.32 `<nk-breadcrumb>` – Breadcrumb
 
 Give it plain `<span>` or `<a>` children; they are cloned into the bar with separators between them and the last one marked current (or the child with a `current` attribute). Text changes, added or removed children are picked up automatically (`refresh()` only for what the observer cannot see). Clicking a crumb fires `nk-select` and forwards the click to the original child, so links navigate exactly once.
 
@@ -1077,7 +1161,7 @@ Give it plain `<span>` or `<a>` children; they are cloned into the bar with sepa
 
 **Small screens:** Stays on one line; keep crumbs short.
 
-### 3.32 `<nk-theme-toggle>` – Theme toggle
+### 3.33 `<nk-theme-toggle>` – Theme toggle
 
 The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in `localStorage`, applies a stored or system preference on first connect when `<html>` has no theme yet, and accepts `postMessage({ nkTheme })` from a parent page. `apply(theme)` does everything a click does: sets, persists and fires `nk-change`.
 
@@ -1103,7 +1187,7 @@ The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in 
 
 **Small screens:** Unchanged.
 
-### 3.33 `<nk-tab-bar>` – Tab bar (mobile)
+### 3.34 `<nk-tab-bar>` – Tab bar (mobile)
 
 The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it last inside `nk-app`: it is slotted into the main column below the scrolling page, so it never moves and no bottom padding is needed. Keeps exactly one `nk-tab-bar-item` active (listening to `nk-select`); a `drawer` item opens the sidebar instead. Needs NotionKit CSS 1.2.0.
 
@@ -1146,7 +1230,7 @@ The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it la
 
 **Small screens:** This is where it lives: hidden above 860px (the sidebar is the navigation there), shown below. `always` shows it at every width – previews, phone frames. The bottom padding is the larger of 6px and `env(safe-area-inset-bottom)`; in landscape the side padding grows to the left/right insets.
 
-### 3.34 `<nk-tab-bar-item>` – Tab bar item
+### 3.35 `<nk-tab-bar-item>` – Tab bar item
 
 One destination of `nk-tab-bar`: an icon over a short label. A tap emits `nk-select` (cancelable), then moves the bar’s `value`; with `href` it navigates afterwards. `drawer` turns it into the “More” item that opens the nearest `nk-sidebar` as a drawer and never becomes active. Standalone it toggles its own `active`.
 
@@ -1181,7 +1265,7 @@ One destination of `nk-tab-bar`: an icon over a short label. A tap emits `nk-sel
 
 ## Page shell & blocks (wave 3)
 
-### 3.35 `<nk-page>` – Page
+### 3.36 `<nk-page>` – Page
 
 The document column: a scrolling wrapper, an optional cover, the 760px page with 64px side padding, and the page icon (rendered here because its slotted twin is keyed on the parent). `narrow` drops the scroll wrapper for pages that are the document itself.
 
@@ -1219,7 +1303,7 @@ The document column: a scrolling wrapper, an optional cover, the 760px page with
 
 **Small screens:** Side padding drops to 24px below 860px.
 
-### 3.36 `<nk-page-cover>` – Page cover
+### 3.37 `<nk-page-cover>` – Page cover
 
 The 200px cover band. Without `src` it shows the token gradient; with `src` a picture – an `<img>` inside the band, cropped rather than stretched. `position` moves the crop, as Notion’s “Reposition” does.
 
@@ -1243,7 +1327,7 @@ The 200px cover band. Without `src` it shows the token gradient; with `src` a pi
 
 **Small screens:** Unchanged.
 
-### 3.37 `<nk-page-title>` – Page title
+### 3.38 `<nk-page-title>` – Page title
 
 The 40px heading. With `editable` it becomes a plain-text field: Enter commits, blur fires `nk-change`.
 
@@ -1272,7 +1356,7 @@ The 40px heading. With `editable` it becomes a plain-text field: Enter commits, 
 
 **Small screens:** Unchanged; long titles wrap.
 
-### 3.38 `<nk-page-actions>` – Page meta row
+### 3.39 `<nk-page-actions>` – Page meta row
 
 The quiet row under the title: owner, date, tags – any inline content, 16px apart.
 
@@ -1293,7 +1377,7 @@ _No attributes._
 
 **Small screens:** Wraps naturally.
 
-### 3.39 `<nk-props>` – Page properties
+### 3.40 `<nk-props>` – Page properties
 
 The properties under the title of a database page, the pattern Notion is known for: a list of `nk-prop` rows. The rows are hosts with `display: contents`, so each renders as a row of this list – no markup of their own around them.
 
@@ -1326,7 +1410,7 @@ _No attributes._
 
 **Small screens:** Below 860px each property stacks: the name above its value.
 
-### 3.40 `<nk-prop>` – Page property
+### 3.41 `<nk-prop>` – Page property
 
 One property: the name with its type icon in a 160px column, the value beside it, 34px with the hover wash on both halves. The value is the element’s content – tags, an avatar and a name, a date, `<nk-progress wide>`. A click fires `nk-action` with the half that was hit, the moment Notion opens the property’s editor.
 
@@ -1352,7 +1436,7 @@ One property: the name with its type icon in a 160px column, the value beside it
 
 **Small screens:** Stacks below 860px.
 
-### 3.41 `<nk-panels>` – Panels
+### 3.42 `<nk-panels>` – Panels
 
 A grid of `nk-panel`s: columns of at least 200px that share the row. The panels are hosts with `display: contents`, so each is a cell of this grid.
 
@@ -1381,7 +1465,7 @@ _No attributes._
 
 **Small screens:** Falls to one column as soon as two 200px columns no longer fit.
 
-### 3.42 `<nk-panel>` – Panel
+### 3.43 `<nk-panel>` – Panel
 
 A neutral surface for content that belongs together – the cards on Notion’s Home, the boxes in its settings. `title` is the heading (never a tooltip); the content goes in as `<p>`s and blocks. `cover` without a value draws the gradient band, with a URL a picture; `icon` overlaps the cover as on a page – a page tile. With `href` the panel is a link.
 
@@ -1408,7 +1492,7 @@ A neutral surface for content that belongs together – the cards on Notion’s 
 
 **Small screens:** Takes the width of its grid cell.
 
-### 3.43 `<nk-block-host>` – Block host
+### 3.44 `<nk-block-host>` – Block host
 
 The optical shell for editor content: hover wash, focus ring, drop-target line, an optional drag handle. It stays behaviour-neutral – mount your editor into the light DOM; `nk-editor` (v1.1) will do that for TipTap.
 
@@ -1432,7 +1516,7 @@ The optical shell for editor content: hover wash, focus ring, drop-target line, 
 
 **Small screens:** The handle sits 26px left of the column and is hidden when there is no room.
 
-### 3.44 `<nk-banner>` – Banner
+### 3.45 `<nk-banner>` – Banner
 
 A tinted notice row. The colour modifier becomes `variant`; an action link goes into `slot="action"` and sits at the right edge.
 
@@ -1461,7 +1545,7 @@ A tinted notice row. The colour modifier becomes `variant`; an action link goes 
 
 **Small screens:** Wraps; the action drops below the text when needed.
 
-### 3.45 `<nk-empty>` – Empty state
+### 3.46 `<nk-empty>` – Empty state
 
 Dashed box with icon, title, description and whatever call to action you slot in.
 
@@ -1486,7 +1570,7 @@ Dashed box with icon, title, description and whatever call to action you slot in
 
 **Small screens:** Unchanged.
 
-### 3.46 `<nk-skeleton>` – Skeleton
+### 3.47 `<nk-skeleton>` – Skeleton
 
 Shimmering placeholder lines. `lines` renders several; `widths` gives each its own width.
 
@@ -1516,7 +1600,7 @@ Shimmering placeholder lines. `lines` renders several; `widths` gives each its o
 
 **Small screens:** Unchanged; respects reduced motion.
 
-### 3.47 `<nk-synced>` – Synced block
+### 3.48 `<nk-synced>` – Synced block
 
 Content that appears in several places, framed with a badge.
 
@@ -1539,7 +1623,7 @@ Content that appears in several places, framed with a badge.
 
 **Small screens:** Unchanged.
 
-### 3.48 `<nk-tabs>` – Tabs
+### 3.49 `<nk-tabs>` – Tabs
 
 A tab strip with panels. `nk-tab` children are the tabs; elements with `slot="panel"` and a matching `data-tab` are the panels – the tabs hide every panel but the active one through `hidden`. Arrow keys move between tabs.
 
@@ -1578,7 +1662,7 @@ A tab strip with panels. `nk-tab` children are the tabs; elements with `slot="pa
 
 **Small screens:** Strip stays on one line; keep labels short.
 
-### 3.49 `<nk-tab>` – Tab
+### 3.50 `<nk-tab>` – Tab
 
 One tab of `nk-tabs`. Standalone it toggles its own `active`.
 
@@ -1605,7 +1689,7 @@ One tab of `nk-tabs`. Standalone it toggles its own `active`.
 
 **Small screens:** Unchanged.
 
-### 3.50 `<nk-segmented>` – Segmented control
+### 3.51 `<nk-segmented>` – Segmented control
 
 Plain `<button value>` children stay in the light DOM (the stylesheet’s slotted twins shape them); the element moves `.active`, handles arrow keys and submits `value` with the form. With `scroll` the chosen option stays in view: after the first layout, on every change and when the row’s width changes, the row – never the page – scrolls the least distance, right to left as well.
 
@@ -1638,7 +1722,7 @@ Plain `<button value>` children stay in the light DOM (the stylesheet’s slotte
 
 **Small screens:** One row by default, which five filter options overflow on a phone: `scroll` keeps one thumb-swipeable row capped at the parent width (scrollbar hidden), `wrap` breaks it onto further rows.
 
-### 3.51 `<nk-steps>` – Steps
+### 3.52 `<nk-steps>` – Steps
 
 A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked `aria-current="step"`. `current` counts from 1; one past the last marks every step done, and `next()` moves on. The `steps` attribute is a comma-separated list; the property also takes `{ label, desc }` objects for a line under the label.
 
@@ -1668,7 +1752,7 @@ A short flow – connecting an account, setting up a model – calm and vertical
 
 **Small screens:** Unchanged: vertical, so it never runs out of width.
 
-### 3.52 `<nk-stats>` – Stat cards
+### 3.53 `<nk-stats>` – Stat cards
 
 `nk-stats` is the row; each `nk-stat` shows label, value and a trend line coloured by `trend`.
 
@@ -1702,7 +1786,7 @@ A short flow – connecting an account, setting up a model – calm and vertical
 
 **Small screens:** The row wraps below 860px.
 
-### 3.53 `<nk-stat>` – Stat card
+### 3.54 `<nk-stat>` – Stat card
 
 One card; see `nk-stats` for the row.
 
@@ -1728,7 +1812,7 @@ One card; see `nk-stats` for the row.
 
 **Small screens:** Unchanged.
 
-### 3.54 `<nk-avatar-group>` – Avatar group
+### 3.55 `<nk-avatar-group>` – Avatar group
 
 Overlapping `.mini-avatar` children (light DOM, styled by the slotted twins) plus a “more” bubble from the attribute. Pass `.mini-avatar`, not `.nk-avatar`: the document rule of `.nk-avatar` sets its own 24px, and for slotted nodes the document wins over the group’s 26px.
 
@@ -1751,7 +1835,7 @@ Overlapping `.mini-avatar` children (light DOM, styled by the slotted twins) plu
 
 **Small screens:** Unchanged.
 
-### 3.55 `<nk-avatar>` – Avatar
+### 3.56 `<nk-avatar>` – Avatar
 
 A person or a workspace: initials, an emoji or a photo in a circle. `size` small (20px), default 24px, large (32px), xlarge (56px); `color` one of Notion’s nine names or any CSS background, without it the avatar gradient; `square` for a workspace icon. Without content the initials come from `name`; with `src` a photo fills the circle and `name` becomes its alt text.
 
@@ -1778,7 +1862,7 @@ A person or a workspace: initials, an emoji or a photo in a circle. `size` small
 
 **Small screens:** Unchanged. A fixed size, so a row of avatars never reflows.
 
-### 3.56 `<nk-mention>` – Mention
+### 3.57 `<nk-mention>` – Mention
 
 Inline chip for a person (with avatar slot), a page or a date.
 
@@ -1801,7 +1885,7 @@ Inline chip for a person (with avatar slot), a page or a date.
 
 **Small screens:** Unchanged; never wraps.
 
-### 3.57 `<nk-template-btn>` – Template button
+### 3.58 `<nk-template-btn>` – Template button
 
 Full-width, left-aligned button on the callout background – “insert a template”. Fires `nk-select` with `value`.
 
@@ -1832,7 +1916,7 @@ Full-width, left-aligned button on the callout background – “insert a templa
 
 **Small screens:** Unchanged.
 
-### 3.58 `<nk-model-card>` – Model card
+### 3.59 `<nk-model-card>` – Model card
 
 A radio-like card. Cards with the same `name` form a group; the selected one submits `value` with the form.
 
@@ -1864,7 +1948,7 @@ A radio-like card. Cards with the same `name` form a group; the selected one sub
 
 **Small screens:** Unchanged.
 
-### 3.59 `<nk-profile-row>` – Profile row
+### 3.60 `<nk-profile-row>` – Profile row
 
 A 56px gradient avatar with whatever you slot beside it – usually two buttons.
 
@@ -1887,7 +1971,7 @@ A 56px gradient avatar with whatever you slot beside it – usually two buttons.
 
 **Small screens:** Unchanged.
 
-### 3.60 `<nk-danger-zone>` – Danger zone
+### 3.61 `<nk-danger-zone>` – Danger zone
 
 Red-framed box for destructive settings.
 
@@ -1910,7 +1994,7 @@ Red-framed box for destructive settings.
 
 **Small screens:** Unchanged.
 
-### 3.61 `<nk-member-list>` – Member list
+### 3.62 `<nk-member-list>` – Member list
 
 Rows of `nk-member-row`; the list marks the last row so it loses its bottom border. Each row shows avatar (initials + `color`), name, mail and a `slot="role"` control on the right.
 
@@ -1943,7 +2027,7 @@ Rows of `nk-member-row`; the list marks the last row so it loses its bottom bord
 
 **Small screens:** Unchanged; the role select shrinks to 120px.
 
-### 3.62 `<nk-member-row>` – Member row
+### 3.63 `<nk-member-row>` – Member row
 
 One row; see `nk-member-list`.
 
@@ -1972,7 +2056,7 @@ One row; see `nk-member-list`.
 
 ## Overlays (wave 4)
 
-### 3.63 `<nk-modal>` – Settings modal
+### 3.64 `<nk-modal>` – Settings modal
 
 The settings overlay: backdrop, a 960×640 dialog with a nav column and a content column. The nav rows are rendered by the modal from the panes’ `label`/`icon`/`group`, so the 27px rows and the 860px icon rail come straight from the stylesheet. Escape and the backdrop close it; focus moves in and back; the page behind is scroll-locked and inert. Place it directly under `<body>`.
 
@@ -2029,7 +2113,7 @@ The settings overlay: backdrop, a 960×640 dialog with a nav column and a conten
 
 **Small screens:** Below 860px the nav collapses to a 60px icon rail; the dialog takes 92vw × 86vh.
 
-### 3.64 `<nk-sheet>` – Sheet
+### 3.65 `<nk-sheet>` – Sheet
 
 Notion’s mobile surface for menus, properties and more – the phone’s twin of the modal, with its contract: `show()`, `close()`, `toggle()`; Escape and the backdrop close it; focus moves in and back; the page behind is scroll-locked and inert. The panel rises from the bottom edge with a grabber, `title` sits under it and names the dialog. Rows inside are 40px, a thumb’s height. Choosing a row does not close the sheet – `nk-select` bubbles out and the app decides. For a menu that is a popover on the desktop and a sheet on the phone, use `<nk-menu floating sheet>`. Place it directly under `<body>`.
 
@@ -2075,7 +2159,7 @@ Notion’s mobile surface for menus, properties and more – the phone’s twin 
 
 **Small screens:** Made for the phone: full width, above the tab bar, bottom padding from the safe area; the content scrolls inside the sheet. On larger screens at most 640px wide, centred.
 
-### 3.65 `<nk-peek>` – Side peek
+### 3.66 `<nk-peek>` – Side peek
 
 Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (`slot="actions"`); the body is the page – `nk-page-title` (32px here), `nk-props`, a `.nk-prose`, `nk-comments`. `show()` slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls `show()` again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under `<body>`.
 
@@ -2122,7 +2206,7 @@ Notion’s side peek: a database row opens at the right edge, full height, next 
 
 **Small screens:** Below 860px a bottom sheet over a dimmed page, title in 28px – and modal there: the page is inert and scroll-locked, a tap on the dimmed page closes it.
 
-### 3.66 `<nk-settings-pane>` – Settings pane
+### 3.67 `<nk-settings-pane>` – Settings pane
 
 One pane of the settings modal. `label`, `icon` and `group` feed the modal’s nav; `title` renders the pane heading. Slotted `<h2>`/`<h3>` are styled too.
 
@@ -2150,7 +2234,7 @@ One pane of the settings modal. `label`, `icon` and `group` feed the modal’s n
 
 **Small screens:** Content padding drops to 24px below 860px.
 
-### 3.67 `<nk-settings-user>` – Settings user
+### 3.68 `<nk-settings-user>` – Settings user
 
 The user card at the top of the settings nav.
 
@@ -2175,7 +2259,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Below 860px only the avatar remains.
 
-### 3.68 `<nk-cmdk>` – Command palette
+### 3.69 `<nk-cmdk>` – Command palette
 
 ⌘K. Feed it `palette.commands = [{ group, items: [{ id, icon, label, shortcut, keywords, action }] }]`; it searches fuzzily over label and keywords, keeps group order, moves the selection with ↑↓, picks with Enter or click (`nk-command` plus the item’s `action`), and closes on Escape or the backdrop. The hotkey is `mod+k` unless changed. Place it directly under `<body>`.
 
@@ -2231,7 +2315,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Full width (96vw) and closer to the top below 860px.
 
-### 3.69 `<nk-menu>` – Menu
+### 3.70 `<nk-menu>` – Menu
 
 A 230px context menu. Items are `nk-menu-item`s (`type="separator"` / `"label"` for the rest); ↑↓ move, Enter selects, `nk-select` bubbles up. Inside `nk-pop` or the workspace switcher it is part of their surface. With `floating` it is a menu over the page of its own, NotionKit’s `.nk-pop.floating`: `menu.show(button)` opens it under the button, right edges aligned (`align="start"`: left edges), and it fades in like the palette. A tap outside closes it and reaches nothing else; Escape and a chosen item close it, a switch row keeps it open. Opened from the keyboard, focus moves to the first item and back when it closes. Put it directly under `<body>`, like the other overlays.
 
@@ -2275,7 +2359,7 @@ A 230px context menu. Items are `nk-menu-item`s (`type="separator"` / `"label"` 
 
 **Small screens:** With `sheet` the floating menu is a bottom sheet below 860px – full width, a grabber, 40px rows, the page dimmed – whatever position `show()` wrote: one markup, two presentations, as Notion’s mobile app opens every menu.
 
-### 3.70 `<nk-menu-item>` – Menu item
+### 3.71 `<nk-menu-item>` – Menu item
 
 One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `type` switches to a separator or a group label, or to a row with a switch on the right – “Small text” in Notion’s page menu: a click flips `checked` and fires `nk-change`, so the menu stays open.
 
@@ -2306,7 +2390,7 @@ One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `
 
 **Small screens:** Unchanged.
 
-### 3.71 `<nk-pop>` – Popover
+### 3.72 `<nk-pop>` – Popover
 
 Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` and toggles `open`; outside clicks, Escape and an `nk-select` from inside close it. Content is wrapped in `.nk-pop` unless it brings its own surface (`nk-menu`, `nk-emoji-picker`) or `bare` is set.
 
@@ -2341,7 +2425,7 @@ Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` an
 
 **Small screens:** Positioned relative to the trigger; keep it near the viewport edge in mind.
 
-### 3.72 `<nk-emoji-picker>` – Emoji picker
+### 3.73 `<nk-emoji-picker>` – Emoji picker
 
 Search field, 8-column grid, category strip. Ships with a built-in set (names for search); `picker.emojis = [{ char, name, cat }]` replaces it. A click fires `nk-select { emoji }`.
 
@@ -2367,7 +2451,7 @@ Search field, 8-column grid, category strip. Ships with a built-in set (names fo
 
 **Small screens:** 296px wide; fine on any phone.
 
-### 3.73 `<nk-toast>` – Toast
+### 3.74 `<nk-toast>` – Toast
 
 One inverted pill at the bottom centre, above every overlay; over a tab bar at the bottom of the screen it rises 12px above the bar. `toast.show("Saved")` shows it and hides it after `duration` ms; `open` is the state.
 
@@ -2398,7 +2482,7 @@ One inverted pill at the bottom centre, above every overlay; over a tab bar at t
 
 ## Data & collaboration (wave 5)
 
-### 3.74 `<nk-database>` – Database
+### 3.75 `<nk-database>` – Database
 
 The view switcher with Notion’s toolbar: child views (`nk-table-view`, `nk-board-view`, `nk-list-view`) become the tabs on the left, `slot="tools"` holds the view’s tools on the right – `<nk-btn variant="tool">` for Filter, Sort and search, then “New” – and `slot="filters"` the `nk-filter-bar` under them. `columns` and `rows` are pushed into every view. `view` selects the active one; `count` on a view shows the row count as badge. No fetching: give it data, listen to events.
 
@@ -2464,7 +2548,7 @@ The view switcher with Notion’s toolbar: child views (`nk-table-view`, `nk-boa
 
 **Small screens:** The tabs scroll sideways when the row gets narrow; the tools keep their place. Tables and boards scroll horizontally; nothing breaks.
 
-### 3.75 `<nk-table-view>` – Table view
+### 3.76 `<nk-table-view>` – Table view
 
 Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text`, `select`, `multi-select`, `date`, `person`, `checkbox`, `url`, `number`, `progress`) and rendered as plain markup by the exported `renderPropertyCell()` – every cell rule starts with `.nk-table`, so a cell element of its own would never be styled. Header clicks sort with `sortable`. A `number` column stands right-aligned in figures of equal width, formatted by its `locale` and `format` (Intl.NumberFormat options); a person’s `color` takes one of the nine names.
 
@@ -2524,7 +2608,7 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
 
 **Small screens:** Scrolls horizontally inside `.nk-table-wrap`.
 
-### 3.76 `<nk-board-view>` – Board view
+### 3.77 `<nk-board-view>` – Board view
 
 Groups rows by a select column (`group-by`, default: the first select column) into one column per option. Cards show the title column and the `meta-keys` (default: dates and progress). Drag a card onto another column: the row’s value changes and `nk-change` fires.
 
@@ -2576,7 +2660,7 @@ Groups rows by a select column (`group-by`, default: the first select column) in
 
 **Small screens:** Columns scroll horizontally.
 
-### 3.77 `<nk-list-view>` – List view
+### 3.78 `<nk-list-view>` – List view
 
 The third database view: one line per row – icon and title, the `meta-keys` on the right (default: the select and date columns, in column order). Dates and text stand as text, selects as tags, a person as avatar and name. Rows fire `nk-select`; `new-row` adds the add row.
 
@@ -2629,7 +2713,73 @@ The third database view: one line per row – icon and title, the `meta-keys` on
 
 **Small screens:** Stays one line per row: the title ends in an ellipsis, the properties keep their place.
 
-### 3.78 `<nk-filter-bar>` – Filter bar
+### 3.79 `<nk-calendar-view>` – Calendar view
+
+The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their dates. `date-key` names the date column (default: the first one) – `YYYY-MM-DD` or `D.M.YYYY`, a range on its start. Today sits on a red pill, days of other months are washed; `weeks` puts the calendar week in front, `weekend` washes the days not worked. A card fires `nk-select` like a row of the table; Today and ‹ › change the month (`nk-month`). In `nk-database` it is a tab like the others and shows the same rows.
+
+```html
+<nk-calendar-view date-key="due" month="2026-05" today="2026-05-20" weeks week-start="1" today-label="Today"></nk-calendar-view>
+<script>{
+  const db = document.currentScript.previousElementSibling;
+  db.columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' }, { value: 'progress', label: 'In progress', color: 'blue' }, { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+  ];
+  db.rows = [
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+  ];
+}</script>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | string | `calendar` | View name. |
+| `label` | string | – | Tab label. |
+| `date-key` | string | – | Date column. |
+| `title-key` | string | – | Title column. |
+| `month` | YYYY-MM | – | The month shown; default today’s. |
+| `weeks` | boolean | – | The ISO calendar week in front of each row. |
+| `week-start` | 0–6 | `Intl` | First day of the week: 0 Sunday, 1 Monday … |
+| `weekend` | list | – | Weekdays not worked, washed – `6,0`. |
+| `today` | YYYY-MM-DD | – | Another today – for tests and docs. |
+| `locale` | BCP 47 | `lang` | Language of the names and the week. |
+| `today-label` | string | `Today` | Today button. |
+| `prev-label` | string | `Previous month` | Names ‹. |
+| `next-label` | string | `Next month` | Names ›. |
+| `week-label` | string | `W · KW` | Head of the week column. |
+
+**Events:** `nk-select` `{ row, id }` – Card clicked or Enter. · `nk-month` `{ month }` – Another month shown.
+
+**Properties:** `columns`, `rows`, `data`, `month` · **Methods:** `refresh()`
+
+**Replaces:** `.nk-calendar-view`, `.weeks`, `.cv-head`, `.cv-title`, `.cal-nav`, `.cv-grid`, `.cv-wd`, `.cv-week`, `.cv-day`, `.out`, `.off`, `.today`, `.cv-num`, `.cv-item`
+
+```html
+<!-- equivalent class markup -->
+<div class="nk-calendar-view weeks">
+  <div class="cv-head"><div class="cv-title">May 2026</div><button class="cal-nav">Today</button><button class="cal-nav" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="cal-nav" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
+  <div class="cv-grid">
+    <div class="cv-wd">W</div><div class="cv-wd">Mon</div><div class="cv-wd">Tue</div><div class="cv-wd">Wed</div><div class="cv-wd">Thu</div><div class="cv-wd">Fri</div><div class="cv-wd">Sat</div><div class="cv-wd">Sun</div>
+    <div class="cv-week">18</div><div class="cv-day out"><span class="cv-num">27</span></div><div class="cv-day out"><span class="cv-num">28</span></div><div class="cv-day out"><span class="cv-num">29</span></div><div class="cv-day out"><span class="cv-num">30</span></div><div class="cv-day"><span class="cv-num">1</span></div><div class="cv-day"><span class="cv-num">2</span></div><div class="cv-day"><span class="cv-num">3</span></div>
+    <div class="cv-week">19</div><div class="cv-day"><span class="cv-num">4</span></div><div class="cv-day"><span class="cv-num">5</span></div><div class="cv-day"><span class="cv-num">6</span></div><div class="cv-day"><span class="cv-num">7</span></div><div class="cv-day"><span class="cv-num">8</span><button class="cv-item">🧭 App shell & sidebar</button></div><div class="cv-day"><span class="cv-num">9</span></div><div class="cv-day"><span class="cv-num">10</span><button class="cv-item">📄 Page shell & typography</button></div>
+    <div class="cv-week">20</div><div class="cv-day"><span class="cv-num">11</span></div><div class="cv-day"><span class="cv-num">12</span></div><div class="cv-day"><span class="cv-num">13</span></div><div class="cv-day"><span class="cv-num">14</span></div><div class="cv-day"><span class="cv-num">15</span></div><div class="cv-day"><span class="cv-num">16</span></div><div class="cv-day"><span class="cv-num">17</span></div>
+    <div class="cv-week">21</div><div class="cv-day"><span class="cv-num">18</span></div><div class="cv-day"><span class="cv-num">19</span></div><div class="cv-day today"><span class="cv-num">20</span><button class="cv-item">🗃️ Database table view</button></div><div class="cv-day"><span class="cv-num">21</span></div><div class="cv-day"><span class="cv-num">22</span></div><div class="cv-day"><span class="cv-num">23</span></div><div class="cv-day"><span class="cv-num">24</span></div>
+    <div class="cv-week">22</div><div class="cv-day"><span class="cv-num">25</span></div><div class="cv-day"><span class="cv-num">26</span></div><div class="cv-day"><span class="cv-num">27</span></div><div class="cv-day"><span class="cv-num">28</span></div><div class="cv-day"><span class="cv-num">29</span></div><div class="cv-day"><span class="cv-num">30</span></div><div class="cv-day"><span class="cv-num">31</span></div>
+  </div>
+</div>
+```
+
+**Small screens:** Keeps seven columns; the days get lower (64px) and the cards smaller.
+
+### 3.80 `<nk-filter-bar>` – Filter bar
 
 The filters in effect as NotionKit’s filter pills – `.active` with an accent tint, a × to remove each, a quiet `add` pill at the end – with no inline style. In `slot="filters"` of `nk-database` the row sits under the toolbar. A pill’s label fires `nk-action { action: "edit" }`, the add pill `{ action: "add" }`, each with the clicked button as `anchor` for `menu.show(anchor)`. `bar.apply(rows)` keeps rows where every filter matches by strict equality (`row[key] === value`, so use the option value) – or differs with `op: "is-not"` – and the search text appears in any string field (a person’s `name`); the data logic stays yours. Its own Filter and Sort tools and the search field are there for a bar without a database toolbar.
 
@@ -2665,7 +2815,7 @@ The filters in effect as NotionKit’s filter pills – `.active` with an accent
 
 **Small screens:** The pills wrap onto further rows.
 
-### 3.79 `<nk-comments>` – Comment thread
+### 3.81 `<nk-comments>` – Comment thread
 
 A left-ruled thread of `nk-comment`s with an input row. Enter or the button fires `nk-submit { text }`; appending the new comment is yours.
 
@@ -2702,7 +2852,7 @@ A left-ruled thread of `nk-comment`s with an input row. Enter or the button fire
 
 **Small screens:** Unchanged.
 
-### 3.80 `<nk-comment>` – Comment
+### 3.82 `<nk-comment>` – Comment
 
 One comment: avatar (initials + `color`), bold author, time, body. `slot="head"` adds content after the name.
 
@@ -2728,7 +2878,7 @@ One comment: avatar (initials + `color`), bold author, time, body. `slot="head"`
 
 **Small screens:** Unchanged.
 
-### 3.81 `<nk-ai-thread>` – AI thread
+### 3.83 `<nk-ai-thread>` – AI thread
 
 The conversation column: `nk-ai-msg` children (`role="user"` gets the gradient avatar), followed by an `nk-ai-input-row`. Action buttons in `slot="actions"` fire `nk-action { action, value }` – both carry the button’s `value` (or its text).
 
@@ -2761,7 +2911,7 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.82 `<nk-ai-msg>` – AI message
+### 3.84 `<nk-ai-msg>` – AI message
 
 One message. `role="user"` flips the avatar to the gradient; `badge` is the grey suffix after the name (“· AI”); plain `<button slot="actions">`s form the action row.
 
@@ -2791,7 +2941,7 @@ One message. `role="user"` flips the avatar to the gradient; `badge` is the grey
 
 **Small screens:** Unchanged.
 
-### 3.83 `<nk-ai-input-row>` – AI input row
+### 3.85 `<nk-ai-input-row>` – AI input row
 
 The prompt field with ✨ and a send button. Enter or the button fires `nk-submit { text }` and clears the field.
 
@@ -2833,8 +2983,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2914,8 +3064,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -2941,6 +3091,7 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
       <nk-filter-bar slot="filters" id="filters" add no-filter no-sort></nk-filter-bar>
       <nk-table-view name="table" label="▦ Table" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
+      <nk-calendar-view name="calendar" label="📅 Calendar" date-key="due" weeks></nk-calendar-view>
     </nk-database>
   </nk-page>
 </nk-app>
@@ -2949,6 +3100,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
   <nk-menu-item type="label">Filter by</nk-menu-item>
   <nk-menu-item type="check" icon="◉" value="done">Status: Done</nk-menu-item>
 </nk-menu>
+<!-- one date picker for every date: a popover under the cell, a sheet on a phone -->
+<nk-calendar floating sheet weeks weekend="6,0" id="picker"></nk-calendar>
 <!-- a row beside the table, a sheet on a phone -->
 <nk-peek id="peek">
   <nk-page-title id="peekTitle"></nk-page-title>
@@ -2988,11 +3141,19 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
   });
   filters.addEventListener('nk-change', render);                                     // × on a pill
   newBtn.addEventListener('click', () => { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: 'planned', due: '—', progress: 0 }); render(); });
-  db.addEventListener('nk-select', e => {                                         // a row, a card, a list item
+  let editing = null;
+  db.addEventListener('nk-select', e => {                                         // a row, a card, a list item, a calendar card
+    if (e.detail.key === 'due') {                                                  // a due date in the table: the picker under its cell
+      editing = e.detail.row;
+      picker.value = editing.due.split('.').reverse().join('-');
+      picker.show(e.detail.cell);
+      return;
+    }
     peekTitle.textContent = e.detail.row.name;
     peek.setAttribute('label', e.detail.row.name);
     peek.show();                                                                   // another row only swaps it
   });
+  picker.addEventListener('nk-change', e => { editing.due = e.detail.value.split('-').reverse().join('.'); render(); });
   db.addEventListener('nk-change', e => toast.show(`${e.detail.row.name} → ${e.detail.value}`));
   db.addEventListener('nk-action', e => { if (e.detail.action === 'new-row') { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: e.detail.value || 'planned', due: '—', progress: 0 }); render(); } });
 </script>
@@ -3011,8 +3172,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3071,8 +3232,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3149,8 +3310,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3196,8 +3357,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3241,8 +3402,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3296,8 +3457,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.8.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3378,6 +3539,8 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | A `<pre>` with a Copy button that writes `navigator.clipboard` itself | `<nk-copy-field value="…" mono>` – Copy, the green moment after, the ⌘C fallback; `secret` for keys |
 | A help or detail panel as a positioned `<aside>` with its own close logic | `<nk-peek>` – beside the page on the desktop, a sheet on a phone, Escape and outside clicks included |
 | A file input plus canvas code for an avatar or logo | `<nk-image-picker>` – EXIF rotation, scaling, a data URL in `nk-change` |
+| A hand-built month grid, or `<input type="date">` for a date property | `<nk-calendar floating sheet>` and `picker.show(cell)` – the table's `nk-select` names the `key` and the `cell`; `range` for start and end, `weeks` for calendar weeks, `days` for holidays and marks |
+| Rows laid out in a table of weeks to show them by date | `<nk-calendar-view date-key="due">` in `<nk-database>` – a tab like table and board |
 
 
 # 7. Quick Reference
@@ -3388,6 +3551,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-input>` | forms | `value`, `type`, `placeholder`, `name` | – | `nk-change`, `nk-input` |
 | `<nk-copy-field>` | forms | `value`, `secret`, `mono`, `wrap` | – | `nk-action` |
 | `<nk-image-picker>` | forms | `src`, `initials`, `square`, `max` | – | `nk-change`, `nk-error` |
+| `<nk-calendar>` | forms | `value`, `month`, `min`, `max` | – | `nk-change`, `nk-month`, `nk-toggle` |
 | `<nk-textarea>` | forms | `value`, `placeholder`, `rows`, `name` | `(default)` | `nk-change`, `nk-input` |
 | `<nk-select>` | forms | `value`, `name`, `disabled`, `required` | `(default)` | `nk-change` |
 | `<nk-switch>` | forms | `checked`, `name`, `disabled`, `value` | `(default)` | `nk-change` |
@@ -3461,6 +3625,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-table-view>` | data | `name`, `label`, `badge`, `count` | – | `nk-select`, `nk-change`, `nk-action` |
 | `<nk-board-view>` | data | `name`, `label`, `group-by`, `title-key` | – | `nk-select`, `nk-change`, `nk-action` |
 | `<nk-list-view>` | data | `name`, `label`, `title-key`, `meta-keys` | – | `nk-select`, `nk-action` |
+| `<nk-calendar-view>` | data | `name`, `label`, `date-key`, `title-key` | – | `nk-select`, `nk-month` |
 | `<nk-filter-bar>` | data | `add`, `add-label`, `no-filter`, `no-sort` | `(default)` | `nk-change`, `nk-action` |
 | `<nk-comments>` | data | `placeholder`, `send-label`, `no-input`, `disabled` | `(default)` | `nk-submit` |
 | `<nk-comment>` | data | `author`, `time`, `avatar`, `color` | `(default)`, `head`, `avatar` | – |
@@ -3486,10 +3651,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.8.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.9.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.8.0 · wrapping NotionKit CSS v1.8.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.9.0 · wrapping NotionKit CSS v1.9.0 · MIT · Jungherz GmbH*

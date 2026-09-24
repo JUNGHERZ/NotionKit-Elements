@@ -88,6 +88,7 @@ export { NkSteps } from './components/page/nk-steps.js';
 export { NkBookmark } from './components/content/nk-bookmark.js';
 export { NkCopyField } from './components/forms/nk-copy-field.js';
 export { NkImagePicker } from './components/forms/nk-image-picker.js';
+export { NkCalendar } from './components/forms/nk-calendar.js';
 export { NkPeek } from './components/overlays/nk-peek.js';
 
 // Wave 4 – overlays
@@ -106,6 +107,7 @@ export { NkDatabase } from './components/data/nk-database.js';
 export { NkTableView } from './components/data/nk-table-view.js';
 export { NkBoardView } from './components/data/nk-board-view.js';
 export { NkListView } from './components/data/nk-list-view.js';
+export { NkCalendarView } from './components/data/nk-calendar-view.js';
 export { NkFilterBar } from './components/data/nk-filter-bar.js';
 export { NkComments } from './components/data/nk-comments.js';
 export { NkComment } from './components/data/nk-comment.js';

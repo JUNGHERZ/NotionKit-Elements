@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -77,7 +77,7 @@
     <nk-props>
       <nk-prop label="Status" icon="◉"><nk-tag color="blue">In Arbeit</nk-tag></nk-prop>
       <nk-prop label="Verantwortlich" icon="👤"><nk-avatar size="small">MK</nk-avatar>Marcel Karas</nk-prop>
-      <nk-prop label="Fällig" icon="📅">2. Juni 2026</nk-prop>
+      <nk-prop label="Fällig" icon="📅" id="pageDue">2. Juni 2026</nk-prop>
       <nk-prop label="Tags" icon="🏷️"><nk-tag color="purple">Designsystem</nk-tag><nk-tag>CSS</nk-tag></nk-prop>
       <nk-prop label="Fortschritt" icon="▰"><nk-progress value="65" label="65 %" wide></nk-progress></nk-prop>
     </nk-props>
@@ -104,6 +104,7 @@
       <nk-table-view name="table" label="▦ Tabelle" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
       <nk-list-view name="list" label="☰ Liste" meta-keys="due,status"></nk-list-view>
+      <nk-calendar-view name="calendar" label="📅 Kalender" date-key="due" month="2026-05" weeks week-start="1" today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"></nk-calendar-view>
     </nk-database>
 
     <nk-divider></nk-divider>
@@ -391,6 +392,9 @@
   <nk-menu-item type="check" icon="👤" value="mine">Verantwortlich: Marcel</nk-menu-item>
 </nk-menu>
 
+<!-- ================= DATE PICKER ================= -->
+<nk-calendar floating sheet weeks week-start="1" weekend="6,0" id="datePicker" label="Fällig" today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"></nk-calendar>
+
 <!-- ================= MORE (phone) ================= -->
 <nk-sheet id="moreSheet" title="Mehr">
   <nk-tree manual id="moreTree">
@@ -490,11 +494,46 @@
   }
   db.addEventListener('nk-action', e => {
     if (e.detail.action === 'new-row') newRow(e.detail.value);
-    if (e.detail.action === 'add-view') toast.show('Ansichten: Tabelle, Board und Liste – mehr in deiner App');
+    if (e.detail.action === 'add-view') toast.show('Ansichten: Tabelle, Board, Liste und Kalender – mehr in deiner App');
     if (e.detail.action === 'sort') toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`);
   });
-  db.addEventListener('nk-select', e => openPeek(e.detail.row));   // a row, a card or a list item
+  // A row, a card, a list item or a calendar card opens the side peek; a due date opens the date picker.
+  db.addEventListener('nk-select', e => { if (e.detail.key !== 'due') openPeek(e.detail.row); });
   db.addEventListener('nk-change', e => toast.show(`“${e.detail.row.name}” → ${e.detail.value}`));
+
+  /* ============ Dates: the picker on Due, the calendar view ============ */
+  // One <nk-calendar floating sheet> for every date: a popover under the
+  // property or the cell, a sheet on a phone, with the ISO calendar week in
+  // front of each row. Weekends and holidays are greyed, the projects' due
+  // dates carry a dot. Weeks start on Monday.
+  const HOLIDAYS = { '2026-05-01': 'Tag der Arbeit', '2026-05-14': 'Christi Himmelfahrt', '2026-05-25': 'Pfingstmontag', '2026-10-03': 'Tag der Deutschen Einheit' };
+  const dueToIso = s => s.split('.').reverse().join('-');
+  const isoToDue = v => v.split('-').reverse().join('.');
+  const longDate = v => new Date(v + 'T00:00').toLocaleDateString('de', { day: 'numeric', month: 'long', year: 'numeric' });
+  let onPick = null;
+  function openPicker(anchor, value, pick) {
+    const days = {};
+    for (const [iso, label] of Object.entries(HOLIDAYS)) days[iso] = { off: true, label };
+    for (const p of projects) if (/^\d/.test(p.due)) { const day = days[dueToIso(p.due)] ??= {}; day.marks = [...(day.marks ?? []), 'blue']; }
+    datePicker.days = days;
+    datePicker.value = value;
+    onPick = pick;
+    datePicker.show(anchor);
+  }
+  datePicker.addEventListener('nk-change', e => onPick?.(e.detail.value));
+  let pageDueDate = '2026-06-02';
+  const openPageDue = () => openPicker(pageDue, pageDueDate, v => {
+    pageDueDate = v;
+    pageDue.textContent = longDate(v);
+    toast.show(`Fällig: ${longDate(v)}`);
+  });
+  pageDue.addEventListener('nk-action', e => { if (e.detail.action === 'value') openPageDue(); });
+  // The table says which cell was hit: the due date opens the picker under it.
+  db.addEventListener('nk-select', e => {
+    if (e.detail.key !== 'due') return;
+    const p = e.detail.row;
+    openPicker(e.detail.cell, /^\d/.test(p.due) ? dueToIso(p.due) : '', v => { p.due = isoToDue(v); renderAll(); toast.show(`${p.name}: ${longDate(v)}`); });
+  });
 
   /* ============ Sidebar tree ============ */
   /* ============ Views: start and project page ============ */
@@ -649,7 +688,7 @@
   }
   publicAddress.addEventListener('nk-action', e => toast.show(e.detail.ok ? 'Adresse kopiert' : 'Adresse markieren und mit ⌘C kopieren'));
 
-  /* ============ Anchors: #menu, #filter, #more, #peek, #settings open that state ============ */
+  /* ============ Anchors: #menu, #filter, #more, #peek, #date, #calendar, #settings open that state ============ */
   // The landing page shows app.html#menu: a popover on the desktop, a sheet
   // on the phone – one markup, two presentations.
   function openFromHash() {
@@ -658,6 +697,8 @@
     if (h === '#filter') { filterBtn.shadowRoot.querySelector('button').scrollIntoView({ block: 'center' }); filterMenu.show(filterBtn); }
     if (h === '#more') moreSheet.show();
     if (h === '#peek') openPeek(projects[2]);
+    if (h === '#date') openPageDue();
+    if (h === '#calendar') db.view = 'calendar';
     if (h === '#settings') settingsModal.show();
   }
   requestAnimationFrame(openFromHash);

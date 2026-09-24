@@ -45,6 +45,7 @@ export const WORDS = {
     peekTitle: 'Database Table-View', peekText: 'Table, board and list read the same rows; filters and sort act on all three.',
     filter: 'Filter', sort: 'Sort', newBtn: 'New', statusOpen: 'Status: Open', addFilter: '＋ Filter', removeFilter: 'Remove filter',
     stepsLabel: 'Connect your own model', stepProvider: 'Choose a provider', stepProviderDesc: 'Anthropic', stepKey: 'Enter the API key', stepTest: 'Test the connection',
+    locale: 'en', calWeek: 'W', calToday: 'Today', calPrev: 'Previous month', calNext: 'Next month', calClear: 'Clear', calTime: 'Time', holidayCorpus: 'Corpus Christi', calendar: '📅 Calendar',
     toastText: 'Settings saved', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
   },
   de: {
@@ -91,6 +92,7 @@ export const WORDS = {
     peekTitle: 'Database Table-View', peekText: 'Tabelle, Board und Liste lesen dieselben Zeilen; Filter und Sortierung wirken auf alle drei.',
     filter: 'Filter', sort: 'Sortieren', newBtn: 'Neu', statusOpen: 'Status: Offen', addFilter: '＋ Filter', removeFilter: 'Filter entfernen',
     stepsLabel: 'Eigenes Modell verbinden', stepProvider: 'Anbieter wählen', stepProviderDesc: 'Anthropic', stepKey: 'API-Schlüssel eintragen', stepTest: 'Verbindung testen',
+    locale: 'de', calWeek: 'KW', calToday: 'Heute', calPrev: 'Voriger Monat', calNext: 'Nächster Monat', calClear: 'Löschen', calTime: 'Uhrzeit', holidayCorpus: 'Fronleichnam', calendar: '📅 Kalender',
     toastText: 'Einstellungen gespeichert', showToast: 'Toast zeigen', openModal: 'Einstellungen öffnen', openPalette2: 'Palette öffnen (⌘K)', pickEmoji: 'Icon wählen', navigate: 'navigieren', openHint: 'öffnen', toggleHint: 'umschalten',
   },
 };

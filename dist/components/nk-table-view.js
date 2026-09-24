@@ -7,8 +7,10 @@ import './shared/avatar-BiqCaHOt.js';
 // `wrap` lets cell text break (`.nk-table.wrap`), like Notion's "wrap column".
 // Standalone: view.columns = […]; view.rows = […];  Inside <nk-database> the
 // database pushes `data`. → <div class="nk-table-wrap"><table class="nk-table">…</table><div class="nk-new-row">＋ New page</div></div>
-// Cells are plain markup from renderPropertyCell(); rows fire nk-select,
-// checkboxes nk-change, headers nk-action { action: 'sort' } (and sort locally
+// Cells are plain markup from renderPropertyCell(); rows fire nk-select
+// { row, id, key, cell } – `key` and `cell` say which cell was hit, to open
+// an editor there, like the date picker under a due date – checkboxes
+// nk-change, headers nk-action { action: 'sort' } (and sort locally
 // with `sortable`), the add row nk-action { action: 'new-row' }.
 class NkTableView extends NkElement {
   static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'new-row', 'new-row-label', 'sortable', 'sort-key', 'sort-dir', 'wrap']; }
@@ -76,7 +78,11 @@ class NkTableView extends NkElement {
       }
       if (e.target.closest('input[type=checkbox], a')) return;
       const tr = e.target.closest('tr[data-id]');
-      if (tr) { const row = this._rowById(tr.dataset.id); this.emit('nk-select', { row, id: row?.id, value: row?.id }); }
+      if (!tr) return;
+      // Which cell: `key` names its column, `cell` is there to anchor an editor to.
+      const cell = e.target.closest('td');
+      const row = this._rowById(tr.dataset.id);
+      this.emit('nk-select', { row, id: row?.id, value: row?.id, key: cell ? this._columns[cell.cellIndex]?.key : undefined, cell });
     };
     this._onChange = (e) => {
       const input = e.target;

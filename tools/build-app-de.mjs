@@ -73,7 +73,7 @@ const PAIRS = [
   // script strings
   ["{ value: 'planned', label: 'Planned', color: 'orange' }", "{ value: 'planned', label: 'Geplant', color: 'orange' }"], ["{ value: 'progress', label: 'In progress', color: 'blue' }", "{ value: 'progress', label: 'In Arbeit', color: 'blue' }"], ["{ value: 'done', label: 'Done', color: 'green' }", "{ value: 'done', label: 'Erledigt', color: 'green' }"],
   ["label: 'Owner', type: 'person'", "label: 'Verantwortlich', type: 'person'"], ["label: 'Due', type: 'date'", "label: 'Fällig', type: 'date'"], ["label: 'Progress', type: 'progress'", "label: 'Fortschritt', type: 'progress'"],
-  ["name: 'Untitled ' + counter++", "name: 'Unbenannt ' + counter++"], ["toast.show('New page created')", "toast.show('Neue Seite angelegt')"], ["toast.show('Views: table, board and list – more in your app')", "toast.show('Ansichten: Tabelle, Board und Liste – mehr in deiner App')"], ["toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`)", "toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`)"],
+  ["name: 'Untitled ' + counter++", "name: 'Unbenannt ' + counter++"], ["toast.show('New page created')", "toast.show('Neue Seite angelegt')"], ["toast.show('Views: table, board, list and calendar – more in your app')", "toast.show('Ansichten: Tabelle, Board, Liste und Kalender – mehr in deiner App')"], ["toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`)", "toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`)"],
   ["toast.show(`${e.detail.action === 'add' ? 'Add page under' : 'Options for'} “${e.detail.label}”`)", "toast.show(`${e.detail.action === 'add' ? 'Seite anlegen unter' : 'Optionen für'} „${e.detail.label}“`)"], ["toast.show('Trash is empty')", "toast.show('Der Papierkorb ist leer')"], ["toast.show(`Workspace: ${e.detail.label}`)", "toast.show(`Workspace: ${e.detail.label}`)"],
   ["toast.show(e.detail.value === 'dark' ? 'Dark mode on' : 'Light mode on')", "toast.show(e.detail.value === 'dark' ? 'Dunkelmodus an' : 'Hellmodus an')"], ["toast.show('Following the system setting')", "toast.show('Folgt der Systemeinstellung')"], ["toast.show(`Palette: ${e.detail.value}`)", "toast.show(`Palette: ${e.detail.value}`)"],
   ["toast.show('Text size set to ' + e.detail.value + ' %')", "toast.show('Textgröße auf ' + e.detail.value + ' % gesetzt')"], ["toast.show('Settings saved')", "toast.show('Einstellungen gespeichert')"], ["toast.show('Just a preview – nothing was deleted')", "toast.show('Nur eine Vorschau – nichts wurde gelöscht')"],
@@ -83,7 +83,7 @@ const PAIRS = [
   // 1.6.0 – app views
   ['aria-label="Page options"', 'aria-label="Seitenoptionen"'],
   ['<nk-prop label="Owner" icon="👤">', '<nk-prop label="Verantwortlich" icon="👤">'], ['<nk-tag color="blue">In progress</nk-tag>', '<nk-tag color="blue">In Arbeit</nk-tag>'],
-  ['<nk-prop label="Due" icon="📅">2 June 2026</nk-prop>', '<nk-prop label="Fällig" icon="📅">2. Juni 2026</nk-prop>'], ['<nk-prop label="Progress" icon="▰">', '<nk-prop label="Fortschritt" icon="▰">'],
+  ['<nk-prop label="Due" icon="📅" id="pageDue">2 June 2026</nk-prop>', '<nk-prop label="Fällig" icon="📅" id="pageDue">2. Juni 2026</nk-prop>'], ['<nk-prop label="Progress" icon="▰">', '<nk-prop label="Fortschritt" icon="▰">'],
   ['label="☰ List"', 'label="☰ Liste"'],
   ['aria-label="Mode"><button value="edit">Edit</button><button value="read">Read</button>', 'aria-label="Modus"><button value="edit">Bearbeiten</button><button value="read">Lesen</button>'],
   ['<nk-page-title>Good morning, Marcel</nk-page-title>', '<nk-page-title>Guten Morgen, Marcel</nk-page-title>'], ['<nk-heading>🕘 Recently visited</nk-heading>', '<nk-heading>🕘 Zuletzt besucht</nk-heading>'], ['<nk-heading>📌 Upcoming</nk-heading>', '<nk-heading>📌 Anstehend</nk-heading>'],
@@ -125,6 +125,12 @@ const PAIRS = [
   ["toast.show('Opens as a full page')", "toast.show('Öffnet sich als ganze Seite')"], ["toast.show(e.detail.dataUrl ? 'Picture updated' : 'Picture removed')", "toast.show(e.detail.dataUrl ? 'Bild aktualisiert' : 'Bild entfernt')"],
   ["toast.show('This file cannot be read')", "toast.show('Diese Datei lässt sich nicht lesen')"], ["toast.show(e.detail.ok ? 'Address copied' : 'Select the address and copy it with ⌘C')", "toast.show(e.detail.ok ? 'Adresse kopiert' : 'Adresse markieren und mit ⌘C kopieren')"], ["[{ label: 'Choose a provider', desc: 'Anthropic' }, 'Enter the API key', 'Test the connection']", "[{ label: 'Anbieter wählen', desc: 'Anthropic' }, 'API-Schlüssel eintragen', 'Verbindung testen']"],
   ["toast.show('API key saved')", "toast.show('API-Schlüssel gespeichert')"], ["toast.show('Connection works')", "toast.show('Verbindung steht')"],
+  // 1.9.0 – dates
+  ['label="📅 Calendar"', 'label="📅 Kalender"'], ['today-label="Today" prev-label="Previous month" next-label="Next month"', 'today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"'],
+  ['id="datePicker" label="Due"', 'id="datePicker" label="Fällig"'],
+  ["{ '2026-05-01': 'Labour Day', '2026-05-14': 'Ascension Day', '2026-05-25': 'Whit Monday', '2026-10-03': 'German Unity Day' }", "{ '2026-05-01': 'Tag der Arbeit', '2026-05-14': 'Christi Himmelfahrt', '2026-05-25': 'Pfingstmontag', '2026-10-03': 'Tag der Deutschen Einheit' }"],
+  [".toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })", ".toLocaleDateString('de', { day: 'numeric', month: 'long', year: 'numeric' })"],
+  ["toast.show(`Due: ${longDate(v)}`)", "toast.show(`Fällig: ${longDate(v)}`)"],
 ];
 
 let html = readFileSync('app.html', 'utf-8');

@@ -188,6 +188,7 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
       <nk-filter-bar slot="filters" id="filters" add no-filter no-sort></nk-filter-bar>
       <nk-table-view name="table" label="${W.table}" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="${W.board}" group-by="status" new-row></nk-board-view>
+      <nk-calendar-view name="calendar" label="${W.calendar}" date-key="due" weeks></nk-calendar-view>
     </nk-database>
   </nk-page>
 </nk-app>
@@ -196,6 +197,8 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
   <nk-menu-item type="label">Filter by</nk-menu-item>
   <nk-menu-item type="check" icon="◉" value="done">${W.dbStatus}: ${W.statusDone}</nk-menu-item>
 </nk-menu>
+<!-- one date picker for every date: a popover under the cell, a sheet on a phone -->
+<nk-calendar floating sheet weeks weekend="6,0" id="picker"></nk-calendar>
 <!-- a row beside the table, a sheet on a phone -->
 <nk-peek id="peek">
   <nk-page-title id="peekTitle"></nk-page-title>
@@ -235,11 +238,19 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
   });
   filters.addEventListener('nk-change', render);                                     // × on a pill
   newBtn.addEventListener('click', () => { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: 'planned', due: '—', progress: 0 }); render(); });
-  db.addEventListener('nk-select', e => {                                         // a row, a card, a list item
+  let editing = null;
+  db.addEventListener('nk-select', e => {                                         // a row, a card, a list item, a calendar card
+    if (e.detail.key === 'due') {                                                  // a due date in the table: the picker under its cell
+      editing = e.detail.row;
+      picker.value = editing.due.split('.').reverse().join('-');
+      picker.show(e.detail.cell);
+      return;
+    }
     peekTitle.textContent = e.detail.row.name;
     peek.setAttribute('label', e.detail.row.name);
     peek.show();                                                                   // another row only swaps it
   });
+  picker.addEventListener('nk-change', e => { editing.due = e.detail.value.split('-').reverse().join('.'); render(); });
   db.addEventListener('nk-change', e => toast.show(\`\${e.detail.row.name} → \${e.detail.value}\`));
   db.addEventListener('nk-action', e => { if (e.detail.action === 'new-row') { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: e.detail.value || 'planned', due: '—', progress: 0 }); render(); } });
 </script>
@@ -625,6 +636,8 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | A \`<pre>\` with a Copy button that writes \`navigator.clipboard\` itself | \`<nk-copy-field value="…" mono>\` – Copy, the green moment after, the ⌘C fallback; \`secret\` for keys |
 | A help or detail panel as a positioned \`<aside>\` with its own close logic | \`<nk-peek>\` – beside the page on the desktop, a sheet on a phone, Escape and outside clicks included |
 | A file input plus canvas code for an avatar or logo | \`<nk-image-picker>\` – EXIF rotation, scaling, a data URL in \`nk-change\` |
+| A hand-built month grid, or \`<input type="date">\` for a date property | \`<nk-calendar floating sheet>\` and \`picker.show(cell)\` – the table's \`nk-select\` names the \`key\` and the \`cell\`; \`range\` for start and end, \`weeks\` for calendar weeks, \`days\` for holidays and marks |
+| Rows laid out in a table of weeks to show them by date | \`<nk-calendar-view date-key="due">\` in \`<nk-database>\` – a tab like table and board |
 `,
 
   integration: () => `# 8. Framework Integration
