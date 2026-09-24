@@ -84,6 +84,12 @@ export { NkPanel } from './components/page/nk-panel.js';
 export { NkSheet } from './components/overlays/nk-sheet.js';
 export { NkSteps } from './components/page/nk-steps.js';
 
+// 1.8.0 – links and peeks
+export { NkBookmark } from './components/content/nk-bookmark.js';
+export { NkCopyField } from './components/forms/nk-copy-field.js';
+export { NkImagePicker } from './components/forms/nk-image-picker.js';
+export { NkPeek } from './components/overlays/nk-peek.js';
+
 // Wave 4 – overlays
 export { NkModal } from './components/overlays/nk-modal.js';
 export { NkSettingsPane } from './components/overlays/nk-settings-pane.js';

@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.7.1/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.8.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -85,6 +85,8 @@
     <p class="lead">A calm UI framework in the Notion idiom – as web components, without a build step. This page is the living preview: sidebar, page tree, callouts, todos, toggles and database views in one shell.</p>
 
     <nk-callout icon="💡"><strong>Core idea:</strong> NotionKit supplies the look and the shell; the editor is mounted through <em>&lt;nk-block-host&gt;</em> (BlockNote, say), and the data comes from your own API. Three layers, cleanly separated.</nk-callout>
+
+    <nk-bookmark href="https://notionkit.jungherz.com" title="NotionKit – the calm workspace look as CSS" desc="NotionKit is a pure CSS component library in the Notion idiom: sidebar, page tree, document shell, database views, settings and AI surfaces." favicon="favicon.svg" cover="covers/notionkit-og.jpg"></nk-bookmark>
 
     <nk-heading>✅ Next steps</nk-heading>
     <nk-todo checked>Sketch the component scope</nk-todo>
@@ -287,12 +289,7 @@
   <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK"></nk-settings-user>
 
   <nk-settings-pane name="profile" group="Account" icon="👤" label="My profile" title="My profile" active>
-    <nk-profile-row avatar="MK">
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <nk-btn variant="secondary" small>Upload image</nk-btn>
-        <nk-btn variant="secondary" small style="color:var(--nk-text-tertiary)">Remove</nk-btn>
-      </div>
-    </nk-profile-row>
+    <nk-image-picker id="profilePicture" initials="MK" label="Profile picture" choose-label="Upload image" change-label="Change image" remove-label="Remove"></nk-image-picker>
     <h3>Details</h3>
     <nk-field label="Display name" desc="How you appear in the workspace."><nk-input value="Marcel Karas"></nk-input></nk-field>
     <nk-field label="E-Mail" desc="Used for invitations and notifications."><nk-input type="email" value="marcel@monahilft.de"></nk-input></nk-field>
@@ -347,7 +344,9 @@
 
   <nk-settings-pane name="general" group="Workspace" icon="⚙️" label="General" title="Workspace settings">
     <nk-field label="Workspace name"><nk-input value="MonaHilft"></nk-input></nk-field>
+    <nk-field label="Icon" desc="Shown in the sidebar and on shared pages."><nk-image-picker id="workspaceIcon" square initials="M" max="256" type="image/png" label="Workspace icon" choose-label="Upload image" change-label="Change image" remove-label="Remove"></nk-image-picker></nk-field>
     <nk-field label="Domain" desc="Public pages appear under this address."><nk-input value="monahilft.notionkit.app"></nk-input></nk-field>
+    <nk-field label="Public address" desc="Visitors reach the shared pages here."><nk-copy-field id="publicAddress" value="https://monahilft.notionkit.app" copy-label="Copy" copied-label="Copied"></nk-copy-field></nk-field>
     <nk-field label="Public home page" desc="Visitors may view shared pages without signing in."><nk-switch></nk-switch></nk-field>
     <nk-danger-zone title="⚠️ Danger zone">
       <nk-field label="Delete workspace" desc="Irreversibly removes all pages, databases and members."><nk-btn variant="danger-solid" small data-save-danger>Delete</nk-btn></nk-field>
@@ -405,6 +404,24 @@
     <nk-tree-item icon="🗑️" value="trash" no-actions>Trash</nk-tree-item>
   </nk-tree>
 </nk-sheet>
+
+<!-- ================= SIDE PEEK ================= -->
+<!-- Not id="peek": #peek opens it, and a fragment target takes the focus. -->
+<nk-peek id="sidePeek" close-label="Close">
+  <nk-btn slot="actions" variant="topbar" id="peekOpen" aria-label="Open as page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
+  <nk-page-title id="peekTitle"></nk-page-title>
+  <nk-props>
+    <nk-prop label="Status" icon="◉" data-peek="status"></nk-prop>
+    <nk-prop label="Owner" icon="👤" data-peek="owner"></nk-prop>
+    <nk-prop label="Due" icon="📅" data-peek="due"></nk-prop>
+    <nk-prop label="Progress" icon="▰" data-peek="progress"></nk-prop>
+    <nk-prop label="Effort (h)" icon="#" data-peek="effort"></nk-prop>
+  </nk-props>
+  <div class="nk-prose" id="peekNotes"></div>
+  <nk-comments placeholder="Comment …" send-label="Send">
+    <nk-comment author="Sara Lindt" time="1 hr ago" color="green">Looks good – let’s take it into the next release.</nk-comment>
+  </nk-comments>
+</nk-peek>
 
 <nk-toast id="toast"></nk-toast>
 
@@ -476,7 +493,7 @@
     if (e.detail.action === 'add-view') toast.show('Views: table, board and list – more in your app');
     if (e.detail.action === 'sort') toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`);
   });
-  db.addEventListener('nk-select', e => toast.show(`Open “${e.detail.row.name}”`));
+  db.addEventListener('nk-select', e => openPeek(e.detail.row));   // a row, a card or a list item
   db.addEventListener('nk-change', e => toast.show(`“${e.detail.row.name}” → ${e.detail.value}`));
 
   /* ============ Sidebar tree ============ */
@@ -599,7 +616,40 @@
   });
   aiTest.addEventListener('click', () => { if (!modelSteps.hidden) modelSteps.current = 4; toast.show('Connection works'); });
 
-  /* ============ Anchors: #menu, #filter, #more, #settings open that state ============ */
+  /* ============ Side peek: a row beside the table ============ */
+  // It opens at the right edge next to the table that stays usable; on a
+  // phone it is a sheet. », Escape and a click elsewhere close it – the
+  // element handles that; a click on another row only swaps the content.
+  const PEEK_NOTES = {
+    1: ['The shell every other view lives in: sidebar, page tree and topbar.', ['A tree with nested pages that fold', 'A drawer behind the ☰ on a phone']],
+    2: ['The page column with cover, icon, title and properties, set in Notion’s type scale.', ['16px document text beside 14px chrome', 'Full width and small text per page']],
+    3: ['Table, board and list read the same rows; filters and sort act on all three.', ['A toolbar with filter pills', 'A side peek for every row – this panel']],
+    4: ['Cards grouped by status, moved between the columns by drag and drop.', ['One column per status option', 'A card opens in the side peek']],
+  };
+  function openPeek(row) {
+    peekTitle.textContent = `${row.icon} ${row.name}`;
+    sidePeek.setAttribute('label', row.name);
+    const set = (key, html) => { sidePeek.querySelector(`[data-peek="${key}"]`).innerHTML = html; };
+    const status = columns[1].options.find(o => o.value === row.status);
+    set('status', `<nk-tag color="${status.color}">${status.label}</nk-tag>`);
+    set('owner', row.owner ? '<nk-avatar size="small">MK</nk-avatar>Marcel' : '—');
+    set('due', row.due);
+    set('progress', `<nk-progress value="${row.progress}" label="${row.progress} %" wide></nk-progress>`);
+    set('effort', typeof row.effort === 'number' ? row.effort.toLocaleString('en', { minimumFractionDigits: 1 }) : '—');
+    const [text, points] = PEEK_NOTES[row.id] ?? ['', []];
+    peekNotes.innerHTML = `<p>${text}</p>` + (points.length ? `<ul>${points.map(x => `<li>${x}</li>`).join('')}</ul>` : '');
+    sidePeek.show();
+  }
+  peekOpen.addEventListener('click', () => toast.show('Opens as a full page'));
+
+  /* ============ Pictures and the public address ============ */
+  for (const picker of [profilePicture, workspaceIcon]) {
+    picker.addEventListener('nk-change', e => toast.show(e.detail.dataUrl ? 'Picture updated' : 'Picture removed'));
+    picker.addEventListener('nk-error', () => toast.show('This file cannot be read'));
+  }
+  publicAddress.addEventListener('nk-action', e => toast.show(e.detail.ok ? 'Address copied' : 'Select the address and copy it with ⌘C'));
+
+  /* ============ Anchors: #menu, #filter, #more, #peek, #settings open that state ============ */
   // The landing page shows app.html#menu: a popover on the desktop, a sheet
   // on the phone – one markup, two presentations.
   function openFromHash() {
@@ -607,6 +657,7 @@
     if (h === '#menu') { syncPageMenu(); pageOptions.show(pageMenuBtn); }
     if (h === '#filter') { filterBtn.shadowRoot.querySelector('button').scrollIntoView({ block: 'center' }); filterMenu.show(filterBtn); }
     if (h === '#more') moreSheet.show();
+    if (h === '#peek') openPeek(projects[2]);
     if (h === '#settings') settingsModal.show();
   }
   requestAnimationFrame(openFromHash);

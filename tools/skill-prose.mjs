@@ -196,6 +196,11 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
   <nk-menu-item type="label">Filter by</nk-menu-item>
   <nk-menu-item type="check" icon="◉" value="done">${W.dbStatus}: ${W.statusDone}</nk-menu-item>
 </nk-menu>
+<!-- a row beside the table, a sheet on a phone -->
+<nk-peek id="peek">
+  <nk-page-title id="peekTitle"></nk-page-title>
+  <div class="nk-prose"><p>Notes on this row – the page behind it.</p></div>
+</nk-peek>
 <nk-toast id="toast"></nk-toast>
 <script>
   const columns = [
@@ -230,7 +235,11 @@ Rules of the shell: \`nk-sidebar\`, \`nk-topbar\` and \`nk-page\` are \`display:
   });
   filters.addEventListener('nk-change', render);                                     // × on a pill
   newBtn.addEventListener('click', () => { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: 'planned', due: '—', progress: 0 }); render(); });
-  db.addEventListener('nk-select', e => console.log('open row', e.detail.row));
+  db.addEventListener('nk-select', e => {                                         // a row, a card, a list item
+    peekTitle.textContent = e.detail.row.name;
+    peek.setAttribute('label', e.detail.row.name);
+    peek.show();                                                                   // another row only swaps it
+  });
   db.addEventListener('nk-change', e => toast.show(\`\${e.detail.row.name} → \${e.detail.value}\`));
   db.addEventListener('nk-action', e => { if (e.detail.action === 'new-row') { rows.push({ id: Date.now(), icon: '📄', name: 'New page', status: e.detail.value || 'planned', due: '—', progress: 0 }); render(); } });
 </script>
@@ -324,7 +333,7 @@ Data contract: \`columns\` describe the properties (\`type\`: text | select | mu
   <nk-settings-user slot="user" name="${W.userName}" mail="${W.userMail}"></nk-settings-user>
 
   <nk-settings-pane name="profile" group="${W.account}" icon="👤" label="${W.myProfile}" title="${W.myProfile}" active>
-    <nk-profile-row avatar="MK"><nk-btn variant="secondary" small>${W.changePhoto}</nk-btn> <nk-btn variant="danger" small>${W.remove}</nk-btn></nk-profile-row>
+    <nk-image-picker id="photo" initials="MK" label="${W.myProfile}"></nk-image-picker>
     <h3>${W.displayName}</h3>
     <nk-field label="${W.displayName}" desc="${W.displayNameDesc}"><nk-input name="name" value="${W.userName}"></nk-input></nk-field>
     <nk-field label="${W.email}"><nk-input name="email" type="email" value="${W.userMail}"></nk-input></nk-field>
@@ -343,6 +352,8 @@ Data contract: \`columns\` describe the properties (\`type\`: text | select | mu
 
   <nk-settings-pane name="general" group="${W.workspaceSection}" icon="⚙️" label="${W.general}" title="${W.general}">
     <nk-field label="${W.workspace}"><nk-input value="${W.workspace}"></nk-input></nk-field>
+    <nk-field label="Icon"><nk-image-picker square initials="A" max="256" type="image/png"></nk-image-picker></nk-field>
+    <nk-field label="Public address"><nk-copy-field value="https://acme.example.com"></nk-copy-field></nk-field>
     <nk-danger-zone title="${W.dangerTitle}"><nk-field label="${W.deleteWorkspace}" desc="${W.dangerDesc}"><nk-btn variant="danger-solid" small>${W.delete}</nk-btn></nk-field></nk-danger-zone>
   </nk-settings-pane>
 
@@ -368,6 +379,7 @@ Data contract: \`columns\` describe the properties (\`type\`: text | select | mu
   palette.addEventListener('nk-command', e => console.log('command', e.detail.id));
   themeSelect.addEventListener('nk-change', e => document.documentElement.dataset.theme = e.detail.value);
   settings.addEventListener('nk-select', e => console.log('pane', e.detail.value));
+  photo.addEventListener('nk-change', e => console.log('upload', e.detail.size, 'bytes'));   // a data URL, scaled, EXIF-rotated
 </script>
 </body>
 </html>
@@ -610,6 +622,9 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | A positioned wrapper around \`<nk-menu>\` to open it under a button | \`<nk-menu floating sheet>\` and \`menu.show(button)\`: it measures the button, closes on a tap outside and is a sheet on a phone |
 | \`<nk-sheet id="more">\` opened from \`app.html#more\` | Give the overlay an id other than the hash: the browser scrolls to the fragment target and takes the focus the overlay just gave |
 | \`<nk-btn variant="topbar" onclick="sidebar.toggle()">☰</nk-btn>\` plus a script that hides it on the desktop | \`<nk-btn variant="sidebar">☰</nk-btn>\` – shown below 860px only, opens the drawer |
+| A \`<pre>\` with a Copy button that writes \`navigator.clipboard\` itself | \`<nk-copy-field value="…" mono>\` – Copy, the green moment after, the ⌘C fallback; \`secret\` for keys |
+| A help or detail panel as a positioned \`<aside>\` with its own close logic | \`<nk-peek>\` – beside the page on the desktop, a sheet on a phone, Escape and outside clicks included |
+| A file input plus canvas code for an avatar or logo | \`<nk-image-picker>\` – EXIF rotation, scaling, a data URL in \`nk-change\` |
 `,
 
   integration: () => `# 8. Framework Integration

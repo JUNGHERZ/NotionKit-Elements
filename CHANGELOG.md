@@ -4,6 +4,58 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.0] – 2026-09-24
+
+Built against NotionKit CSS 1.8.0 (peer `>= 1.8.0`), links and peeks: four
+new elements – 83 in all – for what LearnHub and Auxdesk each built on
+their own: a side peek, a bookmark, a copy field and an image picker.
+
+### Added
+- **`<nk-peek>`** – Notion's side peek: a database row at the right edge,
+  full height, next to the table, which stays usable – no scrim, nothing
+  inert. The bar carries » to close and `slot="actions"`; the body is the
+  page – `nk-page-title` (32px there), `nk-props`, a `.nk-prose`,
+  `nk-comments`. `show()` slides it in and moves focus to it; », Escape and
+  a click elsewhere close it, and Escape and » hand focus back. A click that
+  calls `show()` again – another row – only swaps the content, and clicks
+  inside other overlays (a menu opened from the peek) leave it open. Below
+  860px it is a bottom sheet over a dimmed page and modal there: inert page,
+  scroll lock, a tap on the dimmed page closes it. `nk-toggle`. LearnHub's
+  contextual help is such a panel.
+- **`<nk-bookmark>`** – Notion's link block from `href`, `title`, `desc`,
+  `favicon` and `cover` – what `og:title`, `og:description` and `og:image`
+  give. `title` is the heading, never a tooltip; without it the host name
+  stands in; `url` shows another address than `href`; a part without a
+  value is left out. Opens in a new tab unless `target` says otherwise.
+  LearnHub shows with it how a shared course link will look.
+- **`<nk-copy-field>`** – a value to take along, as tall as an input, with
+  Copy inside: the clipboard, then “Copied” in green for a moment; where the
+  clipboard is not allowed, the value is shown and selected for ⌘C.
+  `secret` masks it behind Show/Hide and Copy still copies the real value;
+  `value` set as a property is not reflected, so a key never lands in the
+  markup. `mono`, `wrap`, `wide`; the texts are attributes. Fires
+  `nk-action { action: 'copy', value, ok }`. Auxdesk's inbound addresses,
+  Notion URL, widget secret and embed code are such values.
+- **`<nk-image-picker>`** – a picture for a person or a workspace on
+  NotionKit's profile row, round or `square`, with Upload / Change and
+  Remove. Ported from GlassKit Elements' `glk-image-picker`: decoded with
+  the EXIF rotation (`createImageBitmap`, `imageOrientation: 'from-image'`),
+  drawn no larger than `max` (512), out as `type` at `quality`, handed over
+  as a data URL in `nk-change`; an unreadable file fires `nk-error`. `src`
+  as a property is not reflected. LearnHub needs it for the customer logo.
+
+### Changed
+- Demo: a row, a card or a list item opens in `<nk-peek>` with its
+  properties, notes and a comment (it was a toast); the bookmark follows
+  the core-idea callout; the profile picture and a square workspace icon are
+  `<nk-image-picker>`s; General shows the public address in an
+  `<nk-copy-field>`; `#peek` opens the table row. The app matches the class
+  demo at 0.00 % – the open peek on the desktop and as a sheet on a phone
+  included.
+- The social card is rendered with the element count and the bundle size
+  from the build; it said 68 elements and 33 KB.
+- Peer `@jungherz-de/notionkit >= 1.8.0`.
+
 ## [1.7.0] – 2026-09-24
 
 Built against NotionKit CSS 1.7.1 (peer `>= 1.7.1`), the mobile-and-filter
@@ -456,6 +508,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.8.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.8.0
 [1.7.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.7.0
 [1.6.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.6.0
 [1.5.3]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.5.3

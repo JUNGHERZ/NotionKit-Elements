@@ -116,6 +116,36 @@ export const CATALOG = [
   classMarkup: W => `<input class="nk-input" name="name" value="Ada Lovelace" placeholder="${W.displayName}">`,
 },
 {
+  tag: 'nk-copy-field', group: 'forms', classes: ['nk-copy-field', 'cf-value', 'cf-btn', 'copied', 'mono', 'wrap', 'wide'],
+  title: t('Copy field', 'Kopierfeld'),
+  desc: t('A value to take along – a link, an address, a key – as tall as an input, with Copy inside on the right: it writes the clipboard and says “Copied” in green for a moment; where the clipboard is not allowed, the value is shown and selected for ⌘C. <code>secret</code> masks it behind Show/Hide, Copy still copies the real value. <code>value</code> set as a property is not reflected, so a key never lands in the markup.',
+          'Ein Wert zum Mitnehmen – ein Link, eine Adresse, ein Schlüssel –, so hoch wie ein Eingabefeld, mit Kopieren rechts darin: Es schreibt die Zwischenablage und sagt kurz „Kopiert“ in Grün; wo die Zwischenablage nicht erlaubt ist, wird der Wert gezeigt und für ⌘C markiert. <code>secret</code> verbirgt ihn hinter Zeigen/Verbergen, Kopieren kopiert trotzdem den echten Wert. Als Property gesetzt, wird <code>value</code> nicht gespiegelt, ein Schlüssel landet also nie im Markup.'),
+  mobile: t('Keeps to its column: the value is cut, never the actions.', 'Bleibt in seiner Spalte: Gekürzt wird der Wert, nie die Aktionen.'),
+  attrs: [str('value', 'string', 'The value.', 'Der Wert.'), bool('secret', 'Masked, with Show/Hide.', 'Verborgen, mit Zeigen/Verbergen.'), bool('mono', 'Monospace – addresses, keys, code.', 'Monospace – Adressen, Schlüssel, Code.'), bool('wrap', 'A long value breaks instead of an ellipsis.', 'Ein langer Wert bricht um statt Auslassungspunkten.'), bool('wide', 'Fills the row.', 'Füllt die Zeile.'), str('copy-label', 'string', 'Button text.', 'Button-Text.', { default: 'Copy' }), str('copied-label', 'string', 'Text for the moment after.', 'Text für den Moment danach.', { default: 'Copied' }), str('show-label', 'string', 'Reveal (secret).', 'Zeigen (secret).', { default: 'Show' }), str('hide-label', 'string', 'Mask again.', 'Wieder verbergen.', { default: 'Hide' })],
+  slots: [],
+  events: [{ name: 'nk-action', detail: "{ action: 'copy', value, ok }", desc: t('Copy clicked; <code>ok</code> is false where the clipboard refused.', 'Kopieren geklickt; <code>ok</code> ist false, wenn die Zwischenablage ablehnte.') }],
+  props: ['value', 'secret'], methods: ['copy()'],
+  example: W => `<div style="max-width:340px"><nk-copy-field value="https://monahilft.notionkit.app" copy-label="${W.copyBtn}"></nk-copy-field></div>
+<div style="max-width:340px;margin-top:10px"><nk-copy-field value="ntn_4f2a9c1e8b7d6a5f3e2c" secret mono copy-label="${W.copyBtn}" show-label="${W.show}"></nk-copy-field></div>`,
+  classMarkup: W => `<div style="max-width:340px"><div class="nk-copy-field"><span class="cf-value">https://monahilft.notionkit.app</span><button class="cf-btn">${W.copyBtn}</button></div></div>
+<div style="max-width:340px;margin-top:10px"><div class="nk-copy-field mono"><span class="cf-value">••••••••••••••••••••••••</span><button class="cf-btn">${W.show}</button><button class="cf-btn">${W.copyBtn}</button></div></div>`,
+},
+{
+  tag: 'nk-image-picker', group: 'forms', classes: ['nk-profile-row', 'big-avatar', 'square', 'pr-actions', 'pr-remove'],
+  title: t('Image picker', 'Bildauswahl'),
+  desc: t('A picture for a person or a workspace, on NotionKit’s profile row: round, or <code>square</code> for a workspace icon, with Upload / Change and Remove beside it. From GlassKit Elements: the file is decoded with its EXIF rotation, drawn no larger than <code>max</code> and handed over as a data URL in <code>nk-change</code> – upload it yourself; an unreadable file fires <code>nk-error</code>. JPEG is drawn on white; <code>type="image/png"</code> keeps transparency. <code>src</code> as a property is not reflected, so megabytes never land in the DOM.',
+          'Ein Bild für eine Person oder einen Workspace, auf NotionKits Profilzeile: rund, oder <code>square</code> für ein Workspace-Icon, mit Hochladen / Ändern und Entfernen daneben. Aus GlassKit Elements: Die Datei wird mit ihrer EXIF-Drehung dekodiert, nicht größer als <code>max</code> gezeichnet und als Data-URL in <code>nk-change</code> übergeben – hochladen übernimmst du; eine unlesbare Datei feuert <code>nk-error</code>. JPEG wird auf Weiß gezeichnet; <code>type="image/png"</code> behält Transparenz. <code>src</code> als Property wird nicht gespiegelt, Megabytes landen also nie im DOM.'),
+  mobile: t('Unchanged; the actions stay beside the picture.', 'Unverändert; die Aktionen bleiben neben dem Bild.'),
+  attrs: [str('src', 'URL / data URL', 'Starting picture.', 'Startbild.'), str('initials', 'string', 'Shown without a picture.', 'Ohne Bild angezeigt.'), bool('square', 'Rounded square – a workspace icon.', 'Abgerundetes Quadrat – ein Workspace-Icon.'), str('max', 'px', 'Longest edge after scaling.', 'Längste Kante nach dem Skalieren.', { default: '512' }), str('type', 'MIME', 'Output format.', 'Ausgabeformat.', { default: 'image/jpeg' }), str('quality', '0–1', 'JPEG / WebP quality.', 'JPEG-/WebP-Qualität.', { default: '0.82' }), str('accept', 'string', 'File dialog filter.', 'Filter des Dateidialogs.', { default: 'image/*' }), str('label', 'string', 'Names the group.', 'Benennt die Gruppe.'), str('choose-label', 'string', 'Without a picture.', 'Ohne Bild.', { default: 'Upload image' }), str('change-label', 'string', 'With a picture.', 'Mit Bild.', { default: 'Change image' }), str('remove-label', 'string', 'Remove button.', 'Entfernen-Button.', { default: 'Remove' })],
+  slots: [],
+  events: [{ name: 'nk-change', detail: '{ dataUrl, width, height, size }', desc: t('A picture chosen – or removed, with an empty dataUrl.', 'Ein Bild gewählt – oder entfernt, mit leerer dataUrl.') }, { name: 'nk-error', detail: '{ message, name }', desc: t('The file cannot be decoded.', 'Die Datei lässt sich nicht dekodieren.') }],
+  props: ['src', 'square'], methods: ['choose()'],
+  example: W => `<nk-image-picker initials="AL" choose-label="${W.uploadImage}"></nk-image-picker>
+<nk-image-picker square src="/favicon.svg" change-label="${W.changeImage}" remove-label="${W.remove}"></nk-image-picker>`,
+  classMarkup: W => `<div class="nk-profile-row"><div class="big-avatar">AL</div><div class="pr-actions"><button class="nk-btn secondary small">${W.uploadImage}</button></div></div>
+<div class="nk-profile-row"><div class="big-avatar square"><img src="/favicon.svg" alt=""></div><div class="pr-actions"><button class="nk-btn secondary small">${W.changeImage}</button><button class="nk-btn secondary small pr-remove">${W.remove}</button></div></div>`,
+},
+{
   tag: 'nk-textarea', group: 'forms', classes: ['nk-textarea', 'wide'],
   title: t('Textarea', 'Textbereich'),
   desc: t('Multi-line sibling of <code>nk-input</code>. The initial value is the <code>value</code> attribute or the element’s text content.', 'Mehrzeiliges Geschwister von <code>nk-input</code>. Startwert ist das <code>value</code>-Attribut oder der Textinhalt des Elements.'),
@@ -297,6 +327,19 @@ export const CATALOG = [
   events: [],
   example: W => `<nk-callout icon="💡"><b>Core idea:</b> ${W.calloutText}</nk-callout>`,
   classMarkup: W => `<div class="nk-callout"><span class="c-icon">💡</span><div><b>Core idea:</b> ${W.calloutText}</div></div>`,
+},
+{
+  tag: 'nk-bookmark', group: 'content', classes: ['nk-bookmark', 'bm-text', 'bm-title', 'bm-desc', 'bm-url', 'bm-favicon', 'bm-cover'],
+  title: t('Bookmark', 'Bookmark'),
+  desc: t('Notion’s link block, filled from what you know of the page – <code>og:title</code>, <code>og:description</code>, <code>og:image</code>: title, two lines of description and the address with its icon on the left, the image on the right in a third, 240px at most. <code>title</code> is the heading, never a tooltip; without it the host name stands in. <code>url</code> shows an address other than <code>href</code>. Opens in a new tab unless <code>target</code> says otherwise; a part without a value is left out.',
+          'Notions Link-Block, gefüllt aus dem, was man über die Seite weiß – <code>og:title</code>, <code>og:description</code>, <code>og:image</code>: Titel, zwei Zeilen Beschreibung und die Adresse mit ihrem Icon links, das Bild rechts in einem Drittel, höchstens 240px. <code>title</code> ist die Überschrift, nie ein Tooltip; ohne ihn steht der Hostname. <code>url</code> zeigt eine andere Adresse als <code>href</code>. Öffnet in einem neuen Tab, außer <code>target</code> sagt anderes; ein Teil ohne Wert entfällt.'),
+  mobile: t('The image keeps its third and is cropped at the centre; title and address end in an ellipsis.', 'Das Bild behält sein Drittel und wird mittig beschnitten; Titel und Adresse enden mit Auslassungspunkten.'),
+  attrs: [str('href', 'URL', 'The link.', 'Der Link.'), str('title', 'string', 'Title – og:title.', 'Titel – og:title.'), str('desc', 'string', 'Description, two lines – og:description.', 'Beschreibung, zwei Zeilen – og:description.'), str('favicon', 'URL', 'The site’s icon, 16px.', 'Das Icon der Seite, 16px.'), str('cover', 'URL', 'Preview image – og:image.', 'Vorschaubild – og:image.'), str('url', 'string', 'The address shown (default: href).', 'Die angezeigte Adresse (Standard: href).'), str('target', 'string', 'Link target.', 'Link-Ziel.', { default: '_blank' })],
+  slots: [],
+  events: [{ name: 'click', detail: '(native)', desc: t('The link is a plain <code>&lt;a&gt;</code>.', 'Der Link ist ein einfaches <code>&lt;a&gt;</code>.') }],
+  props: ['title', 'href'],
+  example: W => `<div style="max-width:600px"><nk-bookmark href="https://notionkit.jungherz.com" title="${W.bmTitle}" desc="${W.bmDesc}" favicon="/favicon.svg" cover="/covers/notionkit-og.jpg"></nk-bookmark></div>`,
+  classMarkup: W => `<div style="max-width:600px"><a class="nk-bookmark" href="https://notionkit.jungherz.com" target="_blank" rel="noopener"><span class="bm-text"><span class="bm-title">${W.bmTitle}</span><span class="bm-desc">${W.bmDesc}</span><span class="bm-url"><img class="bm-favicon" src="/favicon.svg" alt=""><span>https://notionkit.jungherz.com</span></span></span><span class="bm-cover"><img src="/covers/notionkit-og.jpg" alt=""></span></a></div>`,
 },
 {
   tag: 'nk-divider', group: 'content', classes: ['nk-divider'],
@@ -1086,6 +1129,37 @@ export const CATALOG = [
   <div class="nk-tree-item"><span class="icon">🧠</span><span class="label">${W.knowledgeBase}</span></div>
   <div class="nk-tree-item"><span class="icon">🗑️</span><span class="label">${W.trash}</span></div>
 </div></div>`,
+},
+{
+  tag: 'nk-peek', group: 'overlays', classes: ['nk-peek-backdrop', 'open', 'nk-peek', 'pk-bar', 'pk-body'], frame: 520, overlay: true,
+  title: t('Side peek', 'Side Peek'),
+  desc: t('Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (<code>slot="actions"</code>); the body is the page – <code>nk-page-title</code> (32px here), <code>nk-props</code>, a <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls <code>show()</code> again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under <code>&lt;body&gt;</code>.',
+          'Notions Side Peek: Eine Datenbankzeile öffnet sich am rechten Rand, in voller Höhe, neben der Tabelle, die bedienbar bleibt – keine Abdunklung, nichts inert. Die Leiste trägt » zum Schließen und deine Aktionen (<code>slot="actions"</code>); der Body ist die Seite – <code>nk-page-title</code> (hier 32px), <code>nk-props</code>, eine <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> schiebt es herein und setzt den Fokus hinein; », Escape und ein Klick daneben schließen es, und ein Klick, der <code>show()</code> erneut aufruft – eine andere Zeile –, tauscht nur den Inhalt. Klicks in anderen Overlays lassen es offen. Direkt unter <code>&lt;body&gt;</code> platzieren.'),
+  mobile: t('Below 860px a bottom sheet over a dimmed page, title in 28px – and modal there: the page is inert and scroll-locked, a tap on the dimmed page closes it.', 'Unter 860px ein Bottom Sheet über abgedunkelter Seite, Titel in 28px – und dort modal: Die Seite ist inert und scroll-gesperrt, ein Tipp auf die abgedunkelte Seite schließt es.'),
+  attrs: [bool('open', 'Shown.', 'Sichtbar.'), str('label', 'string', 'The dialog’s name – the entry’s title.', 'Der Name des Dialogs – der Titel des Eintrags.'), str('close-label', 'string', 'Name of ».', 'Name von ».', { default: 'Close' })],
+  slots: [{ name: '(default)', desc: t('The page: title, properties, prose, comments.', 'Die Seite: Titel, Eigenschaften, Prosa, Kommentare.') }, { name: 'actions', desc: t('Buttons beside » – open as page, share.', 'Buttons neben » – als Seite öffnen, teilen.') }],
+  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Opened / closed.', 'Geöffnet / geschlossen.') }],
+  props: ['open'], methods: ['show()', 'close()', 'toggle()'],
+  example: W => `<nk-peek open label="${W.peekTitle}">
+  <nk-btn slot="actions" variant="topbar" aria-label="${W.openPage}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
+  <nk-page-title>🗃️ ${W.peekTitle}</nk-page-title>
+  <nk-props>
+    <nk-prop label="${W.propStatus}" icon="◉"><nk-tag color="blue">${W.statusProgress}</nk-tag></nk-prop>
+    <nk-prop label="${W.propDue}" icon="📅">20.05.2026</nk-prop>
+  </nk-props>
+  <div class="nk-prose"><p>${W.peekText}</p></div>
+</nk-peek>`,
+  classMarkup: W => `<div class="nk-peek-backdrop open"><aside class="nk-peek" role="dialog" aria-label="${W.peekTitle}">
+  <div class="pk-bar"><button class="nk-topbar-btn" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></svg></button><button class="nk-topbar-btn" aria-label="${W.openPage}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button></div>
+  <div class="pk-body">
+    <h1 class="nk-page-title">🗃️ ${W.peekTitle}</h1>
+    <dl class="nk-props">
+      <div class="nk-prop"><dt class="p-name"><span class="p-icon">◉</span>${W.propStatus}</dt><dd class="p-value"><span class="nk-tag blue">${W.statusProgress}</span></dd></div>
+      <div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>${W.propDue}</dt><dd class="p-value">20.05.2026</dd></div>
+    </dl>
+    <div class="nk-prose"><p>${W.peekText}</p></div>
+  </div>
+</aside></div>`,
 },
 {
   tag: 'nk-settings-pane', group: 'overlays', classes: ['nk-settings-pane', 'active'],
