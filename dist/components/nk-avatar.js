@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { p as paintAvatar, i as initialsOf } from './shared/avatar-BiqCaHOt.js';
+import { p as paintAvatar, i as initialsOf } from './shared/avatar-CzPZN3uP.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-avatar>MK</nk-avatar>                       → <span class="nk-avatar">MK</span>

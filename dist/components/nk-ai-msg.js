@@ -38,13 +38,15 @@ class NkAiMsg extends NkElement {
     this._box.classList.toggle('user', user);
     this._box.classList.toggle('bubble', bubble);
     const name = this.getAttribute('name');
-    this._nameText.data = name || '';
-    const badge = this.getAttribute('badge');
-    this._badge.textContent = badge ? ` ${badge}` : '';
+    // Runs on slotchange: write text on a change only (see nk-switch).
+    if (this._nameText.data !== (name || '')) this._nameText.data = name || '';
+    const badge = this.getAttribute('badge'), badgeText = badge ? ` ${badge}` : '';
+    if (this._badge.textContent !== badgeText) this._badge.textContent = badgeText;
     // A bubble stands without avatar and name; the text says who asked.
     this._name.style.display = name && !bubble ? '' : 'none';
     this._avatarSlot.style.display = bubble ? 'none' : '';
-    this._avatar.textContent = this.getAttribute('avatar') || (user ? (name || 'U').slice(0, 2).toUpperCase() : '✨');
+    const avatar = this.getAttribute('avatar') || (user ? (name || 'U').slice(0, 2).toUpperCase() : '✨');
+    if (this._avatar.textContent !== avatar) this._avatar.textContent = avatar;
     const color = this.getAttribute('color');
     this._avatar.style.background = color || '';
     this._actions.style.display = this._actionSlot.assignedElements().length ? '' : 'none';

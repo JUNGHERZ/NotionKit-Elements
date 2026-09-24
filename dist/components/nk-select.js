@@ -8,7 +8,9 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 //
 // The light-DOM <option>s are copied into the shadow <select>. A
 // MutationObserver keeps the copy in step when a framework swaps them; the
-// empty string is a valid value; the live selection survives a rebuild.
+// empty string is a valid value; the live selection survives a rebuild. A
+// value set before its option exists – a framework sets properties before
+// children – waits and is applied once the option arrives.
 class NkSelect extends NkFormElement {
   static get observedAttributes() { return ['value', 'name', 'disabled', 'required', 'compact', 'wide', 'aria-label']; }
   static get observesLightDom() { return true; }
@@ -51,9 +53,11 @@ class NkSelect extends NkFormElement {
     this._select.innerHTML = '';
     for (const node of nodes) this._select.appendChild(node.cloneNode(true));
 
-    // Keep the live selection when it survived; otherwise the value attribute;
-    // otherwise the browser default (first option / `selected`).
-    if (!this._applyValue(previous)) this._applyValue(this.getAttribute('value'));
+    // A value that waited for its option first; then the live selection when
+    // it survived; otherwise the value attribute; otherwise the browser
+    // default (first option / `selected`).
+    if (this._pending != null && this._applyValue(this._pending)) this._pending = null;
+    else if (!this._applyValue(previous)) this._applyValue(this.getAttribute('value'));
     this._syncFormValue();
   }
 
@@ -67,6 +71,7 @@ class NkSelect extends NkFormElement {
 
   setupEvents() {
     this._onChange = () => {
+      this._pending = null;
       this._syncFormValue();
       this.emit('nk-change', { value: this._select.value, name: this.name });
       this.dispatchEvent(new Event('change', { bubbles: true }));
@@ -107,10 +112,13 @@ class NkSelect extends NkFormElement {
 
   focus(options) { this._select?.focus(options); }
 
-  get value() { return this._select?.value ?? ''; }
+  get value() { return this._pending ?? this._select?.value ?? ''; }
   set value(v) {
-    if (this._select) { this._select.value = v; this._syncFormValue(); }
-    else this.setAttribute('value', v);
+    const value = v == null ? '' : String(v);
+    if (!this._select) { this.setAttribute('value', value); return; }
+    // No option carries it yet: keep it until one does.
+    this._pending = this._applyValue(value) ? null : value;
+    this._syncFormValue();
   }
   get selectedIndex() { return this._select?.selectedIndex ?? -1; }
   get options() { return this._select?.options ?? []; }

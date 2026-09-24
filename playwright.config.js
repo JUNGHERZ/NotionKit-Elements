@@ -20,5 +20,11 @@ export default defineConfig({
     url: 'http://127.0.0.1:4173/package.json',
     reuseExistingServer: true,
   },
-  projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
+  // Chromium runs the suite; WebKit loads the pages once more, because a
+  // loop that only WebKit enters – an empty <nk-switch> in 1.10 – froze
+  // Safari on every page with one while Chromium stayed green.
+  projects: [
+    { name: 'chromium', use: { browserName: 'chromium' }, testIgnore: /webkit\.spec\.mjs/ },
+    { name: 'webkit', use: { browserName: 'webkit' }, testMatch: /webkit\.spec\.mjs/ },
+  ],
 });

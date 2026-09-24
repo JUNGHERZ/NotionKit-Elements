@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { i as initialsOf, p as paintAvatar } from './shared/avatar-BiqCaHOt.js';
+import { i as initialsOf, p as paintAvatar } from './shared/avatar-CzPZN3uP.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-comment author="Sara Lindt" time="1 hr ago" avatar="SL" color="green">The board view feels close.</nk-comment>

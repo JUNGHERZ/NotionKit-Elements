@@ -13,7 +13,7 @@ function paintAvatar(el, color) {
   el.style.background = color && !AVATAR_COLORS.includes(color) ? color : '';
 }
 
-/** "Sara Lindt" → "SL". */
-const initialsOf = name => String(name || '').split(/\s+/).map(w => w[0]).filter(Boolean).join('').slice(0, 2).toUpperCase();
+/** "Sara Lindt" → "SL", "Planer (Dev)" → "PD", "Anna-Lena Groß" → "AG": the first letter or digit of each word; a word without one is skipped. */
+const initialsOf = name => String(name || '').split(/\s+/).map(w => w.match(/[\p{L}\p{N}]/u)?.[0]).filter(Boolean).join('').slice(0, 2).toUpperCase();
 
 export { initialsOf as i, paintAvatar as p };

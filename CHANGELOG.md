@@ -4,6 +4,32 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.11.0] – 2026-09-24
+
+Built against NotionKit CSS 1.11.0 (peer `>= 1.11.0`). SupaGantt's first weeks on Elements turned up thirteen findings; this release answers all of them. One matters beyond SupaGantt: an `<nk-switch>` without content froze Safari – the demo, the landing page, the docs and the showcase among the pages it hung.
+
+### Fixed
+- **An `<nk-switch>` without content no longer freezes Safari** – since 1.2.0 it did. `_syncText()` wrote the slot's fallback text on every call, WebKit fires `slotchange` for such a write even when the text stays the same, and `slotchange` called `_syncText()` again – an endless loop at 100 % CPU for `<nk-switch></nk-switch>` or `<nk-switch text="…"></nk-switch>`. Chromium was never affected, so no test saw it – and the demo, the landing page, the docs and the showcase all have such switches. It writes on a change only now, and so do `<nk-page>`, `<nk-ai-msg>` and `<nk-tree-item>`, which write fallback text as well.
+- **`<nk-dialog>` closes for its actions only.** Any button with a `value` inside closed it, an option of an `<nk-segmented>` too, with the option's value as the result. Now a button in `slot="actions"` with a `value` closes it, and one anywhere inside with `data-close` – with that attribute's value.
+- **`<nk-select>` keeps a value set before its options.** A framework that sets properties before children – Hybrids – set `value` while the select had no `<option>` yet, and the first option showed. The value now waits and is applied once its option arrives; until then `value` reports it.
+- **A floating menu or date picker inside an open `<nk-modal>` or `<nk-dialog>` sits under its anchor.** Their surfaces kept a transform at rest, which made them the containing block of the fixed menu: it opened off by the surface's position and clipped by its overflow. NotionKit 1.11.0 gives the open surfaces no transform at all, and `placeUnder()` and `placeNear()` measure the frame the host really sits in and take it off, for a transformed ancestor of one's own.
+- **`<nk-menu floating>` and `<nk-calendar floating>` take no room before their first `show()`.** The fixed host stood at its static position in the flow until then – a long page grew by thousands of pixels, and focusing moved it. The host starts at the window's top left corner.
+- **`<nk-tree-item>` takes every text node for its label**, empty and blank ones too: a template engine fills an expression's node after the item is built – `${i} ${title}` read “1Projekte”, and children showed only a “.”.
+- **`<nk-avatar>` initials skip punctuation.** They are the first letter or digit of each word, and a word without one is skipped: “Planer (Dev)” → PD, not P(; “Anna-Lena Groß” → AG. The same goes for every element that draws initials from a name – member rows, comments, people in the database views.
+- **`<nk-filter-bar>` never changes the caller's array.** Removing a pill spliced the array given to `filters`; the bar keeps a copy now, `filters` returns one, and `nk-change` reports the new list.
+- **The banner's action is a button.** `slot="action"` takes a `<button>`, which NotionKit 1.11.0 strips down to underlined text – a button's role and keyboard instead of a span with `role="button"` and a key handler of one's own. Below 860px the action moves under the text, as the docs promised, instead of squeezing the text into a narrow column beside it.
+- **SKILL.md documents `<nk-menu-item type="check">`** – a ✓ where the shortcut stands, `nk-change { value, checked }` instead of `nk-select`, the menu stays open – and the new behaviour of `<nk-dialog>`, `<nk-select>`, `<nk-menu>`, `<nk-tooltip>`, `<nk-avatar>` and `<nk-filter-bar>`.
+
+### Added
+- **`<nk-fields fit>`**: the fields share the row instead of keeping 150px columns – two fields in a wide dialog are two halves, not two thirds and an empty third column. NotionKit's `.nk-fields.fit`.
+- **A floating menu opens upwards and never outgrows the window.** Where the window ends below and there is more room above, `<nk-menu floating>` and `<nk-calendar floating>` open above their anchor; either way they are capped to the room there and a longer menu scrolls – 48 assignees near the bottom of the window.
+- **`<nk-tooltip>` for a rect stays, keeps line breaks and hides on the wheel.** A tooltip shown with `show(rect, text)` – a bar of a Gantt chart – stays until `hide()`, the pointer on another `[data-tooltip]`, a press or Escape; before, one shown in the same `pointerover` that left a `[data-tooltip]` closed at once. A line break in the text is kept (NotionKit's `.nk-tooltip.lines`), a long word breaks, and the wheel hides it – scroll events do not leave a shadow root, so scrolling inside a component left it standing.
+
+### Changed
+- Tests run in WebKit too: every page loads and answers in WebKit, and the settings pane with its empty switches renders – the suite that would have caught the Safari freeze. CI installs Chromium and WebKit.
+- Docs, showcase, SKILL.md and the demo write the banner's action as a `<button>`.
+- Peer `@jungherz-de/notionkit >= 1.11.0`.
+
 ## [1.10.1] – 2026-09-24
 
 Built against NotionKit CSS 1.10.1 (peer `>= 1.10.1`).
@@ -583,6 +609,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.11.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.0
 [1.10.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.1
 [1.10.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.0
 [1.9.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.9.0

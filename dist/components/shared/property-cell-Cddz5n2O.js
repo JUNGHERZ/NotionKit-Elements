@@ -1,4 +1,4 @@
-import { i as initialsOf, p as paintAvatar } from './avatar-BiqCaHOt.js';
+import { i as initialsOf, p as paintAvatar } from './avatar-CzPZN3uP.js';
 
 // Polymorphic property renderer for database views. Returns plain DOM built
 // from NotionKit classes – deliberately not a custom element: every cell rule

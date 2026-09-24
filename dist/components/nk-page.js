@@ -44,8 +44,9 @@ class NkPage extends NkElement {
   }
 
   _sync() {
-    const icon = this.getAttribute('icon');
-    this._icon.textContent = icon || '';
+    const icon = this.getAttribute('icon') || '';
+    // Fallback content: write on a change only (see nk-switch).
+    if (this._icon.textContent !== icon) this._icon.textContent = icon;
     this._icon.style.display = icon ? '' : 'none';
     this._cover.style.display = this.getBoolAttr('cover') ? '' : 'none';
     // `covered` is the stylesheet's twin of `.nk-cover + .nk-page`: the icon

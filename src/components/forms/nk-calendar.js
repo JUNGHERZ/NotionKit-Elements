@@ -43,7 +43,7 @@ import { deepActiveElement } from '../../util/focus.js';
 // outside does. Put a floating calendar directly under <body>.
 const STEPS = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 };
 const floatSheet = new CSSStyleSheet();
-floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; z-index: 60; pointer-events: none; }`);
+floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 60; pointer-events: none; }`);
 
 class NkCalendar extends NkFormElement {
   static get hostStyles() { return floatSheet; }

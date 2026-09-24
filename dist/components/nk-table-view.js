@@ -1,7 +1,7 @@
 import { NkElement } from './base.js';
-import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-o7N30kAQ.js';
+import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-Cddz5n2O.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
-import './shared/avatar-BiqCaHOt.js';
+import './shared/avatar-CzPZN3uP.js';
 
 // <nk-table-view name="table" label="▦ Table" count new-row sortable wrap></nk-table-view>
 // `wrap` lets cell text break (`.nk-table.wrap`), like Notion's "wrap column".

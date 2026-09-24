@@ -464,7 +464,7 @@ The open/close contract is one attribute: \`settings.open = true\`, \`settings.s
   <nk-page-actions><span>${W.owner}</span><span>${W.created}</span><span>${W.tagged} <nk-tag color="green">${W.done}</nk-tag></span></nk-page-actions>
   <p class="lead">${W.lead}</p>
 
-  <nk-banner variant="info">ℹ️ <span>${W.bannerInfo}</span><span slot="action">${W.view}</span></nk-banner>
+  <nk-banner variant="info">ℹ️ <span>${W.bannerInfo}</span><button slot="action" type="button">${W.view}</button></nk-banner>
   <nk-callout icon="💡"><b>Core idea:</b> ${W.calloutText}</nk-callout>
 
   <nk-heading>Getting started</nk-heading>

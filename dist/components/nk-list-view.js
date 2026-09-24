@@ -1,7 +1,7 @@
 import { NkElement } from './base.js';
-import { r as renderPropertyCell } from './shared/property-cell-o7N30kAQ.js';
+import { r as renderPropertyCell } from './shared/property-cell-Cddz5n2O.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
-import './shared/avatar-BiqCaHOt.js';
+import './shared/avatar-CzPZN3uP.js';
 
 // <nk-list-view name="list" label="☰ List" meta-keys="due,status" new-row></nk-list-view>
 // The third database view: one line per row – icon and title, the `meta-keys`

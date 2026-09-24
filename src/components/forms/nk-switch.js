@@ -36,7 +36,11 @@ class NkSwitch extends NkFormElement {
   }
 
   _syncText() {
-    this._textNode.data = this.getAttribute('text') ?? '';
+    // Only on a change: WebKit fires slotchange for a write to the slot's
+    // fallback text, even the same text, and this runs on slotchange – an
+    // endless loop that froze Safari with an empty <nk-switch>.
+    const text = this.getAttribute('text') ?? '';
+    if (this._textNode.data !== text) this._textNode.data = text;
     const hasText = !!(this.getAttribute('text') || this._slot.assignedNodes().some(n => n.nodeType === Node.ELEMENT_NODE || n.data.trim()));
     this._text.hidden = !hasText;
     this._row.style.display = hasText ? '' : 'contents';

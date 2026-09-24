@@ -58,7 +58,7 @@ class NkFilterBar extends NkElement {
   setupEvents() {
     this._onClick = (e) => {
       const remove = e.target.closest('[data-remove]');
-      if (remove) { this._filters.splice(Number(remove.dataset.remove), 1); this._sync(); this._emitChange(); return; }
+      if (remove) { const i = Number(remove.dataset.remove); this._filters = this._filters.filter((_, j) => j !== i); this._sync(); this._emitChange(); return; }
       const edit = e.target.closest('[data-edit]');
       if (edit) { const index = Number(edit.dataset.edit); this.emit('nk-action', { action: 'edit', index, filter: this._filters[index], anchor: edit }); return; }
       const btn = e.target.closest('[data-action]');
@@ -78,8 +78,10 @@ class NkFilterBar extends NkElement {
   _emitChange() { this.emit('nk-change', { filters: [...this._filters], search: this._input.value }); }
   onAttributeChanged() { this._sync(); }
 
-  get filters() { return this._filters; }
-  set filters(v) { this._filters = Array.isArray(v) ? v : []; if (this._row) this._sync(); }
+  // A copy each way: the caller's array is never changed – removing a pill
+  // only reports the new list in nk-change.
+  get filters() { return [...this._filters]; }
+  set filters(v) { this._filters = Array.isArray(v) ? [...v] : []; if (this._row) this._sync(); }
   get value() { return this._input?.value ?? ''; }
   set value(v) { if (this._input) this._input.value = v ?? ''; }
   /**

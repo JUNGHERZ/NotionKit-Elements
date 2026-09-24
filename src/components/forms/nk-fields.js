@@ -9,12 +9,22 @@ import { NkElement } from '../../base.js';
 // nk-field inside renders itself stacked and compact (12px label above a
 // full-width control) – the class markup does the same through
 // `.nk-fields > .nk-field`, which cannot cross the shadow boundary here.
+// `fit` (NotionKit 1.11.0) lets the fields share the row instead of keeping
+// 150px columns: two fields in a wide dialog are two halves.
 class NkFields extends NkElement {
+  static get observedAttributes() { return ['fit']; }
+
   render() {
-    const grid = this.createElement('div', ['nk-fields']);
-    grid.appendChild(document.createElement('slot'));
-    this._wrapper.appendChild(grid);
+    this._grid = this.createElement('div', ['nk-fields']);
+    this._grid.appendChild(document.createElement('slot'));
+    this._wrapper.appendChild(this._grid);
+    this.onAttributeChanged();
   }
+
+  onAttributeChanged() { this._grid?.classList.toggle('fit', this.getBoolAttr('fit')); }
+
+  get fit() { return this.getBoolAttr('fit'); }
+  set fit(v) { this.setBoolAttr('fit', v); }
 }
 
 customElements.define('nk-fields', NkFields);

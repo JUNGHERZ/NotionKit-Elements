@@ -59,8 +59,8 @@ jobs:
           grep -q "## \[${VERSION}\]" CHANGELOG.md \
             || { echo "::error::CHANGELOG.md has no entry for ${VERSION}"; exit 1; }
 
-      - name: Install Chromium for Playwright
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and WebKit for Playwright
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Run tests
         run: npm test

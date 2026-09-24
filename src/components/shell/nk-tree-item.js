@@ -59,7 +59,10 @@ class NkTreeItem extends NkElement {
         else if (slot === 'end') end.push(node);
         else if (node.localName === 'nk-tree-item') children.push(node);
         else label.push(node);
-      } else if (node.nodeType === Node.TEXT_NODE && node.data.trim()) {
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        // Every text node, empty and blank ones too: a template engine fills
+        // an expression's node after the item is built ("${i} ${title}"),
+        // and the blank node between two expressions is the space.
         label.push(node);
       }
     }
@@ -82,9 +85,12 @@ class NkTreeItem extends NkElement {
     if (this._hasChildren) this._row.setAttribute('aria-expanded', open ? 'true' : 'false');
     else this._row.removeAttribute('aria-expanded');
     this._children.classList.toggle('collapsed', !open || !this._hasChildren);
-    this._icon.textContent = this.getAttribute('icon') || '';
-    this._icon.style.display = this.getAttribute('icon') ? '' : 'none';
-    this._labelText.data = this.getAttribute('label') || '';
+    // Fallback content: write on a change only (see nk-switch).
+    const icon = this.getAttribute('icon') || '';
+    if (this._icon.textContent !== icon) this._icon.textContent = icon;
+    this._icon.style.display = icon ? '' : 'none';
+    const label = this.getAttribute('label') || '';
+    if (this._labelText.data !== label) this._labelText.data = label;
     // .actions is display:none until hover (a hover-parent rule); `hidden`
     // would lose to that rule, so the block is detached instead.
     const wantActions = !this.getBoolAttr('no-actions') && !this._hasEnd;

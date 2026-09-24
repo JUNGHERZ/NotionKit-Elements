@@ -19,7 +19,7 @@ import { placeUnder } from '../../util/floating.js';
 // close it too, a switch row does not. Opened from the keyboard, focus moves
 // to the first item; closing returns it to where it was.
 const floatSheet = new CSSStyleSheet();
-floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; z-index: 60; pointer-events: none; }`);
+floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 60; pointer-events: none; }`);
 
 class NkMenu extends NkElement {
   static get hostStyles() { return floatSheet; }

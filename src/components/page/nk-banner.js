@@ -1,7 +1,10 @@
 import { NkElement } from '../../base.js';
 
-// <nk-banner variant="info">ℹ️ <span>Text</span><span slot="action">Open</span></nk-banner>
-// → <div class="nk-banner info">…<span class="b-action">Open</span></div>
+// <nk-banner variant="info">ℹ️ <span>Text</span><button slot="action" type="button">Open</button></nk-banner>
+// → <div class="nk-banner info">…<button class="b-action" type="button">Open</button></div>
+//
+// The action is a <button>, which NotionKit (1.11.0) strips down to
+// underlined text; below 860px it moves under the text.
 const VARIANTS = ['info', 'success', 'warning', 'danger'];
 
 class NkBanner extends NkElement {

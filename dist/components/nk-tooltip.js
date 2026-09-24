@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { a as placeNear } from './shared/floating-CxHxy-Cb.js';
+import { a as placeNear } from './shared/floating-CtqV6MBj.js';
 import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
@@ -15,12 +15,15 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // element. With `for` it belongs to the element with that id and shows its
 // own content and `shortcut`. It appears after `delay` ms (400) under the
 // pointer and at once on keyboard focus, never on touch; leaving, a press,
-// blur, scrolling and Escape hide it. It sits 6px below its target and
-// centred, above it where the window ends – placement="top" prefers above –
-// and 8px inside the window (placeNear in util/floating.js). show(target,
-// text, shortcut) takes an element or a rect, for what has no element of
-// its own: the bars of a Gantt chart. While it shows, the target's
-// aria-describedby names it (in the same document or shadow root).
+// blur, scrolling – the wheel too, inside a shadow root – and Escape hide
+// it. It sits 6px below its target and centred, above it where the window
+// ends – placement="top" prefers above – and 8px inside the window
+// (placeNear in util/floating.js). show(target, text, shortcut) takes an
+// element or a rect, for what has no element of its own: the bars of a
+// Gantt chart; such a tooltip stays until hide(), the pointer on another
+// [data-tooltip], a press or Escape. A line break in the text is kept.
+// While it shows, the target's aria-describedby names it (in the same
+// document or shadow root).
 const hostSheet = new CSSStyleSheet();
 hostSheet.replaceSync(`:host { display: block; position: fixed; top: 0; left: 0; z-index: 130; pointer-events: none; }`);
 let count = 0;
@@ -45,6 +48,7 @@ class NkTooltip extends NkElement {
   _fill(text, key = this.getAttribute('shortcut')) {
     this._slot.style.display = text == null ? '' : 'none';
     this._text.data = text ?? '';
+    this._bubble.classList.toggle('lines', (text ?? '').includes('\n'));
     this._key.textContent = key || '';
     this._key.hidden = !key;
   }
@@ -53,6 +57,9 @@ class NkTooltip extends NkElement {
   show(target, text, shortcut) {
     clearTimeout(this._timer);
     if (!target) return;
+    // What the pointer is on now: a rect has no element, so moving over the
+    // page leaves a tooltip shown for one alone.
+    this._target = target instanceof Element ? target : null;
     this._fill(text ?? null, shortcut);
     this._describe(target);
     placeNear(this, target, this.getAttribute('placement') === 'top' ? 'top' : 'bottom');
@@ -117,6 +124,8 @@ class NkTooltip extends NkElement {
     document.addEventListener('focusout', this._onHide);
     document.addEventListener('pointerdown', this._onHide, true);
     document.addEventListener('scroll', this._onHide, true);
+    // Scroll events do not leave a shadow root; the wheel does.
+    document.addEventListener('wheel', this._onHide, { capture: true, passive: true });
     document.addEventListener('keydown', this._onKey);
   }
 
@@ -126,6 +135,7 @@ class NkTooltip extends NkElement {
     document.removeEventListener('focusout', this._onHide);
     document.removeEventListener('pointerdown', this._onHide, true);
     document.removeEventListener('scroll', this._onHide, true);
+    document.removeEventListener('wheel', this._onHide, { capture: true });
     document.removeEventListener('keydown', this._onKey);
     this.hide();
   }

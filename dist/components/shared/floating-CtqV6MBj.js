@@ -5,7 +5,7 @@
 // in is measured and taken off.
 
 /** The border box of an element, or of the first descendant with one (display: contents hosts). */
-export function boxOf(el) {
+function boxOf(el) {
   if (el.getClientRects().length) return el.getBoundingClientRect();
   for (const child of [...(el.shadowRoot?.children ?? []), ...el.children]) {
     const r = boxOf(child);
@@ -33,7 +33,7 @@ function frameOf(host) {
  * bottom }, a DOMRect) – centred on it: above with side="top", or where the
  * window ends below; kept 8px inside the window. For <nk-tooltip>.
  */
-export function placeNear(host, target, side = 'bottom', gap = 6) {
+function placeNear(host, target, side = 'bottom', gap = 6) {
   const r = target instanceof Element ? boxOf(target) : target;
   const f = frameOf(host), w = f.width, h = f.height;
   const below = r.bottom + gap, above = r.top - gap - h;
@@ -50,7 +50,7 @@ export function placeNear(host, target, side = 'bottom', gap = 6) {
  * it opens upwards; either way --_nk-float-max caps its height to the room
  * there, and a longer menu scrolls.
  */
-export function placeUnder(host, anchor, align) {
+function placeUnder(host, anchor, align) {
   const r = boxOf(anchor), gap = 6, edge = 8;
   host.style.removeProperty('--_nk-float-max');
   const f = frameOf(host);
@@ -62,3 +62,5 @@ export function placeUnder(host, anchor, align) {
   if (align === 'start') { host.style.left = `${r.left - f.x}px`; host.style.right = 'auto'; }
   else { host.style.right = `${f.right - Math.min(r.right, innerWidth - edge)}px`; host.style.left = 'auto'; }
 }
+
+export { placeNear as a, placeUnder as p };

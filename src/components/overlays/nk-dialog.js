@@ -17,10 +17,13 @@ import { lockScroll, unlockScroll, inertOutside, firstFocusable, deepActiveEleme
 // scroll-locked. It lies above the modal and the sheet, so a question can
 // come from either. 440px, `wide` 560px; below 860px a bottom sheet with the
 // buttons stacked, the confirming one on top.
-// A button in slot="actions" with a `value` closes it with that value; so
-// does the submit of a <form method="dialog"> inside, with its submitter's
-// value. Before it closes, nk-close { value } fires and can be cancelled –
-// the place to check an input dialog; Escape and the backdrop close with ''.
+// A button in slot="actions" with a `value` closes it with that value, and
+// one anywhere inside with `data-close` with that attribute's value – a
+// button with a value elsewhere, an option of <nk-segmented> say, leaves it
+// open. The submit of a <form method="dialog"> inside closes it too, with
+// its submitter's value. Before it closes, nk-close { value } fires and can
+// be cancelled – the place to check an input dialog; Escape and the
+// backdrop close with ''.
 // `returnValue` keeps the last value. `alert` makes it an alertdialog, named
 // and described by its title and text. `title` is the heading, never a
 // tooltip – see NkElement.takeTitle(). Put it directly under <body>.
@@ -90,11 +93,14 @@ class NkDialog extends NkElement {
   setupEvents() {
     this._onBackdrop = (e) => { if (e.target === this._backdrop) this.close(''); };
     this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(''); } };
-    // A button with a value closes it; a submit button is the form's.
+    // A button in the actions with a value closes it, and one with data-close
+    // anywhere inside; a submit button is the form's.
     this._onClick = (e) => {
-      const button = e.composedPath().find(n => n instanceof Element && n !== this && this.contains(n) && n.hasAttribute('value') && (n.localName === 'nk-btn' || n.localName === 'button'));
-      if (!button || button.getAttribute('type') === 'submit') return;
-      this.close(button.getAttribute('value'));
+      const path = e.composedPath(), own = path.slice(0, Math.max(0, path.indexOf(this))).filter(n => n instanceof Element && this.contains(n));
+      const button = own.find(n => n.localName === 'nk-btn' || n.localName === 'button');
+      if (!button || button.getAttribute('type') === 'submit' || button.hasAttribute('disabled')) return;
+      if (button.hasAttribute('data-close')) { this.close(button.getAttribute('data-close')); return; }
+      if (button.hasAttribute('value') && own.some(n => n.getAttribute('slot') === 'actions')) this.close(button.getAttribute('value'));
     };
     this._onSubmit = (e) => {
       if ((e.target.getAttribute('method') || '').toLowerCase() !== 'dialog') return;
