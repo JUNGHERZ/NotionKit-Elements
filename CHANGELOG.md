@@ -4,6 +4,13 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.1] – 2026-09-24
+
+Built against NotionKit CSS 1.10.1 (peer `>= 1.10.1`).
+
+### Fixed
+- **A disabled `<nk-btn>` shows its tooltip and its `title`.** NotionKit gave `.nk-btn:disabled` `pointer-events: none`, so the hint that says why a button is disabled never appeared – with `<nk-tooltip>` and `data-tooltip` no more than with `title` – and a click fell through to the element behind it, a table row say. Since NotionKit 1.10.1 a disabled button takes the pointer and shows the `not-allowed` cursor, hover leaves it alone, and a click reaches nothing. A disabled link button (`<nk-btn href disabled>`) is dimmed as well. Found in Auxdesk.
+
 ## [1.10.0] – 2026-09-24
 
 Built against NotionKit CSS 1.10.0 (peer `>= 1.10.0`), shell and overlays: two new elements – 87 in all – and two that grow. SupaGantt asked for all four: a Gantt chart at full width, bars that stay visible beside the peek, confirmation and input dialogs, hints on bars and the ribbon.
@@ -576,6 +583,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.10.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.1
 [1.10.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.0
 [1.9.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.9.0
 [1.8.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.8.0

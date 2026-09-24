@@ -1,6 +1,7 @@
 // Shell and overlays (1.10.0): <nk-sidebar collapsible>, <nk-peek resizable
 // inset>, <nk-dialog> and <nk-tooltip> – and the reference app that puts them
-// where the class demo has them.
+// where the class demo has them. 1.10.1: a disabled <nk-btn> takes the
+// pointer again, so its tooltip shows.
 import { test, expect } from '@playwright/test';
 import { openHarness, setStage } from './helpers.mjs';
 
@@ -257,6 +258,21 @@ test('nk-tooltip: `for` with its own content; at once on keyboard focus; show(re
   await page.evaluate(() => document.getElementById('save').dispatchEvent(new PointerEvent('pointerover', { bubbles: true, composed: true, pointerType: 'touch' })));
   await page.waitForTimeout(550);
   expect(await page.evaluate(() => document.getElementById('own').open)).toBe(false);
+});
+
+test('nk-tooltip on a disabled nk-btn: the hint that says why shows; a click reaches nothing', async ({ page }) => {
+  await openHarness(page);
+  await setStage(page, `<div id="row" style="padding:40px"><nk-btn id="b" variant="primary" disabled data-tooltip="Connect Notion first">Send</nk-btn>
+    <nk-btn id="l" href="#x" variant="secondary" disabled>Link</nk-btn></div><nk-tooltip id="tip"></nk-tooltip>`);
+  await page.evaluate(() => { window.clicks = []; for (const id of ['b', 'l', 'row']) document.getElementById(id).addEventListener('click', () => window.clicks.push(id)); });
+  await page.locator('#b button').hover({ force: true });
+  await page.waitForTimeout(550);
+  expect(await page.evaluate(() => { const b = document.getElementById('tip').shadowRoot.querySelector('.nk-tooltip'); return [b.classList.contains('open'), b.textContent]; })).toEqual([true, 'Connect Notion first']);
+  expect(await page.evaluate(() => ['b', 'l'].map(id => { const cs = getComputedStyle(document.getElementById(id).shadowRoot.querySelector('.nk-btn')); return [cs.opacity, cs.cursor]; }))).toEqual([['0.5', 'not-allowed'], ['0.5', 'not-allowed']]);
+  await page.locator('#b button').click({ force: true });
+  await page.locator('#l a').click({ force: true });
+  // Nothing: not the button, not the row behind it – which took the click while the button had pointer-events: none.
+  expect(await page.evaluate(() => [window.clicks, location.hash])).toEqual([[], '']);
 });
 
 // ── The reference app ───────────────────────────────────────────────────────
