@@ -90,6 +90,8 @@ export { NkCopyField } from './components/forms/nk-copy-field.js';
 export { NkImagePicker } from './components/forms/nk-image-picker.js';
 export { NkCalendar } from './components/forms/nk-calendar.js';
 export { NkPeek } from './components/overlays/nk-peek.js';
+export { NkDialog } from './components/overlays/nk-dialog.js';
+export { NkTooltip } from './components/overlays/nk-tooltip.js';
 
 // Wave 4 – overlays
 export { NkModal } from './components/overlays/nk-modal.js';

@@ -530,12 +530,12 @@ export const CATALOG = [
 
 // ============================================================ WAVE 2 · SHELL
 {
-  tag: 'nk-app', group: 'shell', classes: ['nk-app', 'nk-main'], frame: 300,
+  tag: 'nk-app', group: 'shell', classes: ['nk-app', 'nk-main', 'peek-inset'], frame: 300,
   title: t('App shell', 'App-Shell'),
   desc: t('The outermost element of a workspace app: a full-height flex row with the sidebar slot left and <code>main.nk-main</code> right. Everything in the default slot – <code>nk-topbar</code>, <code>nk-page</code> – becomes a flex child of the main column.',
           'Das äußerste Element einer Workspace-App: eine flex-Zeile über die volle Höhe mit dem Sidebar-Slot links und <code>main.nk-main</code> rechts. Alles im Default-Slot – <code>nk-topbar</code>, <code>nk-page</code> – wird Flex-Kind der Hauptspalte.'),
   mobile: t('Below 860px the sidebar is hidden; open it as a drawer with <code>sidebar.open = true</code>.', 'Unter 860px ist die Sidebar verborgen; als Schublade öffnen mit <code>sidebar.open = true</code>.'),
-  attrs: [],
+  attrs: [bool('peek-inset', 'The main column makes room for the side peek – <code>&lt;nk-peek inset&gt;</code> sets it while open.', 'Die Hauptspalte macht dem Side Peek Platz – <code>&lt;nk-peek inset&gt;</code> setzt es, solange er offen ist.')],
   slots: [{ name: 'sidebar', desc: t('An <code>nk-sidebar</code>.', 'Eine <code>nk-sidebar</code>.') }, { name: '(default)', desc: t('Topbar, page – the main column.', 'Topbar, Seite – die Hauptspalte.') }],
   events: [],
   example: W => `<nk-app>
@@ -583,16 +583,16 @@ export const CATALOG = [
 </div>`,
 },
 {
-  tag: 'nk-sidebar', group: 'shell', classes: ['nk-sidebar', 'nk-sidebar-scroll', 'nk-sidebar-footer', 'nk-sidebar-backdrop', 'open'], frame: 260,
+  tag: 'nk-sidebar', group: 'shell', classes: ['nk-sidebar', 'nk-sidebar-head', 'nk-sidebar-collapse', 'nk-sidebar-scroll', 'nk-sidebar-footer', 'nk-sidebar-backdrop', 'open', 'collapsed'], frame: 260,
   title: t('Sidebar', 'Sidebar'),
-  desc: t('The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get <code>compact</code> (26px rows). The host is <code>display: contents</code>, so the <code>aside</code> is a direct flex child of the app – exactly like the class markup.',
-          'Die linke Leiste: Workspace-Slot oben, ein scrollender Default-Slot für den Baum, ein fixierter Footer-Slot. Footer-Einträge bekommen automatisch <code>compact</code> (26px-Zeilen). Der Host ist <code>display: contents</code>, das <code>aside</code> also direktes Flex-Kind der App – wie im Klassen-Markup.'),
+  desc: t('The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get <code>compact</code> (26px rows). The host is <code>display: contents</code>, so the <code>aside</code> is a direct flex child of the app – exactly like the class markup. <code>collapsible</code> adds Notion’s « beside the workspace row, shown while the pointer is over the sidebar: on the desktop it collapses the sidebar – it slides out, the main column takes the width, nothing in it takes focus – and <code>&lt;nk-btn variant="sidebar"&gt;</code> in the topbar shows and brings it back; ⌘\\ or Ctrl+\\ toggles it. <code>collapsed</code> is the state, <code>nk-collapse</code> the moment to keep it.',
+          'Die linke Leiste: Workspace-Slot oben, ein scrollender Default-Slot für den Baum, ein fixierter Footer-Slot. Footer-Einträge bekommen automatisch <code>compact</code> (26px-Zeilen). Der Host ist <code>display: contents</code>, das <code>aside</code> also direktes Flex-Kind der App – wie im Klassen-Markup. <code>collapsible</code> ergänzt Notions « neben der Workspace-Zeile, sichtbar, solange der Zeiger über der Sidebar ist: Auf dem Desktop klappt es die Sidebar ein – sie gleitet hinaus, die Hauptspalte nimmt die Breite, nichts darin nimmt Fokus –, und <code>&lt;nk-btn variant="sidebar"&gt;</code> in der Topbar erscheint und holt sie zurück; ⌘\\ oder Strg+\\ schaltet um. <code>collapsed</code> ist der Zustand, <code>nk-collapse</code> der Moment, ihn zu speichern.'),
   mobile: t('Hidden below 860px. <code>open</code> shows it as a drawer over the page with a scrim – NotionKit’s own rules since 1.7.0 (<code>.nk-sidebar.open</code>, <code>.nk-sidebar-backdrop</code>), the same as the class markup’s; <code>&lt;nk-btn variant="sidebar"&gt;</code> in the topbar is the ☰ that opens it. Escape and the scrim close it. The drawer slides in over 240ms and the scrim fades, closing runs backwards – CSS only (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; older browsers switch hard, reduced motion snaps). In landscape the drawer grows by the left safe-area inset, so its rows clear the Dynamic Island.', 'Unter 860px verborgen. <code>open</code> zeigt sie als Schublade über der Seite mit Scrim – NotionKits eigene Regeln seit 1.7.0 (<code>.nk-sidebar.open</code>, <code>.nk-sidebar-backdrop</code>), dieselben wie im Klassen-Markup; <code>&lt;nk-btn variant="sidebar"&gt;</code> in der Topbar ist das ☰, das sie öffnet. Escape und der Scrim schließen sie. Die Schublade gleitet in 240ms herein, der Scrim blendet ein, das Schließen läuft rückwärts – nur CSS (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; ältere Browser schalten hart, reduzierte Bewegung springt). Im Querformat wächst die Schublade um den linken Safe-Area-Inset, ihre Zeilen weichen der Dynamic Island aus.'),
-  attrs: [bool('open', 'Drawer state on small screens (no effect on desktop).', 'Schubladen-Zustand auf kleinen Schirmen (ohne Wirkung am Desktop).')],
+  attrs: [bool('open', 'Drawer state on small screens (no effect on desktop).', 'Schubladen-Zustand auf kleinen Schirmen (ohne Wirkung am Desktop).'), bool('collapsible', 'Shows the « that collapses it on the desktop, and ⌘\\.', 'Zeigt das «, das sie auf dem Desktop einklappt, und ⌘\\.'), bool('collapsed', 'Collapsed on the desktop (no effect on a phone).', 'Auf dem Desktop eingeklappt (ohne Wirkung auf dem Telefon).'), str('collapse-label', 'string', 'Name and tooltip of the «.', 'Name und Tooltip des «.', { default: 'Close sidebar' })],
   slots: [{ name: 'workspace', desc: t('<code>nk-workspace-switcher</code>.', '<code>nk-workspace-switcher</code>.') }, { name: '(default)', desc: t('The tree (scrolls).', 'Der Baum (scrollt).') }, { name: 'footer', desc: t('Pinned bottom rows (Settings, Trash).', 'Fixierte Zeilen unten (Einstellungen, Papierkorb).') }],
-  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Drawer opened/closed.', 'Schublade geöffnet/geschlossen.') }],
-  methods: ['show()', 'close()', 'toggle()'],
-  example: W => `<div style="display:flex;height:100%"><nk-sidebar>
+  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Drawer opened/closed.', 'Schublade geöffnet/geschlossen.') }, { name: 'nk-collapse', detail: '{ collapsed }', desc: t('Collapsed / expanded on the desktop.', 'Auf dem Desktop ein-/ausgeklappt.') }],
+  props: ['open', 'collapsed'], methods: ['show()', 'close()', 'toggle()', 'collapse()', 'expand()', 'toggleCollapsed()'],
+  example: W => `<div style="display:flex;height:100%"><nk-sidebar collapsible collapse-label="${W.closeSidebar}">
   <nk-workspace-switcher slot="workspace" name="${W.workspace}"></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon="🏠" active>${W.home}</nk-tree-item>
@@ -602,7 +602,7 @@ export const CATALOG = [
   <nk-tree-item slot="footer" icon="🗑️">${W.trash}</nk-tree-item>
 </nk-sidebar></div>`,
   classMarkup: W => `<div style="display:flex;height:100%"><aside class="nk-sidebar">
-  <div class="nk-workspace"><div class="avatar">M</div><span>${W.workspace}</span><span class="chev">⌄</span></div>
+  <div class="nk-sidebar-head"><div class="nk-workspace"><div class="avatar">M</div><span>${W.workspace}</span><span class="chev">⌄</span></div><button class="nk-sidebar-collapse" aria-label="${W.closeSidebar}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 17-5-5 5-5M11 17l-5-5 5-5"/></svg></button></div>
   <div class="nk-sidebar-scroll">
     <div class="nk-tree-item active"><span class="icon">🏠</span><span class="label">${W.home}</span></div>
     <div class="nk-tree-item"><span class="icon">📥</span><span class="label">${W.inbox}</span></div>
@@ -1242,16 +1242,20 @@ export const CATALOG = [
 </div></div>`,
 },
 {
-  tag: 'nk-peek', group: 'overlays', classes: ['nk-peek-backdrop', 'open', 'nk-peek', 'pk-bar', 'pk-body'], frame: 520, overlay: true,
+  tag: 'nk-peek', group: 'overlays', classes: ['nk-peek-backdrop', 'open', 'nk-peek', 'pk-resize', 'active', 'pk-bar', 'pk-body'], frame: 520, overlay: true,
   title: t('Side peek', 'Side Peek'),
-  desc: t('Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (<code>slot="actions"</code>); the body is the page – <code>nk-page-title</code> (32px here), <code>nk-props</code>, a <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls <code>show()</code> again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under <code>&lt;body&gt;</code>.',
-          'Notions Side Peek: Eine Datenbankzeile öffnet sich am rechten Rand, in voller Höhe, neben der Tabelle, die bedienbar bleibt – keine Abdunklung, nichts inert. Die Leiste trägt » zum Schließen und deine Aktionen (<code>slot="actions"</code>); der Body ist die Seite – <code>nk-page-title</code> (hier 32px), <code>nk-props</code>, eine <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> schiebt es herein und setzt den Fokus hinein; », Escape und ein Klick daneben schließen es, und ein Klick, der <code>show()</code> erneut aufruft – eine andere Zeile –, tauscht nur den Inhalt. Klicks in anderen Overlays lassen es offen. Direkt unter <code>&lt;body&gt;</code> platzieren.'),
+  desc: t('Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (<code>slot="actions"</code>); the body is the page – <code>nk-page-title</code> (32px here), <code>nk-props</code>, a <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls <code>show()</code> again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under <code>&lt;body&gt;</code>. <code>resizable</code> gives it Notion’s drag on the left edge, <code>inset</code> moves the page aside instead of covering it.',
+          'Notions Side Peek: Eine Datenbankzeile öffnet sich am rechten Rand, in voller Höhe, neben der Tabelle, die bedienbar bleibt – keine Abdunklung, nichts inert. Die Leiste trägt » zum Schließen und deine Aktionen (<code>slot="actions"</code>); der Body ist die Seite – <code>nk-page-title</code> (hier 32px), <code>nk-props</code>, eine <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> schiebt es herein und setzt den Fokus hinein; », Escape und ein Klick daneben schließen es, und ein Klick, der <code>show()</code> erneut aufruft – eine andere Zeile –, tauscht nur den Inhalt. Klicks in anderen Overlays lassen es offen. Direkt unter <code>&lt;body&gt;</code> platzieren. <code>resizable</code> gibt ihm Notions Ziehen am linken Rand, <code>inset</code> rückt die Seite zur Seite, statt sie zu überdecken.'),
   mobile: t('Below 860px a bottom sheet over a dimmed page, title in 28px – and modal there: the page is inert and scroll-locked, a tap on the dimmed page closes it.', 'Unter 860px ein Bottom Sheet über abgedunkelter Seite, Titel in 28px – und dort modal: Die Seite ist inert und scroll-gesperrt, ein Tipp auf die abgedunkelte Seite schließt es.'),
-  attrs: [bool('open', 'Shown.', 'Sichtbar.'), str('label', 'string', 'The dialog’s name – the entry’s title.', 'Der Name des Dialogs – der Titel des Eintrags.'), str('close-label', 'string', 'Name of ».', 'Name von ».', { default: 'Close' })],
+  attrs: [bool('open', 'Shown.', 'Sichtbar.'), str('label', 'string', 'The dialog’s name – the entry’s title.', 'Der Name des Dialogs – der Titel des Eintrags.'), str('close-label', 'string', 'Name of ».', 'Name von ».', { default: 'Close' }),
+    bool('resizable', 'The left edge makes it wider or narrower – pointer and arrow keys; the width is the token <code>--nk-peek-width</code> on <code>:root</code>.', 'Der linke Rand macht es breiter oder schmaler – Zeiger und Pfeiltasten; die Breite ist das Token <code>--nk-peek-width</code> auf <code>:root</code>.'),
+    str('width', 'px', 'Sets the width, within min and max.', 'Setzt die Breite, innerhalb von min und max.', { default: '560' }), str('min', 'px', 'Narrowest.', 'Am schmalsten.', { default: '380' }), str('max', 'px', 'Widest.', 'Am breitesten.', { default: 'window − 320' }),
+    str('resize-label', 'string', 'Name of the edge.', 'Name des Randes.', { default: 'Resize' }),
+    bool('inset', 'While open on the desktop, the page’s <code>nk-app</code> makes room instead of lying under it – for a chart whose bars must stay visible.', 'Solange offen auf dem Desktop, macht die <code>nk-app</code> der Seite Platz, statt darunter zu liegen – für ein Diagramm, dessen Balken sichtbar bleiben müssen.')],
   slots: [{ name: '(default)', desc: t('The page: title, properties, prose, comments.', 'Die Seite: Titel, Eigenschaften, Prosa, Kommentare.') }, { name: 'actions', desc: t('Buttons beside » – open as page, share.', 'Buttons neben » – als Seite öffnen, teilen.') }],
-  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Opened / closed.', 'Geöffnet / geschlossen.') }],
-  props: ['open'], methods: ['show()', 'close()', 'toggle()'],
-  example: W => `<nk-peek open label="${W.peekTitle}">
+  events: [{ name: 'nk-toggle', detail: '{ open }', desc: t('Opened / closed.', 'Geöffnet / geschlossen.') }, { name: 'nk-resize', detail: '{ width }', desc: t('A drag or a key changed the width – the moment to keep it.', 'Ziehen oder eine Taste hat die Breite geändert – der Moment, sie zu speichern.') }],
+  props: ['open', 'width'], methods: ['show()', 'close()', 'toggle()'],
+  example: W => `<nk-peek open resizable resize-label="${W.resize}" label="${W.peekTitle}">
   <nk-btn slot="actions" variant="topbar" aria-label="${W.openPage}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
   <nk-page-title>🗃️ ${W.peekTitle}</nk-page-title>
   <nk-props>
@@ -1261,6 +1265,7 @@ export const CATALOG = [
   <div class="nk-prose"><p>${W.peekText}</p></div>
 </nk-peek>`,
   classMarkup: W => `<div class="nk-peek-backdrop open"><aside class="nk-peek" role="dialog" aria-label="${W.peekTitle}">
+  <div class="pk-resize" role="separator" aria-orientation="vertical" aria-label="${W.resize}" tabindex="0"></div>
   <div class="pk-bar"><button class="nk-topbar-btn" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></svg></button><button class="nk-topbar-btn" aria-label="${W.openPage}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button></div>
   <div class="pk-body">
     <h1 class="nk-page-title">🗃️ ${W.peekTitle}</h1>
@@ -1271,6 +1276,27 @@ export const CATALOG = [
     <div class="nk-prose"><p>${W.peekText}</p></div>
   </div>
 </aside></div>`,
+},
+{
+  tag: 'nk-dialog', group: 'overlays', classes: ['nk-dialog-backdrop', 'open', 'nk-dialog', 'wide', 'dl-title', 'dl-body', 'dl-actions'], frame: 320, overlay: true,
+  title: t('Dialog', 'Dialog'),
+  desc: t('A question or a short form – “Move to trash?”, the name of a new view, the link between two tasks – with the contract of <code>nk-modal</code> and <code>nk-sheet</code>: <code>show()</code>, <code>close()</code>, <code>toggle()</code>, <code>nk-toggle</code>; Escape – captured, before a peek, a menu or a modal behind it – and the backdrop close it; focus moves in, to an <code>[autofocus]</code> element or the first field or button, and back; the page behind is inert and scroll-locked. It lies above the modal and the sheet. <code>title</code> is the heading, the default slot the text or the fields, <code>slot="actions"</code> the buttons, the confirming one last. A button with a <code>value</code> closes it with that value, and so does the submit of a <code>&lt;form method="dialog"&gt;</code> inside; before it closes, <code>nk-close</code> fires and can be cancelled – the place to check an input. <code>alert</code> for a question, <code>wide</code> (560px) for a form. <code>show(from)</code> hands focus back to <code>from</code> – the ⋯ of a menu that closed. Place it directly under <code>&lt;body&gt;</code>.',
+          'Eine Frage oder ein kurzes Formular – „In den Papierkorb?“, der Name einer neuen Ansicht, die Verknüpfung zweier Vorgänge – mit dem Vertrag von <code>nk-modal</code> und <code>nk-sheet</code>: <code>show()</code>, <code>close()</code>, <code>toggle()</code>, <code>nk-toggle</code>; Escape – in der Capture-Phase, vor einem Peek, Menü oder Modal dahinter – und der Backdrop schließen ihn; der Fokus wandert hinein, zu einem <code>[autofocus]</code>-Element oder dem ersten Feld oder Button, und zurück; die Seite dahinter ist inert und scroll-gesperrt. Er liegt über Modal und Sheet. <code>title</code> ist die Überschrift, der Default-Slot der Text oder die Felder, <code>slot="actions"</code> die Buttons, der bestätigende zuletzt. Ein Button mit <code>value</code> schließt ihn mit diesem Wert, ebenso das Absenden eines <code>&lt;form method="dialog"&gt;</code> darin; vor dem Schließen feuert <code>nk-close</code> und lässt sich abbrechen – die Stelle, eine Eingabe zu prüfen. <code>alert</code> für eine Frage, <code>wide</code> (560px) für ein Formular. <code>show(from)</code> gibt den Fokus an <code>from</code> zurück – das ⋯ eines Menüs, das sich geschlossen hat. Direkt unter <code>&lt;body&gt;</code> platzieren.'),
+  mobile: t('Below 860px a bottom sheet with a grabber, the buttons stacked across the width, the confirming one on top.', 'Unter 860px ein Bottom Sheet mit Griff, die Buttons über die Breite gestapelt, der bestätigende oben.'),
+  attrs: [bool('open', 'Shown.', 'Sichtbar.'), str('title', 'string', 'Heading and the dialog’s name – never a tooltip.', 'Überschrift und Name des Dialogs – nie ein Tooltip.'), bool('alert', 'An alertdialog, described by its text.', 'Ein Alertdialog, beschrieben durch seinen Text.'), bool('wide', '560px instead of 440px.', '560px statt 440px.')],
+  slots: [{ name: '(default)', desc: t('The text or the fields.', 'Der Text oder die Felder.') }, { name: 'actions', desc: t('The buttons, right; a <code>value</code> closes with it.', 'Die Buttons, rechts; ein <code>value</code> schließt damit.') }],
+  events: [{ name: 'nk-close', detail: '{ value }', desc: t('About to close – cancel it to keep it open.', 'Schließt gleich – abbrechen hält ihn offen.') }, { name: 'nk-toggle', detail: '{ open }', desc: t('Opened / closed.', 'Geöffnet / geschlossen.') }],
+  props: ['open', 'returnValue', 'title'], methods: ['show(from)', 'close(value)', 'toggle()'],
+  example: W => `<nk-dialog open alert title="${W.trashTitle}">
+  ${W.trashText}
+  <nk-btn slot="actions" variant="secondary" value="">${W.cancel}</nk-btn>
+  <nk-btn slot="actions" variant="danger-solid" value="trash">${W.moveToTrash}</nk-btn>
+</nk-dialog>`,
+  classMarkup: W => `<div class="nk-dialog-backdrop open"><div class="nk-dialog" role="alertdialog" aria-modal="true" aria-label="${W.moveToTrash}">
+  <div class="dl-title">${W.trashTitle}</div>
+  <div class="dl-body">${W.trashText}</div>
+  <div class="dl-actions"><button class="nk-btn secondary">${W.cancel}</button><button class="nk-btn danger-solid">${W.moveToTrash}</button></div>
+</div></div>`,
 },
 {
   tag: 'nk-settings-pane', group: 'overlays', classes: ['nk-settings-pane', 'active'],
@@ -1418,6 +1444,24 @@ export const CATALOG = [
   methods: ['show(message?, { duration })', 'close()'], props: ['open', 'message'],
   example: W => `<nk-toast open duration="0">${W.toastText}</nk-toast>`,
   classMarkup: W => `<div class="nk-toast show">✓ <span>${W.toastText}</span></div>`,
+},
+{
+  tag: 'nk-tooltip', group: 'overlays', classes: ['nk-tooltip', 'open', 'tt-key'],
+  title: t('Tooltip', 'Tooltip'),
+  desc: t('Notion’s hover hint in the toast’s colours, a shortcut muted beside it. One <code>&lt;nk-tooltip&gt;</code> without <code>for</code> serves every element with <code>data-tooltip</code> (and <code>data-tooltip-key</code>) on the page, inside shadow roots too – a whole toolbar in one element; with <code>for</code> it belongs to one element and shows its own content and <code>shortcut</code>. It appears after <code>delay</code> ms (400) under the pointer and at once on keyboard focus, never on touch; leaving, a press, blur, scrolling and Escape hide it. It sits 6px below its target and centred, above it where the window ends, 8px inside the window – <code>placeNear</code> in <code>util/floating.js</code>. <code>show(target, text, shortcut)</code> takes an element or a rect, for what has no element of its own: the bars of a chart. The target’s <code>aria-describedby</code> names it while it shows. Hover the buttons.',
+          'Notions Hover-Hinweis in den Farben des Toasts, ein Kürzel gedämpft daneben. Ein <code>&lt;nk-tooltip&gt;</code> ohne <code>for</code> bedient jedes Element mit <code>data-tooltip</code> (und <code>data-tooltip-key</code>) auf der Seite, auch in Shadow Roots – eine ganze Werkzeugleiste mit einem Element; mit <code>for</code> gehört er zu einem Element und zeigt seinen eigenen Inhalt und <code>shortcut</code>. Er erscheint nach <code>delay</code> ms (400) unter dem Zeiger und sofort bei Tastaturfokus, nie bei Berührung; Verlassen, ein Druck, Blur, Scrollen und Escape blenden ihn aus. Er sitzt 6px unter seinem Ziel und zentriert, darüber, wo das Fenster endet, 8px innerhalb des Fensters – <code>placeNear</code> in <code>util/floating.js</code>. <code>show(target, text, shortcut)</code> nimmt ein Element oder ein Rechteck, für das, was kein eigenes Element hat: die Balken eines Diagramms. Das <code>aria-describedby</code> des Ziels nennt ihn, solange er sichtbar ist. Die Buttons überfahren.'),
+  mobile: t('No hover on a phone: it shows nothing on touch.', 'Kein Hover auf dem Telefon: Bei Berührung zeigt er nichts.'),
+  attrs: [str('for', 'id', 'The one element it belongs to; without it, every <code>[data-tooltip]</code>.', 'Das eine Element, zu dem er gehört; ohne, jedes <code>[data-tooltip]</code>.'), str('shortcut', 'string', 'With <code>for</code>: the shortcut beside the text.', 'Mit <code>for</code>: das Kürzel neben dem Text.'), str('delay', 'ms', 'Wait under the pointer.', 'Warten unter dem Zeiger.', { default: '400' }), str('placement', 'bottom | top', 'Preferred side.', 'Bevorzugte Seite.', { default: 'bottom' })],
+  slots: [{ name: '(default)', desc: t('With <code>for</code>: the text.', 'Mit <code>for</code>: der Text.') }],
+  events: [],
+  props: ['open'], methods: ['show(target, text, shortcut)', 'hide()'],
+  example: W => `<div style="display:flex;gap:16px;align-items:center;padding:4px 0 44px">
+  <nk-btn variant="topbar" aria-label="${W.moreTip}" data-tooltip="${W.moreTip}">⋯</nk-btn>
+  <nk-btn variant="topbar" aria-label="${W.favouriteTip}" data-tooltip="${W.favouriteTip}">⭐</nk-btn>
+  <nk-btn variant="topbar" id="ttSidebar" aria-label="${W.openSidebar}">☰</nk-btn>
+</div>
+<nk-tooltip></nk-tooltip>
+<nk-tooltip for="ttSidebar" shortcut="⌘\\">${W.openSidebar}</nk-tooltip>`,
 },
 
 // ============================================================ WAVE 5 · DATA

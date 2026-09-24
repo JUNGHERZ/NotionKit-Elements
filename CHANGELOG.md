@@ -4,6 +4,22 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.0] – 2026-09-24
+
+Built against NotionKit CSS 1.10.0 (peer `>= 1.10.0`), shell and overlays: two new elements – 87 in all – and two that grow. SupaGantt asked for all four: a Gantt chart at full width, bars that stay visible beside the peek, confirmation and input dialogs, hints on bars and the ribbon.
+
+### Added
+- **`<nk-dialog>`** – a question or a short form with the contract of `<nk-modal>` and `<nk-sheet>`: `show()`, `close()`, `toggle()`, `nk-toggle`; Escape – captured, so it closes before a peek, a menu or a modal behind it – and the backdrop close it; focus moves in, to an `[autofocus]` element or the first field or button, and back; the page behind is inert and scroll-locked. It lies above the modal and the sheet and lifts the inertness a modal gave it, so a question can come from inside one. `title` is the heading and the dialog's name, never a tooltip; the default slot takes the text or the fields, `slot="actions"` the buttons. A button with a `value` closes it with that value, so does the submit of a `<form method="dialog">` inside; `nk-close { value }` fires first and can be cancelled – the place to check an input. `returnValue`, `alert` (an alertdialog described by its text), `wide` (560px), `show(from)` to hand focus back to the ⋯ of a menu that has closed. Below 860px a bottom sheet with the buttons stacked, the confirming one on top.
+- **`<nk-tooltip>`** – Notion's hover hint. One element without `for` serves every `[data-tooltip]` (with `data-tooltip-key` for a shortcut) on the page, inside shadow roots too – a whole toolbar in one element; with `for` it belongs to one element and shows its own content and `shortcut`. After `delay` ms (400) under the pointer, at once on keyboard focus, never on touch; leaving, a press, blur, scrolling and Escape hide it. 6px below its target and centred, above it where the window ends (`placement="top"` prefers above), 8px inside the window. `show(target, text, shortcut)` takes an element or a rect – the bars of a chart. The target's `aria-describedby` names it while it shows.
+- **`<nk-sidebar collapsible>`** – Notion's « beside the workspace row, shown while the pointer is over the sidebar: on the desktop it collapses the sidebar, the main column takes the width, nothing in it takes focus; `<nk-btn variant="sidebar">` shows on the desktop too while it is collapsed and brings it back; ⌘\ or Ctrl+\ toggles it, on a phone the drawer. `collapsed`, `collapse()`, `expand()`, `toggleCollapsed()`, `nk-collapse { collapsed }` to keep it, `collapse-label`. Focus moves to the control that is left.
+- **`<nk-peek resizable inset>`** – `resizable` puts Notion's drag on the left edge, with the arrow keys as well (16px a step), from `min` (380) to `max` (all but 320px of the window); the width is NotionKit's new token `--nk-peek-width`, set on `:root`, `width` sets it and `nk-resize { width }` is the moment to keep it. `inset` makes the page's `<nk-app>` move aside while the peek is open on the desktop (`peek-inset`, also an attribute of `<nk-app>`).
+- `placeNear()` in `util/floating.js` – the tooltip's placement, for an element or a rect.
+
+### Changed
+- Demo: « and ⌘\ collapse the sidebar, the ☰ brings it back; the side peek resizes; “Move to trash” in the page menu asks first, and the ＋ view tab asks for a name and a layout; the topbar's buttons and the « have tooltips; `#dialog` opens the question. The app matches the class demo at 0.00 % – the collapsed sidebar, the tooltip, both dialogs, the dialog as a sheet on a phone and a wider peek included.
+- `<nk-workspace-switcher>` fills the new sidebar head beside the «.
+- Peer `@jungherz-de/notionkit >= 1.10.0`.
+
 ## [1.9.0] – 2026-09-24
 
 Built against NotionKit CSS 1.9.0 (peer `>= 1.9.0`), dates: a date picker
@@ -560,6 +576,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.10.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.0
 [1.9.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.9.0
 [1.8.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.8.0
 [1.7.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.7.0

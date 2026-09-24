@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
@@ -93,7 +93,7 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.9.0</span></a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.10.0</span></a>
   <div class="site-nav-links">
     <a href="docs.html" class="current">Docs</a>
     <a href="showcase.html">Showcase</a>
@@ -109,14 +109,14 @@ body { margin: 0; }
 </nav>
 <div class="site-layout">
 <aside class="site-toc"><div class="site-group">Basics</div>
-  <a href="#install">Installation</a><a href="#prereq">Prerequisites</a><a href="#hosts">Hosts are display: contents</a><a href="#theming">Theming & branding</a><a href="#forms">Forms</a><a href="#lightdom">Light-DOM children</a><a href="#icons">Passing icons</a><a href="#overlays">Overlays</a><a href="#editor">Editor</a><div class="site-group">Forms & controls</div><a href="#nk-btn">&lt;nk-btn&gt;</a><a href="#nk-input">&lt;nk-input&gt;</a><a href="#nk-copy-field">&lt;nk-copy-field&gt;</a><a href="#nk-image-picker">&lt;nk-image-picker&gt;</a><a href="#nk-calendar">&lt;nk-calendar&gt;</a><a href="#nk-textarea">&lt;nk-textarea&gt;</a><a href="#nk-select">&lt;nk-select&gt;</a><a href="#nk-switch">&lt;nk-switch&gt;</a><a href="#nk-check">&lt;nk-check&gt;</a><a href="#nk-radio">&lt;nk-radio&gt;</a><a href="#nk-slider">&lt;nk-slider&gt;</a><a href="#nk-field">&lt;nk-field&gt;</a><a href="#nk-fields">&lt;nk-fields&gt;</a><div class="site-group">Content elements</div><a href="#nk-tag">&lt;nk-tag&gt;</a><a href="#nk-progress">&lt;nk-progress&gt;</a><a href="#nk-callout">&lt;nk-callout&gt;</a><a href="#nk-bookmark">&lt;nk-bookmark&gt;</a><a href="#nk-divider">&lt;nk-divider&gt;</a><a href="#nk-heading">&lt;nk-heading&gt;</a><a href="#nk-toggle">&lt;nk-toggle&gt;</a><a href="#nk-todo">&lt;nk-todo&gt;</a><a href="#nk-kbd">&lt;nk-kbd&gt;</a><a href="#nk-code">&lt;nk-code&gt;</a><a href="#nk-quote">&lt;nk-quote&gt;</a><div class="site-group">App shell & navigation</div><a href="#nk-app">&lt;nk-app&gt;</a><a href="#nk-sidebar">&lt;nk-sidebar&gt;</a><a href="#nk-workspace-switcher">&lt;nk-workspace-switcher&gt;</a><a href="#nk-section-label">&lt;nk-section-label&gt;</a><a href="#nk-tree">&lt;nk-tree&gt;</a><a href="#nk-tree-item">&lt;nk-tree-item&gt;</a><a href="#nk-topbar">&lt;nk-topbar&gt;</a><a href="#nk-breadcrumb">&lt;nk-breadcrumb&gt;</a><a href="#nk-theme-toggle">&lt;nk-theme-toggle&gt;</a><a href="#nk-tab-bar">&lt;nk-tab-bar&gt;</a><a href="#nk-tab-bar-item">&lt;nk-tab-bar-item&gt;</a><div class="site-group">Page shell & blocks</div><a href="#nk-page">&lt;nk-page&gt;</a><a href="#nk-page-cover">&lt;nk-page-cover&gt;</a><a href="#nk-page-title">&lt;nk-page-title&gt;</a><a href="#nk-page-actions">&lt;nk-page-actions&gt;</a><a href="#nk-props">&lt;nk-props&gt;</a><a href="#nk-prop">&lt;nk-prop&gt;</a><a href="#nk-panels">&lt;nk-panels&gt;</a><a href="#nk-panel">&lt;nk-panel&gt;</a><a href="#nk-block-host">&lt;nk-block-host&gt;</a><a href="#nk-banner">&lt;nk-banner&gt;</a><a href="#nk-empty">&lt;nk-empty&gt;</a><a href="#nk-skeleton">&lt;nk-skeleton&gt;</a><a href="#nk-synced">&lt;nk-synced&gt;</a><a href="#nk-tabs">&lt;nk-tabs&gt;</a><a href="#nk-tab">&lt;nk-tab&gt;</a><a href="#nk-segmented">&lt;nk-segmented&gt;</a><a href="#nk-steps">&lt;nk-steps&gt;</a><a href="#nk-stats">&lt;nk-stats&gt;</a><a href="#nk-stat">&lt;nk-stat&gt;</a><a href="#nk-avatar-group">&lt;nk-avatar-group&gt;</a><a href="#nk-avatar">&lt;nk-avatar&gt;</a><a href="#nk-mention">&lt;nk-mention&gt;</a><a href="#nk-template-btn">&lt;nk-template-btn&gt;</a><a href="#nk-model-card">&lt;nk-model-card&gt;</a><a href="#nk-profile-row">&lt;nk-profile-row&gt;</a><a href="#nk-danger-zone">&lt;nk-danger-zone&gt;</a><a href="#nk-member-list">&lt;nk-member-list&gt;</a><a href="#nk-member-row">&lt;nk-member-row&gt;</a><div class="site-group">Overlays</div><a href="#nk-modal">&lt;nk-modal&gt;</a><a href="#nk-sheet">&lt;nk-sheet&gt;</a><a href="#nk-peek">&lt;nk-peek&gt;</a><a href="#nk-settings-pane">&lt;nk-settings-pane&gt;</a><a href="#nk-settings-user">&lt;nk-settings-user&gt;</a><a href="#nk-cmdk">&lt;nk-cmdk&gt;</a><a href="#nk-menu">&lt;nk-menu&gt;</a><a href="#nk-menu-item">&lt;nk-menu-item&gt;</a><a href="#nk-pop">&lt;nk-pop&gt;</a><a href="#nk-emoji-picker">&lt;nk-emoji-picker&gt;</a><a href="#nk-toast">&lt;nk-toast&gt;</a><div class="site-group">Data & collaboration</div><a href="#nk-database">&lt;nk-database&gt;</a><a href="#nk-table-view">&lt;nk-table-view&gt;</a><a href="#nk-board-view">&lt;nk-board-view&gt;</a><a href="#nk-list-view">&lt;nk-list-view&gt;</a><a href="#nk-calendar-view">&lt;nk-calendar-view&gt;</a><a href="#nk-filter-bar">&lt;nk-filter-bar&gt;</a><a href="#nk-comments">&lt;nk-comments&gt;</a><a href="#nk-comment">&lt;nk-comment&gt;</a><a href="#nk-ai-thread">&lt;nk-ai-thread&gt;</a><a href="#nk-ai-msg">&lt;nk-ai-msg&gt;</a><a href="#nk-ai-input-row">&lt;nk-ai-input-row&gt;</a></aside>
+  <a href="#install">Installation</a><a href="#prereq">Prerequisites</a><a href="#hosts">Hosts are display: contents</a><a href="#theming">Theming & branding</a><a href="#forms">Forms</a><a href="#lightdom">Light-DOM children</a><a href="#icons">Passing icons</a><a href="#overlays">Overlays</a><a href="#editor">Editor</a><div class="site-group">Forms & controls</div><a href="#nk-btn">&lt;nk-btn&gt;</a><a href="#nk-input">&lt;nk-input&gt;</a><a href="#nk-copy-field">&lt;nk-copy-field&gt;</a><a href="#nk-image-picker">&lt;nk-image-picker&gt;</a><a href="#nk-calendar">&lt;nk-calendar&gt;</a><a href="#nk-textarea">&lt;nk-textarea&gt;</a><a href="#nk-select">&lt;nk-select&gt;</a><a href="#nk-switch">&lt;nk-switch&gt;</a><a href="#nk-check">&lt;nk-check&gt;</a><a href="#nk-radio">&lt;nk-radio&gt;</a><a href="#nk-slider">&lt;nk-slider&gt;</a><a href="#nk-field">&lt;nk-field&gt;</a><a href="#nk-fields">&lt;nk-fields&gt;</a><div class="site-group">Content elements</div><a href="#nk-tag">&lt;nk-tag&gt;</a><a href="#nk-progress">&lt;nk-progress&gt;</a><a href="#nk-callout">&lt;nk-callout&gt;</a><a href="#nk-bookmark">&lt;nk-bookmark&gt;</a><a href="#nk-divider">&lt;nk-divider&gt;</a><a href="#nk-heading">&lt;nk-heading&gt;</a><a href="#nk-toggle">&lt;nk-toggle&gt;</a><a href="#nk-todo">&lt;nk-todo&gt;</a><a href="#nk-kbd">&lt;nk-kbd&gt;</a><a href="#nk-code">&lt;nk-code&gt;</a><a href="#nk-quote">&lt;nk-quote&gt;</a><div class="site-group">App shell & navigation</div><a href="#nk-app">&lt;nk-app&gt;</a><a href="#nk-sidebar">&lt;nk-sidebar&gt;</a><a href="#nk-workspace-switcher">&lt;nk-workspace-switcher&gt;</a><a href="#nk-section-label">&lt;nk-section-label&gt;</a><a href="#nk-tree">&lt;nk-tree&gt;</a><a href="#nk-tree-item">&lt;nk-tree-item&gt;</a><a href="#nk-topbar">&lt;nk-topbar&gt;</a><a href="#nk-breadcrumb">&lt;nk-breadcrumb&gt;</a><a href="#nk-theme-toggle">&lt;nk-theme-toggle&gt;</a><a href="#nk-tab-bar">&lt;nk-tab-bar&gt;</a><a href="#nk-tab-bar-item">&lt;nk-tab-bar-item&gt;</a><div class="site-group">Page shell & blocks</div><a href="#nk-page">&lt;nk-page&gt;</a><a href="#nk-page-cover">&lt;nk-page-cover&gt;</a><a href="#nk-page-title">&lt;nk-page-title&gt;</a><a href="#nk-page-actions">&lt;nk-page-actions&gt;</a><a href="#nk-props">&lt;nk-props&gt;</a><a href="#nk-prop">&lt;nk-prop&gt;</a><a href="#nk-panels">&lt;nk-panels&gt;</a><a href="#nk-panel">&lt;nk-panel&gt;</a><a href="#nk-block-host">&lt;nk-block-host&gt;</a><a href="#nk-banner">&lt;nk-banner&gt;</a><a href="#nk-empty">&lt;nk-empty&gt;</a><a href="#nk-skeleton">&lt;nk-skeleton&gt;</a><a href="#nk-synced">&lt;nk-synced&gt;</a><a href="#nk-tabs">&lt;nk-tabs&gt;</a><a href="#nk-tab">&lt;nk-tab&gt;</a><a href="#nk-segmented">&lt;nk-segmented&gt;</a><a href="#nk-steps">&lt;nk-steps&gt;</a><a href="#nk-stats">&lt;nk-stats&gt;</a><a href="#nk-stat">&lt;nk-stat&gt;</a><a href="#nk-avatar-group">&lt;nk-avatar-group&gt;</a><a href="#nk-avatar">&lt;nk-avatar&gt;</a><a href="#nk-mention">&lt;nk-mention&gt;</a><a href="#nk-template-btn">&lt;nk-template-btn&gt;</a><a href="#nk-model-card">&lt;nk-model-card&gt;</a><a href="#nk-profile-row">&lt;nk-profile-row&gt;</a><a href="#nk-danger-zone">&lt;nk-danger-zone&gt;</a><a href="#nk-member-list">&lt;nk-member-list&gt;</a><a href="#nk-member-row">&lt;nk-member-row&gt;</a><div class="site-group">Overlays</div><a href="#nk-modal">&lt;nk-modal&gt;</a><a href="#nk-sheet">&lt;nk-sheet&gt;</a><a href="#nk-peek">&lt;nk-peek&gt;</a><a href="#nk-dialog">&lt;nk-dialog&gt;</a><a href="#nk-settings-pane">&lt;nk-settings-pane&gt;</a><a href="#nk-settings-user">&lt;nk-settings-user&gt;</a><a href="#nk-cmdk">&lt;nk-cmdk&gt;</a><a href="#nk-menu">&lt;nk-menu&gt;</a><a href="#nk-menu-item">&lt;nk-menu-item&gt;</a><a href="#nk-pop">&lt;nk-pop&gt;</a><a href="#nk-emoji-picker">&lt;nk-emoji-picker&gt;</a><a href="#nk-toast">&lt;nk-toast&gt;</a><a href="#nk-tooltip">&lt;nk-tooltip&gt;</a><div class="site-group">Data & collaboration</div><a href="#nk-database">&lt;nk-database&gt;</a><a href="#nk-table-view">&lt;nk-table-view&gt;</a><a href="#nk-board-view">&lt;nk-board-view&gt;</a><a href="#nk-list-view">&lt;nk-list-view&gt;</a><a href="#nk-calendar-view">&lt;nk-calendar-view&gt;</a><a href="#nk-filter-bar">&lt;nk-filter-bar&gt;</a><a href="#nk-comments">&lt;nk-comments&gt;</a><a href="#nk-comment">&lt;nk-comment&gt;</a><a href="#nk-ai-thread">&lt;nk-ai-thread&gt;</a><a href="#nk-ai-msg">&lt;nk-ai-msg&gt;</a><a href="#nk-ai-input-row">&lt;nk-ai-input-row&gt;</a></aside>
 <main class="site-main"><div class="site-inner">
   <h1 class="site-h1">Documentation</h1>
   <p class="site-lead">Attributes, slots, events and the class markup each element replaces.</p>
   
 <section class="site-section" id="install"><h2>Installation</h2>
-  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
   <p class="doc-h4">npm</p><pre class="doc-code">npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 
 import '@jungherz-de/notionkit/notionkit.css';
@@ -128,8 +128,8 @@ import '@jungherz-de/notionkit-elements';</pre>
 </section>
 <section class="site-section" id="prereq"><h2>Prerequisites</h2><p class="doc-desc">Load <code>notionkit.css</code> on the document and put <code>class="nk-body"</code> on <code>&lt;body&gt;</code>. The shadow roots inherit font, colour and the scoped reset from there; the elements ship no visual CSS of their own. The bundle additionally injects the design tokens as a cascade layer (<code>@layer notionkit-defaults</code>), so a page without the stylesheet still renders, and any unlayered <code>:root { --nk-* }</code> of yours wins.</p><pre class="doc-code">&lt;<span class="tag">html</span> <span class="attr">lang</span>="en" <span class="attr">data-theme</span>="light"&gt;
   &lt;<span class="tag">head</span>&gt;
-    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css"&gt;
-    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css"&gt;
+    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
   &lt;/<span class="tag">head</span>&gt;
   &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
     &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="primary"&gt;Save&lt;/<span class="tag">nk-btn</span>&gt;
@@ -1043,7 +1043,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-app"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
   <nk-sidebar slot=&quot;sidebar&quot;>
     <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
     <nk-tree>
@@ -1063,7 +1063,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
   </div></div>
 </nk-app><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
   <aside class=&quot;nk-sidebar&quot;>
     <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
     <div class=&quot;nk-sidebar-scroll&quot;>
@@ -1131,7 +1131,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 &lt;/<span class="tag">div</span>&gt;</pre>
   </div>
   <p class="doc-h4">Attributes</p>
-  <p class="doc-meta">none</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>peek-inset</code></td><td><code>boolean</code></td><td>–</td><td>The main column makes room for the side peek – <code>&lt;nk-peek inset&gt;</code> sets it while open.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
 <tr><td><code>sidebar</code></td><td>An <code>nk-sidebar</code>.</td></tr>
@@ -1141,15 +1142,15 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   
   
   <div class="doc-meta"><b>On a small screen:</b><span>Below 860px the sidebar is hidden; open it as a drawer with <code>sidebar.open = true</code>.</span></div>
-  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-app</code><code>.nk-main</code></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-app</code><code>.nk-main</code><code>.peek-inset</code></div>
 </article>
 <article class="doc-entry" id="nk-sidebar">
   <h3><code>&lt;nk-sidebar&gt;</code> Sidebar</h3>
-  <p class="doc-desc">The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get <code>compact</code> (26px rows). The host is <code>display: contents</code>, so the <code>aside</code> is a direct flex child of the app – exactly like the class markup.</p>
+  <p class="doc-desc">The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get <code>compact</code> (26px rows). The host is <code>display: contents</code>, so the <code>aside</code> is a direct flex child of the app – exactly like the class markup. <code>collapsible</code> adds Notion’s « beside the workspace row, shown while the pointer is over the sidebar: on the desktop it collapses the sidebar – it slides out, the main column takes the width, nothing in it takes focus – and <code>&lt;nk-btn variant="sidebar"&gt;</code> in the topbar shows and brings it back; ⌘\ or Ctrl+\ toggles it. <code>collapsed</code> is the state, <code>nk-collapse</code> the moment to keep it.</p>
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sidebar"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar collapsible collapse-label=&quot;Close sidebar&quot;>
   <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon=&quot;🏠&quot; active>Home</nk-tree-item>
@@ -1158,8 +1159,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;⚙️&quot;>Settings</nk-tree-item>
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;🗑️&quot;>Trash</nk-tree-item>
 </nk-sidebar></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
-  <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
+  <div class=&quot;nk-sidebar-head&quot;><div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div><button class=&quot;nk-sidebar-collapse&quot; aria-label=&quot;Close sidebar&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;m18 17-5-5 5-5M11 17l-5-5 5-5&quot;/></svg></button></div>
   <div class=&quot;nk-sidebar-scroll&quot;>
     <div class=&quot;nk-tree-item active&quot;><span class=&quot;icon&quot;>🏠</span><span class=&quot;label&quot;>Home</span></div>
     <div class=&quot;nk-tree-item&quot;><span class=&quot;icon&quot;>📥</span><span class=&quot;label&quot;>Inbox</span></div>
@@ -1169,7 +1170,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <div class=&quot;nk-tree-item&quot;><span class=&quot;icon&quot;>🗑️</span><span class=&quot;label&quot;>Trash</span></div>
   </div>
 </aside></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <pre class="doc-code" data-mode="element">&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;height:100%"&gt;&lt;<span class="tag">nk-sidebar</span>&gt;
+    <pre class="doc-code" data-mode="element">&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;height:100%"&gt;&lt;<span class="tag">nk-sidebar</span> collapsible <span class="attr">collapse-label</span>="Close sidebar"&gt;
   &lt;<span class="tag">nk-workspace-switcher</span> <span class="attr">slot</span>="workspace" <span class="attr">name</span>="MonaHilft"&gt;&lt;/<span class="tag">nk-workspace-switcher</span>&gt;
   &lt;<span class="tag">nk-tree</span>&gt;
     &lt;<span class="tag">nk-tree-item</span> <span class="attr">icon</span>="🏠" active&gt;Home&lt;/<span class="tag">nk-tree-item</span>&gt;
@@ -1179,7 +1180,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   &lt;<span class="tag">nk-tree-item</span> <span class="attr">slot</span>="footer" <span class="attr">icon</span>="🗑️"&gt;Trash&lt;/<span class="tag">nk-tree-item</span>&gt;
 &lt;/<span class="tag">nk-sidebar</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;height:100%"&gt;&lt;<span class="tag">aside</span> <span class="attr">class</span>="nk-sidebar"&gt;
-  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-workspace"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="avatar"&gt;M&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">span</span>&gt;MonaHilft&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="chev"&gt;⌄&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-sidebar-head"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-workspace"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="avatar"&gt;M&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">span</span>&gt;MonaHilft&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="chev"&gt;⌄&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-sidebar-collapse" <span class="attr">aria-label</span>="Close sidebar"&gt;&lt;<span class="tag">svg</span> <span class="attr">viewBox</span>="0 0 24 24" <span class="attr">aria-hidden</span>="true"&gt;&lt;<span class="tag">path</span> <span class="attr">d</span>="m18 17-5-5 5-5M11 17l-5-5 5-5"/&gt;&lt;/<span class="tag">svg</span>&gt;&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
   &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-sidebar-scroll"&gt;
     &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tree-item active"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;🏠&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;Home&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;
     &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-tree-item"&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="icon"&gt;📥&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="label"&gt;Inbox&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;
@@ -1192,7 +1193,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   </div>
   <p class="doc-h4">Attributes</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
-<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Drawer state on small screens (no effect on desktop).</td></tr></table></div>
+<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Drawer state on small screens (no effect on desktop).</td></tr>
+<tr><td><code>collapsible</code></td><td><code>boolean</code></td><td>–</td><td>Shows the « that collapses it on the desktop, and ⌘\.</td></tr>
+<tr><td><code>collapsed</code></td><td><code>boolean</code></td><td>–</td><td>Collapsed on the desktop (no effect on a phone).</td></tr>
+<tr><td><code>collapse-label</code></td><td><code>string</code></td><td><code>Close sidebar</code></td><td>Name and tooltip of the «.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
 <tr><td><code>workspace</code></td><td><code>nk-workspace-switcher</code>.</td></tr>
@@ -1200,11 +1204,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 <tr><td><code>footer</code></td><td>Pinned bottom rows (Settings, Trash).</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Description</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Drawer opened/closed.</td></tr></table></div>
-  
-  <p class="doc-meta"><b>Methods:</b> <code>show()</code> <code>close()</code> <code>toggle()</code></p>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Drawer opened/closed.</td></tr>
+<tr><td><code>nk-collapse</code></td><td><code>{ collapsed }</code></td><td>Collapsed / expanded on the desktop.</td></tr></table></div>
+  <p class="doc-meta"><b>Properties:</b> <code>open</code> <code>collapsed</code></p>
+  <p class="doc-meta"><b>Methods:</b> <code>show()</code> <code>close()</code> <code>toggle()</code> <code>collapse()</code> <code>expand()</code> <code>toggleCollapsed()</code></p>
   <div class="doc-meta"><b>On a small screen:</b><span>Hidden below 860px. <code>open</code> shows it as a drawer over the page with a scrim – NotionKit’s own rules since 1.7.0 (<code>.nk-sidebar.open</code>, <code>.nk-sidebar-backdrop</code>), the same as the class markup’s; <code>&lt;nk-btn variant="sidebar"&gt;</code> in the topbar is the ☰ that opens it. Escape and the scrim close it. The drawer slides in over 240ms and the scrim fades, closing runs backwards – CSS only (<code>transition-behavior: allow-discrete</code> + <code>@starting-style</code>; older browsers switch hard, reduced motion snaps). In landscape the drawer grows by the left safe-area inset, so its rows clear the Dynamic Island.</span></div>
-  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-sidebar</code><code>.nk-sidebar-scroll</code><code>.nk-sidebar-footer</code><code>.nk-sidebar-backdrop</code><code>.open</code></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-sidebar</code><code>.nk-sidebar-head</code><code>.nk-sidebar-collapse</code><code>.nk-sidebar-scroll</code><code>.nk-sidebar-footer</code><code>.nk-sidebar-backdrop</code><code>.open</code><code>.collapsed</code></div>
 </article>
 <article class="doc-entry" id="nk-workspace-switcher">
   <h3><code>&lt;nk-workspace-switcher&gt;</code> Workspace switcher</h3>
@@ -1568,12 +1573,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-page"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 3</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
   <nk-page-title>NotionKit MVP</nk-page-title>
   <nk-page-actions><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <nk-tag color=&quot;purple&quot;>Design system</nk-tag></span></nk-page-actions>
   <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
 </nk-page></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
   <div class=&quot;nk-page-icon&quot;>🚀</div>
   <h1 class=&quot;nk-page-title&quot;>NotionKit MVP</h1>
   <div class=&quot;nk-page-meta&quot;><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <span class=&quot;nk-tag purple&quot;>Design system</span></span></div>
@@ -2472,7 +2477,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-modal"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
   <nk-settings-user slot=&quot;user&quot; name=&quot;Marcel Karas&quot; mail=&quot;marcel@monahilft.de&quot;></nk-settings-user>
   <nk-settings-pane name=&quot;profile&quot; group=&quot;Account&quot; icon=&quot;👤&quot; label=&quot;My profile&quot; title=&quot;My profile&quot; active>
     <nk-profile-row avatar=&quot;MK&quot;><nk-btn variant=&quot;secondary&quot; small>Change photo</nk-btn></nk-profile-row>
@@ -2486,7 +2491,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-member-list><nk-member-row name=&quot;Sara Lindt&quot; mail=&quot;sara@example.com&quot; color=&quot;#448361&quot;></nk-member-row></nk-member-list>
   </nk-settings-pane>
 </nk-modal><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
   <nav class=&quot;nk-settings-nav&quot;>
     <div class=&quot;nk-settings-user&quot;><div class=&quot;avatar&quot;>MK</div><div class=&quot;u-text&quot;><div class=&quot;name&quot;>Marcel Karas</div><div class=&quot;mail&quot;>marcel@monahilft.de</div></div></div>
     <div class=&quot;nk-section-label&quot;>Account</div>
@@ -2559,7 +2564,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sheet"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-sheet open title=&quot;More&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-sheet open title=&quot;More&quot;>
   <nk-tree manual>
     <nk-section-label>Favourites</nk-section-label>
     <nk-tree-item icon=&quot;🚀&quot;>NotionKit MVP</nk-tree-item>
@@ -2569,7 +2574,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-tree-item icon=&quot;🗑️&quot;>Trash</nk-tree-item>
   </nk-tree>
 </nk-sheet><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-sheet-backdrop open&quot;><div class=&quot;nk-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;More&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-sheet-backdrop open&quot;><div class=&quot;nk-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;More&quot;>
   <div class=&quot;sh-grabber&quot;></div>
   <div class=&quot;sh-title&quot;>More</div>
   <div class=&quot;nk-section-label&quot;>Favourites</div>
@@ -2617,11 +2622,11 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 </article>
 <article class="doc-entry" id="nk-peek">
   <h3><code>&lt;nk-peek&gt;</code> Side peek</h3>
-  <p class="doc-desc">Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (<code>slot="actions"</code>); the body is the page – <code>nk-page-title</code> (32px here), <code>nk-props</code>, a <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls <code>show()</code> again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under <code>&lt;body&gt;</code>.</p>
+  <p class="doc-desc">Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (<code>slot="actions"</code>); the body is the page – <code>nk-page-title</code> (32px here), <code>nk-props</code>, a <code>.nk-prose</code>, <code>nk-comments</code>. <code>show()</code> slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls <code>show()</code> again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under <code>&lt;body&gt;</code>. <code>resizable</code> gives it Notion’s drag on the left edge, <code>inset</code> moves the page aside instead of covering it.</p>
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-peek"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-peek open label=&quot;Database Table-View&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-peek open resizable resize-label=&quot;Resize&quot; label=&quot;Database Table-View&quot;>
   <nk-btn slot=&quot;actions&quot; variant=&quot;topbar&quot; aria-label=&quot;Open as page&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7&quot;/></svg></nk-btn>
   <nk-page-title>🗃️ Database Table-View</nk-page-title>
   <nk-props>
@@ -2630,7 +2635,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   </nk-props>
   <div class=&quot;nk-prose&quot;><p>Table, board and list read the same rows; filters and sort act on all three.</p></div>
 </nk-peek><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-peek-backdrop open&quot;><aside class=&quot;nk-peek&quot; role=&quot;dialog&quot; aria-label=&quot;Database Table-View&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-peek-backdrop open&quot;><aside class=&quot;nk-peek&quot; role=&quot;dialog&quot; aria-label=&quot;Database Table-View&quot;>
+  <div class=&quot;pk-resize&quot; role=&quot;separator&quot; aria-orientation=&quot;vertical&quot; aria-label=&quot;Resize&quot; tabindex=&quot;0&quot;></div>
   <div class=&quot;pk-bar&quot;><button class=&quot;nk-topbar-btn&quot; aria-label=&quot;Close&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;m6 17 5-5-5-5M13 17l5-5-5-5&quot;/></svg></button><button class=&quot;nk-topbar-btn&quot; aria-label=&quot;Open as page&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7&quot;/></svg></button></div>
   <div class=&quot;pk-body&quot;>
     <h1 class=&quot;nk-page-title&quot;>🗃️ Database Table-View</h1>
@@ -2641,7 +2647,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <div class=&quot;nk-prose&quot;><p>Table, board and list read the same rows; filters and sort act on all three.</p></div>
   </div>
 </aside></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-peek</span> open <span class="attr">label</span>="Database Table-View"&gt;
+    <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-peek</span> open resizable <span class="attr">resize-label</span>="Resize" <span class="attr">label</span>="Database Table-View"&gt;
   &lt;<span class="tag">nk-btn</span> <span class="attr">slot</span>="actions" <span class="attr">variant</span>="topbar" <span class="attr">aria-label</span>="Open as page"&gt;&lt;<span class="tag">svg</span> <span class="attr">viewBox</span>="0 0 24 24" <span class="attr">aria-hidden</span>="true"&gt;&lt;<span class="tag">path</span> <span class="attr">d</span>="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/&gt;&lt;/<span class="tag">svg</span>&gt;&lt;/<span class="tag">nk-btn</span>&gt;
   &lt;<span class="tag">nk-page-title</span>&gt;🗃️ Database Table-View&lt;/<span class="tag">nk-page-title</span>&gt;
   &lt;<span class="tag">nk-props</span>&gt;
@@ -2651,6 +2657,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-prose"&gt;&lt;<span class="tag">p</span>&gt;Table, board and list read the same rows; filters and sort act on all three.&lt;/<span class="tag">p</span>&gt;&lt;/<span class="tag">div</span>&gt;
 &lt;/<span class="tag">nk-peek</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-peek-backdrop open"&gt;&lt;<span class="tag">aside</span> <span class="attr">class</span>="nk-peek" <span class="attr">role</span>="dialog" <span class="attr">aria-label</span>="Database Table-View"&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="pk-resize" <span class="attr">role</span>="separator" <span class="attr">aria-orientation</span>="vertical" <span class="attr">aria-label</span>="Resize" <span class="attr">tabindex</span>="0"&gt;&lt;/<span class="tag">div</span>&gt;
   &lt;<span class="tag">div</span> <span class="attr">class</span>="pk-bar"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn" <span class="attr">aria-label</span>="Close"&gt;&lt;<span class="tag">svg</span> <span class="attr">viewBox</span>="0 0 24 24" <span class="attr">aria-hidden</span>="true"&gt;&lt;<span class="tag">path</span> <span class="attr">d</span>="m6 17 5-5-5-5M13 17l5-5-5-5"/&gt;&lt;/<span class="tag">svg</span>&gt;&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-topbar-btn" <span class="attr">aria-label</span>="Open as page"&gt;&lt;<span class="tag">svg</span> <span class="attr">viewBox</span>="0 0 24 24" <span class="attr">aria-hidden</span>="true"&gt;&lt;<span class="tag">path</span> <span class="attr">d</span>="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/&gt;&lt;/<span class="tag">svg</span>&gt;&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
   &lt;<span class="tag">div</span> <span class="attr">class</span>="pk-body"&gt;
     &lt;<span class="tag">h1</span> <span class="attr">class</span>="nk-page-title"&gt;🗃️ Database Table-View&lt;/<span class="tag">h1</span>&gt;
@@ -2666,18 +2673,71 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Shown.</td></tr>
 <tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>The dialog’s name – the entry’s title.</td></tr>
-<tr><td><code>close-label</code></td><td><code>string</code></td><td><code>Close</code></td><td>Name of ».</td></tr></table></div>
+<tr><td><code>close-label</code></td><td><code>string</code></td><td><code>Close</code></td><td>Name of ».</td></tr>
+<tr><td><code>resizable</code></td><td><code>boolean</code></td><td>–</td><td>The left edge makes it wider or narrower – pointer and arrow keys; the width is the token <code>--nk-peek-width</code> on <code>:root</code>.</td></tr>
+<tr><td><code>width</code></td><td><code>px</code></td><td><code>560</code></td><td>Sets the width, within min and max.</td></tr>
+<tr><td><code>min</code></td><td><code>px</code></td><td><code>380</code></td><td>Narrowest.</td></tr>
+<tr><td><code>max</code></td><td><code>px</code></td><td><code>window − 320</code></td><td>Widest.</td></tr>
+<tr><td><code>resize-label</code></td><td><code>string</code></td><td><code>Resize</code></td><td>Name of the edge.</td></tr>
+<tr><td><code>inset</code></td><td><code>boolean</code></td><td>–</td><td>While open on the desktop, the page’s <code>nk-app</code> makes room instead of lying under it – for a chart whose bars must stay visible.</td></tr></table></div>
   <p class="doc-h4">Slots</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
 <tr><td><code>(default)</code></td><td>The page: title, properties, prose, comments.</td></tr>
 <tr><td><code>actions</code></td><td>Buttons beside » – open as page, share.</td></tr></table></div>
   <p class="doc-h4">Events</p>
   <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Description</th></tr>
-<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Opened / closed.</td></tr></table></div>
-  <p class="doc-meta"><b>Properties:</b> <code>open</code></p>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Opened / closed.</td></tr>
+<tr><td><code>nk-resize</code></td><td><code>{ width }</code></td><td>A drag or a key changed the width – the moment to keep it.</td></tr></table></div>
+  <p class="doc-meta"><b>Properties:</b> <code>open</code> <code>width</code></p>
   <p class="doc-meta"><b>Methods:</b> <code>show()</code> <code>close()</code> <code>toggle()</code></p>
   <div class="doc-meta"><b>On a small screen:</b><span>Below 860px a bottom sheet over a dimmed page, title in 28px – and modal there: the page is inert and scroll-locked, a tap on the dimmed page closes it.</span></div>
-  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-peek-backdrop</code><code>.open</code><code>.nk-peek</code><code>.pk-bar</code><code>.pk-body</code></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-peek-backdrop</code><code>.open</code><code>.nk-peek</code><code>.pk-resize</code><code>.active</code><code>.pk-bar</code><code>.pk-body</code></div>
+</article>
+<article class="doc-entry" id="nk-dialog">
+  <h3><code>&lt;nk-dialog&gt;</code> Dialog</h3>
+  <p class="doc-desc">A question or a short form – “Move to trash?”, the name of a new view, the link between two tasks – with the contract of <code>nk-modal</code> and <code>nk-sheet</code>: <code>show()</code>, <code>close()</code>, <code>toggle()</code>, <code>nk-toggle</code>; Escape – captured, before a peek, a menu or a modal behind it – and the backdrop close it; focus moves in, to an <code>[autofocus]</code> element or the first field or button, and back; the page behind is inert and scroll-locked. It lies above the modal and the sheet. <code>title</code> is the heading, the default slot the text or the fields, <code>slot="actions"</code> the buttons, the confirming one last. A button with a <code>value</code> closes it with that value, and so does the submit of a <code>&lt;form method="dialog"&gt;</code> inside; before it closes, <code>nk-close</code> fires and can be cancelled – the place to check an input. <code>alert</code> for a question, <code>wide</code> (560px) for a form. <code>show(from)</code> hands focus back to <code>from</code> – the ⋯ of a menu that closed. Place it directly under <code>&lt;body&gt;</code>.</p>
+  <div class="doc-compare"><div class="doc-compare-bar">
+    <div class="nk-segmented" data-compare="nk-dialog"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
+    <span class="site-spacer"></span><span>Wave 4</span></div>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-dialog open alert title=&quot;Move “NotionKit MVP” to trash?&quot;>
+  The page and its sub-pages can be restored from Trash for 30 days.
+  <nk-btn slot=&quot;actions&quot; variant=&quot;secondary&quot; value=&quot;&quot;>Cancel</nk-btn>
+  <nk-btn slot=&quot;actions&quot; variant=&quot;danger-solid&quot; value=&quot;trash&quot;>Move to trash</nk-btn>
+</nk-dialog><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-dialog-backdrop open&quot;><div class=&quot;nk-dialog&quot; role=&quot;alertdialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Move to trash&quot;>
+  <div class=&quot;dl-title&quot;>Move “NotionKit MVP” to trash?</div>
+  <div class=&quot;dl-body&quot;>The page and its sub-pages can be restored from Trash for 30 days.</div>
+  <div class=&quot;dl-actions&quot;><button class=&quot;nk-btn secondary&quot;>Cancel</button><button class=&quot;nk-btn danger-solid&quot;>Move to trash</button></div>
+</div></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-dialog</span> open alert <span class="attr">title</span>="Move “NotionKit MVP” to trash?"&gt;
+  The page and its sub-pages can be restored from Trash for 30 days.
+  &lt;<span class="tag">nk-btn</span> <span class="attr">slot</span>="actions" <span class="attr">variant</span>="secondary" <span class="attr">value</span>=""&gt;Cancel&lt;/<span class="tag">nk-btn</span>&gt;
+  &lt;<span class="tag">nk-btn</span> <span class="attr">slot</span>="actions" <span class="attr">variant</span>="danger-solid" <span class="attr">value</span>="trash"&gt;Move to trash&lt;/<span class="tag">nk-btn</span>&gt;
+&lt;/<span class="tag">nk-dialog</span>&gt;</pre>
+    <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-dialog-backdrop open"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-dialog" <span class="attr">role</span>="alertdialog" <span class="attr">aria-modal</span>="true" <span class="attr">aria-label</span>="Move to trash"&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="dl-title"&gt;Move “NotionKit MVP” to trash?&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="dl-body"&gt;The page and its sub-pages can be restored from Trash for 30 days.&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="dl-actions"&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn secondary"&gt;Cancel&lt;/<span class="tag">button</span>&gt;&lt;<span class="tag">button</span> <span class="attr">class</span>="nk-btn danger-solid"&gt;Move to trash&lt;/<span class="tag">button</span>&gt;&lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
+  </div>
+  <p class="doc-h4">Attributes</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>open</code></td><td><code>boolean</code></td><td>–</td><td>Shown.</td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td>–</td><td>Heading and the dialog’s name – never a tooltip.</td></tr>
+<tr><td><code>alert</code></td><td><code>boolean</code></td><td>–</td><td>An alertdialog, described by its text.</td></tr>
+<tr><td><code>wide</code></td><td><code>boolean</code></td><td>–</td><td>560px instead of 440px.</td></tr></table></div>
+  <p class="doc-h4">Slots</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
+<tr><td><code>(default)</code></td><td>The text or the fields.</td></tr>
+<tr><td><code>actions</code></td><td>The buttons, right; a <code>value</code> closes with it.</td></tr></table></div>
+  <p class="doc-h4">Events</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Description</th></tr>
+<tr><td><code>nk-close</code></td><td><code>{ value }</code></td><td>About to close – cancel it to keep it open.</td></tr>
+<tr><td><code>nk-toggle</code></td><td><code>{ open }</code></td><td>Opened / closed.</td></tr></table></div>
+  <p class="doc-meta"><b>Properties:</b> <code>open</code> <code>returnValue</code> <code>title</code></p>
+  <p class="doc-meta"><b>Methods:</b> <code>show(from)</code> <code>close(value)</code> <code>toggle()</code></p>
+  <div class="doc-meta"><b>On a small screen:</b><span>Below 860px a bottom sheet with a grabber, the buttons stacked across the width, the confirming one on top.</span></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-dialog-backdrop</code><code>.open</code><code>.nk-dialog</code><code>.wide</code><code>.dl-title</code><code>.dl-body</code><code>.dl-actions</code></div>
 </article>
 <article class="doc-entry" id="nk-settings-pane">
   <h3><code>&lt;nk-settings-pane&gt;</code> Settings pane</h3>
@@ -2740,7 +2800,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-cmdk"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
 <script>
   document.querySelector('nk-cmdk').commands = [
     { group: 'Pages', items: [
@@ -2755,7 +2815,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     ]},
   ];
 </script><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
   <div class=&quot;nk-cmdk-input-row&quot;><span style=&quot;font-size:15px&quot;>🔍</span><input placeholder=&quot;Search or type a command …&quot;><kbd class=&quot;nk-kbd&quot;>esc</kbd></div>
   <div class=&quot;nk-cmdk-list&quot;>
     <div class=&quot;nk-cmdk-group&quot;>Pages</div>
@@ -2977,8 +3037,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-toast"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
     <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-toast</span> open <span class="attr">duration</span>="0"&gt;Settings saved&lt;/<span class="tag">nk-toast</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-toast show"&gt;✓ &lt;<span class="tag">span</span>&gt;Settings saved&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
@@ -2997,6 +3057,43 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-meta"><b>Methods:</b> <code>show(message?, { duration })</code> <code>close()</code></p>
   <div class="doc-meta"><b>On a small screen:</b><span>Unchanged.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-toast</code><code>.show</code></div>
+</article>
+<article class="doc-entry" id="nk-tooltip">
+  <h3><code>&lt;nk-tooltip&gt;</code> Tooltip</h3>
+  <p class="doc-desc">Notion’s hover hint in the toast’s colours, a shortcut muted beside it. One <code>&lt;nk-tooltip&gt;</code> without <code>for</code> serves every element with <code>data-tooltip</code> (and <code>data-tooltip-key</code>) on the page, inside shadow roots too – a whole toolbar in one element; with <code>for</code> it belongs to one element and shows its own content and <code>shortcut</code>. It appears after <code>delay</code> ms (400) under the pointer and at once on keyboard focus, never on touch; leaving, a press, blur, scrolling and Escape hide it. It sits 6px below its target and centred, above it where the window ends, 8px inside the window – <code>placeNear</code> in <code>util/floating.js</code>. <code>show(target, text, shortcut)</code> takes an element or a rect, for what has no element of its own: the bars of a chart. The target’s <code>aria-describedby</code> names it while it shows. Hover the buttons.</p>
+  <div class="doc-compare">
+    <div class="doc-preview" data-mode="element"><div style="display:flex;gap:16px;align-items:center;padding:4px 0 44px">
+  <nk-btn variant="topbar" aria-label="Style, export and more" data-tooltip="Style, export and more">⋯</nk-btn>
+  <nk-btn variant="topbar" aria-label="Add to Favourites" data-tooltip="Add to Favourites">⭐</nk-btn>
+  <nk-btn variant="topbar" id="ttSidebar" aria-label="Open sidebar">☰</nk-btn>
+</div>
+<nk-tooltip></nk-tooltip>
+<nk-tooltip for="ttSidebar" shortcut="⌘\">Open sidebar</nk-tooltip></div>
+    
+    <pre class="doc-code" data-mode="element">&lt;<span class="tag">div</span> <span class="attr">style</span>="display:flex;gap:16px;align-items:center;padding:4px 0 44px"&gt;
+  &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="topbar" <span class="attr">aria-label</span>="Style, export and more" <span class="attr">data-tooltip</span>="Style, export and more"&gt;⋯&lt;/<span class="tag">nk-btn</span>&gt;
+  &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="topbar" <span class="attr">aria-label</span>="Add to Favourites" <span class="attr">data-tooltip</span>="Add to Favourites"&gt;⭐&lt;/<span class="tag">nk-btn</span>&gt;
+  &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="topbar" <span class="attr">id</span>="ttSidebar" <span class="attr">aria-label</span>="Open sidebar"&gt;☰&lt;/<span class="tag">nk-btn</span>&gt;
+&lt;/<span class="tag">div</span>&gt;
+&lt;<span class="tag">nk-tooltip</span>&gt;&lt;/<span class="tag">nk-tooltip</span>&gt;
+&lt;<span class="tag">nk-tooltip</span> <span class="attr">for</span>="ttSidebar" <span class="attr">shortcut</span>="⌘\"&gt;Open sidebar&lt;/<span class="tag">nk-tooltip</span>&gt;</pre>
+    
+  </div>
+  <p class="doc-h4">Attributes</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>for</code></td><td><code>id</code></td><td>–</td><td>The one element it belongs to; without it, every <code>[data-tooltip]</code>.</td></tr>
+<tr><td><code>shortcut</code></td><td><code>string</code></td><td>–</td><td>With <code>for</code>: the shortcut beside the text.</td></tr>
+<tr><td><code>delay</code></td><td><code>ms</code></td><td><code>400</code></td><td>Wait under the pointer.</td></tr>
+<tr><td><code>placement</code></td><td><code>bottom | top</code></td><td><code>bottom</code></td><td>Preferred side.</td></tr></table></div>
+  <p class="doc-h4">Slots</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Slot</th><th>Description</th></tr>
+<tr><td><code>(default)</code></td><td>With <code>for</code>: the text.</td></tr></table></div>
+  <p class="doc-h4">Events</p>
+  <p class="doc-meta">none</p>
+  <p class="doc-meta"><b>Properties:</b> <code>open</code></p>
+  <p class="doc-meta"><b>Methods:</b> <code>show(target, text, shortcut)</code> <code>hide()</code></p>
+  <div class="doc-meta"><b>On a small screen:</b><span>No hover on a phone: it shows nothing on touch.</span></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-tooltip</code><code>.open</code><code>.tt-key</code></div>
 </article></section>
 <section class="site-section" id="group-data"><h2>Data & collaboration</h2><p class="site-groupnote">Wave 5</p><article class="doc-entry" id="nk-database">
   <h3><code>&lt;nk-database&gt;</code> Database</h3>
@@ -3646,7 +3743,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-meta"><b>On a small screen:</b><span>Unchanged.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-ai-input-row</code><code>.nk-ai-send</code></div>
 </article></section>
-  <div class="site-footer">NotionKit Elements v1.9.0 · wrapping NotionKit CSS v1.9.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.10.0 · wrapping NotionKit CSS v1.10.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

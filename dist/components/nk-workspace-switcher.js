@@ -9,7 +9,7 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // row; clicking outside or pressing Escape closes it.
 const menuSheet = new CSSStyleSheet();
 menuSheet.replaceSync(`
-  .nk-ws-anchor { position: relative; }
+  .nk-ws-anchor { position: relative; flex: 1 1 auto; min-width: 0; }
   .nk-ws-menu { display: none; position: absolute; left: 8px; top: calc(100% - 2px); z-index: 50; }
   :host([open]) .nk-ws-menu { display: block; }
 `);

@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -21,7 +21,7 @@
 <nk-app>
 
   <!-- ================= SIDEBAR ================= -->
-  <nk-sidebar slot="sidebar" id="sidebar">
+  <nk-sidebar slot="sidebar" id="sidebar" collapsible collapse-label="Close sidebar">
     <nk-workspace-switcher slot="workspace" name="MonaHilft" avatar="M">
       <nk-menu slot="menu">
         <nk-menu-item type="label">Workspaces</nk-menu-item>
@@ -63,13 +63,13 @@
 
   <!-- ================= MAIN ================= -->
   <nk-topbar>
-    <nk-btn variant="sidebar" id="menuBtn" aria-label="Menu">☰</nk-btn>
+    <nk-btn variant="sidebar" id="menuBtn" aria-label="Menu" data-tooltip="Open sidebar" data-tooltip-key="⌘\">☰</nk-btn>
     <nk-breadcrumb id="crumbs"><span>📊 Project overview</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
     <span slot="actions" class="nk-topbar-meta" id="lastEdited">Last edited 2 min ago</span>
-    <nk-btn slot="actions" variant="share">Share</nk-btn>
-    <nk-btn slot="actions" variant="topbar" title="Favourite">⭐</nk-btn>
+    <nk-btn slot="actions" variant="share" data-tooltip="Share or publish">Share</nk-btn>
+    <nk-btn slot="actions" variant="topbar" aria-label="Favourite" data-tooltip="Add to Favourites">⭐</nk-btn>
     <nk-theme-toggle slot="actions" id="themeToggle"></nk-theme-toggle>
-    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-label="Page options">⋯</nk-btn>
+    <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-label="Page options" data-tooltip="Style, export and more">⋯</nk-btn>
   </nk-topbar>
 
   <nk-page id="page" icon="🚀" cover>
@@ -411,7 +411,7 @@
 
 <!-- ================= SIDE PEEK ================= -->
 <!-- Not id="peek": #peek opens it, and a fragment target takes the focus. -->
-<nk-peek id="sidePeek" close-label="Close">
+<nk-peek id="sidePeek" close-label="Close" resizable resize-label="Resize">
   <nk-btn slot="actions" variant="topbar" id="peekOpen" aria-label="Open as page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
   <nk-page-title id="peekTitle"></nk-page-title>
   <nk-props>
@@ -426,6 +426,23 @@
     <nk-comment author="Sara Lindt" time="1 hr ago" color="green">Looks good – let’s take it into the next release.</nk-comment>
   </nk-comments>
 </nk-peek>
+
+<!-- ================= DIALOGS ================= -->
+<!-- Not id="dialog": #dialog opens one, and a fragment target takes the focus. -->
+<nk-dialog id="trashDialog" alert title="Move “NotionKit MVP” to trash?">
+  The page and its sub-pages can be restored from Trash for 30 days.
+  <nk-btn slot="actions" variant="secondary" value="">Cancel</nk-btn>
+  <nk-btn slot="actions" variant="danger-solid" value="trash">Move to trash</nk-btn>
+</nk-dialog>
+<nk-dialog id="viewDialog" title="New view">
+  <nk-field label="Name" stacked><nk-input id="viewName" placeholder="Timeline"></nk-input></nk-field>
+  <nk-field label="Layout" stacked><nk-select id="viewLayout"><option>Table</option><option>Board</option><option>List</option><option>Calendar</option></nk-select></nk-field>
+  <nk-btn slot="actions" variant="secondary" value="">Cancel</nk-btn>
+  <nk-btn slot="actions" variant="primary" value="create">Create</nk-btn>
+</nk-dialog>
+
+<!-- One tooltip for every [data-tooltip] on the page -->
+<nk-tooltip></nk-tooltip>
 
 <nk-toast id="toast"></nk-toast>
 
@@ -494,7 +511,7 @@
   }
   db.addEventListener('nk-action', e => {
     if (e.detail.action === 'new-row') newRow(e.detail.value);
-    if (e.detail.action === 'add-view') toast.show('Views: table, board, list and calendar – more in your app');
+    if (e.detail.action === 'add-view') { viewName.value = ''; viewDialog.show(); }
     if (e.detail.action === 'sort') toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`);
   });
   // A row, a card, a list item or a calendar card opens the side peek; a due date opens the date picker.
@@ -614,6 +631,7 @@
   // The menu positions itself under the button, closes on a tap outside,
   // Escape or a chosen item; a switch row keeps it open.
   pageMenuBtn.addEventListener('click', () => { syncPageMenu(); pageOptions.toggle(pageMenuBtn); });
+  pageOptions.addEventListener('nk-select', e => { if (e.detail.value === 'trash') trashDialog.show(pageMenuBtn); });
   pageOptions.addEventListener('nk-change', e => {
     currentPage().toggleAttribute(e.detail.value, e.detail.checked);
     const msgs = { small: ['Small text on', 'Small text off'], full: ['Full width on', 'Full width off'] };
@@ -681,6 +699,15 @@
   }
   peekOpen.addEventListener('click', () => toast.show('Opens as a full page'));
 
+  /* ============ Dialogs: move to trash, a new view ============ */
+  // A button with a value closes the dialog with it – nk-close says which;
+  // Escape and the backdrop close it without.
+  trashDialog.addEventListener('nk-close', e => { if (e.detail.value === 'trash') toast.show('Moved to trash'); });
+  viewDialog.addEventListener('nk-close', e => {
+    if (e.detail.value === 'create') toast.show(`View “${viewName.value || 'Untitled'}” created as ${viewLayout.value.toLowerCase()}`);
+  });
+  viewName.addEventListener('keydown', e => { if (e.key === 'Enter') viewDialog.close('create'); });
+
   /* ============ Pictures and the public address ============ */
   for (const picker of [profilePicture, workspaceIcon]) {
     picker.addEventListener('nk-change', e => toast.show(e.detail.dataUrl ? 'Picture updated' : 'Picture removed'));
@@ -688,7 +715,7 @@
   }
   publicAddress.addEventListener('nk-action', e => toast.show(e.detail.ok ? 'Address copied' : 'Select the address and copy it with ⌘C'));
 
-  /* ============ Anchors: #menu, #filter, #more, #peek, #date, #calendar, #settings open that state ============ */
+  /* ============ Anchors: #menu, #filter, #more, #peek, #date, #calendar, #dialog, #settings open that state ============ */
   // The landing page shows app.html#menu: a popover on the desktop, a sheet
   // on the phone – one markup, two presentations.
   function openFromHash() {
@@ -699,6 +726,7 @@
     if (h === '#peek') openPeek(projects[2]);
     if (h === '#date') openPageDue();
     if (h === '#calendar') db.view = 'calendar';
+    if (h === '#dialog') trashDialog.show(pageMenuBtn);
     if (h === '#settings') settingsModal.show();
   }
   requestAnimationFrame(openFromHash);

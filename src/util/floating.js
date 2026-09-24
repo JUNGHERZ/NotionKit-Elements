@@ -11,6 +11,21 @@ export function boxOf(el) {
   return el.getBoundingClientRect();
 }
 
+/**
+ * Puts `host` 6px below `target` – an element or a rect ({ left, top, right,
+ * bottom }, a DOMRect) – centred on it: above with side="top", or where the
+ * window ends below; kept 8px inside the window. For <nk-tooltip>.
+ */
+export function placeNear(host, target, side = 'bottom', gap = 6) {
+  const r = target instanceof Element ? boxOf(target) : target;
+  const { width: w, height: h } = host.getBoundingClientRect();
+  const below = r.bottom + gap, above = r.top - gap - h;
+  const top = side === 'top' ? (above < 8 ? below : above) : (below + h > innerHeight - 8 ? above : below);
+  host.style.top = `${Math.round(top)}px`;
+  host.style.left = `${Math.round(Math.min(Math.max(8, (r.left + r.right) / 2 - w / 2), innerWidth - 8 - w))}px`;
+  host.style.right = '';
+}
+
 /** Puts `host` 6px under `anchor`, right edges aligned – left edges with align="start". */
 export function placeUnder(host, anchor, align) {
   const r = boxOf(anchor);

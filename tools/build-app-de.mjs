@@ -17,7 +17,7 @@ const PAIRS = [
   ['<nk-section-label>Team spaces</nk-section-label>', '<nk-section-label>Team-Bereiche</nk-section-label>'],
   ['no-actions>Settings<', 'no-actions>Einstellungen<'], ['no-actions>Trash<', 'no-actions>Papierkorb<'],
   ['value="search">Search<', 'value="search">Suche<'], ['value="settings">Settings<', 'value="settings">Einstellungen<'], ['id="moreTab">More<', 'id="moreTab">Mehr<'],
-  ['<span>📊 Project overview</span>', '<span>📊 Projektübersicht</span>'], ['>Last edited 2 min ago<', '>Zuletzt bearbeitet vor 2 Min.<'], ['variant="share">Share<', 'variant="share">Teilen<'], ['title="Favourite"', 'title="Favorit"'],
+  ['<span>📊 Project overview</span>', '<span>📊 Projektübersicht</span>'], ['>Last edited 2 min ago<', '>Zuletzt bearbeitet vor 2 Min.<'], ['data-tooltip="Share or publish">Share<', 'data-tooltip="Teilen oder veröffentlichen">Teilen<'],
   ['<nk-tag color="purple">Design system</nk-tag>', '<nk-tag color="purple">Designsystem</nk-tag>'],
   ['A calm UI framework in the Notion idiom – as web components, without a build step. This page is the living preview: sidebar, page tree, callouts, todos, toggles and database views in one shell.', 'Ein ruhiges UI-Framework im Notion-Stil – als Web Components, ohne Build-Schritt. Diese Seite ist die lebende Vorschau: Sidebar, Seitenbaum, Callouts, Todos, Toggles und Datenbank-Ansichten in einer Hülle.'],
   ['<strong>Core idea:</strong> NotionKit supplies the look and the shell; the editor is mounted through <em>&lt;nk-block-host&gt;</em> (BlockNote, say), and the data comes from your own API. Three layers, cleanly separated.', '<strong>Kernidee:</strong> NotionKit liefert Look und Hülle; der Editor wird über <em>&lt;nk-block-host&gt;</em> eingehängt (etwa BlockNote), die Daten kommen aus deiner eigenen API. Drei Schichten, sauber getrennt.'],
@@ -73,7 +73,7 @@ const PAIRS = [
   // script strings
   ["{ value: 'planned', label: 'Planned', color: 'orange' }", "{ value: 'planned', label: 'Geplant', color: 'orange' }"], ["{ value: 'progress', label: 'In progress', color: 'blue' }", "{ value: 'progress', label: 'In Arbeit', color: 'blue' }"], ["{ value: 'done', label: 'Done', color: 'green' }", "{ value: 'done', label: 'Erledigt', color: 'green' }"],
   ["label: 'Owner', type: 'person'", "label: 'Verantwortlich', type: 'person'"], ["label: 'Due', type: 'date'", "label: 'Fällig', type: 'date'"], ["label: 'Progress', type: 'progress'", "label: 'Fortschritt', type: 'progress'"],
-  ["name: 'Untitled ' + counter++", "name: 'Unbenannt ' + counter++"], ["toast.show('New page created')", "toast.show('Neue Seite angelegt')"], ["toast.show('Views: table, board, list and calendar – more in your app')", "toast.show('Ansichten: Tabelle, Board, Liste und Kalender – mehr in deiner App')"], ["toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`)", "toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`)"],
+  ["name: 'Untitled ' + counter++", "name: 'Unbenannt ' + counter++"], ["toast.show('New page created')", "toast.show('Neue Seite angelegt')"], ["toast.show(`Sorted by ${e.detail.key} (${e.detail.value})`)", "toast.show(`Sortiert nach ${e.detail.key} (${e.detail.value})`)"],
   ["toast.show(`${e.detail.action === 'add' ? 'Add page under' : 'Options for'} “${e.detail.label}”`)", "toast.show(`${e.detail.action === 'add' ? 'Seite anlegen unter' : 'Optionen für'} „${e.detail.label}“`)"], ["toast.show('Trash is empty')", "toast.show('Der Papierkorb ist leer')"], ["toast.show(`Workspace: ${e.detail.label}`)", "toast.show(`Workspace: ${e.detail.label}`)"],
   ["toast.show(e.detail.value === 'dark' ? 'Dark mode on' : 'Light mode on')", "toast.show(e.detail.value === 'dark' ? 'Dunkelmodus an' : 'Hellmodus an')"], ["toast.show('Following the system setting')", "toast.show('Folgt der Systemeinstellung')"], ["toast.show(`Palette: ${e.detail.value}`)", "toast.show(`Palette: ${e.detail.value}`)"],
   ["toast.show('Text size set to ' + e.detail.value + ' %')", "toast.show('Textgröße auf ' + e.detail.value + ' % gesetzt')"], ["toast.show('Settings saved')", "toast.show('Einstellungen gespeichert')"], ["toast.show('Just a preview – nothing was deleted')", "toast.show('Nur eine Vorschau – nichts wurde gelöscht')"],
@@ -113,7 +113,7 @@ const PAIRS = [
   ['label="Workspace icon" choose-label="Upload image" change-label="Change image" remove-label="Remove"', 'label="Workspace-Icon" choose-label="Bild hochladen" change-label="Bild ändern" remove-label="Entfernen"'],
   ['<nk-field label="Public address" desc="Visitors reach the shared pages here.">', '<nk-field label="Öffentliche Adresse" desc="Hier erreichen Besucher die geteilten Seiten.">'],
   ['copy-label="Copy" copied-label="Copied"', 'copy-label="Kopieren" copied-label="Kopiert"'],
-  ['<nk-peek id="sidePeek" close-label="Close">', '<nk-peek id="sidePeek" close-label="Schließen">'], ['id="peekOpen" aria-label="Open as page"', 'id="peekOpen" aria-label="Als Seite öffnen"'],
+  ['<nk-peek id="sidePeek" close-label="Close"', '<nk-peek id="sidePeek" close-label="Schließen"'], ['id="peekOpen" aria-label="Open as page"', 'id="peekOpen" aria-label="Als Seite öffnen"'],
   ['<nk-prop label="Owner" icon="👤" data-peek="owner">', '<nk-prop label="Verantwortlich" icon="👤" data-peek="owner">'], ['<nk-prop label="Due" icon="📅" data-peek="due">', '<nk-prop label="Fällig" icon="📅" data-peek="due">'],
   ['<nk-prop label="Progress" icon="▰" data-peek="progress">', '<nk-prop label="Fortschritt" icon="▰" data-peek="progress">'], ['<nk-prop label="Effort (h)" icon="#" data-peek="effort">', '<nk-prop label="Aufwand (h)" icon="#" data-peek="effort">'],
   ['>Looks good – let’s take it into the next release.</nk-comment>', '>Sieht gut aus – das nehmen wir ins nächste Release.</nk-comment>'],
@@ -131,6 +131,20 @@ const PAIRS = [
   ["{ '2026-05-01': 'Labour Day', '2026-05-14': 'Ascension Day', '2026-05-25': 'Whit Monday', '2026-10-03': 'German Unity Day' }", "{ '2026-05-01': 'Tag der Arbeit', '2026-05-14': 'Christi Himmelfahrt', '2026-05-25': 'Pfingstmontag', '2026-10-03': 'Tag der Deutschen Einheit' }"],
   [".toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })", ".toLocaleDateString('de', { day: 'numeric', month: 'long', year: 'numeric' })"],
   ["toast.show(`Due: ${longDate(v)}`)", "toast.show(`Fällig: ${longDate(v)}`)"],
+  // 1.10.0 – shell and overlays
+  ['collapsible collapse-label="Close sidebar"', 'collapsible collapse-label="Seitenleiste schließen"'],
+  ['data-tooltip="Open sidebar"', 'data-tooltip="Seitenleiste öffnen"'],
+  ['aria-label="Favourite" data-tooltip="Add to Favourites"', 'aria-label="Favorit" data-tooltip="Zu Favoriten hinzufügen"'],
+  ['data-tooltip="Style, export and more"', 'data-tooltip="Stil, Export und mehr"'],
+  ['resizable resize-label="Resize"', 'resizable resize-label="Breite ändern"'],
+  ['title="Move “NotionKit MVP” to trash?"', 'title="„NotionKit MVP“ in den Papierkorb verschieben?"'],
+  ['  The page and its sub-pages can be restored from Trash for 30 days.', '  Die Seite und ihre Unterseiten lassen sich 30 Tage lang aus dem Papierkorb wiederherstellen.'],
+  ['variant="secondary" value="">Cancel<', 'variant="secondary" value="">Abbrechen<'], ['value="create">Create<', 'value="create">Erstellen<'],
+  ['<nk-dialog id="viewDialog" title="New view">', '<nk-dialog id="viewDialog" title="Neue Ansicht">'],
+  ['<nk-field label="Name" stacked><nk-input id="viewName" placeholder="Timeline">', '<nk-field label="Name" stacked><nk-input id="viewName" placeholder="Zeitleiste">'],
+  ['<nk-select id="viewLayout"><option>Table</option><option>Board</option><option>List</option><option>Calendar</option></nk-select>', '<nk-select id="viewLayout"><option>Tabelle</option><option>Board</option><option>Liste</option><option>Kalender</option></nk-select>'],
+  ["toast.show('Moved to trash')", "toast.show('In den Papierkorb verschoben')"],
+  ["toast.show(`View “${viewName.value || 'Untitled'}” created as ${viewLayout.value.toLowerCase()}`)", "toast.show(`Ansicht „${viewName.value || 'Unbenannt'}“ als ${viewLayout.value} angelegt`)"],
 ];
 
 let html = readFileSync('app.html', 'utf-8');

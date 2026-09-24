@@ -85,7 +85,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 </head>
 <body class="nk-body">
 <nk-app>
-  <nk-sidebar slot="sidebar" id="sidebar">
+  <!-- collapsible: the « collapses it on the desktop, the ☰ and ⌘\\ bring it back -->
+  <nk-sidebar slot="sidebar" id="sidebar" collapsible>
     <nk-workspace-switcher slot="workspace" name="${W.workspace}"></nk-workspace-switcher>
     <nk-tree id="tree">
       <nk-tree-item icon="🔍" value="search" no-actions>${W.search}<span slot="end" class="nk-kbd-hint"><nk-kbd>⌘</nk-kbd><nk-kbd>K</nk-kbd></span></nk-tree-item>
@@ -107,7 +108,7 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
   </nk-sidebar>
 
   <nk-topbar>
-    <nk-btn variant="sidebar" aria-label="Menu">☰</nk-btn>
+    <nk-btn variant="sidebar" aria-label="Menu" data-tooltip="${W.openSidebar}">☰</nk-btn>
     <nk-breadcrumb><span>📊 ${W.projectOverview}</span><span>🚀 ${W.mvp}</span></nk-breadcrumb>
     <nk-btn slot="actions" variant="share">${W.share}</nk-btn>
     <nk-theme-toggle slot="actions"></nk-theme-toggle>
@@ -636,6 +637,10 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | A \`<pre>\` with a Copy button that writes \`navigator.clipboard\` itself | \`<nk-copy-field value="…" mono>\` – Copy, the green moment after, the ⌘C fallback; \`secret\` for keys |
 | A help or detail panel as a positioned \`<aside>\` with its own close logic | \`<nk-peek>\` – beside the page on the desktop, a sheet on a phone, Escape and outside clicks included |
 | A file input plus canvas code for an avatar or logo | \`<nk-image-picker>\` – EXIF rotation, scaling, a data URL in \`nk-change\` |
+| A positioned \`<div>\` with a scrim and its own Escape and focus logic for “Are you sure?” | \`<nk-dialog alert title="…">\` with \`<nk-btn slot="actions" value="…">\` – \`nk-close\` says which, and can be cancelled to check an input |
+| \`title="…"\` on buttons for hints, or a hand-positioned hint | One \`<nk-tooltip>\` and \`data-tooltip\` (and \`data-tooltip-key\`) on the buttons; \`tip.show(rect, text)\` for chart bars |
+| \`hidden\` on the sidebar plus an own button to widen the page on the desktop | \`<nk-sidebar collapsible>\` – the «, the ☰ of \`<nk-btn variant="sidebar">\`, ⌘\\; \`nk-collapse\` to keep the state |
+| A padding on the page while the side peek is open, or a peek wider by CSS | \`<nk-peek resizable inset>\` – the width is \`--nk-peek-width\`, \`nk-resize\` to keep it |
 | A hand-built month grid, or \`<input type="date">\` for a date property | \`<nk-calendar floating sheet>\` and \`picker.show(cell)\` – the table's \`nk-select\` names the \`key\` and the \`cell\`; \`range\` for start and end, \`weeks\` for calendar weeks, \`days\` for holidays and marks |
 | Rows laid out in a table of weeks to show them by date | \`<nk-calendar-view date-key="due">\` in \`<nk-database>\` – a tab like table and board |
 `,

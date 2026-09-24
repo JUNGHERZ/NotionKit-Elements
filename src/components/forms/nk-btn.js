@@ -5,7 +5,8 @@ import { NkElement } from '../../base.js';
 // <nk-btn variant="topbar">⭐</nk-btn>  →  <button class="nk-topbar-btn">
 // <nk-btn variant="tool" active>Filter</nk-btn>  →  <button class="nk-db-tool active">  (slot="tools" of nk-database)
 // <nk-btn variant="sidebar" aria-label="Menu">☰</nk-btn>  →  <button class="nk-topbar-btn nk-sidebar-toggle">:
-//   shown on phones only, it opens the page's <nk-sidebar> as a drawer.
+//   on a phone it opens the page's <nk-sidebar> as a drawer; on the desktop
+//   it shows while that sidebar is collapsed (.collapsed) and expands it.
 //
 // Modifier classes become attributes. A slotted <svg> is sized by the
 // `.nk-btn ::slotted(svg)` twin; pass the icon itself, never wrapped.
@@ -51,11 +52,17 @@ class NkBtn extends NkElement {
 
   /** The sidebar the ☰ opens: the one in its own app, else the page's. */
   _sidebar() { return this.closest('nk-app')?.querySelector('nk-sidebar') ?? document.querySelector('nk-sidebar'); }
+  _sidebarCollapsed() { return this.getAttribute('variant') === 'sidebar' && !!this._sidebar()?.hasAttribute('collapsed'); }
 
   setupEvents() {
     this._onClick = (e) => {
       if (this.getBoolAttr('disabled')) { e.preventDefault(); e.stopPropagation(); return; }
-      if (this.getAttribute('variant') === 'sidebar') { this._sidebar()?.toggle?.(); return; }
+      if (this.getAttribute('variant') === 'sidebar') {
+        const sidebar = this._sidebar();
+        if (sidebar?.hasAttribute('collapsed') && !matchMedia('(max-width: 860px)').matches) sidebar.expand?.();
+        else sidebar?.toggle?.();
+        return;
+      }
       // A button inside a shadow root is not a submit button of the outer
       // form; forward the intent to the form the host sits in.
       const type = this.getAttribute('type');
@@ -68,13 +75,20 @@ class NkBtn extends NkElement {
     this._onToggle = (e) => {
       if (this.getAttribute('variant') === 'sidebar' && e.target === this._sidebar()) this._btn.setAttribute('aria-expanded', e.detail.open ? 'true' : 'false');
     };
+    // On the desktop the ☰ shows while its sidebar is collapsed.
+    this._onCollapse = (e) => {
+      if (this.getAttribute('variant') === 'sidebar' && e.target === this._sidebar()) this._btn.classList.toggle('collapsed', e.detail.collapsed);
+    };
     this._btn.addEventListener('click', this._onClick);
     document.addEventListener('nk-toggle', this._onToggle);
+    document.addEventListener('nk-collapse', this._onCollapse);
+    if (this.getAttribute('variant') === 'sidebar') this._btn.className = this._computeClasses().join(' ');
   }
 
   teardownEvents() {
     this._btn?.removeEventListener('click', this._onClick);
     document.removeEventListener('nk-toggle', this._onToggle);
+    document.removeEventListener('nk-collapse', this._onCollapse);
   }
 
   onAttributeChanged(name) {
@@ -103,7 +117,7 @@ class NkBtn extends NkElement {
     const variant = this.getAttribute('variant');
     if (variant === 'topbar') return ['nk-topbar-btn'];
     if (variant === 'share') return ['nk-topbar-btn', 'nk-share-btn'];
-    if (variant === 'sidebar') return ['nk-topbar-btn', 'nk-sidebar-toggle'];
+    if (variant === 'sidebar') return this._sidebarCollapsed() ? ['nk-topbar-btn', 'nk-sidebar-toggle', 'collapsed'] : ['nk-topbar-btn', 'nk-sidebar-toggle'];
     if (variant === 'tool') return this.getBoolAttr('active') ? ['nk-db-tool', 'active'] : ['nk-db-tool'];
     const classes = ['nk-btn'];
     if (VARIANTS.includes(variant)) classes.push(variant);

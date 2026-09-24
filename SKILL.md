@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.9.0) wrapping NotionKit CSS v1.9.0 – the calm, document-centric design system in the Notion idiom. 85 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.10.0) wrapping NotionKit CSS v1.10.0 – the calm, document-centric design system in the Notion idiom. 87 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.9.0) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -74,7 +74,7 @@ Never mix the full bundle with the per-component files – each brings its own `
 | Attributes are live | Every documented attribute re-renders when changed after connect (`stat.setAttribute('value', '129')`, `el.open = true`); properties reflect to attributes where a setter is listed. |
 
 
-# 3. Element Catalog (85 elements)
+# 3. Element Catalog (87 elements)
 
 ## Forms & controls (wave 1)
 
@@ -878,11 +878,13 @@ The outermost element of a workspace app: a full-height flex row with the sideba
 </nk-app>
 ```
 
-_No attributes._
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `peek-inset` | boolean | – | The main column makes room for the side peek – `<nk-peek inset>` sets it while open. |
 
 **Slots:** `sidebar` – An `nk-sidebar`. · `(default)` – Topbar, page – the main column.
 
-**Replaces:** `.nk-app`, `.nk-main`
+**Replaces:** `.nk-app`, `.nk-main`, `.peek-inset`
 
 ```html
 <!-- equivalent class markup -->
@@ -915,10 +917,10 @@ _No attributes._
 
 ### 3.26 `<nk-sidebar>` – Sidebar
 
-The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get `compact` (26px rows). The host is `display: contents`, so the `aside` is a direct flex child of the app – exactly like the class markup.
+The left rail: workspace slot on top, a scrolling default slot for the tree, a pinned footer slot. Footer tree items automatically get `compact` (26px rows). The host is `display: contents`, so the `aside` is a direct flex child of the app – exactly like the class markup. `collapsible` adds Notion’s « beside the workspace row, shown while the pointer is over the sidebar: on the desktop it collapses the sidebar – it slides out, the main column takes the width, nothing in it takes focus – and `<nk-btn variant="sidebar">` in the topbar shows and brings it back; ⌘\ or Ctrl+\ toggles it. `collapsed` is the state, `nk-collapse` the moment to keep it.
 
 ```html
-<div style="display:flex;height:100%"><nk-sidebar>
+<div style="display:flex;height:100%"><nk-sidebar collapsible collapse-label="Close sidebar">
   <nk-workspace-switcher slot="workspace" name="MonaHilft"></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon="🏠" active>Home</nk-tree-item>
@@ -932,19 +934,22 @@ The left rail: workspace slot on top, a scrolling default slot for the tree, a p
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `open` | boolean | – | Drawer state on small screens (no effect on desktop). |
+| `collapsible` | boolean | – | Shows the « that collapses it on the desktop, and ⌘\. |
+| `collapsed` | boolean | – | Collapsed on the desktop (no effect on a phone). |
+| `collapse-label` | string | `Close sidebar` | Name and tooltip of the «. |
 
 **Slots:** `workspace` – `nk-workspace-switcher`. · `(default)` – The tree (scrolls). · `footer` – Pinned bottom rows (Settings, Trash).
 
-**Events:** `nk-toggle` `{ open }` – Drawer opened/closed.
+**Events:** `nk-toggle` `{ open }` – Drawer opened/closed. · `nk-collapse` `{ collapsed }` – Collapsed / expanded on the desktop.
 
-**Methods:** `show()`, `close()`, `toggle()`
+**Properties:** `open`, `collapsed` · **Methods:** `show()`, `close()`, `toggle()`, `collapse()`, `expand()`, `toggleCollapsed()`
 
-**Replaces:** `.nk-sidebar`, `.nk-sidebar-scroll`, `.nk-sidebar-footer`, `.nk-sidebar-backdrop`, `.open`
+**Replaces:** `.nk-sidebar`, `.nk-sidebar-head`, `.nk-sidebar-collapse`, `.nk-sidebar-scroll`, `.nk-sidebar-footer`, `.nk-sidebar-backdrop`, `.open`, `.collapsed`
 
 ```html
 <!-- equivalent class markup -->
 <div style="display:flex;height:100%"><aside class="nk-sidebar">
-  <div class="nk-workspace"><div class="avatar">M</div><span>MonaHilft</span><span class="chev">⌄</span></div>
+  <div class="nk-sidebar-head"><div class="nk-workspace"><div class="avatar">M</div><span>MonaHilft</span><span class="chev">⌄</span></div><button class="nk-sidebar-collapse" aria-label="Close sidebar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 17-5-5 5-5M11 17l-5-5 5-5"/></svg></button></div>
   <div class="nk-sidebar-scroll">
     <div class="nk-tree-item active"><span class="icon">🏠</span><span class="label">Home</span></div>
     <div class="nk-tree-item"><span class="icon">📥</span><span class="label">Inbox</span></div>
@@ -2161,10 +2166,10 @@ Notion’s mobile surface for menus, properties and more – the phone’s twin 
 
 ### 3.66 `<nk-peek>` – Side peek
 
-Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (`slot="actions"`); the body is the page – `nk-page-title` (32px here), `nk-props`, a `.nk-prose`, `nk-comments`. `show()` slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls `show()` again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under `<body>`.
+Notion’s side peek: a database row opens at the right edge, full height, next to the table, which stays usable – no scrim, nothing inert. The bar carries » to close and your actions (`slot="actions"`); the body is the page – `nk-page-title` (32px here), `nk-props`, a `.nk-prose`, `nk-comments`. `show()` slides it in and moves focus to it; », Escape and a click elsewhere close it, and a click that calls `show()` again – another row – only swaps the content. Clicks inside other overlays leave it open. Place it directly under `<body>`. `resizable` gives it Notion’s drag on the left edge, `inset` moves the page aside instead of covering it.
 
 ```html
-<nk-peek open label="Database Table-View">
+<nk-peek open resizable resize-label="Resize" label="Database Table-View">
   <nk-btn slot="actions" variant="topbar" aria-label="Open as page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
   <nk-page-title>🗃️ Database Table-View</nk-page-title>
   <nk-props>
@@ -2180,18 +2185,25 @@ Notion’s side peek: a database row opens at the right edge, full height, next 
 | `open` | boolean | – | Shown. |
 | `label` | string | – | The dialog’s name – the entry’s title. |
 | `close-label` | string | `Close` | Name of ». |
+| `resizable` | boolean | – | The left edge makes it wider or narrower – pointer and arrow keys; the width is the token `--nk-peek-width` on `:root`. |
+| `width` | px | `560` | Sets the width, within min and max. |
+| `min` | px | `380` | Narrowest. |
+| `max` | px | `window − 320` | Widest. |
+| `resize-label` | string | `Resize` | Name of the edge. |
+| `inset` | boolean | – | While open on the desktop, the page’s `nk-app` makes room instead of lying under it – for a chart whose bars must stay visible. |
 
 **Slots:** `(default)` – The page: title, properties, prose, comments. · `actions` – Buttons beside » – open as page, share.
 
-**Events:** `nk-toggle` `{ open }` – Opened / closed.
+**Events:** `nk-toggle` `{ open }` – Opened / closed. · `nk-resize` `{ width }` – A drag or a key changed the width – the moment to keep it.
 
-**Properties:** `open` · **Methods:** `show()`, `close()`, `toggle()`
+**Properties:** `open`, `width` · **Methods:** `show()`, `close()`, `toggle()`
 
-**Replaces:** `.nk-peek-backdrop`, `.open`, `.nk-peek`, `.pk-bar`, `.pk-body`
+**Replaces:** `.nk-peek-backdrop`, `.open`, `.nk-peek`, `.pk-resize`, `.active`, `.pk-bar`, `.pk-body`
 
 ```html
 <!-- equivalent class markup -->
 <div class="nk-peek-backdrop open"><aside class="nk-peek" role="dialog" aria-label="Database Table-View">
+  <div class="pk-resize" role="separator" aria-orientation="vertical" aria-label="Resize" tabindex="0"></div>
   <div class="pk-bar"><button class="nk-topbar-btn" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></svg></button><button class="nk-topbar-btn" aria-label="Open as page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button></div>
   <div class="pk-body">
     <h1 class="nk-page-title">🗃️ Database Table-View</h1>
@@ -2206,7 +2218,45 @@ Notion’s side peek: a database row opens at the right edge, full height, next 
 
 **Small screens:** Below 860px a bottom sheet over a dimmed page, title in 28px – and modal there: the page is inert and scroll-locked, a tap on the dimmed page closes it.
 
-### 3.67 `<nk-settings-pane>` – Settings pane
+### 3.67 `<nk-dialog>` – Dialog
+
+A question or a short form – “Move to trash?”, the name of a new view, the link between two tasks – with the contract of `nk-modal` and `nk-sheet`: `show()`, `close()`, `toggle()`, `nk-toggle`; Escape – captured, before a peek, a menu or a modal behind it – and the backdrop close it; focus moves in, to an `[autofocus]` element or the first field or button, and back; the page behind is inert and scroll-locked. It lies above the modal and the sheet. `title` is the heading, the default slot the text or the fields, `slot="actions"` the buttons, the confirming one last. A button with a `value` closes it with that value, and so does the submit of a `<form method="dialog">` inside; before it closes, `nk-close` fires and can be cancelled – the place to check an input. `alert` for a question, `wide` (560px) for a form. `show(from)` hands focus back to `from` – the ⋯ of a menu that closed. Place it directly under `<body>`.
+
+```html
+<nk-dialog open alert title="Move “NotionKit MVP” to trash?">
+  The page and its sub-pages can be restored from Trash for 30 days.
+  <nk-btn slot="actions" variant="secondary" value="">Cancel</nk-btn>
+  <nk-btn slot="actions" variant="danger-solid" value="trash">Move to trash</nk-btn>
+</nk-dialog>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `open` | boolean | – | Shown. |
+| `title` | string | – | Heading and the dialog’s name – never a tooltip. |
+| `alert` | boolean | – | An alertdialog, described by its text. |
+| `wide` | boolean | – | 560px instead of 440px. |
+
+**Slots:** `(default)` – The text or the fields. · `actions` – The buttons, right; a `value` closes with it.
+
+**Events:** `nk-close` `{ value }` – About to close – cancel it to keep it open. · `nk-toggle` `{ open }` – Opened / closed.
+
+**Properties:** `open`, `returnValue`, `title` · **Methods:** `show(from)`, `close(value)`, `toggle()`
+
+**Replaces:** `.nk-dialog-backdrop`, `.open`, `.nk-dialog`, `.wide`, `.dl-title`, `.dl-body`, `.dl-actions`
+
+```html
+<!-- equivalent class markup -->
+<div class="nk-dialog-backdrop open"><div class="nk-dialog" role="alertdialog" aria-modal="true" aria-label="Move to trash">
+  <div class="dl-title">Move “NotionKit MVP” to trash?</div>
+  <div class="dl-body">The page and its sub-pages can be restored from Trash for 30 days.</div>
+  <div class="dl-actions"><button class="nk-btn secondary">Cancel</button><button class="nk-btn danger-solid">Move to trash</button></div>
+</div></div>
+```
+
+**Small screens:** Below 860px a bottom sheet with a grabber, the buttons stacked across the width, the confirming one on top.
+
+### 3.68 `<nk-settings-pane>` – Settings pane
 
 One pane of the settings modal. `label`, `icon` and `group` feed the modal’s nav; `title` renders the pane heading. Slotted `<h2>`/`<h3>` are styled too.
 
@@ -2234,7 +2284,7 @@ One pane of the settings modal. `label`, `icon` and `group` feed the modal’s n
 
 **Small screens:** Content padding drops to 24px below 860px.
 
-### 3.68 `<nk-settings-user>` – Settings user
+### 3.69 `<nk-settings-user>` – Settings user
 
 The user card at the top of the settings nav.
 
@@ -2259,7 +2309,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Below 860px only the avatar remains.
 
-### 3.69 `<nk-cmdk>` – Command palette
+### 3.70 `<nk-cmdk>` – Command palette
 
 ⌘K. Feed it `palette.commands = [{ group, items: [{ id, icon, label, shortcut, keywords, action }] }]`; it searches fuzzily over label and keywords, keeps group order, moves the selection with ↑↓, picks with Enter or click (`nk-command` plus the item’s `action`), and closes on Escape or the backdrop. The hotkey is `mod+k` unless changed. Place it directly under `<body>`.
 
@@ -2315,7 +2365,7 @@ The user card at the top of the settings nav.
 
 **Small screens:** Full width (96vw) and closer to the top below 860px.
 
-### 3.70 `<nk-menu>` – Menu
+### 3.71 `<nk-menu>` – Menu
 
 A 230px context menu. Items are `nk-menu-item`s (`type="separator"` / `"label"` for the rest); ↑↓ move, Enter selects, `nk-select` bubbles up. Inside `nk-pop` or the workspace switcher it is part of their surface. With `floating` it is a menu over the page of its own, NotionKit’s `.nk-pop.floating`: `menu.show(button)` opens it under the button, right edges aligned (`align="start"`: left edges), and it fades in like the palette. A tap outside closes it and reaches nothing else; Escape and a chosen item close it, a switch row keeps it open. Opened from the keyboard, focus moves to the first item and back when it closes. Put it directly under `<body>`, like the other overlays.
 
@@ -2359,7 +2409,7 @@ A 230px context menu. Items are `nk-menu-item`s (`type="separator"` / `"label"` 
 
 **Small screens:** With `sheet` the floating menu is a bottom sheet below 860px – full width, a grabber, 40px rows, the page dimmed – whatever position `show()` wrote: one markup, two presentations, as Notion’s mobile app opens every menu.
 
-### 3.71 `<nk-menu-item>` – Menu item
+### 3.72 `<nk-menu-item>` – Menu item
 
 One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `type` switches to a separator or a group label, or to a row with a switch on the right – “Small text” in Notion’s page menu: a click flips `checked` and fires `nk-change`, so the menu stays open.
 
@@ -2390,7 +2440,7 @@ One row of `nk-menu`: icon, label, shortcut; `danger` for destructive actions. `
 
 **Small screens:** Unchanged.
 
-### 3.72 `<nk-pop>` – Popover
+### 3.73 `<nk-pop>` – Popover
 
 Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` and toggles `open`; outside clicks, Escape and an `nk-select` from inside close it. Content is wrapped in `.nk-pop` unless it brings its own surface (`nk-menu`, `nk-emoji-picker`) or `bare` is set.
 
@@ -2425,7 +2475,7 @@ Anchors a floating surface to a trigger. The trigger goes in `slot="trigger"` an
 
 **Small screens:** Positioned relative to the trigger; keep it near the viewport edge in mind.
 
-### 3.73 `<nk-emoji-picker>` – Emoji picker
+### 3.74 `<nk-emoji-picker>` – Emoji picker
 
 Search field, 8-column grid, category strip. Ships with a built-in set (names for search); `picker.emojis = [{ char, name, cat }]` replaces it. A click fires `nk-select { emoji }`.
 
@@ -2451,7 +2501,7 @@ Search field, 8-column grid, category strip. Ships with a built-in set (names fo
 
 **Small screens:** 296px wide; fine on any phone.
 
-### 3.74 `<nk-toast>` – Toast
+### 3.75 `<nk-toast>` – Toast
 
 One inverted pill at the bottom centre, above every overlay; over a tab bar at the bottom of the screen it rises 12px above the bar. `toast.show("Saved")` shows it and hides it after `duration` ms; `open` is the state.
 
@@ -2480,9 +2530,38 @@ One inverted pill at the bottom centre, above every overlay; over a tab bar at t
 
 **Small screens:** Unchanged.
 
+### 3.76 `<nk-tooltip>` – Tooltip
+
+Notion’s hover hint in the toast’s colours, a shortcut muted beside it. One `<nk-tooltip>` without `for` serves every element with `data-tooltip` (and `data-tooltip-key`) on the page, inside shadow roots too – a whole toolbar in one element; with `for` it belongs to one element and shows its own content and `shortcut`. It appears after `delay` ms (400) under the pointer and at once on keyboard focus, never on touch; leaving, a press, blur, scrolling and Escape hide it. It sits 6px below its target and centred, above it where the window ends, 8px inside the window – `placeNear` in `util/floating.js`. `show(target, text, shortcut)` takes an element or a rect, for what has no element of its own: the bars of a chart. The target’s `aria-describedby` names it while it shows. Hover the buttons.
+
+```html
+<div style="display:flex;gap:16px;align-items:center;padding:4px 0 44px">
+  <nk-btn variant="topbar" aria-label="Style, export and more" data-tooltip="Style, export and more">⋯</nk-btn>
+  <nk-btn variant="topbar" aria-label="Add to Favourites" data-tooltip="Add to Favourites">⭐</nk-btn>
+  <nk-btn variant="topbar" id="ttSidebar" aria-label="Open sidebar">☰</nk-btn>
+</div>
+<nk-tooltip></nk-tooltip>
+<nk-tooltip for="ttSidebar" shortcut="⌘\">Open sidebar</nk-tooltip>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `for` | id | – | The one element it belongs to; without it, every `[data-tooltip]`. |
+| `shortcut` | string | – | With `for`: the shortcut beside the text. |
+| `delay` | ms | `400` | Wait under the pointer. |
+| `placement` | bottom | top | `bottom` | Preferred side. |
+
+**Slots:** `(default)` – With `for`: the text.
+
+**Properties:** `open` · **Methods:** `show(target, text, shortcut)`, `hide()`
+
+**Replaces:** `.nk-tooltip`, `.open`, `.tt-key`
+
+**Small screens:** No hover on a phone: it shows nothing on touch.
+
 ## Data & collaboration (wave 5)
 
-### 3.75 `<nk-database>` – Database
+### 3.77 `<nk-database>` – Database
 
 The view switcher with Notion’s toolbar: child views (`nk-table-view`, `nk-board-view`, `nk-list-view`) become the tabs on the left, `slot="tools"` holds the view’s tools on the right – `<nk-btn variant="tool">` for Filter, Sort and search, then “New” – and `slot="filters"` the `nk-filter-bar` under them. `columns` and `rows` are pushed into every view. `view` selects the active one; `count` on a view shows the row count as badge. No fetching: give it data, listen to events.
 
@@ -2548,7 +2627,7 @@ The view switcher with Notion’s toolbar: child views (`nk-table-view`, `nk-boa
 
 **Small screens:** The tabs scroll sideways when the row gets narrow; the tools keep their place. Tables and boards scroll horizontally; nothing breaks.
 
-### 3.76 `<nk-table-view>` – Table view
+### 3.78 `<nk-table-view>` – Table view
 
 Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text`, `select`, `multi-select`, `date`, `person`, `checkbox`, `url`, `number`, `progress`) and rendered as plain markup by the exported `renderPropertyCell()` – every cell rule starts with `.nk-table`, so a cell element of its own would never be styled. Header clicks sort with `sortable`. A `number` column stands right-aligned in figures of equal width, formatted by its `locale` and `format` (Intl.NumberFormat options); a person’s `color` takes one of the nine names.
 
@@ -2608,7 +2687,7 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
 
 **Small screens:** Scrolls horizontally inside `.nk-table-wrap`.
 
-### 3.77 `<nk-board-view>` – Board view
+### 3.79 `<nk-board-view>` – Board view
 
 Groups rows by a select column (`group-by`, default: the first select column) into one column per option. Cards show the title column and the `meta-keys` (default: dates and progress). Drag a card onto another column: the row’s value changes and `nk-change` fires.
 
@@ -2660,7 +2739,7 @@ Groups rows by a select column (`group-by`, default: the first select column) in
 
 **Small screens:** Columns scroll horizontally.
 
-### 3.78 `<nk-list-view>` – List view
+### 3.80 `<nk-list-view>` – List view
 
 The third database view: one line per row – icon and title, the `meta-keys` on the right (default: the select and date columns, in column order). Dates and text stand as text, selects as tags, a person as avatar and name. Rows fire `nk-select`; `new-row` adds the add row.
 
@@ -2713,7 +2792,7 @@ The third database view: one line per row – icon and title, the `meta-keys` on
 
 **Small screens:** Stays one line per row: the title ends in an ellipsis, the properties keep their place.
 
-### 3.79 `<nk-calendar-view>` – Calendar view
+### 3.81 `<nk-calendar-view>` – Calendar view
 
 The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their dates. `date-key` names the date column (default: the first one) – `YYYY-MM-DD` or `D.M.YYYY`, a range on its start. Today sits on a red pill, days of other months are washed; `weeks` puts the calendar week in front, `weekend` washes the days not worked. A card fires `nk-select` like a row of the table; Today and ‹ › change the month (`nk-month`). In `nk-database` it is a tab like the others and shows the same rows.
 
@@ -2779,7 +2858,7 @@ The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their 
 
 **Small screens:** Keeps seven columns; the days get lower (64px) and the cards smaller.
 
-### 3.80 `<nk-filter-bar>` – Filter bar
+### 3.82 `<nk-filter-bar>` – Filter bar
 
 The filters in effect as NotionKit’s filter pills – `.active` with an accent tint, a × to remove each, a quiet `add` pill at the end – with no inline style. In `slot="filters"` of `nk-database` the row sits under the toolbar. A pill’s label fires `nk-action { action: "edit" }`, the add pill `{ action: "add" }`, each with the clicked button as `anchor` for `menu.show(anchor)`. `bar.apply(rows)` keeps rows where every filter matches by strict equality (`row[key] === value`, so use the option value) – or differs with `op: "is-not"` – and the search text appears in any string field (a person’s `name`); the data logic stays yours. Its own Filter and Sort tools and the search field are there for a bar without a database toolbar.
 
@@ -2815,7 +2894,7 @@ The filters in effect as NotionKit’s filter pills – `.active` with an accent
 
 **Small screens:** The pills wrap onto further rows.
 
-### 3.81 `<nk-comments>` – Comment thread
+### 3.83 `<nk-comments>` – Comment thread
 
 A left-ruled thread of `nk-comment`s with an input row. Enter or the button fires `nk-submit { text }`; appending the new comment is yours.
 
@@ -2852,7 +2931,7 @@ A left-ruled thread of `nk-comment`s with an input row. Enter or the button fire
 
 **Small screens:** Unchanged.
 
-### 3.82 `<nk-comment>` – Comment
+### 3.84 `<nk-comment>` – Comment
 
 One comment: avatar (initials + `color`), bold author, time, body. `slot="head"` adds content after the name.
 
@@ -2878,7 +2957,7 @@ One comment: avatar (initials + `color`), bold author, time, body. `slot="head"`
 
 **Small screens:** Unchanged.
 
-### 3.83 `<nk-ai-thread>` – AI thread
+### 3.85 `<nk-ai-thread>` – AI thread
 
 The conversation column: `nk-ai-msg` children (`role="user"` gets the gradient avatar), followed by an `nk-ai-input-row`. Action buttons in `slot="actions"` fire `nk-action { action, value }` – both carry the button’s `value` (or its text).
 
@@ -2911,7 +2990,7 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.84 `<nk-ai-msg>` – AI message
+### 3.86 `<nk-ai-msg>` – AI message
 
 One message. `role="user"` flips the avatar to the gradient; `badge` is the grey suffix after the name (“· AI”); plain `<button slot="actions">`s form the action row.
 
@@ -2941,7 +3020,7 @@ One message. `role="user"` flips the avatar to the gradient; `badge` is the grey
 
 **Small screens:** Unchanged.
 
-### 3.85 `<nk-ai-input-row>` – AI input row
+### 3.87 `<nk-ai-input-row>` – AI input row
 
 The prompt field with ✨ and a send button. Enter or the button fires `nk-submit { text }` and clears the field.
 
@@ -2983,12 +3062,13 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
-  <nk-sidebar slot="sidebar" id="sidebar">
+  <!-- collapsible: the « collapses it on the desktop, the ☰ and ⌘\ bring it back -->
+  <nk-sidebar slot="sidebar" id="sidebar" collapsible>
     <nk-workspace-switcher slot="workspace" name="MonaHilft"></nk-workspace-switcher>
     <nk-tree id="tree">
       <nk-tree-item icon="🔍" value="search" no-actions>Search<span slot="end" class="nk-kbd-hint"><nk-kbd>⌘</nk-kbd><nk-kbd>K</nk-kbd></span></nk-tree-item>
@@ -3010,7 +3090,7 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
   </nk-sidebar>
 
   <nk-topbar>
-    <nk-btn variant="sidebar" aria-label="Menu">☰</nk-btn>
+    <nk-btn variant="sidebar" aria-label="Menu" data-tooltip="Open sidebar">☰</nk-btn>
     <nk-breadcrumb><span>📊 Project overview</span><span>🚀 NotionKit MVP</span></nk-breadcrumb>
     <nk-btn slot="actions" variant="share">Share</nk-btn>
     <nk-theme-toggle slot="actions"></nk-theme-toggle>
@@ -3064,8 +3144,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3172,8 +3252,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3232,8 +3312,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3310,8 +3390,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3357,8 +3437,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3402,8 +3482,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3457,8 +3537,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.9.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.9.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.10.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.10.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3539,6 +3619,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | A `<pre>` with a Copy button that writes `navigator.clipboard` itself | `<nk-copy-field value="…" mono>` – Copy, the green moment after, the ⌘C fallback; `secret` for keys |
 | A help or detail panel as a positioned `<aside>` with its own close logic | `<nk-peek>` – beside the page on the desktop, a sheet on a phone, Escape and outside clicks included |
 | A file input plus canvas code for an avatar or logo | `<nk-image-picker>` – EXIF rotation, scaling, a data URL in `nk-change` |
+| A positioned `<div>` with a scrim and its own Escape and focus logic for “Are you sure?” | `<nk-dialog alert title="…">` with `<nk-btn slot="actions" value="…">` – `nk-close` says which, and can be cancelled to check an input |
+| `title="…"` on buttons for hints, or a hand-positioned hint | One `<nk-tooltip>` and `data-tooltip` (and `data-tooltip-key`) on the buttons; `tip.show(rect, text)` for chart bars |
+| `hidden` on the sidebar plus an own button to widen the page on the desktop | `<nk-sidebar collapsible>` – the «, the ☰ of `<nk-btn variant="sidebar">`, ⌘\; `nk-collapse` to keep the state |
+| A padding on the page while the side peek is open, or a peek wider by CSS | `<nk-peek resizable inset>` – the width is `--nk-peek-width`, `nk-resize` to keep it |
 | A hand-built month grid, or `<input type="date">` for a date property | `<nk-calendar floating sheet>` and `picker.show(cell)` – the table's `nk-select` names the `key` and the `cell`; `range` for start and end, `weeks` for calendar weeks, `days` for holidays and marks |
 | Rows laid out in a table of weeks to show them by date | `<nk-calendar-view date-key="due">` in `<nk-database>` – a tab like table and board |
 
@@ -3571,8 +3655,8 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-kbd>` | content | – | `(default)` | – |
 | `<nk-code>` | content | `lang`, `highlight` | `(default)` | – |
 | `<nk-quote>` | content | `cite` | `(default)` | – |
-| `<nk-app>` | shell | – | `sidebar`, `(default)` | – |
-| `<nk-sidebar>` | shell | `open` | `workspace`, `(default)`, `footer` | `nk-toggle` |
+| `<nk-app>` | shell | `peek-inset` | `sidebar`, `(default)` | – |
+| `<nk-sidebar>` | shell | `open`, `collapsible`, `collapsed`, `collapse-label` | `workspace`, `(default)`, `footer` | `nk-toggle`, `nk-collapse` |
 | `<nk-workspace-switcher>` | shell | `name`, `avatar`, `open` | `avatar`, `menu` | `nk-toggle`, `nk-select` |
 | `<nk-section-label>` | shell | `addable`, `label` | `(default)` | `nk-action` |
 | `<nk-tree>` | shell | `manual` | `(default)` | `nk-select`, `nk-toggle`, `nk-action` |
@@ -3612,7 +3696,8 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-member-row>` | page | `name`, `mail`, `avatar`, `color` | `role`, `avatar`, `(default)` | – |
 | `<nk-modal>` | overlays | `open`, `pane` | `(default)`, `user`, `nav` | `nk-toggle`, `nk-select` |
 | `<nk-sheet>` | overlays | `open`, `title` | `(default)` | `nk-toggle` |
-| `<nk-peek>` | overlays | `open`, `label`, `close-label` | `(default)`, `actions` | `nk-toggle` |
+| `<nk-peek>` | overlays | `open`, `label`, `close-label`, `resizable` | `(default)`, `actions` | `nk-toggle`, `nk-resize` |
+| `<nk-dialog>` | overlays | `open`, `title`, `alert`, `wide` | `(default)`, `actions` | `nk-close`, `nk-toggle` |
 | `<nk-settings-pane>` | overlays | `name`, `label`, `icon`, `group` | `(default)` | – |
 | `<nk-settings-user>` | overlays | `name`, `mail`, `avatar` | `avatar` | – |
 | `<nk-cmdk>` | overlays | `open`, `hotkey`, `placeholder` | `footer` | `nk-command`, `nk-toggle` |
@@ -3621,6 +3706,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-pop>` | overlays | `open`, `placement`, `bare` | `trigger`, `(default)` | `nk-toggle` |
 | `<nk-emoji-picker>` | overlays | `placeholder`, `value` | – | `nk-select` |
 | `<nk-toast>` | overlays | `open`, `duration`, `icon` | `(default)` | `nk-toggle` |
+| `<nk-tooltip>` | overlays | `for`, `shortcut`, `delay`, `placement` | `(default)` | – |
 | `<nk-database>` | data | `view`, `add-view` | `(default)`, `tools`, `filters` | `nk-view-change`, `nk-action`, `nk-select / nk-change / nk-action` |
 | `<nk-table-view>` | data | `name`, `label`, `badge`, `count` | – | `nk-select`, `nk-change`, `nk-action` |
 | `<nk-board-view>` | data | `name`, `label`, `group-by`, `title-key` | – | `nk-select`, `nk-change`, `nk-action` |
@@ -3651,10 +3737,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.9.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.10.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.9.0 · wrapping NotionKit CSS v1.9.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.10.0 · wrapping NotionKit CSS v1.10.0 · MIT · Jungherz GmbH*

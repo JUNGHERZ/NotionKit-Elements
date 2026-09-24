@@ -22,7 +22,7 @@ export const PAGES = {
     overlaysBody: 'Put <code>nk-modal</code>, <code>nk-sheet</code>, <code>nk-peek</code>, <code>nk-cmdk</code>, <code>nk-toast</code> and a floating <code>nk-menu</code> directly under <code>&lt;body&gt;</code>. Inside a transformed or clipping container a fixed overlay is trapped. Give an overlay you open from a URL hash another id than the hash: the browser scrolls to the fragment target and takes the focus the overlay just gave.',
     footer: 'MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a>',
     editor: 'Editor', editorBody: 'NotionKit ships no editor. <code>nk-block-host</code> is the optical shell; mount TipTap into a light-DOM <code>.nk-block-host</code> with the recipe below (the demo app uses exactly this file). <code>&lt;nk-editor&gt;</code>, a thin TipTap wrapper, follows in v1.1 as an optional import – never part of the core bundle.',
-    heroTitle: 'The NotionKit look, as elements.', heroLead: '85 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.',
+    heroTitle: 'The NotionKit look, as elements.', heroLead: '87 vanilla-JS Web Components wrapping the NotionKit CSS foundation: same word stem, same tokens, Shadow DOM, automatic light/dark sync, native form participation – and pixel parity with the class markup, measured in both themes.',
     ctaDocs: 'Read the docs', ctaApp: 'Open the demo app', ctaShowcase: 'Showcase',
     compareTitle: 'Same look, a fraction of the markup', before: 'Before – .nk-* classes', after: 'After – one element',
     features: [
@@ -60,7 +60,7 @@ export const PAGES = {
     overlaysBody: '<code>nk-modal</code>, <code>nk-sheet</code>, <code>nk-peek</code>, <code>nk-cmdk</code>, <code>nk-toast</code> und ein schwebendes <code>nk-menu</code> direkt unter <code>&lt;body&gt;</code> platzieren. In einem transformierten oder clippenden Container ist ein fixed Overlay gefangen. Ein Overlay, das über einen URL-Hash aufgeht, braucht eine andere id als den Hash: Der Browser scrollt zum Fragment-Ziel und nimmt dem Overlay den Fokus, den es gerade gesetzt hat.',
     footer: 'MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a>',
     editor: 'Editor', editorBody: 'NotionKit liefert keinen Editor. <code>nk-block-host</code> ist die optische Hülle; TipTap wird mit dem Rezept unten in ein Light-DOM-<code>.nk-block-host</code> gemountet (die Demo-App nutzt genau diese Datei). <code>&lt;nk-editor&gt;</code>, ein dünner TipTap-Wrapper, folgt in v1.1 als optionaler Import – nie Teil des Core-Bundles.',
-    heroTitle: 'Der NotionKit-Look, als Elemente.', heroLead: '85 Vanilla-JS-Web-Components über der NotionKit-CSS-Foundation: gleicher Wortstamm, gleiche Tokens, Shadow DOM, automatischer Hell/Dunkel-Abgleich, native Formular-Teilnahme – und Pixel-Parität mit dem Klassen-Markup, in beiden Themes gemessen.',
+    heroTitle: 'Der NotionKit-Look, als Elemente.', heroLead: '87 Vanilla-JS-Web-Components über der NotionKit-CSS-Foundation: gleicher Wortstamm, gleiche Tokens, Shadow DOM, automatischer Hell/Dunkel-Abgleich, native Formular-Teilnahme – und Pixel-Parität mit dem Klassen-Markup, in beiden Themes gemessen.',
     ctaDocs: 'Zur Doku', ctaApp: 'Demo-App öffnen', ctaShowcase: 'Showcase',
     compareTitle: 'Gleicher Look, ein Bruchteil des Markups', before: 'Vorher – .nk-*-Klassen', after: 'Nachher – ein Element',
     features: [
