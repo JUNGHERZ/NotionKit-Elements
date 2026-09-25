@@ -189,10 +189,13 @@ test('tab bar: value ↔ active, nk-change / nk-select, disabled items, drawer i
   });
   expect(events).toEqual({ log: [['select', 'home', false], ['change', 'home']], active: ['home'], value: 'home', current: 'page' });
 
-  // Programmatic value moves `active` and reports once; an unknown value is ignored.
-  expect(await page.evaluate(() => { document.getElementById('bar').value = 'inbox'; document.getElementById('bar').value = 'nope'; return [window.activeTabs(), window.__log.length]; })).toEqual([['inbox'], 3]);
+  // Programmatic value moves `active` and reports once. A value no item has –
+  // a page without a tab, opened from the drawer – marks the drawer item (1.18.0).
+  expect(await page.evaluate(() => { document.getElementById('bar').value = 'inbox'; return [window.activeTabs(), window.__log.length]; })).toEqual([['inbox'], 3]);
+  expect(await page.evaluate(() => { document.getElementById('bar').value = 'settings/notion'; return [window.activeTabs(), window.__log.at(-1), document.getElementById('bar').value]; })).toEqual([['more'], ['change', 'settings/notion'], 'settings/notion']);
+  expect(await page.evaluate(() => { document.getElementById('bar').value = 'inbox'; return window.activeTabs(); })).toEqual(['inbox']);
 
-  // The drawer item toggles the sidebar and never becomes active.
+  // The drawer item toggles the sidebar; a click does not make it active.
   expect(await page.evaluate(() => {
     document.getElementById('more').shadowRoot.querySelector('button').click();
     const open = document.getElementById('sb').open;

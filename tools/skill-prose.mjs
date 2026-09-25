@@ -649,6 +649,9 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Rows laid out in a table of weeks to show them by date | \`<nk-calendar-view date-key="due">\` in \`<nk-database>\` – a tab like table and board |
 | German labels on every instance (\`copy-label="Kopieren"\`, \`today-label="Heute"\`, \`new-row-label="＋ Neue Seite"\` …) | \`<html lang="de">\` – the elements bring the German texts, the accessible names too; keep an attribute for a label with a meaning of its own, \`setStrings()\` for another language |
 | \`<nk-steps selectable>\` or a gallery whose \`nk-select\` sets \`location.href\` | \`href\` on the step, \`href-key\` on the gallery: a real link opens in a new tab and can be copied; cancel \`nk-select\` to route yourself |
+| A \`<div style="display:flex">\` around \`<nk-progress wide label>\` in a panel so the label stays beside the bar | Not needed: with a \`label\` the element sets bar and label in one \`.nk-progress-row\` – beside each other in a flex column too |
+| \`copy-label="⧉"\` or other glyphs to save room in \`<nk-copy-field>\` on a phone | Nothing: on a phone the buttons show icons by themselves, the words stay their names; \`icons\` does it at every width |
+| \`<nk-tab-bar>\` kept on the last tab while a page from the drawer is open | Set \`value\` to that page's own value: a value no item has marks the \`drawer\` item ("More"), as on iOS |
 `,
 
   integration: () => `# 8. Framework Integration

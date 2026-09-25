@@ -4,6 +4,20 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.18.0] – 2026-09-25
+
+Built against NotionKit CSS 1.18.0 (peer `>= 1.18.0`). What LearnHub and Auxdesk found after their move to 1.17.0: LearnHub's finding 17 and Auxdesk's 26, 27 and 28.
+
+### Added
+- **`<nk-copy-field>` shows icons on a phone.** Each button carries an icon beside its word; below 860px, and with the new `icons` attribute at every width, the icon stands in for the word – two overlapping squares for Copy, an eye and an eye struck through for Show and Hide, a green check for the moment after – and a masked key keeps a dozen characters more (Auxdesk's wish 27). The word stays the button's `aria-label`, from the dictionary or `copy-label` and the other attributes, and while the icons show, its tooltip for `<nk-tooltip>`.
+
+### Changed
+- **`<nk-tab-bar>` marks "More" for a page without a tab of its own.** A `value` no item has – a mailbox, the settings, an account page opened from the drawer – makes the `drawer` item active, as iOS marks "More"; a bar without a drawer item marks none. Before, the bar kept the tab the user came from (Auxdesk's finding 28). `nk-change` reports such a value too; without a value the item marked `active`, else the first, is the one, as before.
+
+### Fixed
+- **`<nk-progress wide label>` in a panel keeps its label beside the bar.** The host is `display: contents`, so bar and label were two flex items of the panel and stood one under the other. With a label the element sets both in one `.nk-progress-row` (NotionKit 1.18.0): beside each other, the label on the bar's middle, the bar filling the rest (LearnHub's finding 17). In a property value the label now stands 7px from the bar, as in a table cell, instead of 13px.
+- **`<nk-prop>` on a phone keeps a long copy field inside its card** – NotionKit 1.18.0's fix for Auxdesk's finding 26 reaches the element's shadow root.
+
 ## [1.17.0] – 2026-09-25
 
 Built against NotionKit CSS 1.17.0 (peer `>= 1.17.0`). The rest of LearnHub's consolidated list: German texts in the elements (finding 9) and steps and gallery cards as links (6 and 16), under one link contract. Additive – with `lang="en"` every text stays as it was.
@@ -718,6 +732,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.18.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.16.0
 [1.15.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.15.0

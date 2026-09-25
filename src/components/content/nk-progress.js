@@ -3,6 +3,9 @@ import { NkElement } from '../../base.js';
 // <nk-progress value="72" label="72%"></nk-progress>
 // <nk-progress value="72" label="72 %" wide></nk-progress>   → fills its row, the label stays beside it
 // The bar is `.nk-progress > i` — a child combinator, so both nodes live here.
+// With a label the two form one .nk-progress-row (1.18.0): the label beside
+// the bar in a flex column too – a panel – where the host, display: contents,
+// would let them stand one under the other.
 class NkProgress extends NkElement {
   static get observedAttributes() { return ['value', 'max', 'label', 'wide']; }
 
@@ -11,8 +14,7 @@ class NkProgress extends NkElement {
     this._fill = document.createElement('i');
     this._bar.appendChild(this._fill);
     this._label = this.createElement('span', ['nk-progress-label']);
-    this._wrapper.appendChild(this._bar);
-    this._wrapper.appendChild(this._label);
+    this._row = this.createElement('span', ['nk-progress-row']);
     this._sync();
   }
 
@@ -29,7 +31,8 @@ class NkProgress extends NkElement {
     this._bar.setAttribute('aria-valuemax', max);
     const label = this.getAttribute('label');
     this._label.textContent = label ?? '';
-    this._label.style.display = label === null ? 'none' : '';
+    if (label === null) { if (this._bar.parentNode !== this._wrapper) this._wrapper.replaceChildren(this._bar); }
+    else if (this._bar.parentNode !== this._row) { this._row.replaceChildren(this._bar, this._label); this._wrapper.replaceChildren(this._row); }
   }
 
   get value() { return Number(this.getAttribute('value')) || 0; }

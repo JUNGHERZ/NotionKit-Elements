@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.17.0) wrapping NotionKit CSS v1.17.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.18.0) wrapping NotionKit CSS v1.18.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.17.0)
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -148,17 +148,19 @@ A native `<input>` inside the shadow root, wired into the surrounding form throu
 
 ### 3.3 `<nk-copy-field>` – Copy field
 
-A value to take along – a link, an address, a key – as tall as an input, with Copy inside on the right: it writes the clipboard and says “Copied” in green for a moment; where the clipboard is not allowed, the value is shown and selected for ⌘C. `secret` masks it behind Show/Hide, Copy still copies the real value. `value` set as a property is not reflected, so a key never lands in the markup.
+A value to take along – a link, an address, a key – as tall as an input, with Copy inside on the right: it writes the clipboard and says “Copied” in green for a moment; where the clipboard is not allowed, the value is shown and selected for ⌘C. `secret` masks it behind Show/Hide, Copy still copies the real value. `value` set as a property is not reflected, so a key never lands in the markup. Each button carries an icon beside its word: on a phone, and with `icons` anywhere, the icon stands in for the word – two overlapping squares, an eye, a check in green for the moment after – and a masked key keeps a dozen characters more. The word stays the button’s name, and while the icons show, its tooltip for `nk-tooltip`.
 
 ```html
 <div style="max-width:340px"><nk-copy-field value="https://monahilft.notionkit.app" copy-label="Copy"></nk-copy-field></div>
 <div style="max-width:340px;margin-top:10px"><nk-copy-field value="ntn_4f2a9c1e8b7d6a5f3e2c" secret mono copy-label="Copy" show-label="Show"></nk-copy-field></div>
+<div style="max-width:340px;margin-top:10px"><nk-copy-field value="ntn_4f2a9c1e8b7d6a5f3e2c" secret mono icons copy-label="Copy" show-label="Show"></nk-copy-field></div>
 ```
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `value` | string | – | The value. |
 | `secret` | boolean | – | Masked, with Show/Hide. |
+| `icons` | boolean | – | Icons instead of words at every width, not only on a phone. |
 | `mono` | boolean | – | Monospace – addresses, keys, code. |
 | `wrap` | boolean | – | A long value breaks instead of an ellipsis. |
 | `wide` | boolean | – | Fills the row. |
@@ -169,17 +171,18 @@ A value to take along – a link, an address, a key – as tall as an input, wit
 
 **Events:** `nk-action` `{ action: 'copy', value, ok }` – Copy clicked; `ok` is false where the clipboard refused.
 
-**Properties:** `value`, `secret` · **Methods:** `copy()`
+**Properties:** `value`, `secret`, `icons` · **Methods:** `copy()`
 
-**Replaces:** `.nk-copy-field`, `.cf-value`, `.cf-btn`, `.copied`, `.mono`, `.wrap`, `.wide`
+**Replaces:** `.nk-copy-field`, `.cf-value`, `.cf-btn`, `.copied`, `.mono`, `.wrap`, `.wide`, `.icons`
 
 ```html
 <!-- equivalent class markup -->
-<div style="max-width:340px"><div class="nk-copy-field"><span class="cf-value">https://monahilft.notionkit.app</span><button class="cf-btn">Copy</button></div></div>
-<div style="max-width:340px;margin-top:10px"><div class="nk-copy-field mono"><span class="cf-value">••••••••••••••••••••••••</span><button class="cf-btn">Show</button><button class="cf-btn">Copy</button></div></div>
+<div style="max-width:340px"><div class="nk-copy-field"><span class="cf-value">https://monahilft.notionkit.app</span><button class="cf-btn" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/><rect x="9" y="9" width="12" height="12" rx="2"/></svg><span>Copy</span></button></div></div>
+<div style="max-width:340px;margin-top:10px"><div class="nk-copy-field mono"><span class="cf-value">••••••••••••••••••••••••</span><button class="cf-btn" aria-label="Show"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>Show</span></button><button class="cf-btn" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/><rect x="9" y="9" width="12" height="12" rx="2"/></svg><span>Copy</span></button></div></div>
+<div style="max-width:340px;margin-top:10px"><div class="nk-copy-field mono icons"><span class="cf-value">••••••••••••••••••••••••</span><button class="cf-btn" aria-label="Show"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>Show</span></button><button class="cf-btn" aria-label="Copy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/><rect x="9" y="9" width="12" height="12" rx="2"/></svg><span>Copy</span></button></div></div>
 ```
 
-**Small screens:** Keeps to its column – inside a panel even below its 210px: the value is cut, never the actions.
+**Small screens:** Keeps to its column – inside a panel even below its 210px: the value is cut, never the actions. The actions are icons, with the words as their names and tooltips.
 
 ### 3.4 `<nk-image-picker>` – Image picker
 
@@ -607,10 +610,11 @@ The select option as Notion draws it, in its nine colours. The colour modifier c
 
 ### 3.15 `<nk-progress>` – Progress
 
-A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `role="progressbar"`. `wide` fills its row, and in a flex column – a panel – it stays a 6px bar.
+A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `role="progressbar"`. `wide` fills its row, and in a flex column – a panel – it stays a 6px bar. With a `label` the bar and its label form one `.nk-progress-row`: the label sits beside the bar, on its middle, in a panel too, where the host – `display: contents` – would let them stand one under the other.
 
 ```html
 <nk-progress value="72" label="72%"></nk-progress>
+<div class="nk-panel" style="margin-top:12px"><h3>Progress</h3><nk-progress value="40" label="40%" wide></nk-progress></div>
 ```
 
 | Attribute | Type | Default | Description |
@@ -622,11 +626,12 @@ A 60px bar with an optional label. `value`/`max` set the fill; the bar carries `
 
 
 
-**Replaces:** `.nk-progress`, `.nk-progress-label`, `.wide`
+**Replaces:** `.nk-progress`, `.nk-progress-label`, `.wide`, `.nk-progress-row`
 
 ```html
 <!-- equivalent class markup -->
-<span class="nk-progress"><i style="width:72%"></i></span><span class="nk-progress-label">72%</span>
+<span class="nk-progress-row"><span class="nk-progress"><i style="width:72%"></i></span><span class="nk-progress-label">72%</span></span>
+<div class="nk-panel" style="margin-top:12px"><h3>Progress</h3><span class="nk-progress-row"><span class="nk-progress wide"><i style="width:40%"></i></span><span class="nk-progress-label">40%</span></span></div>
 ```
 
 **Small screens:** Unchanged.
@@ -1198,7 +1203,7 @@ The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in 
 
 ### 3.34 `<nk-tab-bar>` – Tab bar (mobile)
 
-The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it last inside `nk-app`: it is slotted into the main column below the scrolling page, so it never moves and no bottom padding is needed. Keeps exactly one `nk-tab-bar-item` active (listening to `nk-select`); a `drawer` item opens the sidebar instead. Needs NotionKit CSS 1.2.0.
+The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it last inside `nk-app`: it is slotted into the main column below the scrolling page, so it never moves and no bottom padding is needed. Keeps the `nk-tab-bar-item` whose value is `value` active (listening to `nk-select`); a `drawer` item opens the sidebar instead. A value no item has – a page without a tab of its own, opened from the drawer – marks the `drawer` item, as iOS marks “More”; without one no item is active. Needs NotionKit CSS 1.2.0.
 
 ```html
 <div style="max-width:390px;border:1px solid var(--nk-border);border-radius:12px;overflow:hidden"><nk-tab-bar always value="inbox">
@@ -1212,7 +1217,7 @@ The thumb-reachable twin of the sidebar for phones and installed PWAs. Put it la
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `value` | string | – | Active item value (default: the item with `active`, else the first). |
+| `value` | string | – | Active item value (default: the item with `active`, else the first); a value no item has marks the `drawer` item. |
 | `always` | boolean | – | Visible at every width, not only below 860px. |
 | `fixed` | boolean | – | Pinned to the viewport bottom instead of sitting in the column – for standalone PWAs; a spacer keeps its height (`--nk-tab-bar-height` + safe area) in the flow. |
 | `floating` | boolean | – | A fixed capsule with rounded corners instead of the full-width bar. |
@@ -3145,8 +3150,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3227,8 +3232,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3335,8 +3340,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3395,8 +3400,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3473,8 +3478,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3520,8 +3525,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3565,8 +3570,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3620,8 +3625,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.18.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3712,6 +3717,9 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Rows laid out in a table of weeks to show them by date | `<nk-calendar-view date-key="due">` in `<nk-database>` – a tab like table and board |
 | German labels on every instance (`copy-label="Kopieren"`, `today-label="Heute"`, `new-row-label="＋ Neue Seite"` …) | `<html lang="de">` – the elements bring the German texts, the accessible names too; keep an attribute for a label with a meaning of its own, `setStrings()` for another language |
 | `<nk-steps selectable>` or a gallery whose `nk-select` sets `location.href` | `href` on the step, `href-key` on the gallery: a real link opens in a new tab and can be copied; cancel `nk-select` to route yourself |
+| A `<div style="display:flex">` around `<nk-progress wide label>` in a panel so the label stays beside the bar | Not needed: with a `label` the element sets bar and label in one `.nk-progress-row` – beside each other in a flex column too |
+| `copy-label="⧉"` or other glyphs to save room in `<nk-copy-field>` on a phone | Nothing: on a phone the buttons show icons by themselves, the words stay their names; `icons` does it at every width |
+| `<nk-tab-bar>` kept on the last tab while a page from the drawer is open | Set `value` to that page's own value: a value no item has marks the `drawer` item ("More"), as on iOS |
 
 
 # 7. Quick Reference
@@ -3720,7 +3728,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 |---|---|---|---|---|
 | `<nk-btn>` | forms | `variant`, `active`, `small`, `disabled` | `(default)` | `click` |
 | `<nk-input>` | forms | `value`, `type`, `placeholder`, `name` | – | `nk-change`, `nk-input` |
-| `<nk-copy-field>` | forms | `value`, `secret`, `mono`, `wrap` | – | `nk-action` |
+| `<nk-copy-field>` | forms | `value`, `secret`, `icons`, `mono` | – | `nk-action` |
 | `<nk-image-picker>` | forms | `src`, `initials`, `square`, `max` | – | `nk-change`, `nk-error` |
 | `<nk-calendar>` | forms | `value`, `month`, `min`, `max` | – | `nk-change`, `nk-month`, `nk-toggle` |
 | `<nk-textarea>` | forms | `value`, `placeholder`, `rows`, `name` | `(default)` | `nk-change`, `nk-input` |
@@ -3826,10 +3834,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Texts | `src/util/strings.js` – the English and German dictionary and `setStrings()`; `NkElement#str(key)` reads it in the element's language, `onStringsChanged()` runs after `setStrings()` and when `<html lang>` changes |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.17.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.18.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.17.0 · wrapping NotionKit CSS v1.17.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.18.0 · wrapping NotionKit CSS v1.18.0 · MIT · Jungherz GmbH*

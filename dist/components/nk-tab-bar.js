@@ -14,8 +14,12 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // stylesheet hides it above 860px – there the sidebar is the navigation –
 // and shows it below; `always` shows it at every width (previews, phone
 // frames), `fixed` pins it to the viewport (standalone PWAs) with a spacer
-// holding its place, `floating` makes it a capsule. Exactly one item is `active`; a
-// `drawer` item opens the sidebar instead of becoming active.
+// holding its place, `floating` makes it a capsule. The item whose value is
+// the bar's `value` is `active`; a `drawer` item opens the sidebar instead of
+// becoming active when clicked. A value no item has – a page without a tab
+// of its own, opened from the drawer – marks the drawer item, as iOS marks
+// "More" (1.18.0); without one no item is active. Without a value the item
+// marked `active`, else the first, is the one.
 class NkTabBar extends NkElement {
   static get observedAttributes() { return ['value', 'always', 'fixed', 'floating', 'label']; }
 
@@ -46,16 +50,18 @@ class NkTabBar extends NkElement {
   }
 
   _sync() {
-    const items = this.items.filter(i => !i.hasAttribute('drawer'));
+    const items = this.items.filter(i => !i.hasAttribute('drawer')), drawers = this.items.filter(i => i.hasAttribute('drawer'));
     if (!items.length) return;
     let value = this.getAttribute('value');
-    if (value === null || !items.some(i => this._valueOf(i) === value)) {
+    if (value === null) {
       const preset = items.find(i => i.hasAttribute('active')) || items[0];
       value = this._valueOf(preset);
     }
+    const known = items.some(i => this._valueOf(i) === value);
     for (const item of items) {
       if (this._valueOf(item) === value) item.setAttribute('active', ''); else item.removeAttribute('active');
     }
+    drawers.forEach((item, n) => { if (!known && n === 0) item.setAttribute('active', ''); else item.removeAttribute('active'); });
     this._value = value;
   }
 
