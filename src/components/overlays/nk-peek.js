@@ -1,5 +1,6 @@
 import { NkElement } from '../../base.js';
 import { lockScroll, unlockScroll, inertOutside, deepActiveElement } from '../../util/focus.js';
+import { openLayer, closeLayer } from '../../util/layers.js';
 
 // <nk-peek id="peek" label="Database Table-View">
 //   <nk-btn slot="actions" variant="topbar" aria-label="Open as page"><svg …></svg></nk-btn>
@@ -108,8 +109,10 @@ class NkPeek extends NkElement {
         lockScroll();
         this._undoInert = inertOutside(this);
       }
+      openLayer(this, () => this.close());
       requestAnimationFrame(() => this._box.focus({ preventScroll: true }));
     } else {
+      closeLayer(this);
       if (this._modal) { this._modal = false; this._box.removeAttribute('aria-modal'); unlockScroll(); this._undoInert?.(); this._undoInert = null; }
       const active = deepActiveElement();
       const inside = active && (this.contains(active) || this._shadow.contains(active) || active === document.body);
@@ -122,7 +125,6 @@ class NkPeek extends NkElement {
   setupEvents() {
     this._onClose = () => this.close();
     this._onBackdrop = (e) => { if (e.target === this._backdrop) this.close(); };
-    this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) this.close(); };
     // Bubble phase, after the page's own handlers: a click that showed the
     // peek again (another row) must not close it.
     this._onOutside = (e) => {
@@ -156,7 +158,6 @@ class NkPeek extends NkElement {
     this._handle.addEventListener('pointermove', this._onResizeMove);
     this._handle.addEventListener('lostpointercapture', this._onResizeEnd);
     this._handle.addEventListener('keydown', this._onResizeKey);
-    document.addEventListener('keydown', this._onKey);
     document.addEventListener('click', this._onOutside);
     addEventListener('resize', this._onViewport);
   }
@@ -168,7 +169,7 @@ class NkPeek extends NkElement {
     this._handle?.removeEventListener('pointermove', this._onResizeMove);
     this._handle?.removeEventListener('lostpointercapture', this._onResizeEnd);
     this._handle?.removeEventListener('keydown', this._onResizeKey);
-    document.removeEventListener('keydown', this._onKey);
+    closeLayer(this);
     document.removeEventListener('click', this._onOutside);
     removeEventListener('resize', this._onViewport);
     if (this._insetApp) { this._app()?.removeAttribute('peek-inset'); this._insetApp = false; }

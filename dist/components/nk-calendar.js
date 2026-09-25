@@ -1,7 +1,8 @@
 import { NkFormElement } from './base.js';
 import { p as parseDay, i as isoOf, C as CHEVRONS, r as resolveLocale, f as firstWeekday, m as monthGrid, w as weekLabel, a as weekdayNames, b as isoWeek, s as stepMonth, c as addDays } from './shared/dates-a32DcW1l.js';
 import { p as placeUnder } from './shared/floating-DOK73b_D.js';
-import { d as deepActiveElement } from './shared/focus-C4tbSNND.js';
+import { d as deepActiveElement } from './shared/focus-D55JGjRA.js';
+import { c as closeLayer, o as openLayer } from './shared/layers-D9YYYA5g.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-calendar name="due" value="2026-06-02" weeks weekend="6,0"></nk-calendar>
@@ -272,14 +273,13 @@ class NkCalendar extends NkFormElement {
       this._draw();
       this.emit('nk-change', { value: '', start: null, end: null, time: null });
     };
-    // Floating: a tap outside closes it and reaches nothing else; Escape closes (captured, before a modal around it).
+    // Floating: a tap outside closes it and reaches nothing else; Escape closes it, before a dialog around it (util/layers.js).
     this._onOutside = (e) => {
       const path = e.composedPath();
       if (path.includes(this) || (this._anchor && path.includes(this._anchor))) return;
       e.preventDefault(); e.stopPropagation();
       this.close();
     };
-    this._onEscape = (e) => { if (e.key === 'Escape' && this.getBoolAttr('floating') && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); } };
     this._grid.addEventListener('click', this._onGrid);
     this._grid.addEventListener('keydown', this._onKey);
     this._todayBtn.addEventListener('click', this._onToday);
@@ -287,7 +287,6 @@ class NkCalendar extends NkFormElement {
     this._next.addEventListener('click', this._onNext);
     this._timeInput.addEventListener('change', this._onTime);
     this._clear.addEventListener('click', this._onClear);
-    document.addEventListener('keydown', this._onEscape, true);
     if (this.getBoolAttr('open')) document.addEventListener('click', this._onOutside, true);
   }
 
@@ -299,7 +298,7 @@ class NkCalendar extends NkFormElement {
     this._next?.removeEventListener('click', this._onNext);
     this._timeInput?.removeEventListener('change', this._onTime);
     this._clear?.removeEventListener('click', this._onClear);
-    document.removeEventListener('keydown', this._onEscape, true);
+    closeLayer(this);
     document.removeEventListener('click', this._onOutside, true);
   }
 
@@ -323,7 +322,9 @@ class NkCalendar extends NkFormElement {
       this._returnFocus = deepActiveElement();
       if (this._returnFocus?.matches(':focus-visible')) requestAnimationFrame(() => this.focusDay());
       document.addEventListener('click', this._onOutside, true);
+      if (this.getBoolAttr('floating')) openLayer(this, () => this.close());
     } else {
+      closeLayer(this);
       document.removeEventListener('click', this._onOutside, true);
       const back = this._returnFocus;
       this._returnFocus = null;

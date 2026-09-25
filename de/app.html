@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.18.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -703,7 +703,8 @@
   /* ============ Dialogs: move to trash, a new view ============ */
   // A button with a value closes the dialog with it – nk-close says which;
   // Escape and the backdrop close it without.
-  trashDialog.addEventListener('nk-close', e => { if (e.detail.value === 'trash') toast.show('In den Papierkorb verschoben'); });
+  trashDialog.addEventListener('nk-close', e => { if (e.detail.value === 'trash') toast.show('In den Papierkorb verschoben', { action: { label: 'Rückgängig', value: 'undo' } }); });
+  toast.addEventListener('nk-action', e => { if (e.detail.action === 'undo') toast.show('Wiederhergestellt'); });
   viewDialog.addEventListener('nk-close', e => {
     if (e.detail.value === 'create') toast.show(`Ansicht „${viewName.value || 'Unbenannt'}“ als ${viewLayout.value} angelegt`);
   });

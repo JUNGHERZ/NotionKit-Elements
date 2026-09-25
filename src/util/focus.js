@@ -44,6 +44,12 @@ export function deepActiveElement() {
   return el;
 }
 
+/** Whether `node` lies inside `root`, across shadow roots – Node.contains() stops at them. */
+export function containsDeep(root, node) {
+  for (let n = node; n; n = n.parentNode ?? n.host) if (n === root) return true;
+  return false;
+}
+
 /** The first tabbable element inside a light-DOM subtree, looking into shadow roots. */
 export function firstFocusable(root) {
   const SEL = 'a[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable="true"], [contenteditable="plaintext-only"]';

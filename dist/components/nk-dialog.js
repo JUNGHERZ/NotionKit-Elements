@@ -1,5 +1,6 @@
 import { NkElement } from './base.js';
-import { d as deepActiveElement, l as lockScroll, i as inertOutside, f as firstFocusable, u as unlockScroll } from './shared/focus-C4tbSNND.js';
+import { d as deepActiveElement, l as lockScroll, i as inertOutside, f as firstFocusable, u as unlockScroll } from './shared/focus-D55JGjRA.js';
+import { o as openLayer, c as closeLayer } from './shared/layers-D9YYYA5g.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-dialog id="trash" title="Move “Roadmap” to trash?" alert>
@@ -80,8 +81,10 @@ class NkDialog extends NkElement {
       this.inert = false;
       lockScroll();
       this._undoInert = inertOutside(this);
+      openLayer(this, () => this.close(''));
       requestAnimationFrame(() => (this.querySelector('[autofocus]') || firstFocusable(this) || this._box).focus({ preventScroll: true }));
     } else {
+      closeLayer(this);
       unlockScroll();
       this._undoInert?.(); this._undoInert = null;
       this.inert = this._wasInert;
@@ -93,7 +96,6 @@ class NkDialog extends NkElement {
 
   setupEvents() {
     this._onBackdrop = (e) => { if (e.target === this._backdrop) this.close(''); };
-    this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(''); } };
     // A button in the actions with a value closes it, and one with data-close
     // anywhere inside; a submit button is the form's.
     this._onClick = (e) => {
@@ -113,7 +115,6 @@ class NkDialog extends NkElement {
     this.addEventListener('click', this._onClick);
     this.addEventListener('submit', this._onSubmit);
     this._actionsSlot.addEventListener('slotchange', this._onSlot);
-    document.addEventListener('keydown', this._onKey, true);
     this._onSlot();
   }
 
@@ -122,8 +123,7 @@ class NkDialog extends NkElement {
     this.removeEventListener('click', this._onClick);
     this.removeEventListener('submit', this._onSubmit);
     this._actionsSlot?.removeEventListener('slotchange', this._onSlot);
-    document.removeEventListener('keydown', this._onKey, true);
-    if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
+    if (this._wasOpen) { closeLayer(this); unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
 
   onAttributeChanged(name, oldValue, value) {

@@ -1,5 +1,6 @@
 import { NkElement } from './base.js';
-import { d as deepActiveElement } from './shared/focus-C4tbSNND.js';
+import { d as deepActiveElement, c as containsDeep } from './shared/focus-D55JGjRA.js';
+import { o as openLayer, c as closeLayer } from './shared/layers-D9YYYA5g.js';
 import { p as placeUnder } from './shared/floating-DOK73b_D.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
@@ -49,13 +50,28 @@ class NkMenu extends NkElement {
       this._returnFocus = deepActiveElement();
       if (this._returnFocus?.matches(':focus-visible')) requestAnimationFrame(() => this.focusFirst());
       document.addEventListener('click', this._onOutside, true);
+      if (this.getBoolAttr('floating')) { openLayer(this, () => this.close()); this._scrollToStart(); }
     } else {
+      closeLayer(this);
       document.removeEventListener('click', this._onOutside, true);
       const back = this._returnFocus;
       this._returnFocus = null;
-      if (back?.isConnected && this.contains(document.activeElement)) back.focus({ preventScroll: true });
+      // The focus behind shadow hosts: document.activeElement stops at the
+      // host of a view that holds the menu (1.19.0).
+      const active = deepActiveElement();
+      if (back?.isConnected && active && (containsDeep(this, active) || active === document.body)) back.focus({ preventScroll: true });
     }
     this.emit('nk-toggle', { open });
+  }
+
+  // A long menu opens at its top again, or at its first checked item (1.19.0):
+  // it kept where it had been scrolled to, its heading out of sight.
+  _scrollToStart() {
+    this._box.scrollTop = 0;
+    const item = this.items.find(i => i.hasAttribute('checked'))?.shadowRoot?.querySelector('.nk-menu-item');
+    if (!item) return;
+    const box = this._box.getBoundingClientRect(), r = item.getBoundingClientRect();
+    if (r.bottom > box.bottom) this._box.scrollTop += r.top - box.top - (box.height - r.height) / 2;
   }
 
   /** Opens under `anchor` (any element, display: contents hosts included). */
@@ -95,17 +111,14 @@ class NkMenu extends NkElement {
       e.preventDefault(); e.stopPropagation();
       this.close();
     };
-    // Captured, so a menu inside a modal or sheet closes before they do.
-    this._onEscape = (e) => { if (e.key === 'Escape' && this.getBoolAttr('floating') && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); } };
     this._onSelect = () => { if (this.getBoolAttr('floating')) this.close(); };
-    document.addEventListener('keydown', this._onEscape, true);
     this.addEventListener('nk-select', this._onSelect);
     if (this.getBoolAttr('open')) document.addEventListener('click', this._onOutside, true);
   }
 
   teardownEvents() {
     this.removeEventListener('keydown', this._onKey);
-    document.removeEventListener('keydown', this._onEscape, true);
+    closeLayer(this);
     this.removeEventListener('nk-select', this._onSelect);
     document.removeEventListener('click', this._onOutside, true);
   }

@@ -652,6 +652,9 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | A \`<div style="display:flex">\` around \`<nk-progress wide label>\` in a panel so the label stays beside the bar | Not needed: with a \`label\` the element sets bar and label in one \`.nk-progress-row\` – beside each other in a flex column too |
 | \`copy-label="⧉"\` or other glyphs to save room in \`<nk-copy-field>\` on a phone | Nothing: on a phone the buttons show icons by themselves, the words stay their names; \`icons\` does it at every width |
 | \`<nk-tab-bar>\` kept on the last tab while a page from the drawer is open | Set \`value\` to that page's own value: a value no item has marks the \`drawer\` item ("More"), as on iOS |
+| A banner under the topbar for "New version · Reload", or a toast plus a separate Undo button | \`toast.show('Moved to trash', { action: { label: 'Undo', value: 'undo' } })\` – a button and an ×, it stays until used; \`nk-action\` names the action |
+| \`stopImmediatePropagation()\` or a check of your own so that Escape in a dialog closes only its date picker | Nothing: Escape closes the layer that opened last – the floating date picker or menu first, then the dialog |
+| A \`focusBack()\` helper after a menu, the modal or the palette opened from a view's shadow root | Nothing: the overlays find the focused control behind shadow hosts and give the focus back to it |
 `,
 
   integration: () => `# 8. Framework Integration

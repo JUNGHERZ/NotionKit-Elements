@@ -139,7 +139,7 @@ const PAIRS = [
   ['<nk-dialog id="viewDialog" title="New view">', '<nk-dialog id="viewDialog" title="Neue Ansicht">'],
   ['<nk-field label="Name" stacked><nk-input id="viewName" placeholder="Timeline">', '<nk-field label="Name" stacked><nk-input id="viewName" placeholder="Zeitleiste">'],
   ['<nk-select id="viewLayout"><option>Table</option><option>Board</option><option>List</option><option>Calendar</option></nk-select>', '<nk-select id="viewLayout"><option>Tabelle</option><option>Board</option><option>Liste</option><option>Kalender</option></nk-select>'],
-  ["toast.show('Moved to trash')", "toast.show('In den Papierkorb verschoben')"],
+  ["toast.show('Moved to trash', { action: { label: 'Undo', value: 'undo' } })", "toast.show('In den Papierkorb verschoben', { action: { label: 'Rückgängig', value: 'undo' } })"], ["toast.show('Restored')", "toast.show('Wiederhergestellt')"],
   ["toast.show(`View “${viewName.value || 'Untitled'}” created as ${viewLayout.value.toLowerCase()}`)", "toast.show(`Ansicht „${viewName.value || 'Unbenannt'}“ als ${viewLayout.value} angelegt`)"],
 ];
 

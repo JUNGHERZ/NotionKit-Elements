@@ -4,6 +4,20 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.19.0] – 2026-09-25
+
+Built against NotionKit CSS 1.19.1 (peer `>= 1.19.1`). Auxdesk's wish 24 and what SupaGantt's mock-ups found – 14, 15 and 16 – together with a toast that never hid.
+
+### Added
+- **`<nk-toast>` with an action.** `toast.show('Moved to trash', { action: { label: 'Undo', value: 'undo' } })`, or a `<button slot="action">`, gives the toast a button and an ×, as Notion's "Moved to trash · Undo". Such a toast stays until one of them is used, unless `show()` names a duration, and waits while the pointer or the focus is on it. The action fires `nk-action { action, value, label }` and, unless cancelled, closes the toast – a handler that shows the next message, "Restored", keeps it open; Escape closes it while the focus is inside, and the focus goes back to where it came from (Auxdesk's wish 24, which showed "A new version of Auxdesk · Reload" as a banner under the topbar). The demo's trash toast offers Undo.
+
+### Fixed
+- **A toast without a `duration` attribute hides by itself again.** `show()` read the missing attribute as 0 – "stay" – so every such toast stayed on screen since 1.0.0, the demo's too; the default of 2200ms applies again, and a set attribute or `show()`'s `duration` still win.
+- **Escape closes the layer that opened last.** A floating date picker or menu opened from a `<nk-dialog>` and the dialog both listened for Escape on the document in the capture phase, where `stopPropagation()` does not part them, so one Escape closed both. The overlays – modal, sheet, dialog, side peek, palette, popover, floating menu and date picker – now join one stack while they are open, and Escape goes to its top only; a second one closes the dialog (SupaGantt's finding 15).
+- **The focus goes back into a shadow root.** `<nk-menu>` checked `document.activeElement`, `<nk-modal>` and `<nk-cmdk>` remembered it – both stop at the host of a view that holds the trigger, so the focus ended on `<body>`. They look behind shadow hosts now, like the dialog and the sheet (SupaGantt's finding 14).
+- **A long floating menu opens at its top again** – or with its first checked item in view. It kept the place it had been scrolled to, its heading out of sight (SupaGantt's finding 16).
+- **A toast whose message is empty takes no place**, so static text in its slot no longer stands a second gap away from the icon.
+
 ## [1.18.0] – 2026-09-25
 
 Built against NotionKit CSS 1.18.0 (peer `>= 1.18.0`). What LearnHub and Auxdesk found after their move to 1.17.0: LearnHub's finding 17 and Auxdesk's 26, 27 and 28.
@@ -732,6 +746,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.19.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.16.0

@@ -1,5 +1,6 @@
 import { NkElement } from '../../base.js';
-import { lockScroll, unlockScroll, inertOutside, firstFocusable } from '../../util/focus.js';
+import { lockScroll, unlockScroll, inertOutside, firstFocusable, deepActiveElement } from '../../util/focus.js';
+import { openLayer, closeLayer } from '../../util/layers.js';
 
 // <nk-modal id="settings">
 //   <nk-settings-user slot="user" name="…" mail="…"></nk-settings-user>
@@ -93,14 +94,17 @@ class NkModal extends NkElement {
     if (open === this._wasOpen) return;
     this._wasOpen = open;
     if (open) {
-      this._returnFocus = document.activeElement;
+      // Behind shadow hosts too: a trigger in a view's shadow root gets the focus back.
+      this._returnFocus = deepActiveElement();
       lockScroll();
       this._undoInert = inertOutside(this);
+      openLayer(this, () => this.close());
       requestAnimationFrame(() => {
         const target = this._rows.querySelector('.nk-tree-item.active') || firstFocusable(this) || this._box;
         target.focus({ preventScroll: true });
       });
     } else {
+      closeLayer(this);
       unlockScroll();
       this._undoInert?.(); this._undoInert = null;
       const back = this._returnFocus;
@@ -111,7 +115,6 @@ class NkModal extends NkElement {
 
   setupEvents() {
     this._onBackdrop = (e) => { if (e.target === this._backdrop) this.close(); };
-    this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); } };
     this._onNavClick = (e) => { const row = e.target.closest('[data-pane]'); if (row) { row.focus(); this.pane = row.dataset.pane; } };
     this._onNavKey = (e) => {
       const row = e.target.closest?.('[data-pane]');
@@ -125,7 +128,6 @@ class NkModal extends NkElement {
     };
     this._onSlot = () => this.requestNav();
     this._backdrop.addEventListener('click', this._onBackdrop);
-    document.addEventListener('keydown', this._onKey);
     this._rows.addEventListener('click', this._onNavClick);
     this._rows.addEventListener('keydown', this._onNavKey);
     this._slot.addEventListener('slotchange', this._onSlot);
@@ -133,11 +135,10 @@ class NkModal extends NkElement {
 
   teardownEvents() {
     this._backdrop?.removeEventListener('click', this._onBackdrop);
-    document.removeEventListener('keydown', this._onKey);
     this._rows?.removeEventListener('click', this._onNavClick);
     this._rows?.removeEventListener('keydown', this._onNavKey);
     this._slot?.removeEventListener('slotchange', this._onSlot);
-    if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
+    if (this._wasOpen) { closeLayer(this); unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
 
   onStringsChanged() { this._nav.setAttribute('aria-label', this.str('settings')); }

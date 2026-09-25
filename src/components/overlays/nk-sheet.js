@@ -1,5 +1,6 @@
 import { NkElement } from '../../base.js';
 import { lockScroll, unlockScroll, inertOutside, firstFocusable, deepActiveElement } from '../../util/focus.js';
+import { openLayer, closeLayer } from '../../util/layers.js';
 
 // <nk-sheet id="more" title="More">
 //   <nk-tree manual>
@@ -52,8 +53,10 @@ class NkSheet extends NkElement {
       this._returnFocus = deepActiveElement();
       lockScroll();
       this._undoInert = inertOutside(this);
+      openLayer(this, () => this.close());
       requestAnimationFrame(() => (firstFocusable(this) || this._box).focus({ preventScroll: true }));
     } else {
+      closeLayer(this);
       unlockScroll();
       this._undoInert?.(); this._undoInert = null;
       const back = this._returnFocus;
@@ -64,15 +67,12 @@ class NkSheet extends NkElement {
 
   setupEvents() {
     this._onBackdrop = (e) => { if (e.target === this._backdrop) this.close(); };
-    this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); } };
     this._backdrop.addEventListener('click', this._onBackdrop);
-    document.addEventListener('keydown', this._onKey);
   }
 
   teardownEvents() {
     this._backdrop?.removeEventListener('click', this._onBackdrop);
-    document.removeEventListener('keydown', this._onKey);
-    if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
+    if (this._wasOpen) { closeLayer(this); unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
 
   onAttributeChanged(name, oldValue, value) {

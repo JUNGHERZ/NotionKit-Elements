@@ -1,5 +1,6 @@
 import { NkElement } from './base.js';
-import { l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-C4tbSNND.js';
+import { d as deepActiveElement, l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-D55JGjRA.js';
+import { o as openLayer, c as closeLayer } from './shared/layers-D9YYYA5g.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // Subsequence scoring for the command palette: every query character must
@@ -153,14 +154,16 @@ class NkCmdk extends NkElement {
     if (open === this._wasOpen) return;
     this._wasOpen = open;
     if (open) {
-      this._returnFocus = document.activeElement;
+      this._returnFocus = deepActiveElement();
       this._input.value = '';
       this._index = 0;
       this._renderList();
       lockScroll();
       this._undoInert = inertOutside(this);
+      openLayer(this, () => this.close());
       requestAnimationFrame(() => this._input.focus({ preventScroll: true }));
     } else {
+      closeLayer(this);
       unlockScroll();
       this._undoInert?.(); this._undoInert = null;
       const back = this._returnFocus;
@@ -171,8 +174,7 @@ class NkCmdk extends NkElement {
 
   setupEvents() {
     this._onDocKey = (e) => {
-      if (this._matchesHotkey(e)) { e.preventDefault(); this.toggle(); return; }
-      if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); }
+      if (this._matchesHotkey(e)) { e.preventDefault(); this.toggle(); }
     };
     this._onInput = () => { this._index = 0; this._renderList(); };
     this._onInputKey = (e) => {
@@ -201,7 +203,7 @@ class NkCmdk extends NkElement {
     this._list?.removeEventListener('mousemove', this._onListMove);
     this._list?.removeEventListener('mousedown', this._onListDown);
     this._backdrop?.removeEventListener('click', this._onBackdrop);
-    if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
+    if (this._wasOpen) { closeLayer(this); unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
 
   onAttributeChanged(name) {

@@ -1,4 +1,5 @@
 import { NkElement } from './base.js';
+import { c as closeLayer, o as openLayer } from './shared/layers-D9YYYA5g.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-pop placement="bottom-start">
@@ -49,12 +50,10 @@ class NkPop extends NkElement {
       this.toggle();
     };
     this._onDocClick = (e) => { if (this.getBoolAttr('open') && !e.composedPath().includes(this)) this.close(); };
-    this._onKey = (e) => { if (e.key === 'Escape' && this.getBoolAttr('open')) this.close(); };
     this._onSelect = (e) => { if (e.target !== this) this.close(); };
     this._onSlot = () => this._syncSurface();
     this.addEventListener('click', this._onTrigger);
     document.addEventListener('click', this._onDocClick);
-    document.addEventListener('keydown', this._onKey);
     this._float.addEventListener('nk-select', this._onSelect);
     this._slot.addEventListener('slotchange', this._onSlot);
   }
@@ -62,7 +61,7 @@ class NkPop extends NkElement {
   teardownEvents() {
     this.removeEventListener('click', this._onTrigger);
     document.removeEventListener('click', this._onDocClick);
-    document.removeEventListener('keydown', this._onKey);
+    closeLayer(this);
     this._float?.removeEventListener('nk-select', this._onSelect);
     this._slot?.removeEventListener('slotchange', this._onSlot);
   }
@@ -71,6 +70,7 @@ class NkPop extends NkElement {
     if (name === 'bare') this._syncSurface();
     if (name === 'open') {
       const open = this.getBoolAttr('open');
+      if (open) openLayer(this, () => this.close()); else closeLayer(this);
       for (const el of this._triggerSlot.assignedElements()) el.setAttribute('aria-expanded', open ? 'true' : 'false');
       this.emit('nk-toggle', { open });
     }

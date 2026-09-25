@@ -48,7 +48,7 @@ export const WORDS = {
     closeSidebar: 'Close sidebar', openSidebar: 'Open sidebar', resize: 'Resize', moveToTrash: 'Move to trash', create: 'Create', fieldName: 'Name', layout: 'Layout', newView: 'New view',
     trashTitle: 'Move “NotionKit MVP” to trash?', trashText: 'The page and its sub-pages can be restored from Trash for 30 days.', moreTip: 'Style, export and more', favouriteTip: 'Add to Favourites', timelineName: 'Timeline',
     locale: 'en', calWeek: 'W', calToday: 'Today', calPrev: 'Previous month', calNext: 'Next month', calClear: 'Clear', calTime: 'Time', holidayCorpus: 'Corpus Christi', calendar: '📅 Calendar',
-    toastText: 'Settings saved', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
+    toastText: 'Settings saved', trashed: 'Moved to trash', undo: 'Undo', closeLabel: 'Close', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
   },
   de: {
     save: 'Speichern', cancel: 'Abbrechen', delete: 'Löschen', share: 'Teilen', newPage: 'Neue Seite', percent: '\u00a0%', copyLink: 'Link kopieren',
@@ -97,6 +97,6 @@ export const WORDS = {
     closeSidebar: 'Seitenleiste schließen', openSidebar: 'Seitenleiste öffnen', resize: 'Breite ändern', moveToTrash: 'In den Papierkorb', create: 'Erstellen', fieldName: 'Name', layout: 'Layout', newView: 'Neue Ansicht',
     trashTitle: '„NotionKit MVP“ in den Papierkorb verschieben?', trashText: 'Die Seite und ihre Unterseiten lassen sich 30 Tage lang aus dem Papierkorb wiederherstellen.', moreTip: 'Stil, Export und mehr', favouriteTip: 'Zu Favoriten hinzufügen', timelineName: 'Zeitleiste',
     locale: 'de', calWeek: 'KW', calToday: 'Heute', calPrev: 'Voriger Monat', calNext: 'Nächster Monat', calClear: 'Löschen', calTime: 'Uhrzeit', holidayCorpus: 'Fronleichnam', calendar: '📅 Kalender',
-    toastText: 'Einstellungen gespeichert', showToast: 'Toast zeigen', openModal: 'Einstellungen öffnen', openPalette2: 'Palette öffnen (⌘K)', pickEmoji: 'Icon wählen', navigate: 'navigieren', openHint: 'öffnen', toggleHint: 'umschalten',
+    toastText: 'Einstellungen gespeichert', trashed: 'In den Papierkorb verschoben', undo: 'Rückgängig', closeLabel: 'Schließen', showToast: 'Toast zeigen', openModal: 'Einstellungen öffnen', openPalette2: 'Palette öffnen (⌘K)', pickEmoji: 'Icon wählen', navigate: 'navigieren', openHint: 'öffnen', toggleHint: 'umschalten',
   },
 };

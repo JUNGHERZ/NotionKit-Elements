@@ -1,5 +1,6 @@
 import { NkElement } from '../../base.js';
-import { lockScroll, unlockScroll, inertOutside } from '../../util/focus.js';
+import { lockScroll, unlockScroll, inertOutside, deepActiveElement } from '../../util/focus.js';
+import { openLayer, closeLayer } from '../../util/layers.js';
 import { fuzzyScore } from '../../util/fuzzy.js';
 
 // <nk-cmdk id="palette" placeholder="Search or type a command …"></nk-cmdk>
@@ -133,14 +134,16 @@ class NkCmdk extends NkElement {
     if (open === this._wasOpen) return;
     this._wasOpen = open;
     if (open) {
-      this._returnFocus = document.activeElement;
+      this._returnFocus = deepActiveElement();
       this._input.value = '';
       this._index = 0;
       this._renderList();
       lockScroll();
       this._undoInert = inertOutside(this);
+      openLayer(this, () => this.close());
       requestAnimationFrame(() => this._input.focus({ preventScroll: true }));
     } else {
+      closeLayer(this);
       unlockScroll();
       this._undoInert?.(); this._undoInert = null;
       const back = this._returnFocus;
@@ -151,8 +154,7 @@ class NkCmdk extends NkElement {
 
   setupEvents() {
     this._onDocKey = (e) => {
-      if (this._matchesHotkey(e)) { e.preventDefault(); this.toggle(); return; }
-      if (e.key === 'Escape' && this.getBoolAttr('open')) { e.stopPropagation(); this.close(); }
+      if (this._matchesHotkey(e)) { e.preventDefault(); this.toggle(); }
     };
     this._onInput = () => { this._index = 0; this._renderList(); };
     this._onInputKey = (e) => {
@@ -181,7 +183,7 @@ class NkCmdk extends NkElement {
     this._list?.removeEventListener('mousemove', this._onListMove);
     this._list?.removeEventListener('mousedown', this._onListDown);
     this._backdrop?.removeEventListener('click', this._onBackdrop);
-    if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
+    if (this._wasOpen) { closeLayer(this); unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
 
   onAttributeChanged(name) {
