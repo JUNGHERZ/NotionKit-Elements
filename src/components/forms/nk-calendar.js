@@ -21,8 +21,9 @@ import { deepActiveElement } from '../../util/focus.js';
 // default from the locale, Monday where the browser cannot say), weeks,
 // weekend (weekdays not worked, "6,0" for Saturday and Sunday), range, time,
 // clearable, label and the texts today-label, prev-label, next-label,
-// week-label, time-label, clear-label. `time` belongs to single days; a
-// range has none.
+// week-label, time-label, clear-label – without them English or German
+// after the language (1.17.0). `time` belongs to single days; a range has
+// none.
 // days (property, or JSON attribute): { 'YYYY-MM-DD': { off, label, marks } }
 // – `off` greys a holiday, `label` names the day (tooltip and screen
 // reader), `marks` puts up to three dots in the nine colours on it.
@@ -151,9 +152,9 @@ class NkCalendar extends NkFormElement {
     const label = this.getAttribute('label');
     if (label) this._cal.setAttribute('aria-label', label); else this._cal.removeAttribute('aria-label');
     this._title.textContent = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(g.first);
-    this._todayBtn.textContent = this.getAttribute('today-label') || 'Today';
-    this._prev.setAttribute('aria-label', this.getAttribute('prev-label') || 'Previous month');
-    this._next.setAttribute('aria-label', this.getAttribute('next-label') || 'Next month');
+    this._todayBtn.textContent = this.getAttribute('today-label') || this.str('today');
+    this._prev.setAttribute('aria-label', this.getAttribute('prev-label') || this.str('previousMonth'));
+    this._next.setAttribute('aria-label', this.getAttribute('next-label') || this.str('nextMonth'));
 
     // The one tab stop: the focused day, else the chosen one, else the 1st.
     const cells = Array.from({ length: 42 }, (_, i) => isoOf(g.day(i)));
@@ -190,8 +191,8 @@ class NkCalendar extends NkFormElement {
 
     const time = this._hasTime, clearable = this.getBoolAttr('clearable');
     this._timeInput.value = this._time;
-    this._timeInput.setAttribute('aria-label', this.getAttribute('time-label') || 'Time');
-    this._clear.textContent = this.getAttribute('clear-label') || 'Clear';
+    this._timeInput.setAttribute('aria-label', this.getAttribute('time-label') || this.str('time'));
+    this._clear.textContent = this.getAttribute('clear-label') || this.str('clear');
     this._foot.replaceChildren(...[time && this._timeInput, clearable && this._clear].filter(Boolean));
     if (time || clearable) this._cal.appendChild(this._foot); else this._foot.remove();
     this._syncForm();
@@ -300,6 +301,8 @@ class NkCalendar extends NkFormElement {
     document.removeEventListener('keydown', this._onEscape, true);
     document.removeEventListener('click', this._onOutside, true);
   }
+
+  onStringsChanged() { if (this._grid) this._draw(); }
 
   onAttributeChanged(name, _old, value) {
     if (name === 'value') { this._readValue(value); this._draw(); return; }

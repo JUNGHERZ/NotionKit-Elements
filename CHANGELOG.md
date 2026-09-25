@@ -4,6 +4,22 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.17.0] – 2026-09-25
+
+Built against NotionKit CSS 1.17.0 (peer `>= 1.17.0`). The rest of LearnHub's consolidated list: German texts in the elements (finding 9) and steps and gallery cards as links (6 and 16), under one link contract. Additive – with `lang="en"` every text stays as it was.
+
+### Added
+- **The elements speak English and German.** Button labels, placeholders and the names a screen reader announces – 38 texts, from Copy, Today and ＋ New page to the names of the palette and the modal – come from a dictionary after the element's language: its nearest `lang` attribute, across shadow roots, else `<html lang>`. `de`, `de-DE` or `de-AT` give German, everything else English. An attribute on the element still wins, so a label with a meaning of its own stays. The fixed accessible names – Message, Send, Breadcrumb, Command palette, Comment, Search emoji, Settings, Title, Change icon – come from the same dictionary; before, they could not be changed at all. README lists every key with its attribute, English and German.
+- **`setStrings(strings, lang?)` and `builtInStrings(lang)`**, from the bundle and from `base.js`: add or replace texts for every language or for one – a language of its own too. The elements on the page take them at once, and again when `<html lang>` changes.
+- **`this.str(key)` and `onStringsChanged()` on `NkElement`**: a project's own element reads the dictionary in its language, its own keys too, and applies new texts when they change.
+- **Percentages as `Intl` writes them.** A progress cell, a board card and a gallery card write 45 as `45%` in English and `45 %` in German, with a no-break space – the column's `locale` first, else the page's language. `formatPercent(column, value)` is exported beside `formatDate()`.
+- **`<nk-steps>`: a step with `href` is a link.** Its label becomes `<a class="st-label" href>`, with or without `selectable`, and opens in a new tab with a middle click or offers "Copy link" – for chapters whose addresses are shared. Steps without `href` stay buttons.
+- **`<nk-gallery-view href-key>`: cards as links.** `href-key` names the row field with a card's address – a string or `{ href }`. Such a card is `<a class="nk-card" href>` in a `.card-item` that carries `role="listitem"`; rows without an address and galleries without `href-key` stay as they were.
+- **The link contract, for both:** a plain left click and Enter fire the cancelable `nk-select` as before – `{ index, value, step }` and `{ row, id, value }`; cancel it and the browser stays, for a router of your own, otherwise it follows the link (and a step becomes current). A middle click or one with Cmd, Ctrl, Shift or Alt fires nothing and does what a link does; Space on a link card scrolls, like on any link. The mark beside a step's link counts as the link.
+
+### Changed
+- **The German demo sets no text attributes any more.** `de/app.html` takes Kopieren, Heute, Seitenleiste schließen and the others from `<html lang="de">`; `app.html` dropped the English ones it only carried to be translated. The docs have a Languages section, show the defaults of text attributes in both languages and write percentages and the new-row text in the page's language.
+
 ## [1.16.0] – 2026-09-25
 
 Built against NotionKit CSS 1.16.0 (peer `>= 1.16.0`). LearnHub checked all its open findings against 1.14.0; this release takes the fixes and small additions from that list – 3, 4, 5, 10, 11 and 15 – together with Auxdesk's finding 25. Links for steps and gallery cards and German texts follow in 1.17.0.
@@ -702,6 +718,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.17.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.17.0
 [1.16.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.16.0
 [1.15.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.14.0

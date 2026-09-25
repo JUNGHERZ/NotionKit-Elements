@@ -23,7 +23,8 @@ import { deepActiveElement } from '../../util/focus.js';
 // brings it back; ⌘\ or Ctrl+\ toggles it (on a phone the drawer).
 // `collapsed` is the state, collapse() / expand() / toggleCollapsed() the
 // API, nk-collapse { collapsed } the moment to keep it. collapse-label names
-// the « (default "Close sidebar") and is its tooltip for <nk-tooltip>.
+// the « (default "Close sidebar", in German "Seitenleiste schließen") and is
+// its tooltip for <nk-tooltip>.
 const COLLAPSE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 17-5-5 5-5M11 17l-5-5 5-5"/></svg>';
 const phone = () => matchMedia('(max-width: 860px)').matches;
 
@@ -53,7 +54,7 @@ class NkSidebar extends NkElement {
   }
 
   _syncCollapse() {
-    const label = this.getAttribute('collapse-label') || 'Close sidebar';
+    const label = this.getAttribute('collapse-label') || this.str('closeSidebar');
     this._collapse.hidden = !this.getBoolAttr('collapsible');
     this._collapse.setAttribute('aria-label', label);
     this._collapse.dataset.tooltip = label;
@@ -104,6 +105,8 @@ class NkSidebar extends NkElement {
     this._collapse?.removeEventListener('click', this._onCollapse);
     document.removeEventListener('keydown', this._onKey);
   }
+
+  onStringsChanged() { this._syncCollapse(); }
 
   onAttributeChanged(name) {
     if (name === 'open') {

@@ -10,8 +10,8 @@ class NkAiInputRow extends NkElement {
     this._row = this.createElement('div', ['nk-ai-input-row']);
     this._icon = document.createElement('span');
     this._icon.style.fontSize = '14px';
-    this._input = this.createElement('input', [], { type: 'text', 'aria-label': 'Message' });
-    this._btn = this.createElement('button', ['nk-ai-send'], { type: 'button', 'aria-label': 'Send' });
+    this._input = this.createElement('input', [], { type: 'text' });
+    this._btn = this.createElement('button', ['nk-ai-send'], { type: 'button' });
     this._btn.textContent = '↑';
     this._row.append(this._icon, this._input, this._btn);
     this._wrapper.appendChild(this._row);
@@ -19,7 +19,9 @@ class NkAiInputRow extends NkElement {
   }
 
   _sync() {
-    this._input.placeholder = this.getAttribute('placeholder') || 'Ask something …';
+    this._input.placeholder = this.getAttribute('placeholder') || this.str('askPlaceholder');
+    this._input.setAttribute('aria-label', this.str('message'));
+    this._btn.setAttribute('aria-label', this.str('send'));
     if (this.hasAttribute('value') && this._input.value !== this.getAttribute('value')) this._input.value = this.getAttribute('value');
     this._input.disabled = this._btn.disabled = this.getBoolAttr('disabled');
     const icon = this.getAttribute('icon') ?? '✨';
@@ -47,6 +49,7 @@ class NkAiInputRow extends NkElement {
   }
 
   onAttributeChanged() { this._sync(); }
+  onStringsChanged() { this._sync(); }
   focus(o) { this._input?.focus(o); }
   get value() { return this._input?.value ?? ''; }
   set value(v) { if (this._input) this._input.value = v ?? ''; }

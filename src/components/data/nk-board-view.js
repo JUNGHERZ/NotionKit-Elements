@@ -1,5 +1,5 @@
 import { NkElement } from '../../base.js';
-import { renderPropertyCell, tagFor, textOf, formatDate } from '../../util/property-cell.js';
+import { renderPropertyCell, tagFor, textOf, formatDate, formatPercent } from '../../util/property-cell.js';
 
 // <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
 // Groups rows by a select column (default: the first select column); one
@@ -55,7 +55,7 @@ class NkBoardView extends NkElement {
           const v = row[c.key];
           if (v === undefined || v === null || v === '') continue;
           const s = document.createElement('span');
-          if (c.type === 'progress') s.textContent = `▰ ${v}%`;
+          if (c.type === 'progress') s.textContent = `▰ ${formatPercent(c, v)}`;
           else if (c.type === 'date') s.textContent = `📅 ${formatDate(c, v)}`;
           else s.appendChild(renderPropertyCell(c, v, row));
           meta.appendChild(s);

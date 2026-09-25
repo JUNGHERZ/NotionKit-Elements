@@ -34,7 +34,7 @@ class NkTreeItem extends NkElement {
     this._labelSlot.appendChild(this._labelText);
     this._label.appendChild(this._labelSlot);
     this._actions = this.createElement('span', ['actions']);
-    for (const [action, glyph, title] of [['add', '＋', 'Add'], ['more', '⋯', 'More']]) {
+    for (const [action, glyph, title] of [['add', '＋', this.str('add')], ['more', '⋯', this.str('more')]]) {
       const b = this.createElement('span', [], { 'data-action': action, role: 'button', title });
       b.textContent = glyph;
       this._actions.appendChild(b);
@@ -119,6 +119,8 @@ class NkTreeItem extends NkElement {
     this._row?.removeEventListener('click', this._onRowClick);
     this._row?.removeEventListener('keydown', this._onKey);
   }
+
+  onStringsChanged() { for (const b of this._actions.children) b.title = this.str(b.dataset.action); }
 
   onAttributeChanged(name) {
     if (name === 'label') this.assignSlots();

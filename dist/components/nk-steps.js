@@ -18,6 +18,12 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // nk-select { index, value, step } – index counts from 1, like `current` –
 // and, unless cancelled, makes that step current. `horizontal` sets the
 // steps in one row above a wizard.
+// A step with `href` (1.17.0) shows its label as a link, <a class="st-label">,
+// with or without `selectable` – to open a chapter in a new tab or copy its
+// address. A plain click, or Enter, fires the same nk-select; cancelling it
+// keeps the browser from following the link, for a router of your own. A
+// middle click or one with Cmd, Ctrl, Shift or Alt fires nothing and does
+// what a link does.
 class NkSteps extends NkElement {
   static get observedAttributes() { return ['steps', 'current', 'label', 'selectable', 'horizontal']; }
 
@@ -45,7 +51,7 @@ class NkSteps extends NkElement {
     // Rebuilding drops the focused label; the new one at that place takes it back.
     const focused = this.shadowRoot?.activeElement?.closest?.('li')?.dataset.index;
     this._list.replaceChildren(...this._items().map((_, i) => {
-      const n = i + 1, { label: text, desc, state } = this._step(i);
+      const n = i + 1, { label: text, desc, state, href } = this._step(i);
       // A state of its own wins; without one, the steps before `current` are done.
       const done = state ? state === 'done' : n < current, skipped = state === 'skipped';
       const li = this.createElement('li', ['nk-step'], { 'data-index': String(n) });
@@ -55,7 +61,8 @@ class NkSteps extends NkElement {
       if (n === current) li.setAttribute('aria-current', 'step');
       const mark = this.createElement('span', ['st-mark'], { 'aria-hidden': 'true' });
       mark.textContent = done ? '✓' : skipped ? '–' : String(n);
-      const body = selectable ? this.createElement('button', ['st-label'], { type: 'button' }) : document.createElement('span');
+      const body = href != null && href !== '' ? this.createElement('a', ['st-label'], { href: String(href) })
+        : selectable ? this.createElement('button', ['st-label'], { type: 'button' }) : document.createElement('span');
       body.textContent = text ?? '';
       if (desc) { const d = this.createElement('span', ['st-desc']); d.textContent = desc; body.appendChild(d); }
       li.append(mark, body);
@@ -66,9 +73,18 @@ class NkSteps extends NkElement {
 
   setupEvents() {
     this._onClick = (e) => {
-      if (!this.getBoolAttr('selectable')) return;
       const li = e.target.closest?.('li.nk-step');
-      if (li && this._list.contains(li)) this.select(Number(li.dataset.index));
+      if (!li || !this._list.contains(li)) return;
+      const link = li.querySelector('a.st-label');
+      if (link) {
+        // The link contract: a plain left click is a selection, any other
+        // one the browser's. The mark beside the link counts as the link.
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (!link.contains(e.target)) { link.click(); return; }
+        if (!this.select(Number(li.dataset.index))) e.preventDefault();
+        return;
+      }
+      if (this.getBoolAttr('selectable')) this.select(Number(li.dataset.index));
     };
     this._list.addEventListener('click', this._onClick);
   }

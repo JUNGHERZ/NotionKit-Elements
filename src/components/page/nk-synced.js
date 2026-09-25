@@ -14,8 +14,9 @@ class NkSynced extends NkElement {
     this._sync();
   }
 
-  _sync() { this._badge.textContent = this.getAttribute('badge') ?? '⟳ synced'; }
+  _sync() { this._badge.textContent = this.getAttribute('badge') ?? this.str('synced'); }
   onAttributeChanged() { this._sync(); }
+  onStringsChanged() { this._sync(); }
 
   get badge() { return this.getAttribute('badge'); }
   set badge(v) { this.setAttribute('badge', v); }

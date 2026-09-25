@@ -10,7 +10,8 @@ import { NkElement } from '../../base.js';
 // ⌘C. `secret` masks it behind a Show/Hide toggle; Copy still copies the
 // real value. `value` set as a property is not reflected, so a key never
 // lands in the markup. Fires nk-action { action: 'copy', value, ok }. The
-// texts are attributes: copy-label, copied-label, show-label, hide-label.
+// texts come in English or German after the language (1.17.0, setStrings()
+// for others); copy-label, copied-label, show-label, hide-label set them here.
 class NkCopyField extends NkElement {
   static get observedAttributes() { return ['value', 'mono', 'wrap', 'wide', 'secret', 'copy-label', 'copied-label', 'show-label', 'hide-label']; }
 
@@ -34,9 +35,9 @@ class NkCopyField extends NkElement {
     // but a button that is not there cannot be tabbed to either.
     if (secret && !this._show.isConnected) this._copy.before(this._show);
     if (!secret) this._show.remove();
-    this._show.textContent = this._revealed ? (this.getAttribute('hide-label') || 'Hide') : (this.getAttribute('show-label') || 'Show');
+    this._show.textContent = this._revealed ? (this.getAttribute('hide-label') || this.str('hide')) : (this.getAttribute('show-label') || this.str('show'));
     this._show.setAttribute('aria-pressed', String(!!this._revealed));
-    this._copy.textContent = this._copied ? (this.getAttribute('copied-label') || 'Copied') : (this.getAttribute('copy-label') || 'Copy');
+    this._copy.textContent = this._copied ? (this.getAttribute('copied-label') || this.str('copied')) : (this.getAttribute('copy-label') || this.str('copy'));
     this._copy.classList.toggle('copied', !!this._copied);
   }
 
@@ -52,6 +53,8 @@ class NkCopyField extends NkElement {
     this._show?.removeEventListener('click', this._onShow);
     clearTimeout(this._timer);
   }
+
+  onStringsChanged() { this._sync(); }
 
   onAttributeChanged(name, _old, value) {
     if (name === 'value') this._val = value ?? '';

@@ -2,7 +2,7 @@
 // language-neutral. Same idea as tools/words.mjs in the NotionKit foundation.
 export const WORDS = {
   en: {
-    save: 'Save', cancel: 'Cancel', delete: 'Delete', share: 'Share', newPage: 'New page',
+    save: 'Save', cancel: 'Cancel', delete: 'Delete', share: 'Share', newPage: 'New page', percent: '%', copyLink: 'Copy link',
     inProgress: 'In progress', done: 'Done', planned: 'Planned', design: 'Design',
     tagGray: 'Not started', tagBrown: 'Archive', tagYellow: 'Review', tagPink: 'Idea', tagRed: 'Blocked', bannerDanger: 'The connection to Notion was lost.',
     calloutText: 'A callout carries one thought that must not be missed.',
@@ -51,7 +51,7 @@ export const WORDS = {
     toastText: 'Settings saved', showToast: 'Show toast', openModal: 'Open settings', openPalette2: 'Open palette (⌘K)', pickEmoji: 'Pick an icon', navigate: 'navigate', openHint: 'open', toggleHint: 'toggle',
   },
   de: {
-    save: 'Speichern', cancel: 'Abbrechen', delete: 'Löschen', share: 'Teilen', newPage: 'Neue Seite',
+    save: 'Speichern', cancel: 'Abbrechen', delete: 'Löschen', share: 'Teilen', newPage: 'Neue Seite', percent: '\u00a0%', copyLink: 'Link kopieren',
     inProgress: 'In Arbeit', done: 'Erledigt', planned: 'Geplant', design: 'Design',
     tagGray: 'Nicht begonnen', tagBrown: 'Archiv', tagYellow: 'Review', tagPink: 'Idee', tagRed: 'Blockiert', bannerDanger: 'Die Verbindung zu Notion ist abgerissen.',
     calloutText: 'Ein Callout trägt einen Gedanken, der nicht untergehen darf.',

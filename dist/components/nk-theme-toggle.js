@@ -15,7 +15,7 @@ class NkThemeToggle extends NkElement {
 
   render() {
     this._btn = this.createElement('button', ['nk-topbar-btn', 'nk-theme-toggle'], { type: 'button' });
-    this._btn.title = this.getAttribute('title') || 'Toggle light / dark';
+    this._syncTitle();
     this._wrapper.appendChild(this._btn);
     const root = document.documentElement;
     let stored = null;
@@ -46,8 +46,11 @@ class NkThemeToggle extends NkElement {
     window.removeEventListener('message', this._onMessage);
   }
 
+  _syncTitle() { this._btn.title = this.getAttribute('title') || this.str('toggleTheme'); }
+  onStringsChanged() { this._syncTitle(); }
+
   onAttributeChanged(name) {
-    if (name === 'title' && this._btn) this._btn.title = this.getAttribute('title') || 'Toggle light / dark';
+    if (name === 'title' && this._btn) this._syncTitle();
   }
 
   /** Sets the theme on <html>, persists it and reports it. */

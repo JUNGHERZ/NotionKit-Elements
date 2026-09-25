@@ -10,7 +10,7 @@ class NkEmojiPicker extends NkElement {
 
   render() {
     this._box = this.createElement('div', ['nk-pop']);
-    this._search = this.createElement('input', ['nk-emoji-search'], { type: 'search', autocomplete: 'off', 'aria-label': 'Search emoji' });
+    this._search = this.createElement('input', ['nk-emoji-search'], { type: 'search', autocomplete: 'off' });
     this._grid = this.createElement('div', ['nk-emoji-grid'], { role: 'listbox' });
     this._cats = this.createElement('div', ['nk-emoji-cats'], { role: 'tablist' });
     this._box.append(this._search, this._grid, this._cats);
@@ -22,7 +22,11 @@ class NkEmojiPicker extends NkElement {
     this._syncAttrs();
   }
 
-  _syncAttrs() { this._search.placeholder = this.getAttribute('placeholder') || 'Search…'; }
+  _syncAttrs() {
+    this._search.placeholder = this.getAttribute('placeholder') || this.str('emojiPlaceholder');
+    this._search.setAttribute('aria-label', this.str('searchEmoji'));
+  }
+  onStringsChanged() { this._syncAttrs(); }
 
   _renderCats() {
     this._cats.replaceChildren();

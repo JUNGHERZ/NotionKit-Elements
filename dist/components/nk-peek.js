@@ -27,7 +27,8 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // Notion: from `min` (380) to `max` (all but 320px of the window). The width
 // is the token --nk-peek-width, set on :root; `width` (px) sets it too, and
 // nk-resize { width } fires when a drag or a key ends – the moment to keep
-// it. resize-label names the edge (default "Resize").
+// it. resize-label names the edge (default "Resize", in German "Breite
+// ändern").
 // `inset`: while it is open on the desktop, the page's <nk-app> gets
 // `peek-inset` – its main column makes room instead of lying under the peek.
 const CLOSE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></svg>';
@@ -74,7 +75,7 @@ class NkPeek extends NkElement {
 
   _syncResize() {
     this._handle.hidden = !this.getBoolAttr('resizable');
-    this._handle.setAttribute('aria-label', this.getAttribute('resize-label') || 'Resize');
+    this._handle.setAttribute('aria-label', this.getAttribute('resize-label') || this.str('resize'));
     this._handle.setAttribute('aria-valuemin', this._min);
     this._handle.setAttribute('aria-valuenow', Math.round(this.width));
   }
@@ -91,7 +92,7 @@ class NkPeek extends NkElement {
   _syncLabels() {
     const label = this.getAttribute('label');
     if (label) this._box.setAttribute('aria-label', label); else this._box.removeAttribute('aria-label');
-    this._close.setAttribute('aria-label', this.getAttribute('close-label') || 'Close');
+    this._close.setAttribute('aria-label', this.getAttribute('close-label') || this.str('close'));
   }
 
   _syncOpen() {
@@ -175,6 +176,8 @@ class NkPeek extends NkElement {
     if (this._modal) { this._modal = false; unlockScroll(); this._undoInert?.(); this._undoInert = null; }
     this._wasOpen = false;
   }
+
+  onStringsChanged() { this._syncResize(); this._syncLabels(); }
 
   onAttributeChanged(name, _old, value) {
     if (name === 'width') { this._setWidth(Number(value)); return; }

@@ -38,7 +38,7 @@ class NkCmdk extends NkElement {
   render() {
     this._backdrop = this.createElement('div', ['nk-cmdk-backdrop']);
     this._backdrop.inert = true;
-    this._box = this.createElement('div', ['nk-cmdk'], { role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Command palette' });
+    this._box = this.createElement('div', ['nk-cmdk'], { role: 'dialog', 'aria-modal': 'true' });
     const row = this.createElement('div', ['nk-cmdk-input-row']);
     const glass = document.createElement('span');
     glass.style.fontSize = '15px';
@@ -63,7 +63,11 @@ class NkCmdk extends NkElement {
     this._syncOpen();
   }
 
-  _syncAttrs() { this._input.placeholder = this.getAttribute('placeholder') || 'Search or type a command …'; }
+  _syncAttrs() {
+    this._input.placeholder = this.getAttribute('placeholder') || this.str('commandPlaceholder');
+    this._box.setAttribute('aria-label', this.str('commandPalette'));
+  }
+  onStringsChanged() { this._syncAttrs(); }
 
   /** Filtered, flat list in group order, best matches first within a group. */
   results() {

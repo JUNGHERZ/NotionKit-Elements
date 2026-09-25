@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.16.0) wrapping NotionKit CSS v1.16.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.17.0) wrapping NotionKit CSS v1.17.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.16.0)
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -72,6 +72,8 @@ Never mix the full bundle with the per-component files – each brings its own `
 | Light-DOM children | Elements that copy children (`nk-select` options, breadcrumb crumbs) watch them; `element.refresh()` is the escape hatch. The empty string is a valid value. |
 | Moving elements | An element moved in the DOM keeps working – listeners and theme registration are re-armed on every connect. |
 | Attributes are live | Every documented attribute re-renders when changed after connect (`stat.setAttribute('value', '129')`, `el.open = true`); properties reflect to attributes where a setter is listed. |
+| Language | The texts an element brings along – button labels, placeholders, accessible names – come in English and German after its nearest `lang` (across shadow roots), else `<html lang>`. An attribute on the element wins. `setStrings({ key: '…' }, lang?)` adds or replaces texts, and the elements on the page take them at once; your own `NkElement` reads them with `this.str('key')`. Percentages follow as `Intl` writes them (`45 %` in German). |
+| Links | A step of `nk-steps` with `href` and a card of `nk-gallery-view` whose row has an address (`href-key`) are real `<a href>`: a middle click opens a new tab, the context menu copies the link. A plain click or Enter fires the cancelable `nk-select` – cancel it to route yourself; middle and modified clicks fire nothing. |
 
 
 # 3. Element Catalog (88 elements)
@@ -160,10 +162,10 @@ A value to take along – a link, an address, a key – as tall as an input, wit
 | `mono` | boolean | – | Monospace – addresses, keys, code. |
 | `wrap` | boolean | – | A long value breaks instead of an ellipsis. |
 | `wide` | boolean | – | Fills the row. |
-| `copy-label` | string | `Copy` | Button text. |
-| `copied-label` | string | `Copied` | Text for the moment after. |
-| `show-label` | string | `Show` | Reveal (secret). |
-| `hide-label` | string | `Hide` | Mask again. |
+| `copy-label` | string | `Copy · Kopieren` | Button text. |
+| `copied-label` | string | `Copied · Kopiert` | Text for the moment after. |
+| `show-label` | string | `Show · Zeigen` | Reveal (secret). |
+| `hide-label` | string | `Hide · Verbergen` | Mask again. |
 
 **Events:** `nk-action` `{ action: 'copy', value, ok }` – Copy clicked; `ok` is false where the clipboard refused.
 
@@ -198,9 +200,9 @@ A picture for a person or a workspace, on NotionKit’s profile row: round, or `
 | `quality` | 0–1 | `0.82` | JPEG / WebP quality. |
 | `accept` | string | `image/*` | File dialog filter. |
 | `label` | string | – | Names the group. |
-| `choose-label` | string | `Upload image` | Without a picture. |
-| `change-label` | string | `Change image` | With a picture. |
-| `remove-label` | string | `Remove` | Remove button. |
+| `choose-label` | string | `Upload image · Bild hochladen` | Without a picture. |
+| `change-label` | string | `Change image · Bild ändern` | With a picture. |
+| `remove-label` | string | `Remove · Entfernen` | Remove button. |
 
 **Events:** `nk-change` `{ dataUrl, width, height, size }` – A picture chosen – or removed, with an empty dataUrl. · `nk-error` `{ message, name }` – The file cannot be decoded.
 
@@ -247,12 +249,12 @@ Notion’s date picker as one element (NotionKit 1.9.0): a month with Today and 
 | `open` | boolean | – | Floating: shown. |
 | `align` | end | start | `end` | Floating: right or left edge on the anchor’s. |
 | `label` | string | – | Names the month group for screen readers. |
-| `today-label` | string | `Today` | Today button. |
-| `prev-label` | string | `Previous month` | Names ‹. |
-| `next-label` | string | `Next month` | Names ›. |
+| `today-label` | string | `Today · Heute` | Today button. |
+| `prev-label` | string | `Previous month · Voriger Monat` | Names ‹. |
+| `next-label` | string | `Next month · Nächster Monat` | Names ›. |
 | `week-label` | string | `W · KW` | Head of the week column. |
-| `time-label` | string | `Time` | Names the time field. |
-| `clear-label` | string | `Clear` | Clear button. |
+| `time-label` | string | `Time · Uhrzeit` | Names the time field. |
+| `clear-label` | string | `Clear · Leeren` | Clear button. |
 | `name` | string | – | Form field name (FormData key). |
 | `disabled` | boolean | – | Disables the control. |
 | `required` | boolean | – | A value is required; validity is set on the host. |
@@ -938,7 +940,7 @@ The left rail: workspace slot on top, a scrolling default slot for the tree, a p
 | `open` | boolean | – | Drawer state on small screens (no effect on desktop). |
 | `collapsible` | boolean | – | Shows the « that collapses it on the desktop, and ⌘\. |
 | `collapsed` | boolean | – | Collapsed on the desktop (no effect on a phone). |
-| `collapse-label` | string | `Close sidebar` | Name and tooltip of the «. |
+| `collapse-label` | string | `Close sidebar · Seitenleiste schließen` | Name and tooltip of the «. |
 
 **Slots:** `workspace` – `nk-workspace-switcher`. · `(default)` – The tree (scrolls). · `footer` – Pinned bottom rows (Settings, Trash).
 
@@ -1624,7 +1626,7 @@ Content that appears in several places, framed with a badge.
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `badge` | string | `⟳ synced` | Badge text. |
+| `badge` | string | `⟳ synced · ⟳ synchronisiert` | Badge text. |
 
 **Slots:** `(default)` – Content.
 
@@ -1739,13 +1741,13 @@ Plain `<button value>` children stay in the light DOM (the stylesheet’s slotte
 
 ### 3.52 `<nk-steps>` – Steps
 
-A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked `aria-current="step"`. `current` counts from 1; one past the last marks every step done, and `next()` moves on. The `steps` attribute is a comma-separated list; the property also takes `{ label, desc }` objects for a line under the label. A `state` in such an object – `done`, `skipped` or `open` – wins over the order, for a wizard that lets a step be skipped while a later one is done; a skipped step shows a dashed ring around a dash. `selectable` makes each label a button: a click or Enter fires `nk-select { index, value, step }` – `index` counts from 1, like `current` – and, unless cancelled, makes that step current. `horizontal` sets the steps in one row above a wizard.
+A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked `aria-current="step"`. `current` counts from 1; one past the last marks every step done, and `next()` moves on. The `steps` attribute is a comma-separated list; the property also takes `{ label, desc }` objects for a line under the label. A `state` in such an object – `done`, `skipped` or `open` – wins over the order, for a wizard that lets a step be skipped while a later one is done; a skipped step shows a dashed ring around a dash. `selectable` makes each label a button: a click or Enter fires `nk-select { index, value, step }` – `index` counts from 1, like `current` – and, unless cancelled, makes that step current. A step with `href` shows its label as a link, with or without `selectable` – to open a chapter in a new tab or copy its address. A plain click, and Enter, fire the same `nk-select`; cancel it and the browser stays, for a router of your own. A middle click or one with Cmd, Ctrl, Shift or Alt fires nothing and does what a link does. `horizontal` sets the steps in one row above a wizard.
 
 ```html
 <nk-steps label="Connect your own model" current="2"></nk-steps>
 <script>{ document.currentScript.previousElementSibling.steps = [{ label: 'Choose a provider', desc: 'Anthropic' }, 'Enter the API key', 'Test the connection']; }</script>
 <div style="margin-top:16px"><nk-steps id="stepsWizard" label="Connect your own model" current="3" horizontal selectable></nk-steps></div>
-<script>{ document.getElementById('stepsWizard').steps = [{ label: 'Choose a provider', state: 'done' }, { label: 'Enter the API key', desc: 'skipped', state: 'skipped' }, 'Test the connection']; }</script>
+<script>{ document.getElementById('stepsWizard').steps = [{ label: 'Choose a provider', state: 'done', href: '#nk-steps' }, { label: 'Enter the API key', desc: 'skipped', state: 'skipped' }, 'Test the connection']; }</script>
 ```
 
 | Attribute | Type | Default | Description |
@@ -1756,7 +1758,7 @@ A short flow – connecting an account, setting up a model – calm and vertical
 | `selectable` | boolean | – | Labels are buttons that jump to their step. |
 | `horizontal` | boolean | – | One row above a wizard. |
 
-**Events:** `nk-select` `{ index, value, step }` – A step clicked (with `selectable`); cancel it to stay.
+**Events:** `nk-select` `{ index, value, step }` – A step clicked (with `selectable`, or its link with a plain click or Enter); cancel it to stay.
 
 **Properties:** `steps`, `current`, `selectable`, `horizontal` · **Methods:** `next()`, `select(index)`
 
@@ -1770,7 +1772,7 @@ A short flow – connecting an account, setting up a model – calm and vertical
   <li class="nk-step"><span class="st-mark">3</span><span>Test the connection</span></li>
 </ol>
 <div style="margin-top:16px"><ol class="nk-steps horizontal" aria-label="Connect your own model">
-  <li class="nk-step done"><span class="st-mark">✓</span><button type="button" class="st-label">Choose a provider</button></li>
+  <li class="nk-step done"><span class="st-mark">✓</span><a class="st-label" href="#nk-steps">Choose a provider</a></li>
   <li class="nk-step skipped"><span class="st-mark">–</span><button type="button" class="st-label">Enter the API key<span class="st-desc">skipped</span></button></li>
   <li class="nk-step current" aria-current="step"><span class="st-mark">3</span><button type="button" class="st-label">Test the connection</button></li>
 </ol></div>
@@ -2205,12 +2207,12 @@ Notion’s side peek: a database row opens at the right edge, full height, next 
 |---|---|---|---|
 | `open` | boolean | – | Shown. |
 | `label` | string | – | The dialog’s name – the entry’s title. |
-| `close-label` | string | `Close` | Name of ». |
+| `close-label` | string | `Close · Schließen` | Name of ». |
 | `resizable` | boolean | – | The left edge makes it wider or narrower – pointer and arrow keys; the width is the token `--nk-peek-width` on `:root`. |
 | `width` | px | `560` | Sets the width, within min and max. |
 | `min` | px | `380` | Narrowest. |
 | `max` | px | `window − 320` | Widest. |
-| `resize-label` | string | `Resize` | Name of the edge. |
+| `resize-label` | string | `Resize · Breite ändern` | Name of the edge. |
 | `inset` | boolean | – | While open on the desktop, the page’s `nk-app` makes room instead of lying under it – for a chart whose bars must stay visible. |
 
 **Slots:** `(default)` – The page: title, properties, prose, comments. · `actions` – Buttons beside » – open as page, share.
@@ -2682,7 +2684,7 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
 | `badge` | string | – | Tab badge. |
 | `count` | boolean | – | Row count as badge. |
 | `new-row` | boolean | – | Show the add row. |
-| `new-row-label` | string | `＋ New page` | Its text. |
+| `new-row-label` | string | `＋ New page · ＋ Neue Seite` | Its text. |
 | `sortable` | boolean | – | Header click sorts locally. |
 | `sort-key` | string | – | Sorted column. |
 | `sort-dir` | asc | desc | – | Direction. |
@@ -2794,7 +2796,7 @@ The third database view: one line per row – icon and title, the `meta-keys` on
 | `title-key` | string | – | Title column. |
 | `meta-keys` | list | – | Comma-separated columns on the right. |
 | `new-row` | boolean | – | Show the add row. |
-| `new-row-label` | string | `＋ New page` | Its text. |
+| `new-row-label` | string | `＋ New page · ＋ Neue Seite` | Its text. |
 
 **Events:** `nk-select` `{ row, id }` – Row clicked or Enter. · `nk-action` `{ action: 'new-row' }` – Add row clicked.
 
@@ -2852,9 +2854,9 @@ The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their 
 | `weekend` | list | – | Weekdays not worked, washed – `6,0`. |
 | `today` | YYYY-MM-DD | – | Another today – for tests and docs. |
 | `locale` | BCP 47 | `lang` | Language of the names and the week. |
-| `today-label` | string | `Today` | Today button. |
-| `prev-label` | string | `Previous month` | Names ‹. |
-| `next-label` | string | `Next month` | Names ›. |
+| `today-label` | string | `Today · Heute` | Today button. |
+| `prev-label` | string | `Previous month · Voriger Monat` | Names ‹. |
+| `next-label` | string | `Next month · Nächster Monat` | Names ›. |
 | `week-label` | string | `W · KW` | Head of the week column. |
 
 **Events:** `nk-select` `{ row, id }` – Card clicked or Enter. · `nk-month` `{ month }` – Another month shown.
@@ -2882,7 +2884,7 @@ The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their 
 
 ### 3.82 `<nk-gallery-view>` – Gallery view
 
-The fifth database view: the rows as cards with a picture on top, in a grid that fills the row – Notion’s gallery, for a course catalog or a reading list. `cover-key` names the row field with the picture’s URL (default: `cover`); a row without one shows the cover gradient, `no-cover` leaves the pictures out. The picture stands in 2:1, cropped to fill; `fit` shows it whole, for logos. `size` small, medium or large sets the card size – columns from 180, 260 or 340px. Cards show the title and the `meta-keys` (default: the select and date columns) and fire `nk-select` on a click, Enter or Space; `new-row` adds the add card.
+The fifth database view: the rows as cards with a picture on top, in a grid that fills the row – Notion’s gallery, for a course catalog or a reading list. `cover-key` names the row field with the picture’s URL (default: `cover`); a row without one shows the cover gradient, `no-cover` leaves the pictures out. The picture stands in 2:1, cropped to fill; `fit` shows it whole, for logos. `size` small, medium or large sets the card size – columns from 180, 260 or 340px. Cards show the title and the `meta-keys` (default: the select and date columns) and fire `nk-select` on a click, Enter or Space; `new-row` adds the add card. `href-key` names the row field with a card’s address: such a card is a link, `<a class="nk-card" href>` in a `.card-item` that carries the list item’s role – to open a course in a new tab or copy its address. A plain click, and Enter, fire the same `nk-select`; cancel it and the browser stays. A middle click or one with Cmd, Ctrl, Shift or Alt fires nothing and does what a link does.
 
 ```html
 <nk-gallery-view meta-keys="status,due" new-row></nk-gallery-view>
@@ -2916,14 +2918,15 @@ The fifth database view: the rows as cards with a picture on top, in a grid that
 | `fit` | boolean | – | Show a picture whole instead of cropped. |
 | `title-key` | string | – | Title column. |
 | `meta-keys` | list | – | Comma-separated columns under the title. |
+| `href-key` | string | – | Row field with the card’s address; such a card is a link. |
 | `new-row` | boolean | – | Show the add card. |
-| `new-row-label` | string | `＋ New page` | Its text. |
+| `new-row-label` | string | `＋ New page · ＋ Neue Seite` | Its text. |
 
-**Events:** `nk-select` `{ row, id, value }` – Card clicked, Enter or Space. · `nk-action` `{ action: 'new-row' }` – Add card clicked.
+**Events:** `nk-select` `{ row, id, value }` – Card clicked, Enter or Space; a link card with a plain click or Enter – cancel it to stay. · `nk-action` `{ action: 'new-row' }` – Add card clicked.
 
 **Properties:** `columns`, `rows`, `data` · **Methods:** `refresh()`
 
-**Replaces:** `.nk-gallery`, `.small`, `.large`, `.fit`, `.nk-card`, `.nk-cover`, `.card-title`, `.card-meta`, `.nk-new-row`
+**Replaces:** `.nk-gallery`, `.small`, `.large`, `.fit`, `.nk-card`, `.card-item`, `.nk-cover`, `.card-title`, `.card-meta`, `.nk-new-row`
 
 ```html
 <!-- equivalent class markup -->
@@ -2954,8 +2957,8 @@ The filters in effect as NotionKit’s filter pills – `.active` with an accent
 | `no-filter` | boolean | – | Hide the Filter tool. |
 | `no-sort` | boolean | – | Hide the Sort tool. |
 | `filter-label` | string | `Filter` | Text of the Filter tool. |
-| `sort-label` | string | `Sort` | Text of the Sort tool. |
-| `remove-label` | string | `Remove filter` | The ×’s name, followed by the pill’s text. |
+| `sort-label` | string | `Sort · Sortieren` | Text of the Sort tool. |
+| `remove-label` | string | `Remove filter · Filter entfernen` | The ×’s name, followed by the pill’s text. |
 | `search` | boolean | – | Show the search field. |
 | `placeholder` | string | – | Search placeholder. |
 
@@ -2988,7 +2991,7 @@ A left-ruled thread of `nk-comment`s with an input row. Enter or the button fire
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `placeholder` | string | – | Input placeholder. |
-| `send-label` | string | `Send` | Button text. |
+| `send-label` | string | `Send · Senden` | Button text. |
 | `no-input` | boolean | – | Read-only thread. |
 | `disabled` | boolean | – | Input disabled. |
 
@@ -3142,8 +3145,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3224,8 +3227,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3332,8 +3335,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3392,8 +3395,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3470,8 +3473,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3517,8 +3520,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3562,8 +3565,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3617,8 +3620,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.16.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.17.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3707,6 +3710,8 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | A padding on the page while the side peek is open, or a peek wider by CSS | `<nk-peek resizable inset>` – the width is `--nk-peek-width`, `nk-resize` to keep it |
 | A hand-built month grid, or `<input type="date">` for a date property | `<nk-calendar floating sheet>` and `picker.show(cell)` – the table's `nk-select` names the `key` and the `cell`; `range` for start and end, `weeks` for calendar weeks, `days` for holidays and marks |
 | Rows laid out in a table of weeks to show them by date | `<nk-calendar-view date-key="due">` in `<nk-database>` – a tab like table and board |
+| German labels on every instance (`copy-label="Kopieren"`, `today-label="Heute"`, `new-row-label="＋ Neue Seite"` …) | `<html lang="de">` – the elements bring the German texts, the accessible names too; keep an attribute for a label with a meaning of its own, `setStrings()` for another language |
+| `<nk-steps selectable>` or a gallery whose `nk-select` sets `location.href` | `href` on the step, `href-key` on the gallery: a real link opens in a new tab and can be copied; cancel `nk-select` to route yourself |
 
 
 # 7. Quick Reference
@@ -3818,12 +3823,13 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Base classes `NkElement` / `NkFormElement` | `src/base.js` – shadow root, adopted `componentsSheet`, theme wrapper, `render/setupEvents/teardownEvents/onAttributeChanged/projectLightDom/refresh`, ElementInternals |
 | Token injection | `src/base.js` – once per page, `@layer notionkit-defaults { tokensCss }` appended to `document.adoptedStyleSheets` |
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
+| Texts | `src/util/strings.js` – the English and German dictionary and `setStrings()`; `NkElement#str(key)` reads it in the element's language, `onStringsChanged()` runs after `setStrings()` and when `<html lang>` changes |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.16.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.17.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.16.0 · wrapping NotionKit CSS v1.16.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.17.0 · wrapping NotionKit CSS v1.17.0 · MIT · Jungherz GmbH*

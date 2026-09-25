@@ -6,6 +6,7 @@
 // nothing else; the element ships no visual CSS of its own.
 // ============================================================
 import { componentsSheet, tokensCss } from '@jungherz-de/notionkit/notionkit-styles.js';
+import { onStringsChange, str as textFor } from './util/strings.js';
 
 // ── Design tokens ──
 // The shadow roots deliberately adopt componentsSheet only. The full sheet
@@ -49,10 +50,20 @@ function syncAllThemes() {
   for (const instance of instances) instance._syncTheme(theme);
 }
 
+// The built-in texts follow the language (1.17.0): setStrings() and a new
+// lang on <html> reach the elements already on the page, too.
+function syncAllStrings() {
+  for (const instance of instances) instance.onStringsChanged();
+}
+onStringsChange(syncAllStrings);
+
 if (typeof window !== 'undefined' && typeof MutationObserver !== 'undefined') {
-  new MutationObserver(syncAllThemes).observe(document.documentElement, {
+  new MutationObserver(records => {
+    if (records.some(r => r.attributeName === 'data-theme')) syncAllThemes();
+    if (records.some(r => r.attributeName === 'lang')) syncAllStrings();
+  }).observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ['data-theme']
+    attributeFilter: ['data-theme', 'lang']
   });
 }
 
@@ -196,6 +207,21 @@ export class NkElement extends HTMLElement {
   _syncTheme(theme) {
     this._wrapper?.setAttribute('data-theme', theme);
   }
+
+  /**
+   * The text `key` in this element's language – its nearest lang attribute,
+   * across shadow roots, else the page's: the one setStrings() gave, else the
+   * built-in English or German one (1.17.0). A project's own element reads
+   * its texts here too, after setStrings({ myKey: '…' }).
+   */
+  str(key) { return textFor(key, this); }
+
+  /**
+   * The texts may have changed: setStrings() ran or <html lang> changed.
+   * Components with built-in texts apply them again here; an attribute on
+   * the element still wins.
+   */
+  onStringsChanged() {}
 
   _upgradeOwnProperties() {
     for (const key of Object.keys(this)) {
@@ -347,3 +373,7 @@ export class NkFormElement extends NkElement {
 }
 
 export { getCurrentTheme };
+
+// For projects that import single elements (components/nk-*.js): the one
+// dictionary every element reads its built-in texts from.
+export { setStrings, builtInStrings } from './util/strings.js';

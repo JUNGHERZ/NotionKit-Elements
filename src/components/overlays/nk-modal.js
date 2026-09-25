@@ -22,7 +22,7 @@ class NkModal extends NkElement {
     this._backdrop = this.createElement('div', ['nk-modal-backdrop']);
     this._backdrop.inert = true;
     this._box = this.createElement('div', ['nk-modal'], { role: 'dialog', 'aria-modal': 'true', tabindex: '-1' });
-    this._nav = this.createElement('nav', ['nk-settings-nav'], { 'aria-label': 'Settings' });
+    this._nav = this.createElement('nav', ['nk-settings-nav'], { 'aria-label': this.str('settings') });
     this._nav.appendChild(this.createElement('slot', [], { name: 'user' }));
     this._rows = document.createElement('div');
     this._nav.appendChild(this._rows);
@@ -139,6 +139,8 @@ class NkModal extends NkElement {
     this._slot?.removeEventListener('slotchange', this._onSlot);
     if (this._wasOpen) { unlockScroll(); this._undoInert?.(); this._undoInert = null; this._wasOpen = false; }
   }
+
+  onStringsChanged() { this._nav.setAttribute('aria-label', this.str('settings')); }
 
   onAttributeChanged(name) {
     if (name === 'open') {

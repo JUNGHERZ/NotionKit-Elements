@@ -20,7 +20,7 @@ class NkPage extends NkElement {
 
   render() {
     this._page = this.createElement('div', ['nk-page']);
-    this._icon = this.createElement('div', ['nk-page-icon'], { role: 'button', title: 'Change icon' });
+    this._icon = this.createElement('div', ['nk-page-icon'], { role: 'button', title: this.str('changeIcon') });
     this._iconSlot = this.createElement('slot', [], { name: 'icon' });
     this._iconSlot.appendChild(this._icon);
     this._page.appendChild(this._iconSlot);
@@ -75,6 +75,8 @@ class NkPage extends NkElement {
     this._coverSlot?.removeEventListener('slotchange', this._onCover);
     this._iconSlot?.removeEventListener('slotchange', this._onCover);
   }
+
+  onStringsChanged() { this._icon.title = this.str('changeIcon'); }
 
   onAttributeChanged(name) {
     if (name === 'narrow') this._build();

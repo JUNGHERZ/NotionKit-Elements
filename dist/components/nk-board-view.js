@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { t as tagFor, a as textOf, f as formatDate, r as renderPropertyCell } from './shared/property-cell-BSVcETss.js';
+import { t as tagFor, a as textOf, f as formatPercent, b as formatDate, r as renderPropertyCell } from './shared/property-cell-DcsfnUNF.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
 import './shared/dates-a32DcW1l.js';
@@ -58,7 +58,7 @@ class NkBoardView extends NkElement {
           const v = row[c.key];
           if (v === undefined || v === null || v === '') continue;
           const s = document.createElement('span');
-          if (c.type === 'progress') s.textContent = `▰ ${v}%`;
+          if (c.type === 'progress') s.textContent = `▰ ${formatPercent(c, v)}`;
           else if (c.type === 'date') s.textContent = `📅 ${formatDate(c, v)}`;
           else s.appendChild(renderPropertyCell(c, v, row));
           meta.appendChild(s);

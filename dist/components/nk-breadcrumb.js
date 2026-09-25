@@ -17,7 +17,7 @@ class NkBreadcrumb extends NkElement {
   static get observesLightDom() { return true; }
 
   render() {
-    this._nav = this.createElement('nav', ['nk-breadcrumb'], { 'aria-label': 'Breadcrumb' });
+    this._nav = this.createElement('nav', ['nk-breadcrumb'], { 'aria-label': this.str('breadcrumb') });
     this._wrapper.appendChild(this._nav);
     this.projectLightDom();
   }
@@ -69,6 +69,7 @@ class NkBreadcrumb extends NkElement {
   teardownEvents() { this._nav?.removeEventListener('click', this._onClick); }
 
   onAttributeChanged() { this.projectLightDom(); }
+  onStringsChanged() { this._nav.setAttribute('aria-label', this.str('breadcrumb')); }
 
   get separator() { return this.getAttribute('separator') ?? '/'; }
   set separator(v) { this.setAttribute('separator', v); }

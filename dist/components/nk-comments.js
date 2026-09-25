@@ -13,7 +13,7 @@ class NkComments extends NkElement {
     const box = this.createElement('div', ['nk-comments']);
     box.appendChild(document.createElement('slot'));
     this._row = this.createElement('div', ['nk-comment-input']);
-    this._input = this.createElement('input', ['nk-input'], { type: 'text', 'aria-label': 'Comment' });
+    this._input = this.createElement('input', ['nk-input'], { type: 'text' });
     this._btn = this.createElement('button', ['nk-btn', 'primary', 'small'], { type: 'button' });
     this._row.append(this._input, this._btn);
     box.appendChild(this._row);
@@ -22,8 +22,9 @@ class NkComments extends NkElement {
   }
 
   _sync() {
-    this._input.placeholder = this.getAttribute('placeholder') || 'Comment …';
-    this._btn.textContent = this.getAttribute('send-label') || 'Send';
+    this._input.placeholder = this.getAttribute('placeholder') || this.str('commentPlaceholder');
+    this._input.setAttribute('aria-label', this.str('comment'));
+    this._btn.textContent = this.getAttribute('send-label') || this.str('send');
     this._row.style.display = this.getBoolAttr('no-input') ? 'none' : '';
     this._input.disabled = this._btn.disabled = this.getBoolAttr('disabled');
   }
@@ -48,6 +49,7 @@ class NkComments extends NkElement {
   }
 
   onAttributeChanged() { this._sync(); }
+  onStringsChanged() { this._sync(); }
   focus(o) { this._input?.focus(o); }
   get value() { return this._input?.value ?? ''; }
   set value(v) { if (this._input) this._input.value = v ?? ''; }

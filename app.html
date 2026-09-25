@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.16.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.17.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -21,7 +21,7 @@
 <nk-app>
 
   <!-- ================= SIDEBAR ================= -->
-  <nk-sidebar slot="sidebar" id="sidebar" collapsible collapse-label="Close sidebar">
+  <nk-sidebar slot="sidebar" id="sidebar" collapsible>
     <nk-workspace-switcher slot="workspace" name="MonaHilft" avatar="M">
       <nk-menu slot="menu">
         <nk-menu-item type="label">Workspaces</nk-menu-item>
@@ -100,11 +100,11 @@
       <nk-btn slot="tools" variant="tool" id="sortBtn">Sort</nk-btn>
       <nk-btn slot="tools" variant="tool" id="searchBtn" aria-label="Search">🔍</nk-btn>
       <nk-btn slot="tools" variant="primary" small id="newBtn">New</nk-btn>
-      <nk-filter-bar slot="filters" id="filterBar" add no-filter no-sort remove-label="Remove filter"></nk-filter-bar>
+      <nk-filter-bar slot="filters" id="filterBar" add no-filter no-sort></nk-filter-bar>
       <nk-table-view name="table" label="▦ Table" count new-row sortable></nk-table-view>
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
       <nk-list-view name="list" label="☰ List" meta-keys="due,status"></nk-list-view>
-      <nk-calendar-view name="calendar" label="📅 Calendar" date-key="due" month="2026-05" weeks week-start="1" today-label="Today" prev-label="Previous month" next-label="Next month"></nk-calendar-view>
+      <nk-calendar-view name="calendar" label="📅 Calendar" date-key="due" month="2026-05" weeks week-start="1"></nk-calendar-view>
       <nk-gallery-view name="gallery" label="🖼 Gallery" meta-keys="status,due" new-row></nk-gallery-view>
     </nk-database>
 
@@ -210,7 +210,7 @@
 
       <div class="nk-g-item">
         <h4>Comment thread</h4>
-        <nk-comments id="comments" placeholder="Comment …" send-label="Send">
+        <nk-comments id="comments">
           <nk-comment author="Sara Lindt" time="1 hr ago" color="green">The board view already feels very close to the original. 👍</nk-comment>
           <nk-comment author="Mona" time="20 min ago" avatar="✨" color="gray"><span slot="head" class="nk-tag blue" style="font-size:10.5px;padding:0 6px;margin-left:4px">KI</span>I have flagged the overdue entries and prepared a summary.</nk-comment>
         </nk-comments>
@@ -291,7 +291,7 @@
   <nk-settings-user slot="user" name="Marcel Karas" mail="marcel@monahilft.de" avatar="MK"></nk-settings-user>
 
   <nk-settings-pane name="profile" group="Account" icon="👤" label="My profile" title="My profile" active>
-    <nk-image-picker id="profilePicture" initials="MK" label="Profile picture" choose-label="Upload image" change-label="Change image" remove-label="Remove"></nk-image-picker>
+    <nk-image-picker id="profilePicture" initials="MK" label="Profile picture"></nk-image-picker>
     <h3>Details</h3>
     <nk-field label="Display name" desc="How you appear in the workspace."><nk-input value="Marcel Karas"></nk-input></nk-field>
     <nk-field label="E-Mail" desc="Used for invitations and notifications."><nk-input type="email" value="marcel@monahilft.de"></nk-input></nk-field>
@@ -346,9 +346,9 @@
 
   <nk-settings-pane name="general" group="Workspace" icon="⚙️" label="General" title="Workspace settings">
     <nk-field label="Workspace name"><nk-input value="MonaHilft"></nk-input></nk-field>
-    <nk-field label="Icon" desc="Shown in the sidebar and on shared pages."><nk-image-picker id="workspaceIcon" square initials="M" max="256" type="image/png" label="Workspace icon" choose-label="Upload image" change-label="Change image" remove-label="Remove"></nk-image-picker></nk-field>
+    <nk-field label="Icon" desc="Shown in the sidebar and on shared pages."><nk-image-picker id="workspaceIcon" square initials="M" max="256" type="image/png" label="Workspace icon"></nk-image-picker></nk-field>
     <nk-field label="Domain" desc="Public pages appear under this address."><nk-input value="monahilft.notionkit.app"></nk-input></nk-field>
-    <nk-field label="Public address" desc="Visitors reach the shared pages here."><nk-copy-field id="publicAddress" value="https://monahilft.notionkit.app" copy-label="Copy" copied-label="Copied"></nk-copy-field></nk-field>
+    <nk-field label="Public address" desc="Visitors reach the shared pages here."><nk-copy-field id="publicAddress" value="https://monahilft.notionkit.app"></nk-copy-field></nk-field>
     <nk-field label="Public home page" desc="Visitors may view shared pages without signing in."><nk-switch></nk-switch></nk-field>
     <nk-danger-zone title="⚠️ Danger zone">
       <nk-field label="Delete workspace" desc="Irreversibly removes all pages, databases and members."><nk-btn variant="danger-solid" small data-save-danger>Delete</nk-btn></nk-field>
@@ -370,7 +370,7 @@
 </nk-modal>
 
 <!-- ================= COMMAND PALETTE (⌘K) ================= -->
-<nk-cmdk id="palette" placeholder="Search or type a command …"></nk-cmdk>
+<nk-cmdk id="palette"></nk-cmdk>
 
 <!-- ================= PAGE MENU (⋯) ================= -->
 <!-- floating: fades in under the ⋯ like the palette; sheet: a bottom sheet on a phone -->
@@ -394,7 +394,7 @@
 </nk-menu>
 
 <!-- ================= DATE PICKER ================= -->
-<nk-calendar floating sheet weeks week-start="1" weekend="6,0" id="datePicker" label="Due" today-label="Today" prev-label="Previous month" next-label="Next month"></nk-calendar>
+<nk-calendar floating sheet weeks week-start="1" weekend="6,0" id="datePicker" label="Due"></nk-calendar>
 
 <!-- ================= MORE (phone) ================= -->
 <nk-sheet id="moreSheet" title="More">
@@ -412,7 +412,7 @@
 
 <!-- ================= SIDE PEEK ================= -->
 <!-- Not id="peek": #peek opens it, and a fragment target takes the focus. -->
-<nk-peek id="sidePeek" close-label="Close" resizable resize-label="Resize">
+<nk-peek id="sidePeek" resizable>
   <nk-btn slot="actions" variant="topbar" id="peekOpen" aria-label="Open as page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></nk-btn>
   <nk-page-title id="peekTitle"></nk-page-title>
   <nk-props>
@@ -423,7 +423,7 @@
     <nk-prop label="Effort (h)" icon="#" data-peek="effort"></nk-prop>
   </nk-props>
   <div class="nk-prose" id="peekNotes"></div>
-  <nk-comments placeholder="Comment …" send-label="Send">
+  <nk-comments>
     <nk-comment author="Sara Lindt" time="1 hr ago" color="green">Looks good – let’s take it into the next release.</nk-comment>
   </nk-comments>
 </nk-peek>

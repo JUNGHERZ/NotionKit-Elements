@@ -53,7 +53,7 @@ class NkListView extends NkElement {
       item.append(icon, t, m);
       this._list.appendChild(item);
     }
-    this._newRow.textContent = this.getAttribute('new-row-label') || '＋ New page';
+    this._newRow.textContent = this.getAttribute('new-row-label') || this.str('newPage');
     this._newRow.style.display = this.getBoolAttr('new-row') ? '' : 'none';
   }
 
@@ -78,6 +78,7 @@ class NkListView extends NkElement {
 
   _rowById(id) { return this._rows.find(r => String(r.id) === String(id)); }
   onAttributeChanged() { this._render(); }
+  onStringsChanged() { this._render(); }
 
   get name() { return this.getAttribute('name') || 'list'; }
   get columns() { return this._columns; }

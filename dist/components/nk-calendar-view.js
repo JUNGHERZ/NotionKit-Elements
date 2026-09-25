@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { a as textOf } from './shared/property-cell-BSVcETss.js';
+import { a as textOf } from './shared/property-cell-DcsfnUNF.js';
 import { C as CHEVRONS, i as isoOf, r as resolveLocale, f as firstWeekday, m as monthGrid, p as parseDay, w as weekLabel, a as weekdayNames, b as isoWeek, s as stepMonth } from './shared/dates-a32DcW1l.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
@@ -12,7 +12,8 @@ import './shared/avatar-CzPZN3uP.js';
 // default today's), weeks (the ISO week in front of each row), week-start
 // (0 = Sunday … 6 = Saturday; default from the locale), weekend (weekdays
 // washed like the days of other months, "6,0"), today, locale and the texts
-// today-label, prev-label, next-label, week-label.
+// today-label, prev-label, next-label, week-label – without them English
+// or German after the language (1.17.0).
 // Standalone: view.columns = […]; view.rows = […]. Inside <nk-database> the
 // database pushes the data. A card fires nk-select { row, id, value } like a
 // row of the table, Today and ‹ › nk-month { month }.
@@ -68,9 +69,9 @@ class NkCalendarView extends NkElement {
     }
     this._box.classList.toggle('weeks', weeks);
     this._title.textContent = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(g.first);
-    this._todayBtn.textContent = this.getAttribute('today-label') || 'Today';
-    this._prev.setAttribute('aria-label', this.getAttribute('prev-label') || 'Previous month');
-    this._next.setAttribute('aria-label', this.getAttribute('next-label') || 'Next month');
+    this._todayBtn.textContent = this.getAttribute('today-label') || this.str('today');
+    this._prev.setAttribute('aria-label', this.getAttribute('prev-label') || this.str('previousMonth'));
+    this._next.setAttribute('aria-label', this.getAttribute('next-label') || this.str('nextMonth'));
 
     const cell = (cls, text) => { const el = this.createElement('div', [cls]); el.textContent = text; return el; };
     const nodes = [];
@@ -115,6 +116,8 @@ class NkCalendarView extends NkElement {
   teardownEvents() { this._box?.removeEventListener('click', this._onClick); }
 
   _rowById(id) { return this._rows.find(r => String(r.id) === String(id)); }
+
+  onStringsChanged() { this._render(); }
 
   onAttributeChanged(name) {
     if (name === 'month') this._month = this._attrMonth() ?? this._month;

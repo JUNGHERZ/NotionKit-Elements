@@ -65,6 +65,8 @@ Never mix the full bundle with the per-component files – each brings its own \
 | Light-DOM children | Elements that copy children (\`nk-select\` options, breadcrumb crumbs) watch them; \`element.refresh()\` is the escape hatch. The empty string is a valid value. |
 | Moving elements | An element moved in the DOM keeps working – listeners and theme registration are re-armed on every connect. |
 | Attributes are live | Every documented attribute re-renders when changed after connect (\`stat.setAttribute('value', '129')\`, \`el.open = true\`); properties reflect to attributes where a setter is listed. |
+| Language | The texts an element brings along – button labels, placeholders, accessible names – come in English and German after its nearest \`lang\` (across shadow roots), else \`<html lang>\`. An attribute on the element wins. \`setStrings({ key: '…' }, lang?)\` adds or replaces texts, and the elements on the page take them at once; your own \`NkElement\` reads them with \`this.str('key')\`. Percentages follow as \`Intl\` writes them (\`45 %\` in German). |
+| Links | A step of \`nk-steps\` with \`href\` and a card of \`nk-gallery-view\` whose row has an address (\`href-key\`) are real \`<a href>\`: a middle click opens a new tab, the context menu copies the link. A plain click or Enter fires the cancelable \`nk-select\` – cancel it to route yourself; middle and modified clicks fire nothing. |
 `,
 
   skeletons: ({ CDN_CSS, CDN_JS, W }) => `# 4. Composition Patterns (app skeletons)
@@ -645,6 +647,8 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | A padding on the page while the side peek is open, or a peek wider by CSS | \`<nk-peek resizable inset>\` – the width is \`--nk-peek-width\`, \`nk-resize\` to keep it |
 | A hand-built month grid, or \`<input type="date">\` for a date property | \`<nk-calendar floating sheet>\` and \`picker.show(cell)\` – the table's \`nk-select\` names the \`key\` and the \`cell\`; \`range\` for start and end, \`weeks\` for calendar weeks, \`days\` for holidays and marks |
 | Rows laid out in a table of weeks to show them by date | \`<nk-calendar-view date-key="due">\` in \`<nk-database>\` – a tab like table and board |
+| German labels on every instance (\`copy-label="Kopieren"\`, \`today-label="Heute"\`, \`new-row-label="＋ Neue Seite"\` …) | \`<html lang="de">\` – the elements bring the German texts, the accessible names too; keep an attribute for a label with a meaning of its own, \`setStrings()\` for another language |
+| \`<nk-steps selectable>\` or a gallery whose \`nk-select\` sets \`location.href\` | \`href\` on the step, \`href-key\` on the gallery: a real link opens in a new tab and can be copied; cancel \`nk-select\` to route yourself |
 `,
 
   integration: () => `# 8. Framework Integration
@@ -663,6 +667,7 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | Base classes \`NkElement\` / \`NkFormElement\` | \`src/base.js\` – shadow root, adopted \`componentsSheet\`, theme wrapper, \`render/setupEvents/teardownEvents/onAttributeChanged/projectLightDom/refresh\`, ElementInternals |
 | Token injection | \`src/base.js\` – once per page, \`@layer notionkit-defaults { tokensCss }\` appended to \`document.adoptedStyleSheets\` |
 | Theme sync | one \`MutationObserver\` on \`<html>[data-theme]\`, a \`Set\` of instances, \`.nk-wrapper[data-theme]\` inside each root |
+| Texts | \`src/util/strings.js\` – the English and German dictionary and \`setStrings()\`; \`NkElement#str(key)\` reads it in the element's language, \`onStringsChanged()\` runs after \`setStrings()\` and when \`<html lang>\` changes |
 | Components | \`src/components/{forms,content,shell,page,overlays,data}/nk-*.js\`, one tag per file, \`customElements.define\` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable \`dist/components/base.js\` that import NotionKit's sheet (\`@jungherz-de/notionkit/notionkit-styles.js\`) instead of inlining it; the full bundles inline it and export \`componentsSheet\` |
 | Peer | \`@jungherz-de/notionkit >= ${pkg.version}\` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |

@@ -16,6 +16,8 @@ import { r as resolveLocale } from './dates-a32DcW1l.js';
 // text: a string, or { text, desc, color, tooltip, sort } – one of Notion's
 // nine text colours for a tone, a quiet second line under it, the whole
 // text in a tooltip (served by <nk-tooltip>), a value to sort by.
+// progress: 0–100, the bar and its percentage as Intl writes it in
+// column.locale, else the page's language ("45 %" in German).
 // date: the value as given, or with column.format ('short', 'relative' or
 // Intl.DateTimeFormat options) and column.locale formatted from an ISO date
 // or date-time, D.M.YYYY, a Date or a timestamp; { start, end } is a range.
@@ -81,7 +83,7 @@ function renderPropertyCell(column, value, row = {}) {
   if (type === 'actions') return actions(column, value);
   if (value === undefined || value === null || value === '') {
     if (type === 'checkbox') return checkbox(column, false, row);
-    if (type === 'progress') return progress(0);
+    if (type === 'progress') return progress(column, 0);
     return el('span', type === 'person' ? 'person-cell' : null, type === 'text' && column.title ? '' : '—');
   }
   switch (type) {
@@ -113,7 +115,7 @@ function renderPropertyCell(column, value, row = {}) {
     }
     // column.locale / column.format: Intl.NumberFormat locale and options, e.g. { minimumFractionDigits: 1 }.
     case 'number': return el('span', null, typeof value === 'number' ? value.toLocaleString(column.locale, column.format) : String(value));
-    case 'progress': return progress(Number(value) || 0);
+    case 'progress': return progress(column, Number(value) || 0);
     default: {
       const o = typeof value === 'object' ? value : { text: value };
       let t;
@@ -159,13 +161,21 @@ function checkbox(column, checked, row) {
   return label;
 }
 
-function progress(value) {
+function progress(column, value) {
   const frag = document.createDocumentFragment();
   const bar = el('span', 'nk-progress');
   const fill = el('i'); fill.style.width = `${Math.max(0, Math.min(100, value))}%`;
   bar.appendChild(fill);
-  frag.append(bar, el('span', 'nk-progress-label', `${Math.round(value)}%`));
+  frag.append(bar, el('span', 'nk-progress-label', formatPercent(column, value)));
   return frag;
+}
+
+/** A progress value of 0–100 as Intl writes a percentage in column.locale, else the page's language: 45 → "45%", in German "45 %". */
+function formatPercent(column, value) {
+  const n = Number(value) || 0;
+  try {
+    return new Intl.NumberFormat(column.locale || resolveLocale(), { style: 'percent', maximumFractionDigits: 0 }).format(n / 100);
+  } catch { return `${Math.round(n)}%`; }  // a lang Intl does not take
 }
 
 /** A select's place among its options: the order Notion sorts by. */
@@ -201,4 +211,4 @@ function compareBy(column, dir = 1) {
   };
 }
 
-export { textOf as a, compareBy as c, formatDate as f, renderPropertyCell as r, tagFor as t };
+export { textOf as a, formatDate as b, compareBy as c, formatPercent as f, renderPropertyCell as r, tagFor as t };

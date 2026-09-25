@@ -63,7 +63,7 @@ class NkTableView extends NkElement {
       }
       this._tbody.appendChild(r);
     }
-    this._newRow.textContent = this.getAttribute('new-row-label') || '＋ New page';
+    this._newRow.textContent = this.getAttribute('new-row-label') || this.str('newPage');
     this._newRow.style.display = this.getBoolAttr('new-row') ? '' : 'none';
   }
 
@@ -113,6 +113,7 @@ class NkTableView extends NkElement {
 
   _rowById(id) { return this._rows.find(r => String(r.id) === String(id)); }
   onAttributeChanged() { this._render(); }
+  onStringsChanged() { this._render(); }
 
   get name() { return this.getAttribute('name') || 'table'; }
   get columns() { return this._columns; }

@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { a as textOf, f as formatDate, r as renderPropertyCell } from './shared/property-cell-BSVcETss.js';
+import { a as textOf, b as formatDate, r as renderPropertyCell } from './shared/property-cell-DcsfnUNF.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
 import './shared/dates-a32DcW1l.js';
@@ -56,7 +56,7 @@ class NkListView extends NkElement {
       item.append(icon, t, m);
       this._list.appendChild(item);
     }
-    this._newRow.textContent = this.getAttribute('new-row-label') || '＋ New page';
+    this._newRow.textContent = this.getAttribute('new-row-label') || this.str('newPage');
     this._newRow.style.display = this.getBoolAttr('new-row') ? '' : 'none';
   }
 
@@ -81,6 +81,7 @@ class NkListView extends NkElement {
 
   _rowById(id) { return this._rows.find(r => String(r.id) === String(id)); }
   onAttributeChanged() { this._render(); }
+  onStringsChanged() { this._render(); }
 
   get name() { return this.getAttribute('name') || 'list'; }
   get columns() { return this._columns; }

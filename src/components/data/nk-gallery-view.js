@@ -1,5 +1,5 @@
 import { NkElement } from '../../base.js';
-import { renderPropertyCell, textOf, formatDate } from '../../util/property-cell.js';
+import { renderPropertyCell, textOf, formatDate, formatPercent } from '../../util/property-cell.js';
 
 // <nk-gallery-view name="gallery" label="🖼 Gallery" meta-keys="status,due" new-row></nk-gallery-view>
 // The fifth database view (NotionKit 1.14.0): the rows as cards with a
@@ -13,13 +13,20 @@ import { renderPropertyCell, textOf, formatDate } from '../../util/property-cell
 // <nk-database> the database pushes the data. A card fires nk-select
 // { row, id, value } on a click, Enter or Space, like a row of the table;
 // the add card nk-action { action: 'new-row' }.
+// `href-key` (1.17.0) names the row field with the card's address: a row
+// with one gets a link, <a class="nk-card" href>, in a .card-item that
+// carries the list item's role – to open a course in a new tab or copy its
+// address. A plain click, or Enter, fires the same nk-select; cancelling it
+// keeps the browser from following the link. A middle click or one with
+// Cmd, Ctrl, Shift or Alt fires nothing and does what a link does.
 // → <div class="nk-gallery" role="list"><div class="nk-card" role="listitem" tabindex="0">
 //     <div class="nk-cover"><img src="…" alt=""></div><div class="card-title">🧭 …</div><div class="card-meta">…</div></div>
+//     <div class="card-item" role="listitem"><a class="nk-card" href="/courses/safety">…</a></div>
 //     <div class="nk-new-row">＋ New page</div></div>
 const SIZES = ['small', 'large'];
 
 class NkGalleryView extends NkElement {
-  static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'cover-key', 'no-cover', 'size', 'fit', 'title-key', 'meta-keys', 'new-row', 'new-row-label']; }
+  static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'cover-key', 'no-cover', 'size', 'fit', 'title-key', 'meta-keys', 'href-key', 'new-row', 'new-row-label']; }
 
   render() {
     this._grid = this.createElement('div', ['nk-gallery'], { role: 'list' });
@@ -45,9 +52,13 @@ class NkGalleryView extends NkElement {
     this._grid.className = ['nk-gallery', SIZES.includes(size) && size, this.getBoolAttr('fit') && 'fit'].filter(Boolean).join(' ');
     const title = this._titleColumn(), meta = this._metaColumns();
     const coverKey = this.getAttribute('cover-key') || 'cover', covers = !this.getBoolAttr('no-cover');
+    const hrefKey = this.getAttribute('href-key');
     this._grid.replaceChildren();
     for (const row of this._rows) {
-      const card = this.createElement('div', ['nk-card'], { role: 'listitem', tabindex: '0', 'data-id': row.id ?? '' });
+      const link = hrefKey ? row[hrefKey] : null, href = link && typeof link === 'object' ? link.href : link;
+      const card = href
+        ? this.createElement('a', ['nk-card'], { href: String(href), 'data-id': row.id ?? '' })
+        : this.createElement('div', ['nk-card'], { role: 'listitem', tabindex: '0', 'data-id': row.id ?? '' });
       if (covers) {
         const cover = this.createElement('div', ['nk-cover']);
         if (row[coverKey]) cover.appendChild(this.createElement('img', [], { src: row[coverKey], alt: '' }));
@@ -60,17 +71,21 @@ class NkGalleryView extends NkElement {
         const v = row[c.key];
         if (v === undefined || v === null || v === '') continue;
         const s = document.createElement('span');
-        if (c.type === 'progress') s.textContent = `▰ ${v}%`;
+        if (c.type === 'progress') s.textContent = `▰ ${formatPercent(c, v)}`;
         else if (c.type === 'date') s.textContent = `📅 ${formatDate(c, v)}`;
         else s.appendChild(renderPropertyCell(c, v, row));
         m.appendChild(s);
       }
       card.append(t, m);
-      this._grid.appendChild(card);
+      if (href) {
+        const item = this.createElement('div', ['card-item'], { role: 'listitem' });
+        item.appendChild(card);
+        this._grid.appendChild(item);
+      } else this._grid.appendChild(card);
     }
     if (this.getBoolAttr('new-row')) {
       const add = this.createElement('div', ['nk-new-row'], { role: 'button', tabindex: '0', 'data-add': '' });
-      add.textContent = this.getAttribute('new-row-label') || '＋ New page';
+      add.textContent = this.getAttribute('new-row-label') || this.str('newPage');
       this._grid.appendChild(add);
     }
   }
@@ -79,10 +94,16 @@ class NkGalleryView extends NkElement {
     this._onClick = (e) => {
       if (e.target.closest('[data-add]')) { this.emit('nk-action', { action: 'new-row' }); return; }
       const card = e.target.closest('.nk-card');
-      if (card) { const row = this._rowById(card.dataset.id); this.emit('nk-select', { row, id: row?.id, value: row?.id }); }
+      if (!card) return;
+      // The link contract: a plain left click is a selection, any other one the browser's.
+      const link = card.localName === 'a';
+      if (link && (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) return;
+      const row = this._rowById(card.dataset.id);
+      if (!this.emit('nk-select', { row, id: row?.id, value: row?.id }) && link) e.preventDefault();
     };
     this._onKey = (e) => {
       if (e.key !== 'Enter' && e.key !== ' ') return;
+      if (e.target.localName === 'a') return;  // a link card: Enter is the browser's click, Space scrolls
       if (e.target.matches?.('.nk-card, [data-add]')) { e.preventDefault(); e.target.click(); }
     };
     this._grid.addEventListener('click', this._onClick);
@@ -96,6 +117,7 @@ class NkGalleryView extends NkElement {
 
   _rowById(id) { return this._rows.find(r => String(r.id) === String(id)); }
   onAttributeChanged() { this._render(); }
+  onStringsChanged() { this._render(); }
 
   get name() { return this.getAttribute('name') || 'gallery'; }
   get columns() { return this._columns; }

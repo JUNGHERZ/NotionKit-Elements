@@ -24,7 +24,7 @@ class NkPageTitle extends NkElement {
       this._h1.setAttribute('contenteditable', 'plaintext-only');
       this._h1.setAttribute('spellcheck', 'false');
       this._h1.setAttribute('role', 'textbox');
-      this._h1.setAttribute('aria-label', 'Title');
+      this._h1.setAttribute('aria-label', this.str('title'));
       const text = this.getAttribute('value') ?? this.textContent.trim();
       if (this._h1.textContent !== text && document.activeElement !== this) this._h1.textContent = text;
       this._h1.setAttribute('data-placeholder', this.getAttribute('placeholder') || '');
@@ -59,6 +59,7 @@ class NkPageTitle extends NkElement {
   }
 
   onAttributeChanged() { this._sync(); }
+  onStringsChanged() { if (this._h1.hasAttribute('role')) this._h1.setAttribute('aria-label', this.str('title')); }
 
   get value() { return this.getBoolAttr('editable') ? (this._h1?.textContent.trim() ?? '') : (this.getAttribute('value') ?? this.textContent.trim()); }
   set value(v) { this.setAttribute('value', v); }

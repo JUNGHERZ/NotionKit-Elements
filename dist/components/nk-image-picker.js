@@ -21,7 +21,9 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // Events: nk-change { dataUrl, width, height, size } after a pick, and on
 //         remove with an empty dataUrl; nk-error { message, name } when the
 //         file cannot be decoded (HEIC outside Safari, a broken file).
-// Texts:  choose-label, change-label, remove-label; label names the group.
+// Texts:  English or German after the language (1.17.0, setStrings() for
+//         others); choose-label, change-label, remove-label set them here.
+//         label names the group.
 
 function dataUrlBytes(url) {
   const b64 = url.slice(url.indexOf(',') + 1);
@@ -63,8 +65,8 @@ class NkImagePicker extends NkElement {
     }
     const label = this.getAttribute('label');
     if (label) this._row.setAttribute('aria-label', label); else this._row.removeAttribute('aria-label');
-    this._choose.textContent = this._src ? (this.getAttribute('change-label') || 'Change image') : (this.getAttribute('choose-label') || 'Upload image');
-    this._remove.textContent = this.getAttribute('remove-label') || 'Remove';
+    this._choose.textContent = this._src ? (this.getAttribute('change-label') || this.str('changeImage')) : (this.getAttribute('choose-label') || this.str('uploadImage'));
+    this._remove.textContent = this.getAttribute('remove-label') || this.str('remove');
     this._remove.hidden = !this._src;
     this._input.accept = this.getAttribute('accept') || 'image/*';
   }
@@ -111,6 +113,8 @@ class NkImagePicker extends NkElement {
     this._input?.removeEventListener('change', this._onChange);
     this._remove?.removeEventListener('click', this._onRemove);
   }
+
+  onStringsChanged() { this._sync(); }
 
   onAttributeChanged(name, _old, value) {
     if (name === 'src') this._src = value || '';

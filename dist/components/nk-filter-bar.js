@@ -13,9 +13,10 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // nk-action { action: 'add' } – each with the clicked button as `anchor`, to
 // open a menu under it. × removes the filter; every change to filters or
 // search fires nk-change { filters, search }. In slot="filters" of
-// <nk-database> the row sits right under the view tabs. The texts are
-// attributes, for other languages: filter-label, sort-label, add-label,
-// remove-label (the × reads "<remove-label>: <pill>") and placeholder.
+// <nk-database> the row sits right under the view tabs. The texts come in
+// English or German after the language (1.17.0, setStrings() for others);
+// filter-label, sort-label, add-label, remove-label (the × reads
+// "<remove-label>: <pill>") and placeholder set them here.
 class NkFilterBar extends NkElement {
   static get observedAttributes() { return ['search', 'placeholder', 'no-filter', 'no-sort', 'value', 'add', 'add-label', 'filter-label', 'sort-label', 'remove-label']; }
 
@@ -33,18 +34,18 @@ class NkFilterBar extends NkElement {
   }
 
   _sync() {
-    this._filterBtn.textContent = this.getAttribute('filter-label') || 'Filter';
+    this._filterBtn.textContent = this.getAttribute('filter-label') || this.str('filter');
     this._filterBtn.hidden = this.getBoolAttr('no-filter');
     this._filterBtn.classList.toggle('active', this._filters.length > 0);
-    this._sortBtn.textContent = this.getAttribute('sort-label') || 'Sort';
+    this._sortBtn.textContent = this.getAttribute('sort-label') || this.str('sort');
     this._sortBtn.hidden = this.getBoolAttr('no-sort');
-    this._addBtn.textContent = this.getAttribute('add-label') || '＋ Filter';
+    this._addBtn.textContent = this.getAttribute('add-label') || this.str('addFilter');
     this._addBtn.hidden = !this.getBoolAttr('add');
     this._input.hidden = !this.getBoolAttr('search');
-    this._input.placeholder = this.getAttribute('placeholder') || 'Search …';
+    this._input.placeholder = this.getAttribute('placeholder') || this.str('search');
     if (this.hasAttribute('value') && this._input.value !== this.getAttribute('value')) this._input.value = this.getAttribute('value');
     for (const old of this._row.querySelectorAll('[data-pill]')) old.remove();
-    const removeLabel = this.getAttribute('remove-label') || 'Remove filter';
+    const removeLabel = this.getAttribute('remove-label') || this.str('removeFilter');
     this._pillStart.after(...this._filters.map((f, i) => {
       const pill = this.createElement('span', ['nk-filter-pill', 'active'], { 'data-pill': i });
       const label = this.createElement('button', [], { type: 'button', 'data-edit': i });
@@ -78,6 +79,7 @@ class NkFilterBar extends NkElement {
 
   _emitChange() { this.emit('nk-change', { filters: [...this._filters], search: this._input.value }); }
   onAttributeChanged() { this._sync(); }
+  onStringsChanged() { this._sync(); }
 
   // A copy each way: the caller's array is never changed – removing a pill
   // only reports the new list in nk-change.

@@ -117,4 +117,8 @@ export { NkComment } from './components/data/nk-comment.js';
 export { NkAiThread } from './components/data/nk-ai-thread.js';
 export { NkAiMsg } from './components/data/nk-ai-msg.js';
 export { NkAiInputRow } from './components/data/nk-ai-input-row.js';
-export { renderPropertyCell, tagFor, compareBy, formatDate, timeOf, textOf } from './util/property-cell.js';
+export { renderPropertyCell, tagFor, compareBy, formatDate, formatPercent, timeOf, textOf } from './util/property-cell.js';
+
+// 1.17.0 – the built-in texts in English and German, after the lang of the
+// page or of the element; setStrings() adds or replaces them.
+export { setStrings, builtInStrings } from './util/strings.js';
