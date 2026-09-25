@@ -4,6 +4,25 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.12.0] – 2026-09-25
+
+Built against NotionKit CSS 1.12.0 (peer `>= 1.12.0`). Auxdesk moved from 1.5.1 to 1.11 and sent back eight findings; this release answers all of them.
+
+### Added
+- **`<nk-panel>` `slot="end"`** sits at the right edge of the title – a state as a tag, a button – as Notion's settings boxes show a connection, and moves under the title where both do not fit. Until now nothing could stand beside the title, and an `<h3>` of one's own lost the panel's type as soon as it shared a row with a tag.
+- **`flush` on `<nk-props>` and `<nk-panels>`** drops the outer margin meant for the flow under a title – for a list inside a panel, a grid inside a flex column with a gap of its own. The margin sat in the shadow root, out of reach from outside.
+- **`<nk-prop text>`**: a value that is text – a sentence, an address, a model name with a tag – flows and wraps as text instead of setting its parts one under the other.
+- **`<nk-steps>` with a state per step, `selectable` and `horizontal`.** A step object takes `state: 'done' | 'skipped' | 'open'`, which wins over `current`, so a wizard can show a skipped step before a done one; a skipped step shows a dashed ring around a dash. `selectable` makes each label a button: a click or Enter fires `nk-select { index, value, step }` – `index` counts from 1, like `current` – and, unless cancelled, makes that step current; `select(index)` does the same from a script. `horizontal` sets the steps in one row above a wizard.
+- **`<nk-tabs scroll>`** keeps many tabs in one row that scrolls sideways and holds the active tab in view – after the first layout, on every change and when the row's width changes – as `<nk-segmented scroll>` does. Ten tabs in a mailbox editor no longer run out of a phone's page.
+- **An `actions` column in `<nk-table-view>`.** `{ type: 'actions', actions: [{ action, label, icon, danger, disabled, tooltip }] }` sets small buttons in each row; a row's value – a list of action names – picks which of them it shows. A click fires `nk-action { action, row, id, anchor }` instead of selecting the row, and the column's header sorts nothing. `renderPropertyCell()` draws it for tables of one's own too.
+- **A `url` value may be `{ href, label, target }`**: a link of one's own – to another page of the app, with its own text, in the same tab unless `target` says otherwise. A string is still an address outside, opened in a new tab.
+
+### Changed
+- **A property value keeps at least 220px** (NotionKit 1.12.0): in a column narrower than 380px – the details beside a message, a third of the page – it moves under its name instead of shrinking until an address breaks into syllables.
+- The docs example of `<nk-table-view>` shows the actions column, `<nk-steps>` a wizard row with a skipped step, `<nk-panel>` a tag beside the title and `<nk-prop>` a text value.
+- `--nk-page-full-max` (NotionKit 1.12.0) caps `<nk-page full>` as well: the token reaches the shadow root.
+- Peer `@jungherz-de/notionkit >= 1.12.0`.
+
 ## [1.11.1] – 2026-09-24
 
 Built against NotionKit CSS 1.11.1 (peer `>= 1.11.0`).
@@ -620,6 +639,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.12.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.12.0
 [1.11.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.1
 [1.11.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.0
 [1.10.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.10.1

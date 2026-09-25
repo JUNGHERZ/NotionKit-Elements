@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { r as renderPropertyCell } from './shared/property-cell-Cddz5n2O.js';
+import { r as renderPropertyCell } from './shared/property-cell-DKvv6TIG.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
 

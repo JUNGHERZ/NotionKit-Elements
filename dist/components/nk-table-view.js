@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-Cddz5n2O.js';
+import { c as compareBy, r as renderPropertyCell } from './shared/property-cell-DKvv6TIG.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
 
@@ -11,7 +11,10 @@ import './shared/avatar-CzPZN3uP.js';
 // { row, id, key, cell } – `key` and `cell` say which cell was hit, to open
 // an editor there, like the date picker under a due date – checkboxes
 // nk-change, headers nk-action { action: 'sort' } (and sort locally
-// with `sortable`), the add row nk-action { action: 'new-row' }.
+// with `sortable`), the add row nk-action { action: 'new-row' }. A column of
+// type 'actions' (NotionKit 1.12.0) sets buttons in each row; a click on one
+// fires nk-action { action, row, id, anchor } instead of selecting the row,
+// and its header sorts nothing.
 class NkTableView extends NkElement {
   static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'new-row', 'new-row-label', 'sortable', 'sort-key', 'sort-dir', 'wrap']; }
 
@@ -41,9 +44,10 @@ class NkTableView extends NkElement {
     this._table.classList.toggle('wrap', this.getBoolAttr('wrap'));
     const tr = document.createElement('tr');
     for (const col of this._columns) {
-      const th = this.createElement('th', [], { 'data-key': col.key, scope: 'col' });
+      const actions = col.type === 'actions';
+      const th = this.createElement('th', actions ? ['actions'] : [], actions ? { scope: 'col' } : { 'data-key': col.key, scope: 'col' });
       if (col.icon) { const i = this.createElement('span', ['th-icon']); i.textContent = col.icon; th.appendChild(i); }
-      th.appendChild(document.createTextNode(col.label ?? col.key));
+      th.appendChild(document.createTextNode(col.label ?? (actions ? '' : col.key)));
       if (col.key === this.getAttribute('sort-key')) th.appendChild(document.createTextNode(this.getAttribute('sort-dir') === 'desc' ? ' ↓' : ' ↑'));
       if (col.width) th.style.width = col.width;
       tr.appendChild(th);
@@ -74,6 +78,12 @@ class NkTableView extends NkElement {
         const dir = this.getAttribute('sort-key') === key && this.getAttribute('sort-dir') !== 'desc' ? 'desc' : 'asc';
         const ok = this.emit('nk-action', { action: 'sort', key, value: dir });
         if (ok && this.getBoolAttr('sortable')) { this.setAttribute('sort-key', key); this.setAttribute('sort-dir', dir); }
+        return;
+      }
+      const act = e.target.closest('button[data-action]');
+      if (act) {
+        const row = this._rowById(act.closest('tr[data-id]')?.dataset.id);
+        if (!act.disabled) this.emit('nk-action', { action: act.dataset.action, row, id: row?.id, anchor: act });
         return;
       }
       if (e.target.closest('input[type=checkbox], a')) return;

@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { a as placeNear } from './shared/floating-CtqV6MBj.js';
+import { a as placeNear } from './shared/floating-DOK73b_D.js';
 import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 

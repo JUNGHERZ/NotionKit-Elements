@@ -5,9 +5,11 @@ import { NkElement } from '../../base.js';
 // The value is the element's content – tags, an avatar and a name, a date, a
 // <nk-progress wide>. slot="icon" replaces the icon glyph. A click on the
 // name or the value fires nk-action { action: 'name' | 'value', label }, the
-// moment Notion opens the property's editor.
+// moment Notion opens the property's editor. `text` (NotionKit 1.12.0) lets a
+// value that is text – an address, a model name with a tag – flow as text
+// instead of setting its parts one under the other.
 class NkProp extends NkElement {
-  static get observedAttributes() { return ['label', 'icon']; }
+  static get observedAttributes() { return ['label', 'icon', 'text']; }
 
   render() {
     this._row = this.createElement('div', ['nk-prop']);
@@ -29,6 +31,7 @@ class NkProp extends NkElement {
     this._icon.textContent = icon || '';
     this._icon.style.display = icon ? '' : 'none';
     this._label.data = this.getAttribute('label') || '';
+    this._value.classList.toggle('text', this.getBoolAttr('text'));
   }
 
   setupEvents() {
@@ -46,6 +49,8 @@ class NkProp extends NkElement {
   set label(v) { this.setAttribute('label', v); }
   get icon() { return this.getAttribute('icon'); }
   set icon(v) { v == null ? this.removeAttribute('icon') : this.setAttribute('icon', v); }
+  get text() { return this.getBoolAttr('text'); }
+  set text(v) { this.setBoolAttr('text', v); }
 }
 
 customElements.define('nk-prop', NkProp);

@@ -4,7 +4,12 @@
 // be styled. Exported for consumers who render tables themselves.
 //
 // column: { key, label, type, icon, options: [{ value, label, color }], title }
-// types: text | select | multi-select | date | person | checkbox | url | number | progress
+// types: text | select | multi-select | date | person | checkbox | url | number | progress | actions
+// url: a string is an address outside, opened in a new tab; { href, label,
+// target } a link of your own – to another page of the app, with its text.
+// actions: buttons for the row from column.actions [{ action, label, icon,
+// danger, disabled, tooltip }]; the row's value – action names or objects –
+// picks which of them it shows, all of them without one.
 import { paintAvatar, initialsOf } from './avatar.js';
 
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
@@ -23,6 +28,7 @@ export function tagFor(column, value) {
 
 export function renderPropertyCell(column, value, row = {}) {
   const type = column.type || 'text';
+  if (type === 'actions') return actions(column, value);
   if (value === undefined || value === null || value === '') {
     if (type === 'checkbox') return checkbox(column, false, row);
     if (type === 'progress') return progress(0);
@@ -47,7 +53,14 @@ export function renderPropertyCell(column, value, row = {}) {
       return cell;
     }
     case 'checkbox': return checkbox(column, !!value, row);
-    case 'url': { const a = el('a', null, String(value).replace(/^https?:\/\//, '')); a.href = String(value); a.target = '_blank'; a.rel = 'noopener'; return a; }
+    case 'url': {
+      const link = typeof value === 'object' ? value : { href: String(value), label: String(value).replace(/^https?:\/\//, ''), target: '_blank' };
+      const a = el('a', null, link.label ?? link.href);
+      a.href = link.href ?? '';
+      if (link.target) a.target = link.target;
+      if (link.target === '_blank') a.rel = 'noopener';
+      return a;
+    }
     // column.locale / column.format: Intl.NumberFormat locale and options, e.g. { minimumFractionDigits: 1 }.
     case 'number': return el('span', null, typeof value === 'number' ? value.toLocaleString(column.locale, column.format) : String(value));
     case 'progress': return progress(Number(value) || 0);
@@ -61,6 +74,22 @@ export function renderPropertyCell(column, value, row = {}) {
       return el('span', null, String(value));
     }
   }
+}
+
+function actions(column, value) {
+  const all = column.actions || [];
+  const list = value == null ? all
+    : (Array.isArray(value) ? value : [value]).map(v => typeof v === 'string' ? all.find(a => a.action === v) ?? { action: v, label: v } : v);
+  const wrap = el('span', 'row-actions');
+  for (const a of list) {
+    const b = el('button', `nk-btn ${a.danger ? 'danger' : 'secondary'} small`, [a.icon, a.label ?? a.action].filter(Boolean).join(' '));
+    b.type = 'button';
+    b.dataset.action = a.action;
+    b.disabled = !!a.disabled;
+    if (a.tooltip) b.dataset.tooltip = a.tooltip;
+    wrap.appendChild(b);
+  }
+  return wrap;
 }
 
 function checkbox(column, checked, row) {

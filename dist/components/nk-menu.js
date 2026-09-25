@@ -1,6 +1,6 @@
 import { NkElement } from './base.js';
 import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
-import { p as placeUnder } from './shared/floating-CtqV6MBj.js';
+import { p as placeUnder } from './shared/floating-DOK73b_D.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-menu>

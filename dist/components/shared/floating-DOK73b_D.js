@@ -63,4 +63,4 @@ function placeUnder(host, anchor, align) {
   else { host.style.right = `${f.right - Math.min(r.right, innerWidth - edge)}px`; host.style.left = 'auto'; }
 }
 
-export { placeNear as a, placeUnder as p };
+export { placeNear as a, boxOf as b, placeUnder as p };

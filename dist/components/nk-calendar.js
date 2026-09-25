@@ -1,6 +1,6 @@
 import { NkFormElement } from './base.js';
 import { p as parseDay, i as isoOf, C as CHEVRONS, r as resolveLocale, f as firstWeekday, m as monthGrid, w as weekLabel, a as weekdayNames, b as isoWeek, s as stepMonth, c as addDays } from './shared/dates-a32DcW1l.js';
-import { p as placeUnder } from './shared/floating-CtqV6MBj.js';
+import { p as placeUnder } from './shared/floating-DOK73b_D.js';
 import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 

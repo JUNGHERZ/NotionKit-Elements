@@ -26,7 +26,7 @@ const formAttrs = [
 const changeEvent = (en, de) => ({ name: 'nk-change', detail: '{ value, name }', desc: t(en, de) });
 
 // Shared database sample (columns + rows) for the wave-5 examples.
-const dbScript = W => `<script>{
+const dbScript = (W, { actions } = {}) => `<script>{
   const db = document.currentScript.previousElementSibling;
   db.columns = [
     { key: 'name', label: '${W.dbName}', type: 'text', icon: '📄', title: true },
@@ -35,22 +35,23 @@ const dbScript = W => `<script>{
     { key: 'owner', label: '${W.dbOwner}', type: 'person', icon: '👤' },
     { key: 'due', label: '${W.dbDue}', type: 'date', icon: '📅' },
     { key: 'progress', label: '${W.dbProgress}', type: 'progress', icon: '▰' },
-    { key: 'effort', label: '${W.effort}', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+    { key: 'effort', label: '${W.effort}', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },${actions ? `
+    { key: 'actions', type: 'actions', actions: [{ action: 'open', label: '${W.rowOpen}' }, { action: 'archive', label: '${W.rowArchive}', danger: true }] },` : ''}
   ];
   db.rows = [
     { id: 1, icon: '🧭', name: '${W.p1}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
     { id: 2, icon: '📄', name: '${W.p2}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
     { id: 3, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0, effort: 8${actions ? ", actions: ['open']" : ''} },
   ];
 }</script>`;
-const dbTableClass = W => `<div class="nk-table-wrap"><table class="nk-table">
-  <thead><tr><th><span class="th-icon">📄</span>${W.dbName}</th><th><span class="th-icon">◉</span>${W.dbStatus}</th><th><span class="th-icon">👤</span>${W.dbOwner}</th><th><span class="th-icon">📅</span>${W.dbDue}</th><th><span class="th-icon">▰</span>${W.dbProgress}</th><th><span class="th-icon">#</span>${W.effort}</th></tr></thead>
+const dbTableClass = (W, { actions } = {}) => `<div class="nk-table-wrap"><table class="nk-table">
+  <thead><tr><th><span class="th-icon">📄</span>${W.dbName}</th><th><span class="th-icon">◉</span>${W.dbStatus}</th><th><span class="th-icon">👤</span>${W.dbOwner}</th><th><span class="th-icon">📅</span>${W.dbDue}</th><th><span class="th-icon">▰</span>${W.dbProgress}</th><th><span class="th-icon">#</span>${W.effort}</th>${actions ? '<th class="actions"></th>' : ''}</tr></thead>
   <tbody>
-    <tr><td><span class="row-title">🧭 ${W.p1}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>6.0</span></td></tr>
-    <tr><td><span class="row-title">📄 ${W.p2}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>4.5</span></td></tr>
-    <tr><td><span class="row-title">🗃️ ${W.p3}</span></td><td><span class="nk-tag blue">${W.statusProgress}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td><td class="num"><span>12.5</span></td></tr>
-    <tr><td><span class="row-title">▤ ${W.p4}</span></td><td><span class="nk-tag orange">${W.statusPlanned}</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td></tr>
+    <tr><td><span class="row-title">🧭 ${W.p1}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">08.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>6.0</span></td>${actions ? `<td><span class="row-actions"><button class="nk-btn secondary small">${W.rowOpen}</button><button class="nk-btn danger small">${W.rowArchive}</button></span></td>` : ''}</tr>
+    <tr><td><span class="row-title">📄 ${W.p2}</span></td><td><span class="nk-tag green">${W.statusDone}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">10.05.2026</span></td><td><span class="nk-progress"><i style="width:100%"></i></span><span class="nk-progress-label">100%</span></td><td class="num"><span>4.5</span></td>${actions ? `<td><span class="row-actions"><button class="nk-btn secondary small">${W.rowOpen}</button><button class="nk-btn danger small">${W.rowArchive}</button></span></td>` : ''}</tr>
+    <tr><td><span class="row-title">🗃️ ${W.p3}</span></td><td><span class="nk-tag blue">${W.statusProgress}</span></td><td><span class="person-cell"><span class="nk-avatar small purple">MK</span> Marcel</span></td><td><span class="date-cell">20.05.2026</span></td><td><span class="nk-progress"><i style="width:65%"></i></span><span class="nk-progress-label">65%</span></td><td class="num"><span>12.5</span></td>${actions ? `<td><span class="row-actions"><button class="nk-btn secondary small">${W.rowOpen}</button><button class="nk-btn danger small">${W.rowArchive}</button></span></td>` : ''}</tr>
+    <tr><td><span class="row-title">▤ ${W.p4}</span></td><td><span class="nk-tag orange">${W.statusPlanned}</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td>${actions ? `<td><span class="row-actions"><button class="nk-btn secondary small">${W.rowOpen}</button></span></td>` : ''}</tr>
   </tbody>
 </table><div class="nk-new-row">＋ New page</div></div>`;
 const dbListClass = W => `<div class="nk-list">
@@ -834,11 +835,11 @@ export const CATALOG = [
   classMarkup: W => `<div class="nk-page-meta"><span>${W.owner}</span><span>${W.created}</span><span>${W.tagged} <span class="nk-tag purple">${W.designSystem}</span></span></div>`,
 },
 {
-  tag: 'nk-props', group: 'page', classes: ['nk-props'],
+  tag: 'nk-props', group: 'page', classes: ['nk-props', 'flush'],
   title: t('Page properties', 'Seiteneigenschaften'),
-  desc: t('The properties under the title of a database page, the pattern Notion is known for: a list of <code>nk-prop</code> rows. The rows are hosts with <code>display: contents</code>, so each renders as a row of this list – no markup of their own around them.', 'Die Eigenschaften unter dem Titel einer Datenbankseite, das Muster, für das Notion bekannt ist: eine Liste von <code>nk-prop</code>-Zeilen. Die Zeilen sind Hosts mit <code>display: contents</code> und erscheinen deshalb als Zeilen dieser Liste – ohne eigenes Markup drumherum.'),
-  mobile: t('Below 860px each property stacks: the name above its value.', 'Unter 860px stapelt sich jede Eigenschaft: der Name über seinem Wert.'),
-  attrs: [], slots: [{ name: '(default)', desc: t('<code>nk-prop</code> children.', '<code>nk-prop</code>-Kinder.') }], events: [],
+  desc: t('The properties under the title of a database page, the pattern Notion is known for: a list of <code>nk-prop</code> rows. The rows are hosts with <code>display: contents</code>, so each renders as a row of this list – no markup of their own around them. <code>flush</code> drops the outer margin meant for the flow under a title, for a list inside a panel or a flex column.', 'Die Eigenschaften unter dem Titel einer Datenbankseite, das Muster, für das Notion bekannt ist: eine Liste von <code>nk-prop</code>-Zeilen. Die Zeilen sind Hosts mit <code>display: contents</code> und erscheinen deshalb als Zeilen dieser Liste – ohne eigenes Markup drumherum. <code>flush</code> nimmt den Außenabstand für den Fluss unter einem Titel weg, für eine Liste in einem Panel oder einer Flex-Spalte.'),
+  mobile: t('Below 860px each property stacks: the name above its value. In a column narrower than 380px the value moves under its name as well.', 'Unter 860px stapelt sich jede Eigenschaft: der Name über seinem Wert. In einer Spalte unter 380px rutscht der Wert ebenfalls unter seinen Namen.'),
+  attrs: [bool('flush', 'No outer margin.', 'Kein Außenabstand.')], slots: [{ name: '(default)', desc: t('<code>nk-prop</code> children.', '<code>nk-prop</code>-Kinder.') }], events: [],
   example: W => `<nk-props style="max-width:520px">
   <nk-prop label="${W.propStatus}" icon="◉"><nk-tag color="blue">${W.statusProgress}</nk-tag></nk-prop>
   <nk-prop label="${W.propOwner}" icon="👤"><nk-avatar size="small" color="purple">AL</nk-avatar>Ada Lovelace</nk-prop>
@@ -855,22 +856,22 @@ export const CATALOG = [
 </dl>`,
 },
 {
-  tag: 'nk-prop', group: 'page', classes: ['nk-prop', 'p-name', 'p-icon', 'p-value'],
+  tag: 'nk-prop', group: 'page', classes: ['nk-prop', 'p-name', 'p-icon', 'p-value', 'text'],
   title: t('Page property', 'Seiteneigenschaft'),
-  desc: t('One property: the name with its type icon in a 160px column, the value beside it, 34px with the hover wash on both halves. The value is the element’s content – tags, an avatar and a name, a date, <code>&lt;nk-progress wide&gt;</code>. A click fires <code>nk-action</code> with the half that was hit, the moment Notion opens the property’s editor.', 'Eine Eigenschaft: der Name mit seinem Typ-Icon in einer 160px-Spalte, daneben der Wert, 34px hoch mit Hover-Hauch auf beiden Hälften. Der Wert ist der Inhalt des Elements – Tags, ein Avatar mit Namen, ein Datum, <code>&lt;nk-progress wide&gt;</code>. Ein Klick feuert <code>nk-action</code> mit der getroffenen Hälfte – der Moment, in dem Notion den Editor der Eigenschaft öffnet.'),
-  mobile: t('Stacks below 860px.', 'Stapelt sich unter 860px.'),
-  attrs: [str('label', 'string', 'Property name.', 'Name der Eigenschaft.'), str('icon', 'string', 'Type icon.', 'Typ-Icon.')],
+  desc: t('One property: the name with its type icon in a 160px column, the value beside it, 34px with the hover wash on both halves. The value is the element’s content – tags, an avatar and a name, a date, <code>&lt;nk-progress wide&gt;</code>. A click fires <code>nk-action</code> with the half that was hit, the moment Notion opens the property’s editor. <code>text</code> lets a value that is text – a sentence, an address, a model name with a tag – flow as text instead of setting its parts one under the other. The value keeps at least 220px: in a column narrower than 380px it moves under its name.', 'Eine Eigenschaft: der Name mit seinem Typ-Icon in einer 160px-Spalte, daneben der Wert, 34px hoch mit Hover-Hauch auf beiden Hälften. Der Wert ist der Inhalt des Elements – Tags, ein Avatar mit Namen, ein Datum, <code>&lt;nk-progress wide&gt;</code>. Ein Klick feuert <code>nk-action</code> mit der getroffenen Hälfte – der Moment, in dem Notion den Editor der Eigenschaft öffnet. <code>text</code> lässt einen Wert, der Text ist – ein Satz, eine Adresse, ein Modellname mit Etikett –, als Text fließen, statt seine Teile untereinander zu setzen. Der Wert behält mindestens 220px: In einer Spalte unter 380px rutscht er unter seinen Namen.'),
+  mobile: t('Stacks below 860px, and in a column narrower than 380px.', 'Stapelt sich unter 860px und in einer Spalte unter 380px.'),
+  attrs: [str('label', 'string', 'Property name.', 'Name der Eigenschaft.'), str('icon', 'string', 'Type icon.', 'Typ-Icon.'), bool('text', 'The value flows as text.', 'Der Wert fließt als Text.')],
   slots: [{ name: '(default)', desc: t('The value.', 'Der Wert.') }, { name: 'icon', desc: t('Icon node.', 'Icon-Knoten.') }],
   events: [{ name: 'nk-action', detail: "{ action: 'name' | 'value', label }", desc: t('Name or value clicked.', 'Name oder Wert geklickt.') }],
-  example: W => `<nk-props style="max-width:520px"><nk-prop label="${W.propDue}" icon="📅">${W.dueDate}</nk-prop></nk-props>`,
-  classMarkup: W => `<dl class="nk-props" style="max-width:520px"><div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>${W.propDue}</dt><dd class="p-value">${W.dueDate}</dd></div></dl>`,
+  example: W => `<nk-props style="max-width:520px"><nk-prop label="${W.propDue}" icon="📅">${W.dueDate}</nk-prop><nk-prop label="${W.propAddress}" icon="✉️" text>support+design@notionkit.example.com · <nk-tag color="green">${W.propVerified}</nk-tag></nk-prop></nk-props>`,
+  classMarkup: W => `<dl class="nk-props" style="max-width:520px"><div class="nk-prop"><dt class="p-name"><span class="p-icon">📅</span>${W.propDue}</dt><dd class="p-value">${W.dueDate}</dd></div><div class="nk-prop"><dt class="p-name"><span class="p-icon">✉️</span>${W.propAddress}</dt><dd class="p-value text">support+design@notionkit.example.com · <span class="nk-tag green">${W.propVerified}</span></dd></div></dl>`,
 },
 {
-  tag: 'nk-panels', group: 'page', classes: ['nk-panels'],
+  tag: 'nk-panels', group: 'page', classes: ['nk-panels', 'flush'],
   title: t('Panels', 'Panels'),
-  desc: t('A grid of <code>nk-panel</code>s: columns of at least 200px that share the row. The panels are hosts with <code>display: contents</code>, so each is a cell of this grid.', 'Ein Raster aus <code>nk-panel</code>s: Spalten von mindestens 200px, die sich die Zeile teilen. Die Panels sind Hosts mit <code>display: contents</code> und damit Zellen dieses Rasters.'),
+  desc: t('A grid of <code>nk-panel</code>s: columns of at least 200px that share the row. The panels are hosts with <code>display: contents</code>, so each is a cell of this grid. <code>flush</code> drops the outer margin, for a grid inside a flex column with a gap of its own.', 'Ein Raster aus <code>nk-panel</code>s: Spalten von mindestens 200px, die sich die Zeile teilen. Die Panels sind Hosts mit <code>display: contents</code> und damit Zellen dieses Rasters. <code>flush</code> nimmt den Außenabstand weg, für ein Raster in einer Flex-Spalte mit eigenem Abstand.'),
   mobile: t('Falls to one column as soon as two 200px columns no longer fit.', 'Fällt auf eine Spalte, sobald zwei 200px-Spalten nicht mehr passen.'),
-  attrs: [], slots: [{ name: '(default)', desc: t('<code>nk-panel</code> children.', '<code>nk-panel</code>-Kinder.') }], events: [],
+  attrs: [bool('flush', 'No outer margin.', 'Kein Außenabstand.')], slots: [{ name: '(default)', desc: t('<code>nk-panel</code> children.', '<code>nk-panel</code>-Kinder.') }], events: [],
   example: W => `<nk-panels>
   <nk-panel href="#" cover="/covers/aurora.svg" icon="🚀" title="${W.pageTitle}"><p>${W.minAgo}</p></nk-panel>
   <nk-panel href="#" cover="/covers/dunes.svg" icon="📚" title="${W.knowledgeBase}"><p>${W.yesterday}</p></nk-panel>
@@ -883,15 +884,17 @@ export const CATALOG = [
 </div>`,
 },
 {
-  tag: 'nk-panel', group: 'page', classes: ['nk-panel', 'nk-cover', 'nk-page-icon'],
+  tag: 'nk-panel', group: 'page', classes: ['nk-panel', 'nk-cover', 'nk-page-icon', 'p-head', 'p-end'],
   title: t('Panel', 'Panel'),
-  desc: t('A neutral surface for content that belongs together – the cards on Notion’s Home, the boxes in its settings. <code>title</code> is the heading (never a tooltip); the content goes in as <code>&lt;p&gt;</code>s and blocks. <code>cover</code> without a value draws the gradient band, with a URL a picture; <code>icon</code> overlaps the cover as on a page – a page tile. With <code>href</code> the panel is a link.', 'Eine neutrale Fläche für Inhalt, der zusammengehört – die Karten auf Notions Startseite, die Kästen in seinen Einstellungen. <code>title</code> ist die Überschrift (nie ein Tooltip); der Inhalt kommt als <code>&lt;p&gt;</code>s und Blöcke hinein. <code>cover</code> ohne Wert zeichnet das Verlaufsband, mit URL ein Bild; <code>icon</code> überlappt das Cover wie auf einer Seite – eine Seitenkachel. Mit <code>href</code> ist das Panel ein Link.'),
+  desc: t('A neutral surface for content that belongs together – the cards on Notion’s Home, the boxes in its settings. <code>title</code> is the heading (never a tooltip); the content goes in as <code>&lt;p&gt;</code>s and blocks. <code>cover</code> without a value draws the gradient band, with a URL a picture; <code>icon</code> overlaps the cover as on a page – a page tile. With <code>href</code> the panel is a link. <code>slot="end"</code> sits at the right edge of the title – a state as a tag, a button – as Notion’s settings boxes show a connection, and moves under the title where both do not fit.', 'Eine neutrale Fläche für Inhalt, der zusammengehört – die Karten auf Notions Startseite, die Kästen in seinen Einstellungen. <code>title</code> ist die Überschrift (nie ein Tooltip); der Inhalt kommt als <code>&lt;p&gt;</code>s und Blöcke hinein. <code>cover</code> ohne Wert zeichnet das Verlaufsband, mit URL ein Bild; <code>icon</code> überlappt das Cover wie auf einer Seite – eine Seitenkachel. Mit <code>href</code> ist das Panel ein Link. <code>slot="end"</code> sitzt am rechten Rand des Titels – ein Zustand als Tag, ein Button –, wie Notions Einstellungskästen eine Verbindung zeigen, und rutscht unter den Titel, wo beides nicht nebeneinander passt.'),
   mobile: t('Takes the width of its grid cell.', 'Nimmt die Breite seiner Rasterzelle.'),
   attrs: [str('title', 'string', 'Heading.', 'Überschrift.'), str('icon', 'string', 'Page icon.', 'Seiten-Icon.'), str('cover', 'URL | empty', 'Cover band: empty for the gradient, a URL for a picture.', 'Cover-Band: leer für den Verlauf, eine URL für ein Bild.'), str('href', 'URL', 'Makes the panel a link.', 'Macht das Panel zum Link.'), str('target', 'string', 'Link target.', 'Link-Ziel.')],
-  slots: [{ name: '(default)', desc: t('Content: <code>&lt;p&gt;</code>, a prose block, a progress bar.', 'Inhalt: <code>&lt;p&gt;</code>, ein Prosa-Block, ein Fortschrittsbalken.') }],
+  slots: [{ name: '(default)', desc: t('Content: <code>&lt;p&gt;</code>, a prose block, a progress bar.', 'Inhalt: <code>&lt;p&gt;</code>, ein Prosa-Block, ein Fortschrittsbalken.') }, { name: 'end', desc: t('Beside the title, at its right edge: a tag, a button.', 'Neben dem Titel, an seinem rechten Rand: ein Tag, ein Button.') }],
   events: [],
-  example: W => `<div style="max-width:260px"><nk-panel href="#" cover icon="🚀" title="${W.pageTitle}"><p>${W.minAgo}</p></nk-panel></div>`,
-  classMarkup: W => `<div style="max-width:260px"><a class="nk-panel" href="#"><div class="nk-cover"></div><div class="nk-page-icon">🚀</div><h3>${W.pageTitle}</h3><p>${W.minAgo}</p></a></div>`,
+  example: W => `<div style="max-width:360px;display:grid;gap:12px"><nk-panel href="#" cover icon="🚀" title="${W.pageTitle}"><p>${W.minAgo}</p></nk-panel>
+<nk-panel title="${W.weeklyReview}"><nk-tag slot="end" color="blue">${W.statusProgress}</nk-tag><p>${W.weeklyReviewText}</p></nk-panel></div>`,
+  classMarkup: W => `<div style="max-width:360px;display:grid;gap:12px"><a class="nk-panel" href="#"><div class="nk-cover"></div><div class="nk-page-icon">🚀</div><h3>${W.pageTitle}</h3><p>${W.minAgo}</p></a>
+<div class="nk-panel"><div class="p-head"><h3>${W.weeklyReview}</h3><span class="p-end"><span class="nk-tag blue">${W.statusProgress}</span></span></div><p>${W.weeklyReviewText}</p></div></div>`,
 },
 {
   tag: 'nk-block-host', group: 'page', classes: ['nk-block-host', 'nk-block-handle', 'nk-drop-target'],
@@ -957,15 +960,15 @@ export const CATALOG = [
   classMarkup: W => `<div class="nk-synced"><span class="synced-badge">${W.syncedBadge}</span><div style="font-size:14px;line-height:1.55">${W.syncedText}</div></div>`,
 },
 {
-  tag: 'nk-tabs', group: 'page', classes: ['nk-tabs', 'nk-tab', 'active', 'nk-tab-panel'],
+  tag: 'nk-tabs', group: 'page', classes: ['nk-tabs', 'nk-tab', 'active', 'nk-tab-panel', 'scroll'],
   title: t('Tabs', 'Tabs'),
-  desc: t('A tab strip with panels. <code>nk-tab</code> children are the tabs; elements with <code>slot="panel"</code> and a matching <code>data-tab</code> are the panels – the tabs hide every panel but the active one through <code>hidden</code>. Arrow keys move between tabs.',
-          'Eine Tab-Leiste mit Panels. <code>nk-tab</code>-Kinder sind die Tabs; Elemente mit <code>slot="panel"</code> und passendem <code>data-tab</code> die Panels – die Tabs verbergen per <code>hidden</code> alle bis auf das aktive. Pfeiltasten wechseln.'),
-  mobile: t('Strip stays on one line; keep labels short.', 'Leiste bleibt einzeilig; Labels kurz halten.'),
-  attrs: [str('value', 'string', 'Active tab value (default: the tab with <code>active</code>, else the first).', 'Aktiver Tab-Wert (Standard: Tab mit <code>active</code>, sonst der erste).')],
+  desc: t('A tab strip with panels. <code>nk-tab</code> children are the tabs; elements with <code>slot="panel"</code> and a matching <code>data-tab</code> are the panels – the tabs hide every panel but the active one through <code>hidden</code>. Arrow keys move between tabs. <code>scroll</code> keeps many tabs in one row that scrolls sideways, scrollbar hidden, and holds the active tab in view – after the first layout, on every change and when the row’s width changes.',
+          'Eine Tab-Leiste mit Panels. <code>nk-tab</code>-Kinder sind die Tabs; Elemente mit <code>slot="panel"</code> und passendem <code>data-tab</code> die Panels – die Tabs verbergen per <code>hidden</code> alle bis auf das aktive. Pfeiltasten wechseln. <code>scroll</code> hält viele Tabs in einer Zeile, die seitlich scrollt, ohne sichtbare Scrollleiste, und behält den aktiven Tab im Blick – nach dem ersten Layout, bei jedem Wechsel und wenn sich die Breite der Zeile ändert.'),
+  mobile: t('The strip stays on one line; one longer than the screen takes <code>scroll</code>.', 'Die Leiste bleibt einzeilig; eine, die länger ist als der Bildschirm, bekommt <code>scroll</code>.'),
+  attrs: [str('value', 'string', 'Active tab value (default: the tab with <code>active</code>, else the first).', 'Aktiver Tab-Wert (Standard: Tab mit <code>active</code>, sonst der erste).'), bool('scroll', 'One row that scrolls sideways and keeps the active tab in view.', 'Eine Zeile, die seitlich scrollt und den aktiven Tab im Blick hält.')],
   slots: [{ name: '(default)', desc: t('<code>nk-tab</code> children.', '<code>nk-tab</code>-Kinder.') }, { name: 'panel', desc: t('Panels with <code>data-tab</code>.', 'Panels mit <code>data-tab</code>.') }],
   events: [{ name: 'nk-change', detail: '{ value }', desc: t('Active tab changed.', 'Aktiver Tab gewechselt.') }, { name: 'nk-select', detail: '{ value, label }', desc: t('From the clicked tab.', 'Vom geklickten Tab.') }],
-  props: ['value'],
+  props: ['value', 'scroll'],
   example: W => `<nk-tabs value="notes">
   <nk-tab value="notes">${W.notes}</nk-tab>
   <nk-tab value="tasks">${W.tasks}</nk-tab>
@@ -1008,22 +1011,29 @@ export const CATALOG = [
 <div style="max-width:300px;margin-top:12px"><div class="nk-segmented wrap"><button class="active">${W.all}</button><button>⚠️ ${W.attention}</button><button>${W.failed}</button><button>${W.read}</button><button>${W.ignored}</button></div></div>`,
 },
 {
-  tag: 'nk-steps', group: 'page', classes: ['nk-steps', 'nk-step', 'st-mark', 'st-desc', 'done', 'current'],
+  tag: 'nk-steps', group: 'page', classes: ['nk-steps', 'nk-step', 'st-mark', 'st-desc', 'done', 'current', 'skipped', 'st-label', 'horizontal'],
   title: t('Steps', 'Schritte'),
-  desc: t('A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked <code>aria-current="step"</code>. <code>current</code> counts from 1; one past the last marks every step done, and <code>next()</code> moves on. The <code>steps</code> attribute is a comma-separated list; the property also takes <code>{ label, desc }</code> objects for a line under the label.',
-          'Ein kurzer Ablauf – ein Konto verbinden, ein Modell einrichten –, ruhig und vertikal: ein nummerierter Kreis pro Schritt, verbunden durch eine Haarlinie, erledigte Schritte mit Haken auf dem grünen Tag, der aktuelle im Akzent umrandet und mit <code>aria-current="step"</code> markiert. <code>current</code> zählt ab 1; einer hinter dem letzten markiert alle Schritte als erledigt, <code>next()</code> geht weiter. Das Attribut <code>steps</code> ist eine kommagetrennte Liste; die Property nimmt auch <code>{ label, desc }</code>-Objekte für eine Zeile unter dem Label.'),
-  mobile: t('Unchanged: vertical, so it never runs out of width.', 'Unverändert: vertikal, die Breite geht also nie aus.'),
-  attrs: [str('steps', 'list', 'Comma-separated step labels.', 'Kommagetrennte Schritt-Labels.'), str('current', 'number', 'The current step, from 1.', 'Der aktuelle Schritt, ab 1.', { default: '1' }), str('label', 'string', 'The list’s accessible name.', 'Der zugängliche Name der Liste.')],
+  desc: t('A short flow – connecting an account, setting up a model – calm and vertical: a numbered circle per step joined by a hairline, done steps with a check on the green tag, the current one ringed in the accent and marked <code>aria-current="step"</code>. <code>current</code> counts from 1; one past the last marks every step done, and <code>next()</code> moves on. The <code>steps</code> attribute is a comma-separated list; the property also takes <code>{ label, desc }</code> objects for a line under the label. A <code>state</code> in such an object – <code>done</code>, <code>skipped</code> or <code>open</code> – wins over the order, for a wizard that lets a step be skipped while a later one is done; a skipped step shows a dashed ring around a dash. <code>selectable</code> makes each label a button: a click or Enter fires <code>nk-select { index, value, step }</code> – <code>index</code> counts from 1, like <code>current</code> – and, unless cancelled, makes that step current. <code>horizontal</code> sets the steps in one row above a wizard.',
+          'Ein kurzer Ablauf – ein Konto verbinden, ein Modell einrichten –, ruhig und vertikal: ein nummerierter Kreis pro Schritt, verbunden durch eine Haarlinie, erledigte Schritte mit Haken auf dem grünen Tag, der aktuelle im Akzent umrandet und mit <code>aria-current="step"</code> markiert. <code>current</code> zählt ab 1; einer hinter dem letzten markiert alle Schritte als erledigt, <code>next()</code> geht weiter. Das Attribut <code>steps</code> ist eine kommagetrennte Liste; die Property nimmt auch <code>{ label, desc }</code>-Objekte für eine Zeile unter dem Label. Ein <code>state</code> in so einem Objekt – <code>done</code>, <code>skipped</code> oder <code>open</code> – geht der Reihenfolge vor, für einen Assistenten, der einen Schritt überspringen lässt, während ein späterer erledigt ist; ein übersprungener Schritt zeigt einen gestrichelten Ring um einen Strich. <code>selectable</code> macht jedes Label zum Button: Ein Klick oder Enter feuert <code>nk-select { index, value, step }</code> – <code>index</code> zählt ab 1 wie <code>current</code> – und macht diesen Schritt aktuell, sofern nicht abgebrochen. <code>horizontal</code> setzt die Schritte in eine Zeile über einem Assistenten.'),
+  mobile: t('Vertical steps stay as they are. <code>horizontal</code> keeps its row below 860px, with every mark but only the current step’s label.', 'Vertikale Schritte bleiben, wie sie sind. <code>horizontal</code> behält unter 860px seine Zeile, mit jeder Marke, aber nur dem Label des aktuellen Schritts.'),
+  attrs: [str('steps', 'list', 'Comma-separated step labels.', 'Kommagetrennte Schritt-Labels.'), str('current', 'number', 'The current step, from 1.', 'Der aktuelle Schritt, ab 1.', { default: '1' }), str('label', 'string', 'The list’s accessible name.', 'Der zugängliche Name der Liste.'), bool('selectable', 'Labels are buttons that jump to their step.', 'Labels sind Buttons, die zu ihrem Schritt springen.'), bool('horizontal', 'One row above a wizard.', 'Eine Zeile über einem Assistenten.')],
   slots: [],
-  events: [],
-  props: ['steps', 'current'], methods: ['next()'],
+  events: [{ name: 'nk-select', detail: '{ index, value, step }', desc: t('A step clicked (with <code>selectable</code>); cancel it to stay.', 'Ein Schritt geklickt (mit <code>selectable</code>); abbrechen, um zu bleiben.') }],
+  props: ['steps', 'current', 'selectable', 'horizontal'], methods: ['next()', 'select(index)'],
   example: W => `<nk-steps label="${W.stepsLabel}" current="2"></nk-steps>
-<script>{ document.currentScript.previousElementSibling.steps = [{ label: '${W.stepProvider}', desc: '${W.stepProviderDesc}' }, '${W.stepKey}', '${W.stepTest}']; }</script>`,
+<script>{ document.currentScript.previousElementSibling.steps = [{ label: '${W.stepProvider}', desc: '${W.stepProviderDesc}' }, '${W.stepKey}', '${W.stepTest}']; }</script>
+<div style="margin-top:16px"><nk-steps id="stepsWizard" label="${W.stepsLabel}" current="3" horizontal selectable></nk-steps></div>
+<script>{ document.getElementById('stepsWizard').steps = [{ label: '${W.stepProvider}', state: 'done' }, { label: '${W.stepKey}', desc: '${W.stepSkipped}', state: 'skipped' }, '${W.stepTest}']; }</script>`,
   classMarkup: W => `<ol class="nk-steps" aria-label="${W.stepsLabel}">
   <li class="nk-step done"><span class="st-mark">✓</span><span>${W.stepProvider}<span class="st-desc">${W.stepProviderDesc}</span></span></li>
   <li class="nk-step current" aria-current="step"><span class="st-mark">2</span><span>${W.stepKey}</span></li>
   <li class="nk-step"><span class="st-mark">3</span><span>${W.stepTest}</span></li>
-</ol>`,
+</ol>
+<div style="margin-top:16px"><ol class="nk-steps horizontal" aria-label="${W.stepsLabel}">
+  <li class="nk-step done"><span class="st-mark">✓</span><button type="button" class="st-label">${W.stepProvider}</button></li>
+  <li class="nk-step skipped"><span class="st-mark">–</span><button type="button" class="st-label">${W.stepKey}<span class="st-desc">${W.stepSkipped}</span></button></li>
+  <li class="nk-step current" aria-current="step"><span class="st-mark">3</span><button type="button" class="st-label">${W.stepTest}</button></li>
+</ol></div>`,
 },
 {
   tag: 'nk-stats', group: 'page', classes: ['nk-stats', 'nk-stat', 's-label', 's-value', 's-delta', 'up', 'down'],
@@ -1492,18 +1502,18 @@ ${dbScript(W)}`,
 </div>`,
 },
 {
-  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'wrap', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'nk-avatar', 'num', 'nk-new-row'], wide: true, script: true,
+  tag: 'nk-table-view', group: 'data', classes: ['nk-table-wrap', 'nk-table', 'wrap', 'th-icon', 'row-title', 'date-cell', 'person-cell', 'nk-avatar', 'num', 'row-actions', 'actions', 'nk-new-row'], wide: true, script: true,
   title: t('Table view', 'Tabellenansicht'),
-  desc: t('Renders <code>columns</code> × <code>rows</code> as the NotionKit table. Cells are polymorphic (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) and rendered as plain markup by the exported <code>renderPropertyCell()</code> – every cell rule starts with <code>.nk-table</code>, so a cell element of its own would never be styled. Header clicks sort with <code>sortable</code>. A <code>number</code> column stands right-aligned in figures of equal width, formatted by its <code>locale</code> and <code>format</code> (Intl.NumberFormat options); a person’s <code>color</code> takes one of the nine names.',
-          'Rendert <code>columns</code> × <code>rows</code> als NotionKit-Tabelle. Zellen sind polymorph (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) und werden vom exportierten <code>renderPropertyCell()</code> als Klassen-Markup gerendert – jede Zellregel beginnt mit <code>.nk-table</code>, ein eigenes Zellen-Element würde nie gestylt. Kopfklicks sortieren mit <code>sortable</code>.'),
+  desc: t('Renders <code>columns</code> × <code>rows</code> as the NotionKit table. Cells are polymorphic (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) and rendered as plain markup by the exported <code>renderPropertyCell()</code> – every cell rule starts with <code>.nk-table</code>, so a cell element of its own would never be styled. Header clicks sort with <code>sortable</code>. A <code>number</code> column stands right-aligned in figures of equal width, formatted by its <code>locale</code> and <code>format</code> (Intl.NumberFormat options); a person’s <code>color</code> takes one of the nine names. A column of type <code>actions</code> (NotionKit 1.12.0) sets buttons in each row from <code>column.actions</code> – <code>[{ action, label, icon, danger, disabled, tooltip }]</code> –, and a row’s value – a list of action names – picks which of them it shows; a click fires <code>nk-action { action, row, id, anchor }</code> instead of selecting the row. A <code>url</code> value may be <code>{ href, label, target }</code>: a link of your own, to another page of the app, with its own text.',
+          'Rendert <code>columns</code> × <code>rows</code> als NotionKit-Tabelle. Zellen sind polymorph (<code>text</code>, <code>select</code>, <code>multi-select</code>, <code>date</code>, <code>person</code>, <code>checkbox</code>, <code>url</code>, <code>number</code>, <code>progress</code>) und werden vom exportierten <code>renderPropertyCell()</code> als Klassen-Markup gerendert – jede Zellregel beginnt mit <code>.nk-table</code>, ein eigenes Zellen-Element würde nie gestylt. Kopfklicks sortieren mit <code>sortable</code>. Eine Spalte vom Typ <code>actions</code> (NotionKit 1.12.0) setzt Knöpfe in jede Zeile aus <code>column.actions</code> – <code>[{ action, label, icon, danger, disabled, tooltip }]</code> –, und der Wert einer Zeile – eine Liste von Aktionsnamen – wählt, welche sie zeigt; ein Klick feuert <code>nk-action { action, row, id, anchor }</code>, statt die Zeile zu wählen. Ein <code>url</code>-Wert darf <code>{ href, label, target }</code> sein: ein eigener Link, zu einer anderen Seite der App, mit eigenem Text.'),
   mobile: t('Scrolls horizontally inside <code>.nk-table-wrap</code>.', 'Scrollt horizontal in <code>.nk-table-wrap</code>.'),
   attrs: [str('name', 'string', 'View name (tab id).', 'View-Name (Tab-Kennung).'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('badge', 'string', 'Tab badge.', 'Tab-Badge.'), bool('count', 'Row count as badge.', 'Zeilenzahl als Badge.'), bool('new-row', 'Show the add row.', 'Hinzufügen-Zeile zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' }), bool('sortable', 'Header click sorts locally.', 'Kopfklick sortiert lokal.'), str('sort-key', 'string', 'Sorted column.', 'Sortierte Spalte.'), str('sort-dir', 'asc | desc', 'Direction.', 'Richtung.'), bool('wrap', 'Cell text may break (Notion\'s "wrap column").', 'Zellentext darf umbrechen (Notions „Spalte umbrechen“).')],
   slots: [],
-  events: [{ name: 'nk-select', detail: '{ row, id }', desc: t('Row clicked.', 'Zeile geklickt.') }, { name: 'nk-change', detail: '{ row, key, value }', desc: t('Checkbox cell toggled (row updated in place).', 'Checkbox-Zelle umgeschaltet (Zeile direkt aktualisiert).') }, { name: 'nk-action', detail: "{ action: 'sort' | 'new-row', key?, value? }", desc: t('Header or add row clicked.', 'Kopf oder Hinzufügen-Zeile geklickt.') }],
+  events: [{ name: 'nk-select', detail: '{ row, id, key, cell }', desc: t('Row clicked.', 'Zeile geklickt.') }, { name: 'nk-change', detail: '{ row, key, value }', desc: t('Checkbox cell toggled (row updated in place).', 'Checkbox-Zelle umgeschaltet (Zeile direkt aktualisiert).') }, { name: 'nk-action', detail: "{ action: 'sort' | 'new-row' | an actions column's action, key?, value?, row?, id?, anchor? }", desc: t('Header, add row or a row’s button clicked.', 'Kopf, Hinzufügen-Zeile oder ein Knopf einer Zeile geklickt.') }],
   props: ['columns', 'rows', 'data'], methods: ['refresh()'],
   example: W => `<nk-table-view new-row sortable></nk-table-view>
-${dbScript(W)}`,
-  classMarkup: dbTableClass,
+${dbScript(W, { actions: true })}`,
+  classMarkup: W => dbTableClass(W, { actions: true }),
 },
 {
   tag: 'nk-board-view', group: 'data', classes: ['nk-board', 'active', 'nk-board-col', 'nk-board-col-header', 'count', 'nk-card', 'card-title', 'card-meta'], wide: true, script: true,
