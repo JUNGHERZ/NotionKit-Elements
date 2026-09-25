@@ -4,6 +4,20 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.13.0] – 2026-09-25
+
+Built against NotionKit CSS 1.13.0 (peer `>= 1.13.0`). LearnHub moved from 1.5.1 to 1.11 and sent back three findings about fixed sizes; this release answers them.
+
+### Fixed
+- **`<nk-page>` with a cover but no icon keeps its top padding.** It set `covered` for every cover, so the page dropped its padding for an icon that was not there, and the title – or tags and a deadline – sat right on the picture. `covered` now needs an icon too, from the attribute or from `slot="icon"`, and follows an icon that arrives later.
+- **`<nk-input>`, `<nk-select>`, `<nk-textarea>` and `<nk-copy-field>` stay inside a narrow `<nk-panel>`** (NotionKit 1.13.0). The 210px floor ran past a 200px tile; inside a panel it gives way now, while a field row keeps it. The fix reaches the shadow roots through a custom property, so `wide` and `<nk-field stacked>` are no longer needed for it.
+
+### Added
+- **Cover heights you can set**: `--nk-cover-height` (200px) for `<nk-page-cover>` and the page's own cover, `--nk-panel-cover-height` (64px) for `<nk-panel cover>` – on `:root`, or on one element: `<nk-page-cover style="--nk-cover-height: clamp(200px, 30vh, 300px)">`. Until now the band's height sat in the shadow root, out of reach.
+
+### Changed
+- Peer `@jungherz-de/notionkit >= 1.13.0`.
+
 ## [1.12.0] – 2026-09-25
 
 Built against NotionKit CSS 1.12.0 (peer `>= 1.12.0`). Auxdesk moved from 1.5.1 to 1.11 and sent back eight findings; this release answers all of them.
@@ -639,6 +653,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.13.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.13.0
 [1.12.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.12.0
 [1.11.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.1
 [1.11.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.0

@@ -5,6 +5,8 @@ import { NkElement } from '../../base.js';
 // → <div class="nk-cover"><img src="cover.jpg" alt=""></div>: the picture fills
 // the band, cropped rather than stretched; `position` moves the crop, as
 // Notion's "Reposition" does. The gradient stays underneath while it loads.
+// The band is as tall as the token --nk-cover-height (200px), which reaches
+// the shadow root: style="--nk-cover-height: 30vh" sets one cover.
 class NkPageCover extends NkElement {
   static get observedAttributes() { return ['src', 'position']; }
 
