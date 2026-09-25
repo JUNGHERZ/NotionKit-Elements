@@ -61,6 +61,9 @@ if (typeof window !== 'undefined' && typeof MutationObserver !== 'undefined') {
 // Layout plumbing only: how the host box participates in the outer layout, and
 // that `hidden` keeps working. :host([hidden]) has a higher specificity than
 // :host, so it wins regardless of order. The wrapper is layout-transparent.
+// `flush` on any element drops the outer margin of its box (NotionKit
+// 1.16.0) – for a block in a flex column with a gap of its own; a whole
+// column does it for every block with --nk-block-space: 0.
 
 const hostSheets = new Map();
 
@@ -71,6 +74,7 @@ function hostSheetFor(display) {
     sheet.replaceSync(`
       :host { display: ${display}; }
       :host([hidden]) { display: none; }
+      :host([flush]) .nk-wrapper > * { margin-top: 0; margin-bottom: 0; }
       .nk-wrapper { display: contents; }
     `);
     hostSheets.set(display, sheet);

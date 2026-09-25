@@ -631,6 +631,8 @@ Form controls additionally re-dispatch a native, bubbling \`change\` event, so \
 | \`<button class="nk-btn">\` inside \`<nk-btn>\` | The element renders the button – slot only the label and icon |
 | Loading the bundle without \`notionkit.css\` and wondering about the serif font | The token layer only covers colours and metrics; typography comes from \`.nk-body\` |
 | \`<nk-btn style="margin-top:16px">\` or \`nk-callout { margin: … }\` | Hosts are \`display: contents\` and have no box – put spacing on a wrapper you own |
+| Blocks in a flex column with a \`gap\` that stand too far apart | \`--nk-block-space: 0\` on the column drops every block's outer margin; \`flush\` on one element drops its own. Headings keep theirs |
+| A \`<nk-calendar floating>\` or \`<nk-menu floating>\` moved into a dialog so that it can be clicked | Leave it under \`<body>\`: an open \`nk-dialog\`, \`nk-modal\` or \`nk-sheet\` keeps floating menus, date pickers, the tooltip and the toast usable |
 | A positioned wrapper around \`<nk-menu>\` to open it under a button | \`<nk-menu floating sheet>\` and \`menu.show(button)\`: it measures the button, closes on a tap outside and is a sheet on a phone |
 | \`<nk-sheet id="more">\` opened from \`app.html#more\` | Give the overlay an id other than the hash: the browser scrolls to the fragment target and takes the focus the overlay just gave |
 | \`<nk-btn variant="topbar" onclick="sidebar.toggle()">☰</nk-btn>\` plus a script that hides it on the desktop | \`<nk-btn variant="sidebar">☰</nk-btn>\` – shown below 860px only, opens the drawer |

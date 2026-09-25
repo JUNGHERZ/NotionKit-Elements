@@ -42,7 +42,10 @@ class NkPanel extends NkElement {
     const href = this.getAttribute('href');
     if (href) { this._box.setAttribute('href', href); this._box.target = this.getAttribute('target') || ''; }
     const cover = this.getAttribute('cover');
-    this._cover.style.display = cover === null ? 'none' : '';
+    // The band is in the tree only with `cover`: hidden, it still matched
+    // `.nk-cover + .nk-page-icon` and pulled a lone icon over the tile's edge.
+    if (cover === null) this._cover.remove();
+    else if (!this._cover.isConnected) this._box.prepend(this._cover);
     if (cover) { this._img.src = cover; if (!this._img.isConnected) this._cover.appendChild(this._img); }
     else this._img.remove();
     const icon = this.getAttribute('icon');

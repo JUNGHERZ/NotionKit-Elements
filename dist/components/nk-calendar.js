@@ -1,7 +1,7 @@
 import { NkFormElement } from './base.js';
 import { p as parseDay, i as isoOf, C as CHEVRONS, r as resolveLocale, f as firstWeekday, m as monthGrid, w as weekLabel, a as weekdayNames, b as isoWeek, s as stepMonth, c as addDays } from './shared/dates-a32DcW1l.js';
 import { p as placeUnder } from './shared/floating-DOK73b_D.js';
-import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
+import { d as deepActiveElement } from './shared/focus-C4tbSNND.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-calendar name="due" value="2026-06-02" weeks weekend="6,0"></nk-calendar>
@@ -44,7 +44,7 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // outside does. Put a floating calendar directly under <body>.
 const STEPS = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 };
 const floatSheet = new CSSStyleSheet();
-floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 60; pointer-events: none; }`);
+floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 106; pointer-events: none; }`);
 
 class NkCalendar extends NkFormElement {
   static get hostStyles() { return floatSheet; }

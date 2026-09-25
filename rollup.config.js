@@ -46,6 +46,13 @@ const bundles = [
     input: 'src/index.js',
     output: { file: 'dist/notionkit-elements.esm.js', format: 'es' },
     plugins: [nodeResolve()]
+  },
+  // ES module bundle, minified, with a source map – for an import map without
+  // a build step: the same exports as the unminified module
+  {
+    input: 'src/index.js',
+    output: { file: 'dist/notionkit-elements.esm.min.js', format: 'es', sourcemap: true },
+    plugins: [nodeResolve(), terser()]
   }
 ];
 

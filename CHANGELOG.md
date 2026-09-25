@@ -4,6 +4,24 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0] – 2026-09-25
+
+Built against NotionKit CSS 1.16.0 (peer `>= 1.16.0`). LearnHub checked all its open findings against 1.14.0; this release takes the fixes and small additions from that list – 3, 4, 5, 10, 11 and 15 – together with Auxdesk's finding 25. Links for steps and gallery cards and German texts follow in 1.17.0.
+
+### Fixed
+- **`<nk-panel icon>` without `cover` keeps its icon inside the tile.** The band sat in the shadow root even without `cover`, only hidden, and `.nk-cover + .nk-page-icon` still pulled the icon 24px up, 9px over the tile's edge. The band is in the tree only with `cover` now, and follows the attribute both ways.
+- **`<nk-select>` waits for the option of a value from the attribute, too.** `<nk-select value="b">` with a static first option and `b` loaded later showed the first option: the browser's preselection survived as the live selection. A value – attribute or property – whose option is missing now waits and wins once it arrives, unless someone has chosen another option in the meantime, and settling on it fires no `nk-change`. While it waits, `value` reports it; the visible selection and the form value stay as they are.
+- **`<nk-progress wide>` in a panel is a 6px bar** instead of 60px and more (NotionKit 1.16.0).
+- **A floating date picker or menu under `<body>` works from an open dialog.** An open `<nk-dialog>`, `<nk-modal>`, `<nk-sheet>`, the palette or – on a phone – `<nk-peek>` made every sibling inert, the floating layers under `<body>` among them, and they lay under it besides: a date picker opened from a field in a dialog showed but took no click. Floating menus and date pickers, the tooltip and the toast stay out of the inert page now, and NotionKit 1.16.0 lays them above the dialog.
+- **`<nk-btn>` stretched across a column keeps its label centred** (NotionKit 1.16.0) – Auxdesk's sign-in page.
+
+### Added
+- **`flush` on every element** drops the outer margin of its box, for a block in a flex column with a gap of its own; `--nk-block-space: 0` on the column does it for every block inside (NotionKit 1.16.0). Before, only `<nk-props>` and `<nk-panels>` had `flush`, and the margins of the others sat out of reach in their shadow roots.
+- **A minified ES module: `dist/notionkit-elements.esm.min.js`**, with its source map, the same exports as `notionkit-elements.esm.js` – for an import map without a build step, where the minified bundle was an IIFE only. `@jungherz-de/notionkit-elements/esm.min.js` resolves to it.
+
+### Changed
+- Peer `@jungherz-de/notionkit >= 1.16.0`.
+
 ## [1.15.0] – 2026-09-25
 
 Built against NotionKit CSS 1.15.0 (peer `>= 1.15.0`). Auxdesk's findings 22 and 23 from its jobs, messages and tickets in `<nk-table-view>`.
@@ -684,6 +702,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.16.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.16.0
 [1.15.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.14.0
 [1.13.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.13.0

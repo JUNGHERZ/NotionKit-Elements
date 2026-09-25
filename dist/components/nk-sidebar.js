@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
+import { d as deepActiveElement } from './shared/focus-C4tbSNND.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-sidebar slot="sidebar">

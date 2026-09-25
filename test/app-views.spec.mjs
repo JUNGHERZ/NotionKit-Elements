@@ -123,12 +123,13 @@ test('nk-panel: title is the heading, never a tooltip; href makes a link; cover 
   const m = await page.evaluate(() => ['a', 'b', 'c'].map(id => {
     const el = document.getElementById(id), box = el.shadowRoot.querySelector('.nk-panel');
     const cover = box.querySelector('.nk-cover'), p = el.querySelector('p');
-    return { tag: box.localName, href: box.getAttribute('href'), title: el.hasAttribute('title'), h3: box.querySelector('h3').textContent, cover: getComputedStyle(cover).display, img: !!cover.querySelector('img'),
+    return { tag: box.localName, href: box.getAttribute('href'), title: el.hasAttribute('title'), h3: box.querySelector('h3').textContent, cover: cover ? getComputedStyle(cover).display : null, img: !!cover?.querySelector('img'),
       top: Math.round(box.getBoundingClientRect().top), pSize: getComputedStyle(p).fontSize, pMargin: getComputedStyle(p).marginTop };
   }));
   expect(m[0]).toMatchObject({ tag: 'a', href: '/x', title: false, h3: 'Roadmap', cover: 'block', img: true, pSize: '13px', pMargin: '0px' });
   expect(m[1]).toMatchObject({ tag: 'div', cover: 'block', img: false });
-  expect(m[2]).toMatchObject({ cover: 'none' });
+  // Without `cover` the band is not in the tree at all (1.16.0) – hidden, it still pulled an icon over the edge.
+  expect(m[2]).toMatchObject({ cover: null });
   expect(new Set(m.map(x => x.top)).size, 'one row').toBe(1);
   await page.setViewportSize(PHONE);
   await page.evaluate(() => { document.querySelector('nk-panels').style.width = '340px'; });

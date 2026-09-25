@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { d as deepActiveElement, l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-BNAChOXO.js';
+import { d as deepActiveElement, l as lockScroll, i as inertOutside, u as unlockScroll } from './shared/focus-C4tbSNND.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
 // <nk-peek id="peek" label="Database Table-View">

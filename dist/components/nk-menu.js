@@ -1,5 +1,5 @@
 import { NkElement } from './base.js';
-import { d as deepActiveElement } from './shared/focus-BNAChOXO.js';
+import { d as deepActiveElement } from './shared/focus-C4tbSNND.js';
 import { p as placeUnder } from './shared/floating-DOK73b_D.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 
@@ -20,7 +20,7 @@ import '@jungherz-de/notionkit/notionkit-styles.js';
 // close it too, a switch row does not. Opened from the keyboard, focus moves
 // to the first item; closing returns it to where it was.
 const floatSheet = new CSSStyleSheet();
-floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 60; pointer-events: none; }`);
+floatSheet.replaceSync(`:host([floating]) { display: block; position: fixed; top: 0; left: 0; z-index: 106; pointer-events: none; }`);
 
 class NkMenu extends NkElement {
   static get hostStyles() { return floatSheet; }

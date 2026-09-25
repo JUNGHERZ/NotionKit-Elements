@@ -15,7 +15,12 @@ function unlockScroll() {
   if (locks > 0 && --locks === 0) document.documentElement.style.overflow = previousOverflow;
 }
 
-/** Makes every sibling along `el`'s ancestor chain inert (shadow hosts included); returns the undo. */
+// Floating layers under <body> that open from inside an overlay – a menu, a
+// date picker – and the tooltip and toast stay usable: made inert, a date
+// picker opened from a dialog showed but took no click.
+const LAYERS = 'nk-menu[floating], nk-calendar[floating], nk-tooltip, nk-toast';
+
+/** Makes every sibling along `el`'s ancestor chain inert (shadow hosts included), floating layers aside; returns the undo. */
 function inertOutside(el) {
   const made = [];
   let node = el;
@@ -23,7 +28,7 @@ function inertOutside(el) {
     const parent = node.parentNode instanceof ShadowRoot ? node.parentNode : node.parentNode;
     if (!parent) break;
     for (const sib of parent.children) {
-      if (sib === node || sib.inert || /^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(sib.tagName)) continue;
+      if (sib === node || sib.inert || /^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(sib.tagName) || sib.matches(LAYERS)) continue;
       sib.inert = true;
       made.push(sib);
     }

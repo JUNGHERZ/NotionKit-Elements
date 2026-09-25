@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <title>NotionKit Elements – ES module fixture</title>
+  <link rel="stylesheet" href="/node_modules/@jungherz-de/notionkit/notionkit.css">
+</head>
+<body class="nk-body">
+  <!-- Loads one ES module bundle – ?src=esm.js or esm.min.js – and nothing else, so no element is defined twice. -->
+  <script type="module">
+    const src = new URLSearchParams(location.search).get('src') || 'esm.min.js';
+    window.esm = await import(`/dist/notionkit-elements.${src}`);
+    window.ready = true;
+  </script>
+</body>
+</html>

@@ -20,13 +20,16 @@ test('<nk-select> options follow the light DOM; selection survives a rebuild', a
   expect(await page.evaluate(() => [...new FormData(Object.assign(document.createElement('form'), {})).entries()])).toEqual([]);
 });
 
-test('<nk-select value=""> selects the empty option and a stale value leaves the selection alone', async ({ page }) => {
+test('<nk-select value=""> selects the empty option; a value without an option leaves the selection alone and waits', async ({ page }) => {
   await openHarness(page);
   await setStage(page, `<form id="f"><nk-select id="sel" name="s" value=""><option value="x">X</option><option value="">Empty</option></nk-select></form>`);
   expect(await page.evaluate(() => document.getElementById('sel').value)).toBe('');
   expect(await page.evaluate(() => [...new FormData(document.getElementById('f')).entries()])).toEqual([['s', '']]);
+  // Since 1.16.0 a value from the attribute waits for its option, as one from the property did since 1.11.0:
+  // the selection and the form value stay, `value` reports what it waits for.
   await page.evaluate(() => document.getElementById('sel').setAttribute('value', 'nope'));
-  expect(await page.evaluate(() => document.getElementById('sel').value)).toBe('');
+  expect(await page.evaluate(() => [document.getElementById('sel').shadowRoot.querySelector('select').value, document.getElementById('sel').value])).toEqual(['', 'nope']);
+  expect(await page.evaluate(() => [...new FormData(document.getElementById('f')).entries()])).toEqual([['s', '']]);
 });
 
 test('<nk-code highlight> re-highlights when its text changes', async ({ page }) => {

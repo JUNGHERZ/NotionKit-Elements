@@ -8,8 +8,10 @@ import { NkFormElement } from '../../base.js';
 // The light-DOM <option>s are copied into the shadow <select>. A
 // MutationObserver keeps the copy in step when a framework swaps them; the
 // empty string is a valid value; the live selection survives a rebuild. A
-// value set before its option exists – a framework sets properties before
-// children – waits and is applied once the option arrives.
+// value – attribute or property – whose option is not there yet waits and
+// wins over the browser's preselection once the option arrives, unless
+// someone has chosen another option in the meantime; settling on it fires
+// no nk-change.
 class NkSelect extends NkFormElement {
   static get observedAttributes() { return ['value', 'name', 'disabled', 'required', 'compact', 'wide', 'aria-label']; }
   static get observesLightDom() { return true; }
@@ -19,6 +21,7 @@ class NkSelect extends NkFormElement {
     this._forwardAll();
     this._wrapper.appendChild(this._select);
     this._defaultValue = this.getAttribute('value');
+    this._pending = this._defaultValue;
     // Children may not be parsed yet when connectedCallback runs.
     this.projectLightDom();
     requestAnimationFrame(() => this.projectLightDom());
@@ -52,11 +55,11 @@ class NkSelect extends NkFormElement {
     this._select.innerHTML = '';
     for (const node of nodes) this._select.appendChild(node.cloneNode(true));
 
-    // A value that waited for its option first; then the live selection when
-    // it survived; otherwise the value attribute; otherwise the browser
-    // default (first option / `selected`).
-    if (this._pending != null && this._applyValue(this._pending)) this._pending = null;
-    else if (!this._applyValue(previous)) this._applyValue(this.getAttribute('value'));
+    // A value that waits for its option first – it keeps waiting while the
+    // option is missing; else the live selection when it survived; else the
+    // browser default (first option / `selected`).
+    if (this._pending != null) { if (this._applyValue(this._pending)) this._pending = null; }
+    else this._applyValue(previous);
     this._syncFormValue();
   }
 
@@ -85,7 +88,8 @@ class NkSelect extends NkFormElement {
   onAttributeChanged(name) {
     if (!this._select) return;
     if (name === 'value') {
-      this._applyValue(this.getAttribute('value'));
+      const value = this.getAttribute('value');
+      this._pending = value === null || this._applyValue(value) ? null : value;
       this._syncFormValue();
       return;
     }
@@ -99,6 +103,7 @@ class NkSelect extends NkFormElement {
   }
 
   resetValue() {
+    this._pending = null;
     if (!this._applyValue(this._defaultValue)) this._select.selectedIndex = 0;
     this._syncFormValue();
   }
