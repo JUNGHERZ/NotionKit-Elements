@@ -1,11 +1,11 @@
 <h1 align="center">🧩 NotionKit Elements</h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.14.0-2383e2?style=flat-square" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/version-1.15.0-2383e2?style=flat-square" alt="Version"></a>
   <a href="#"><img src="https://img.shields.io/badge/vanilla_JS-no_dependencies-448361?style=flat-square" alt="Vanilla JS"></a>
   <a href="#"><img src="https://img.shields.io/badge/elements-88-529cca?style=flat-square" alt="88 Elements"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-9065b0?style=flat-square" alt="MIT License"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.14.0-lightgrey?style=flat-square" alt="Changelog"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-v1.15.0-lightgrey?style=flat-square" alt="Changelog"></a>
   <a href="https://www.npmjs.com/package/@jungherz-de/notionkit-elements"><img src="https://img.shields.io/badge/npm-%40jungherz--de%2Fnotionkit--elements-cb3837?style=flat-square&logo=npm" alt="npm"></a>
 </p>
 
@@ -59,7 +59,7 @@ It is the **app layer** of the NotionKit family – three layers, one design lan
 | 🧩 **88 Elements** | Forms with copy field, image picker and date picker, content blocks with bookmarks, app shell & tree with the ☰ drawer and the collapsing sidebar, page shell with properties, panels, avatars and steps, overlays (modal, sheet, dialog, resizable side peek, tooltip, ⌘K palette, menus that float in and become sheets on a phone, popover, emoji picker, toast), database table, board, list, calendar & gallery with toolbar and filter pills, comments, AI thread |
 | 🎛️ **Form participation** | Input, textarea, select, switch, check, radio, slider, segmented and model card work natively with `<form>` via `ElementInternals`; radios group across shadow roots |
 | 🌗 **Theme sync** | One observer mirrors `data-theme` on `<html>` into every element |
-| 🪶 **Lightweight** | 277 KB minified / 55 KB gzipped (IIFE, foundation sheet included), no external dependencies |
+| 🪶 **Lightweight** | 280 KB minified / 56 KB gzipped (IIFE, foundation sheet included), no external dependencies |
 | 📦 **Four bundle shapes** | IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `base.js`, which import NotionKit's sheet instead of carrying a copy |
 | 🤖 **AI-ready** | `SKILL.md` with copy-paste markup, six app skeletons and the rules – an agent given only that file built a working app in the release test |
 
@@ -71,8 +71,8 @@ It is the **app layer** of the NotionKit family – three layers, one design lan
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.15.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.15.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-field label="Display name" desc="Shown next to your comments">
@@ -102,7 +102,7 @@ The per-component files import NotionKit's sheet as `@jungherz-de/notionkit/noti
 
 Do not mix the full bundle with the per-component files: each brings its own `NkElement`. With the bundle, take `componentsSheet` and `NkElement` from the bundle (`NotionKitElements.componentsSheet` from the `<script>` build).
 
-Two prerequisites, always: `notionkit.css` on the document (the peer dependency, `>= 1.14.0`; 1.14.0 brings the gallery view and a banner action that stands at the right edge again, 1.13.0 keeps fields inside narrow panels, leaves a page without icon its padding under the cover and makes cover heights tokens, 1.12.0 brings a tag or button beside a panel's title, lists and grids without outer margin, text values, steps with states in any order and in a row, scrolling tabs, a cap for full pages and buttons per table row, 1.11.0 keeps a floating menu inside an open modal or dialog in place and inside the window and brings the banner's action as a button, fields that share a row and tooltips of several lines, 1.10.1 lets a disabled button show its tooltip, 1.10.0 brings the collapsing sidebar, the resizable side peek, the dialog and the tooltip, 1.9.0 the date picker and the calendar view, 1.8.0 the side peek, the bookmark, the copy field and pictures on the profile row, 1.7.0 the sheet, menus that float in and become sheets on a phone, the sidebar drawer, the database toolbar with filter pills and the steps, 1.7.1 minified files that carry all of it, 1.6.0 page properties, page options, list view, panels, prose and the avatar, 1.5.1 the safe areas, 1.5.0 the Notion-2025 tokens, the nine tag colours and the filled inputs; from 1.5.0 on, Elements and the foundation share one version number – the elements are built and tested against the same release) and `class="nk-body"` on `<body>`. The elements ship no visual CSS of their own – every rule comes from the foundation. The bundle injects the design tokens once as `@layer notionkit-defaults`, so any plain `:root { --nk-accent: … }` of yours re-brands every element in both themes.
+Two prerequisites, always: `notionkit.css` on the document (the peer dependency, `>= 1.15.0`; 1.15.0 brings table text with a tone and a second line, 1.14.0 brings the gallery view and a banner action that stands at the right edge again, 1.13.0 keeps fields inside narrow panels, leaves a page without icon its padding under the cover and makes cover heights tokens, 1.12.0 brings a tag or button beside a panel's title, lists and grids without outer margin, text values, steps with states in any order and in a row, scrolling tabs, a cap for full pages and buttons per table row, 1.11.0 keeps a floating menu inside an open modal or dialog in place and inside the window and brings the banner's action as a button, fields that share a row and tooltips of several lines, 1.10.1 lets a disabled button show its tooltip, 1.10.0 brings the collapsing sidebar, the resizable side peek, the dialog and the tooltip, 1.9.0 the date picker and the calendar view, 1.8.0 the side peek, the bookmark, the copy field and pictures on the profile row, 1.7.0 the sheet, menus that float in and become sheets on a phone, the sidebar drawer, the database toolbar with filter pills and the steps, 1.7.1 minified files that carry all of it, 1.6.0 page properties, page options, list view, panels, prose and the avatar, 1.5.1 the safe areas, 1.5.0 the Notion-2025 tokens, the nine tag colours and the filled inputs; from 1.5.0 on, Elements and the foundation share one version number – the elements are built and tested against the same release) and `class="nk-body"` on `<body>`. The elements ship no visual CSS of their own – every rule comes from the foundation. The bundle injects the design tokens once as `@layer notionkit-defaults`, so any plain `:root { --nk-accent: … }` of yours re-brands every element in both themes.
 
 ## Elements
 

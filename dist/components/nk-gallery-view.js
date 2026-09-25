@@ -1,7 +1,8 @@
 import { NkElement } from './base.js';
-import { r as renderPropertyCell } from './shared/property-cell-DKvv6TIG.js';
+import { a as textOf, f as formatDate, r as renderPropertyCell } from './shared/property-cell-BSVcETss.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
+import './shared/dates-a32DcW1l.js';
 
 // <nk-gallery-view name="gallery" label="🖼 Gallery" meta-keys="status,due" new-row></nk-gallery-view>
 // The fifth database view (NotionKit 1.14.0): the rows as cards with a
@@ -56,14 +57,14 @@ class NkGalleryView extends NkElement {
         card.appendChild(cover);
       }
       const t = this.createElement('div', ['card-title']);
-      t.textContent = `${row.icon ? row.icon + ' ' : ''}${title ? row[title.key] ?? '' : ''}`;
+      t.textContent = `${row.icon ? row.icon + ' ' : ''}${title ? textOf(row[title.key]) : ''}`;
       const m = this.createElement('div', ['card-meta']);
       for (const c of meta) {
         const v = row[c.key];
         if (v === undefined || v === null || v === '') continue;
         const s = document.createElement('span');
         if (c.type === 'progress') s.textContent = `▰ ${v}%`;
-        else if (c.type === 'date') s.textContent = `📅 ${v}`;
+        else if (c.type === 'date') s.textContent = `📅 ${formatDate(c, v)}`;
         else s.appendChild(renderPropertyCell(c, v, row));
         m.appendChild(s);
       }

@@ -1,6 +1,8 @@
 import { NkElement } from './base.js';
+import { a as textOf } from './shared/property-cell-BSVcETss.js';
 import { C as CHEVRONS, i as isoOf, r as resolveLocale, f as firstWeekday, m as monthGrid, p as parseDay, w as weekLabel, a as weekdayNames, b as isoWeek, s as stepMonth } from './shared/dates-a32DcW1l.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
+import './shared/avatar-CzPZN3uP.js';
 
 // <nk-calendar-view name="calendar" label="📅 Calendar" date-key="due" weeks></nk-calendar-view>
 // The fourth database view (NotionKit 1.9.0): a month, the rows as cards on
@@ -83,7 +85,7 @@ class NkCalendarView extends NkElement {
       day.appendChild(num);
       for (const row of byDay[iso] || []) {
         const item = this.createElement('button', ['cv-item'], { type: 'button', 'data-id': row.id ?? '' });
-        const title = titleCol ? String(row[titleCol.key] ?? '') : '';
+        const title = titleCol ? textOf(row[titleCol.key]) : '';
         item.textContent = row.icon ? `${row.icon} ${title}` : title;
         day.appendChild(item);
       }

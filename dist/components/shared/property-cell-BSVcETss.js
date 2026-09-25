@@ -1,3 +1,6 @@
+import { i as initialsOf, p as paintAvatar } from './avatar-CzPZN3uP.js';
+import { r as resolveLocale } from './dates-a32DcW1l.js';
+
 // Polymorphic property renderer for database views. Returns plain DOM built
 // from NotionKit classes – deliberately not a custom element: every cell rule
 // starts with `.nk-table`, so a cell inside its own shadow root would never
@@ -19,28 +22,26 @@
 // Sorting (compareBy) goes by column.sortKey – another field of the row –
 // when there is one, else by a value's `sort`, a date's time, a select's
 // place among its options; empty cells come last in both directions.
-import { paintAvatar, initialsOf } from './avatar.js';
-import { resolveLocale } from './dates.js';
 
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
 const COLORS = ['gray', 'brown', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'red'];
 
-export function optionFor(column, value) {
+function optionFor(column, value) {
   const opts = column.options || [];
   return opts.find(o => o.value === value) || opts.find(o => o.label === value) || null;
 }
 
-export function tagFor(column, value) {
+function tagFor(column, value) {
   const opt = optionFor(column, value);
   const color = opt?.color && COLORS.includes(opt.color) ? opt.color : 'gray';   // Notion's default option colour
   return el('span', `nk-tag ${color}`, opt?.label ?? String(value));
 }
 
 /** The text of a value: a string as it is, a text, link or person object's text, label or name. */
-export const textOf = v => (v && typeof v === 'object' ? v.text ?? v.label ?? v.name ?? '' : String(v ?? ''));
+const textOf = v => (v && typeof v === 'object' ? v.text ?? v.label ?? v.name ?? '' : String(v ?? ''));
 
 /** The time of a date value in ms: an ISO date – local midnight – or date-time, D.M.YYYY, a Date, a timestamp, a range's start; NaN when it is none. */
-export function timeOf(v) {
+function timeOf(v) {
   if (v instanceof Date) return v.getTime();
   if (typeof v === 'number') return v;
   if (v && typeof v === 'object') return timeOf(v.start);
@@ -58,7 +59,7 @@ export function timeOf(v) {
  * hours ago or ahead within a day, else the short date; or the options of
  * Intl.DateTimeFormat. A range { start, end } stands as start → end.
  */
-export function formatDate(column, value) {
+function formatDate(column, value) {
   if (value && typeof value === 'object' && !(value instanceof Date)) return [value.start, value.end].filter(Boolean).map(v => formatDate(column, v)).join(' → ');
   const format = column.format, t = timeOf(value);
   if (!format || Number.isNaN(t)) return String(value ?? '');
@@ -75,7 +76,7 @@ export function formatDate(column, value) {
   return typeof format === 'object' ? new Intl.DateTimeFormat(locale, format).format(d) : String(value);
 }
 
-export function renderPropertyCell(column, value, row = {}) {
+function renderPropertyCell(column, value, row = {}) {
   const type = column.type || 'text';
   if (type === 'actions') return actions(column, value);
   if (value === undefined || value === null || value === '') {
@@ -190,7 +191,7 @@ function sortValue(column, row) {
 }
 
 /** Sort comparator for a column; empty cells come last whichever the direction. */
-export function compareBy(column, dir = 1) {
+function compareBy(column, dir = 1) {
   const empty = v => v === null || v === undefined || v === '' || Number.isNaN(v);
   return (a, b) => {
     const x = sortValue(column, a), y = sortValue(column, b);
@@ -199,3 +200,5 @@ export function compareBy(column, dir = 1) {
     return String(x).localeCompare(String(y), undefined, { numeric: true }) * dir;
   };
 }
+
+export { textOf as a, compareBy as c, formatDate as f, renderPropertyCell as r, tagFor as t };

@@ -88,12 +88,13 @@ class NkFilterBar extends NkElement {
   /**
    * Applies filters and search to rows: a filter keeps rows where row[key]
    * equals value – or differs from it with op: 'is-not'; the search looks
-   * for the text in every string field (a person's name).
+   * for the text in every string field (a person's name, a text or link
+   * object's text).
    */
   apply(rows) {
     const q = this.value.trim().toLowerCase();
     return rows.filter(r => this._filters.every(f => (f.op === 'is-not' ? r[f.key] !== f.value : r[f.key] === f.value))
-      && (!q || Object.values(r).some(v => String(typeof v === 'object' && v ? v.name ?? '' : v ?? '').toLowerCase().includes(q))));
+      && (!q || Object.values(r).some(v => String(typeof v === 'object' && v ? v.name ?? v.text ?? v.label ?? '' : v ?? '').toLowerCase().includes(q))));
   }
 }
 

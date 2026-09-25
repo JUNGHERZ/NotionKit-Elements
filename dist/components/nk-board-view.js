@@ -1,7 +1,8 @@
 import { NkElement } from './base.js';
-import { t as tagFor, r as renderPropertyCell } from './shared/property-cell-DKvv6TIG.js';
+import { t as tagFor, a as textOf, f as formatDate, r as renderPropertyCell } from './shared/property-cell-BSVcETss.js';
 import '@jungherz-de/notionkit/notionkit-styles.js';
 import './shared/avatar-CzPZN3uP.js';
+import './shared/dates-a32DcW1l.js';
 
 // <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
 // Groups rows by a select column (default: the first select column); one
@@ -51,14 +52,14 @@ class NkBoardView extends NkElement {
       for (const row of cards) {
         const card = this.createElement('div', ['nk-card'], { draggable: 'true', 'data-id': row.id ?? '', tabindex: '0' });
         const t = this.createElement('div', ['card-title']);
-        t.textContent = `${row.icon ? row.icon + ' ' : ''}${title ? row[title.key] ?? '' : ''}`;
+        t.textContent = `${row.icon ? row.icon + ' ' : ''}${title ? textOf(row[title.key]) : ''}`;
         const meta = this.createElement('div', ['card-meta']);
         for (const c of this._metaColumns()) {
           const v = row[c.key];
           if (v === undefined || v === null || v === '') continue;
           const s = document.createElement('span');
           if (c.type === 'progress') s.textContent = `▰ ${v}%`;
-          else if (c.type === 'date') s.textContent = `📅 ${v}`;
+          else if (c.type === 'date') s.textContent = `📅 ${formatDate(c, v)}`;
           else s.appendChild(renderPropertyCell(c, v, row));
           meta.appendChild(s);
         }

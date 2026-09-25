@@ -4,6 +4,23 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.15.0] – 2026-09-25
+
+Built against NotionKit CSS 1.15.0 (peer `>= 1.15.0`). Auxdesk's findings 22 and 23 from its jobs, messages and tickets in `<nk-table-view>`.
+
+### Fixed
+- **`sortable` sorts by the value, not by the text shown.** Every column but number, progress and checkbox compared its text: dates as text, so 13.09.2026 came before 24.08.2026, and a select by its key – `failed`, `ignored`, `posted` – instead of the order of its options. Dates now sort by their time (D.M.YYYY, ISO dates and date-times, ranges by their start), selects by their options as Notion does, and empty cells come last in both directions. `compareBy()` does the same for tables of one's own.
+
+### Added
+- **A value to sort by.** `sortKey` on a column sorts by another field of the row – a “Time” column that shows “4 min ago” sorts by the ISO time next to it – and a `sort` in a cell's object sorts that cell by its own value.
+- **Date formats.** A `date` column with `format` – `'short'` (day and month, the year when it is not this one), `'relative'` (minutes or hours ago or ahead within a day, else the short date) or the options of Intl.DateTimeFormat – shows ISO dates and date-times formatted in its `locale`, and sorts by their time. Without `format` a date stands as given, as before. Board, list and gallery show the same format; a range reads start → end.
+- **Text cells with a tone, a second line and a tooltip.** A text value may be `{ text, desc, color, tooltip }`: `color` one of Notion's nine text colours – orange for an error –, `desc` a quiet second line under it – the next run under an error, the sender under a subject –, `tooltip` the whole text, which `<nk-tooltip>` shows. A title cell takes `desc` and `tooltip` too. The other views and the filter bar's search read the text of such an object.
+- Exported next to `renderPropertyCell()`: `formatDate()`, `timeOf()` and `textOf()`.
+
+### Changed
+- The docs example of `<nk-table-view>` shows a quiet line under the first title.
+- Peer `@jungherz-de/notionkit >= 1.15.0`.
+
 ## [1.14.0] – 2026-09-25
 
 Built against NotionKit CSS 1.14.0 (peer `>= 1.14.0`). The gallery view – 88 elements now – for LearnHub's course catalog.
@@ -667,6 +684,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.15.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.15.0
 [1.14.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.14.0
 [1.13.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.13.0
 [1.12.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.12.0

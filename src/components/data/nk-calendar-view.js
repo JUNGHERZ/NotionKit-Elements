@@ -1,4 +1,5 @@
 import { NkElement } from '../../base.js';
+import { textOf } from '../../util/property-cell.js';
 import { isoOf, parseDay, isoWeek, resolveLocale, firstWeekday, weekdayNames, monthGrid, stepMonth, weekLabel, CHEVRONS } from '../../util/dates.js';
 
 // <nk-calendar-view name="calendar" label="📅 Calendar" date-key="due" weeks></nk-calendar-view>
@@ -82,7 +83,7 @@ class NkCalendarView extends NkElement {
       day.appendChild(num);
       for (const row of byDay[iso] || []) {
         const item = this.createElement('button', ['cv-item'], { type: 'button', 'data-id': row.id ?? '' });
-        const title = titleCol ? String(row[titleCol.key] ?? '') : '';
+        const title = titleCol ? textOf(row[titleCol.key]) : '';
         item.textContent = row.icon ? `${row.icon} ${title}` : title;
         day.appendChild(item);
       }

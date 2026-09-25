@@ -1,5 +1,5 @@
 import { NkElement } from '../../base.js';
-import { renderPropertyCell } from '../../util/property-cell.js';
+import { renderPropertyCell, textOf, formatDate } from '../../util/property-cell.js';
 
 // <nk-list-view name="list" label="☰ List" meta-keys="due,status" new-row></nk-list-view>
 // The third database view: one line per row – icon and title, the `meta-keys`
@@ -43,12 +43,12 @@ class NkListView extends NkElement {
       icon.textContent = row.icon || '';
       if (!row.icon) icon.style.display = 'none';
       const t = this.createElement('span', ['l-title']);
-      t.textContent = title ? String(row[title.key] ?? '') : '';
+      t.textContent = title ? textOf(row[title.key]) : '';
       const m = this.createElement('span', ['l-meta']);
       for (const c of meta) {
         const v = row[c.key];
         if (v === undefined || v === null || v === '') continue;
-        m.appendChild(c.type === 'date' || c.type === 'text' || !c.type ? document.createTextNode(String(v)) : renderPropertyCell(c, v, row));
+        m.appendChild(c.type === 'date' ? document.createTextNode(formatDate(c, v)) : c.type === 'text' || !c.type ? document.createTextNode(textOf(v)) : renderPropertyCell(c, v, row));
       }
       item.append(icon, t, m);
       this._list.appendChild(item);
