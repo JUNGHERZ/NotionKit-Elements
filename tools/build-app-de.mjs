@@ -126,7 +126,7 @@ const PAIRS = [
   ["toast.show('This file cannot be read')", "toast.show('Diese Datei lässt sich nicht lesen')"], ["toast.show(e.detail.ok ? 'Address copied' : 'Select the address and copy it with ⌘C')", "toast.show(e.detail.ok ? 'Adresse kopiert' : 'Adresse markieren und mit ⌘C kopieren')"], ["[{ label: 'Choose a provider', desc: 'Anthropic' }, 'Enter the API key', 'Test the connection']", "[{ label: 'Anbieter wählen', desc: 'Anthropic' }, 'API-Schlüssel eintragen', 'Verbindung testen']"],
   ["toast.show('API key saved')", "toast.show('API-Schlüssel gespeichert')"], ["toast.show('Connection works')", "toast.show('Verbindung steht')"],
   // 1.9.0 – dates
-  ['label="📅 Calendar"', 'label="📅 Kalender"'], ['today-label="Today" prev-label="Previous month" next-label="Next month"', 'today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"'],
+  ['label="📅 Calendar"', 'label="📅 Kalender"'], ['label="🖼 Gallery" meta-keys="status,due" new-row', 'label="🖼 Galerie" meta-keys="status,due" new-row new-row-label="＋ Neue Seite"'], ["cover: 'covers/", "cover: '../covers/"], ['today-label="Today" prev-label="Previous month" next-label="Next month"', 'today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"'],
   ['id="datePicker" label="Due"', 'id="datePicker" label="Fällig"'],
   ["{ '2026-05-01': 'Labour Day', '2026-05-14': 'Ascension Day', '2026-05-25': 'Whit Monday', '2026-10-03': 'German Unity Day' }", "{ '2026-05-01': 'Tag der Arbeit', '2026-05-14': 'Christi Himmelfahrt', '2026-05-25': 'Pfingstmontag', '2026-10-03': 'Tag der Deutschen Einheit' }"],
   [".toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })", ".toLocaleDateString('de', { day: 'numeric', month: 'long', year: 'numeric' })"],

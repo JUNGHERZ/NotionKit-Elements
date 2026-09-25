@@ -110,6 +110,7 @@ export { NkTableView } from './components/data/nk-table-view.js';
 export { NkBoardView } from './components/data/nk-board-view.js';
 export { NkListView } from './components/data/nk-list-view.js';
 export { NkCalendarView } from './components/data/nk-calendar-view.js';
+export { NkGalleryView } from './components/data/nk-gallery-view.js';
 export { NkFilterBar } from './components/data/nk-filter-bar.js';
 export { NkComments } from './components/data/nk-comments.js';
 export { NkComment } from './components/data/nk-comment.js';

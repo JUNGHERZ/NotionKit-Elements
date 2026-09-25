@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.13.0) wrapping NotionKit CSS v1.13.0 – the calm, document-centric design system in the Notion idiom. 87 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.14.0) wrapping NotionKit CSS v1.14.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.13.0)
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -74,7 +74,7 @@ Never mix the full bundle with the per-component files – each brings its own `
 | Attributes are live | Every documented attribute re-renders when changed after connect (`stat.setAttribute('value', '129')`, `el.open = true`); properties reflect to attributes where a setter is listed. |
 
 
-# 3. Element Catalog (87 elements)
+# 3. Element Catalog (88 elements)
 
 ## Forms & controls (wave 1)
 
@@ -2606,10 +2606,10 @@ The view switcher with Notion’s toolbar: child views (`nk-table-view`, `nk-boa
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script>
 ```
@@ -2667,10 +2667,10 @@ Renders `columns` × `rows` as the NotionKit table. Cells are polymorphic (`text
     { key: 'actions', type: 'actions', actions: [{ action: 'open', label: 'Open' }, { action: 'archive', label: 'Archive', danger: true }] },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'] },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'], cover: '/covers/tide.svg' },
   ];
 }</script>
 ```
@@ -2727,10 +2727,10 @@ Groups rows by a select column (`group-by`, default: the first select column) in
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script>
 ```
@@ -2779,10 +2779,10 @@ The third database view: one line per row – icon and title, the `meta-keys` on
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script>
 ```
@@ -2832,10 +2832,10 @@ The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their 
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script>
 ```
@@ -2880,7 +2880,65 @@ The fourth database view (NotionKit 1.9.0): a month, the rows as cards on their 
 
 **Small screens:** Keeps seven columns; the days get lower (64px) and the cards smaller.
 
-### 3.82 `<nk-filter-bar>` – Filter bar
+### 3.82 `<nk-gallery-view>` – Gallery view
+
+The fifth database view: the rows as cards with a picture on top, in a grid that fills the row – Notion’s gallery, for a course catalog or a reading list. `cover-key` names the row field with the picture’s URL (default: `cover`); a row without one shows the cover gradient, `no-cover` leaves the pictures out. The picture stands in 2:1, cropped to fill; `fit` shows it whole, for logos. `size` small, medium or large sets the card size – columns from 180, 260 or 340px. Cards show the title and the `meta-keys` (default: the select and date columns) and fire `nk-select` on a click, Enter or Space; `new-row` adds the add card.
+
+```html
+<nk-gallery-view meta-keys="status,due" new-row></nk-gallery-view>
+<script>{
+  const db = document.currentScript.previousElementSibling;
+  db.columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' }, { value: 'progress', label: 'In progress', color: 'blue' }, { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+  ];
+  db.rows = [
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
+  ];
+}</script>
+```
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | string | – | View name. |
+| `label` | string | – | Tab label. |
+| `cover-key` | string | `cover` | Row field with the picture’s URL. |
+| `no-cover` | boolean | – | Cards without pictures. |
+| `size` | small | medium | large | `medium` | Card size. |
+| `fit` | boolean | – | Show a picture whole instead of cropped. |
+| `title-key` | string | – | Title column. |
+| `meta-keys` | list | – | Comma-separated columns under the title. |
+| `new-row` | boolean | – | Show the add card. |
+| `new-row-label` | string | `＋ New page` | Its text. |
+
+**Events:** `nk-select` `{ row, id, value }` – Card clicked, Enter or Space. · `nk-action` `{ action: 'new-row' }` – Add card clicked.
+
+**Properties:** `columns`, `rows`, `data` · **Methods:** `refresh()`
+
+**Replaces:** `.nk-gallery`, `.small`, `.large`, `.fit`, `.nk-card`, `.nk-cover`, `.card-title`, `.card-meta`, `.nk-new-row`
+
+```html
+<!-- equivalent class markup -->
+<div class="nk-gallery" role="list">
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/aurora.svg" alt=""></div><div class="card-title">🧭 App shell & sidebar</div><div class="card-meta"><span><span class="nk-tag green">Done</span></span><span>📅 08.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/dunes.svg" alt=""></div><div class="card-title">📄 Page shell & typography</div><div class="card-meta"><span><span class="nk-tag green">Done</span></span><span>📅 10.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/meadow.svg" alt=""></div><div class="card-title">🗃️ Database table view</div><div class="card-meta"><span><span class="nk-tag blue">In progress</span></span><span>📅 20.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/tide.svg" alt=""></div><div class="card-title">▤ Board view & drag-and-drop</div><div class="card-meta"><span><span class="nk-tag orange">Planned</span></span><span>📅 02.06.2026</span></div></div>
+  <div class="nk-new-row" role="button" tabindex="0">＋ New page</div>
+</div>
+```
+
+**Small screens:** The grid drops columns by itself – one card per row on a phone, no breakpoint involved.
+
+### 3.83 `<nk-filter-bar>` – Filter bar
 
 The filters in effect as NotionKit’s filter pills – `.active` with an accent tint, a × to remove each, a quiet `add` pill at the end – with no inline style. In `slot="filters"` of `nk-database` the row sits under the toolbar. A pill’s label fires `nk-action { action: "edit" }`, the add pill `{ action: "add" }`, each with the clicked button as `anchor` for `menu.show(anchor)`. `bar.apply(rows)` keeps rows where every filter matches by strict equality (`row[key] === value`, so use the option value) – or differs with `op: "is-not"` – and the search text appears in any string field (a person’s `name`); the data logic stays yours. Its own Filter and Sort tools and the search field are there for a bar without a database toolbar. It keeps its own copy of `filters`: the array you pass is never changed, a removed pill is reported in `nk-change`.
 
@@ -2916,7 +2974,7 @@ The filters in effect as NotionKit’s filter pills – `.active` with an accent
 
 **Small screens:** The pills wrap onto further rows.
 
-### 3.83 `<nk-comments>` – Comment thread
+### 3.84 `<nk-comments>` – Comment thread
 
 A left-ruled thread of `nk-comment`s with an input row. Enter or the button fires `nk-submit { text }`; appending the new comment is yours.
 
@@ -2953,7 +3011,7 @@ A left-ruled thread of `nk-comment`s with an input row. Enter or the button fire
 
 **Small screens:** Unchanged.
 
-### 3.84 `<nk-comment>` – Comment
+### 3.85 `<nk-comment>` – Comment
 
 One comment: avatar (initials + `color`), bold author, time, body. `slot="head"` adds content after the name.
 
@@ -2979,7 +3037,7 @@ One comment: avatar (initials + `color`), bold author, time, body. `slot="head"`
 
 **Small screens:** Unchanged.
 
-### 3.85 `<nk-ai-thread>` – AI thread
+### 3.86 `<nk-ai-thread>` – AI thread
 
 The conversation column: `nk-ai-msg` children (`role="user"` gets the gradient avatar), followed by an `nk-ai-input-row`. Action buttons in `slot="actions"` fire `nk-action { action, value }` – both carry the button’s `value` (or its text).
 
@@ -3012,7 +3070,7 @@ _No attributes._
 
 **Small screens:** Unchanged.
 
-### 3.86 `<nk-ai-msg>` – AI message
+### 3.87 `<nk-ai-msg>` – AI message
 
 One message. `role="user"` flips the avatar to the gradient; `badge` is the grey suffix after the name (“· AI”); plain `<button slot="actions">`s form the action row.
 
@@ -3042,7 +3100,7 @@ One message. `role="user"` flips the avatar to the gradient; `badge` is the grey
 
 **Small screens:** Unchanged.
 
-### 3.87 `<nk-ai-input-row>` – AI input row
+### 3.88 `<nk-ai-input-row>` – AI input row
 
 The prompt field with ✨ and a send button. Enter or the button fires `nk-submit { text }` and clears the field.
 
@@ -3084,8 +3142,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3166,8 +3224,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3274,8 +3332,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3334,8 +3392,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3412,8 +3470,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3459,8 +3517,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3504,8 +3562,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3559,8 +3617,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3734,6 +3792,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-board-view>` | data | `name`, `label`, `group-by`, `title-key` | – | `nk-select`, `nk-change`, `nk-action` |
 | `<nk-list-view>` | data | `name`, `label`, `title-key`, `meta-keys` | – | `nk-select`, `nk-action` |
 | `<nk-calendar-view>` | data | `name`, `label`, `date-key`, `title-key` | – | `nk-select`, `nk-month` |
+| `<nk-gallery-view>` | data | `name`, `label`, `cover-key`, `no-cover` | – | `nk-select`, `nk-action` |
 | `<nk-filter-bar>` | data | `add`, `add-label`, `no-filter`, `no-sort` | `(default)` | `nk-change`, `nk-action` |
 | `<nk-comments>` | data | `placeholder`, `send-label`, `no-input`, `disabled` | `(default)` | `nk-submit` |
 | `<nk-comment>` | data | `author`, `time`, `avatar`, `color` | `(default)`, `head`, `avatar` | – |
@@ -3759,10 +3818,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Theme sync | one `MutationObserver` on `<html>[data-theme]`, a `Set` of instances, `.nk-wrapper[data-theme]` inside each root |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.13.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.14.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.13.0 · wrapping NotionKit CSS v1.13.0 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.14.0 · wrapping NotionKit CSS v1.14.0 · MIT · Jungherz GmbH*

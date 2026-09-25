@@ -4,6 +4,20 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.14.0] – 2026-09-25
+
+Built against NotionKit CSS 1.14.0 (peer `>= 1.14.0`). The gallery view – 88 elements now – for LearnHub's course catalog.
+
+### Added
+- **`<nk-gallery-view>`**, the fifth view of `<nk-database>`: the rows as cards with a picture on top, in a grid that fills the row – Notion's gallery. `cover-key` names the row field with the picture's URL (default: `cover`); a row without one shows the cover gradient, and `no-cover` leaves the pictures out. The picture stands in 2:1, cropped to fill; `fit` shows it whole, for logos. `size` small, medium or large sets the card size – columns from 180, 260 or 340px, one card per row on a phone. Cards show the title and the `meta-keys` (default: the select and date columns); a click, Enter or Space fires `nk-select { row, id, value }` like a row of the table, and `new-row` adds a dashed card that fires `nk-action { action: 'new-row' }`. Standalone it takes `columns` and `rows`, inside `<nk-database>` the database pushes the data.
+- Demo: the project database has a Gallery tab, each project with one of the four covers; `#gallery` opens it, a card opens in the side peek, and the app still matches the class demo at 0.00 %.
+
+### Fixed
+- **A `<button slot="action">` of `<nk-banner>` stands at the banner's right edge again** (NotionKit 1.14.0). On a page with `class="nk-body"`, NotionKit's scoped button reset won over the `::slotted()` margin – the outer tree wins – so after a short text the action sat right behind it. Since 1.11.0 the docs write the action as a button; a span was never affected. A test now checks it on an `nk-body` page.
+
+### Changed
+- Peer `@jungherz-de/notionkit >= 1.14.0`.
+
 ## [1.13.0] – 2026-09-25
 
 Built against NotionKit CSS 1.13.0 (peer `>= 1.13.0`). LearnHub moved from 1.5.1 to 1.11 and sent back three findings about fixed sizes; this release answers them.
@@ -653,6 +667,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.14.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.14.0
 [1.13.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.13.0
 [1.12.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.12.0
 [1.11.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.11.1

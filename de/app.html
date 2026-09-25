@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -105,6 +105,7 @@
       <nk-board-view name="board" label="▤ Board" group-by="status" new-row></nk-board-view>
       <nk-list-view name="list" label="☰ Liste" meta-keys="due,status"></nk-list-view>
       <nk-calendar-view name="calendar" label="📅 Kalender" date-key="due" month="2026-05" weeks week-start="1" today-label="Heute" prev-label="Voriger Monat" next-label="Nächster Monat"></nk-calendar-view>
+      <nk-gallery-view name="gallery" label="🖼 Galerie" meta-keys="status,due" new-row new-row-label="＋ Neue Seite"></nk-gallery-view>
     </nk-database>
 
     <nk-divider></nk-divider>
@@ -461,10 +462,10 @@
   ];
   const marcel = { name: 'Marcel', initials: 'MK' };
   const projects = [
-    { id: 1, icon: '🧭', name: 'App-Shell & Sidebar', status: 'done', owner: marcel, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page-Shell & Typografie', status: 'done', owner: marcel, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database Table-View', status: 'progress', owner: marcel, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board-View & Drag-and-Drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App-Shell & Sidebar', status: 'done', owner: marcel, due: '08.05.2026', progress: 100, effort: 6, cover: '../covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page-Shell & Typografie', status: 'done', owner: marcel, due: '10.05.2026', progress: 100, effort: 4.5, cover: '../covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database Table-View', status: 'progress', owner: marcel, due: '20.05.2026', progress: 65, effort: 12.5, cover: '../covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board-View & Drag-and-Drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '../covers/tide.svg' },
   ];
   db.columns = columns;
 
@@ -715,7 +716,7 @@
   }
   publicAddress.addEventListener('nk-action', e => toast.show(e.detail.ok ? 'Adresse kopiert' : 'Adresse markieren und mit ⌘C kopieren'));
 
-  /* ============ Anchors: #menu, #filter, #more, #peek, #date, #calendar, #dialog, #settings open that state ============ */
+  /* ============ Anchors: #menu, #filter, #more, #peek, #date, #calendar, #gallery, #dialog, #settings open that state ============ */
   // The landing page shows app.html#menu: a popover on the desktop, a sheet
   // on the phone – one markup, two presentations.
   function openFromHash() {
@@ -726,6 +727,7 @@
     if (h === '#peek') openPeek(projects[2]);
     if (h === '#date') openPageDue();
     if (h === '#calendar') db.view = 'calendar';
+    if (h === '#gallery') db.view = 'gallery';
     if (h === '#dialog') trashDialog.show(pageMenuBtn);
     if (h === '#settings') settingsModal.show();
   }

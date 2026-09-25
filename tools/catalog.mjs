@@ -39,10 +39,10 @@ const dbScript = (W, { actions } = {}) => `<script>{
     { key: 'actions', type: 'actions', actions: [{ action: 'open', label: '${W.rowOpen}' }, { action: 'archive', label: '${W.rowArchive}', danger: true }] },` : ''}
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: '${W.p1}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: '${W.p2}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0, effort: 8${actions ? ", actions: ['open']" : ''} },
+    { id: 1, icon: '🧭', name: '${W.p1}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: '${W.p2}', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: '${W.p3}', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: '${W.p4}', status: 'planned', due: '02.06.2026', progress: 0, effort: 8${actions ? ", actions: ['open']" : ''}, cover: '/covers/tide.svg' },
   ];
 }</script>`;
 const dbTableClass = (W, { actions } = {}) => `<div class="nk-table-wrap"><table class="nk-table">
@@ -54,6 +54,13 @@ const dbTableClass = (W, { actions } = {}) => `<div class="nk-table-wrap"><table
     <tr><td><span class="row-title">▤ ${W.p4}</span></td><td><span class="nk-tag orange">${W.statusPlanned}</span></td><td><span class="person-cell">—</span></td><td><span class="date-cell">02.06.2026</span></td><td><span class="nk-progress"><i style="width:0%"></i></span><span class="nk-progress-label">0%</span></td><td class="num"><span>8.0</span></td>${actions ? `<td><span class="row-actions"><button class="nk-btn secondary small">${W.rowOpen}</button></span></td>` : ''}</tr>
   </tbody>
 </table><div class="nk-new-row">＋ New page</div></div>`;
+const dbGalleryClass = W => `<div class="nk-gallery" role="list">
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/aurora.svg" alt=""></div><div class="card-title">🧭 ${W.p1}</div><div class="card-meta"><span><span class="nk-tag green">${W.statusDone}</span></span><span>📅 08.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/dunes.svg" alt=""></div><div class="card-title">📄 ${W.p2}</div><div class="card-meta"><span><span class="nk-tag green">${W.statusDone}</span></span><span>📅 10.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/meadow.svg" alt=""></div><div class="card-title">🗃️ ${W.p3}</div><div class="card-meta"><span><span class="nk-tag blue">${W.statusProgress}</span></span><span>📅 20.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/tide.svg" alt=""></div><div class="card-title">▤ ${W.p4}</div><div class="card-meta"><span><span class="nk-tag orange">${W.statusPlanned}</span></span><span>📅 02.06.2026</span></div></div>
+  <div class="nk-new-row" role="button" tabindex="0">＋ New page</div>
+</div>`;
 const dbListClass = W => `<div class="nk-list">
   <div class="nk-list-item"><span class="l-icon">🧭</span><span class="l-title">${W.p1}</span><span class="l-meta">08.05.2026<span class="nk-tag green">${W.statusDone}</span></span></div>
   <div class="nk-list-item"><span class="l-icon">📄</span><span class="l-title">${W.p2}</span><span class="l-meta">10.05.2026<span class="nk-tag green">${W.statusDone}</span></span></div>
@@ -1567,6 +1574,20 @@ ${dbScript(W)}`,
   example: W => `<nk-calendar-view date-key="due" month="2026-05" today="2026-05-20" weeks week-start="1" today-label="${W.calToday}"></nk-calendar-view>
 ${dbScript(W)}`,
   classMarkup: W => calendarViewClass(W, { month: '2026-05', today: '2026-05-20', items: { '2026-05-08': [`🧭 ${W.p1}`], '2026-05-10': [`📄 ${W.p2}`], '2026-05-20': [`🗃️ ${W.p3}`] } }),
+},
+{
+  tag: 'nk-gallery-view', group: 'data', classes: ['nk-gallery', 'small', 'large', 'fit', 'nk-card', 'nk-cover', 'card-title', 'card-meta', 'nk-new-row'], wide: true, script: true,
+  title: t('Gallery view', 'Galerieansicht'),
+  desc: t('The fifth database view: the rows as cards with a picture on top, in a grid that fills the row – Notion’s gallery, for a course catalog or a reading list. <code>cover-key</code> names the row field with the picture’s URL (default: <code>cover</code>); a row without one shows the cover gradient, <code>no-cover</code> leaves the pictures out. The picture stands in 2:1, cropped to fill; <code>fit</code> shows it whole, for logos. <code>size</code> small, medium or large sets the card size – columns from 180, 260 or 340px. Cards show the title and the <code>meta-keys</code> (default: the select and date columns) and fire <code>nk-select</code> on a click, Enter or Space; <code>new-row</code> adds the add card.',
+          'Die fünfte Datenbank-Ansicht: die Einträge als Karten mit einem Bild oben, in einem Raster, das die Zeile füllt – Notions Galerie, für einen Kurskatalog oder eine Leseliste. <code>cover-key</code> nennt das Feld mit der URL des Bilds (Standard: <code>cover</code>); ein Eintrag ohne Bild zeigt den Cover-Verlauf, <code>no-cover</code> lässt die Bilder weg. Das Bild steht in 2:1 und wird beschnitten; <code>fit</code> zeigt es ganz, für Logos. <code>size</code> small, medium oder large setzt die Kartengröße – Spalten ab 180, 260 oder 340px. Karten zeigen den Titel und die <code>meta-keys</code> (Standard: die Select- und Datumsspalten) und feuern <code>nk-select</code> bei Klick, Enter oder Leertaste; <code>new-row</code> ergänzt die Hinzufügen-Karte.'),
+  mobile: t('The grid drops columns by itself – one card per row on a phone, no breakpoint involved.', 'Das Raster verliert Spalten von selbst – auf dem Telefon eine Karte pro Zeile, ganz ohne Breakpoint.'),
+  attrs: [str('name', 'string', 'View name.', 'View-Name.'), str('label', 'string', 'Tab label.', 'Tab-Beschriftung.'), str('cover-key', 'string', 'Row field with the picture’s URL.', 'Feld mit der URL des Bilds.', { default: 'cover' }), bool('no-cover', 'Cards without pictures.', 'Karten ohne Bilder.'), str('size', 'small | medium | large', 'Card size.', 'Kartengröße.', { default: 'medium' }), bool('fit', 'Show a picture whole instead of cropped.', 'Ein Bild ganz zeigen statt beschnitten.'), str('title-key', 'string', 'Title column.', 'Titelspalte.'), str('meta-keys', 'list', 'Comma-separated columns under the title.', 'Kommagetrennte Spalten unter dem Titel.'), bool('new-row', 'Show the add card.', 'Hinzufügen-Karte zeigen.'), str('new-row-label', 'string', 'Its text.', 'Deren Text.', { default: '＋ New page' })],
+  slots: [],
+  events: [{ name: 'nk-select', detail: '{ row, id, value }', desc: t('Card clicked, Enter or Space.', 'Karte geklickt, Enter oder Leertaste.') }, { name: 'nk-action', detail: "{ action: 'new-row' }", desc: t('Add card clicked.', 'Hinzufügen-Karte geklickt.') }],
+  props: ['columns', 'rows', 'data'], methods: ['refresh()'],
+  example: W => `<nk-gallery-view meta-keys="status,due" new-row></nk-gallery-view>
+${dbScript(W)}`,
+  classMarkup: dbGalleryClass,
 },
 {
   tag: 'nk-filter-bar', group: 'data', classes: ['nk-filter-row', 'nk-filter-pill', 'active', 'add', 'fp-remove', 'nk-db-tool', 'nk-input'], wide: true,

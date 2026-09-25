@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css">
 <script src="dist/notionkit-elements.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
@@ -93,7 +93,7 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.13.0</span></a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.14.0</span></a>
   <div class="site-nav-links">
     <a href="docs.html" class="current">Docs</a>
     <a href="showcase.html">Showcase</a>
@@ -109,14 +109,14 @@ body { margin: 0; }
 </nav>
 <div class="site-layout">
 <aside class="site-toc"><div class="site-group">Basics</div>
-  <a href="#install">Installation</a><a href="#prereq">Prerequisites</a><a href="#hosts">Hosts are display: contents</a><a href="#theming">Theming & branding</a><a href="#forms">Forms</a><a href="#lightdom">Light-DOM children</a><a href="#icons">Passing icons</a><a href="#overlays">Overlays</a><a href="#editor">Editor</a><div class="site-group">Forms & controls</div><a href="#nk-btn">&lt;nk-btn&gt;</a><a href="#nk-input">&lt;nk-input&gt;</a><a href="#nk-copy-field">&lt;nk-copy-field&gt;</a><a href="#nk-image-picker">&lt;nk-image-picker&gt;</a><a href="#nk-calendar">&lt;nk-calendar&gt;</a><a href="#nk-textarea">&lt;nk-textarea&gt;</a><a href="#nk-select">&lt;nk-select&gt;</a><a href="#nk-switch">&lt;nk-switch&gt;</a><a href="#nk-check">&lt;nk-check&gt;</a><a href="#nk-radio">&lt;nk-radio&gt;</a><a href="#nk-slider">&lt;nk-slider&gt;</a><a href="#nk-field">&lt;nk-field&gt;</a><a href="#nk-fields">&lt;nk-fields&gt;</a><div class="site-group">Content elements</div><a href="#nk-tag">&lt;nk-tag&gt;</a><a href="#nk-progress">&lt;nk-progress&gt;</a><a href="#nk-callout">&lt;nk-callout&gt;</a><a href="#nk-bookmark">&lt;nk-bookmark&gt;</a><a href="#nk-divider">&lt;nk-divider&gt;</a><a href="#nk-heading">&lt;nk-heading&gt;</a><a href="#nk-toggle">&lt;nk-toggle&gt;</a><a href="#nk-todo">&lt;nk-todo&gt;</a><a href="#nk-kbd">&lt;nk-kbd&gt;</a><a href="#nk-code">&lt;nk-code&gt;</a><a href="#nk-quote">&lt;nk-quote&gt;</a><div class="site-group">App shell & navigation</div><a href="#nk-app">&lt;nk-app&gt;</a><a href="#nk-sidebar">&lt;nk-sidebar&gt;</a><a href="#nk-workspace-switcher">&lt;nk-workspace-switcher&gt;</a><a href="#nk-section-label">&lt;nk-section-label&gt;</a><a href="#nk-tree">&lt;nk-tree&gt;</a><a href="#nk-tree-item">&lt;nk-tree-item&gt;</a><a href="#nk-topbar">&lt;nk-topbar&gt;</a><a href="#nk-breadcrumb">&lt;nk-breadcrumb&gt;</a><a href="#nk-theme-toggle">&lt;nk-theme-toggle&gt;</a><a href="#nk-tab-bar">&lt;nk-tab-bar&gt;</a><a href="#nk-tab-bar-item">&lt;nk-tab-bar-item&gt;</a><div class="site-group">Page shell & blocks</div><a href="#nk-page">&lt;nk-page&gt;</a><a href="#nk-page-cover">&lt;nk-page-cover&gt;</a><a href="#nk-page-title">&lt;nk-page-title&gt;</a><a href="#nk-page-actions">&lt;nk-page-actions&gt;</a><a href="#nk-props">&lt;nk-props&gt;</a><a href="#nk-prop">&lt;nk-prop&gt;</a><a href="#nk-panels">&lt;nk-panels&gt;</a><a href="#nk-panel">&lt;nk-panel&gt;</a><a href="#nk-block-host">&lt;nk-block-host&gt;</a><a href="#nk-banner">&lt;nk-banner&gt;</a><a href="#nk-empty">&lt;nk-empty&gt;</a><a href="#nk-skeleton">&lt;nk-skeleton&gt;</a><a href="#nk-synced">&lt;nk-synced&gt;</a><a href="#nk-tabs">&lt;nk-tabs&gt;</a><a href="#nk-tab">&lt;nk-tab&gt;</a><a href="#nk-segmented">&lt;nk-segmented&gt;</a><a href="#nk-steps">&lt;nk-steps&gt;</a><a href="#nk-stats">&lt;nk-stats&gt;</a><a href="#nk-stat">&lt;nk-stat&gt;</a><a href="#nk-avatar-group">&lt;nk-avatar-group&gt;</a><a href="#nk-avatar">&lt;nk-avatar&gt;</a><a href="#nk-mention">&lt;nk-mention&gt;</a><a href="#nk-template-btn">&lt;nk-template-btn&gt;</a><a href="#nk-model-card">&lt;nk-model-card&gt;</a><a href="#nk-profile-row">&lt;nk-profile-row&gt;</a><a href="#nk-danger-zone">&lt;nk-danger-zone&gt;</a><a href="#nk-member-list">&lt;nk-member-list&gt;</a><a href="#nk-member-row">&lt;nk-member-row&gt;</a><div class="site-group">Overlays</div><a href="#nk-modal">&lt;nk-modal&gt;</a><a href="#nk-sheet">&lt;nk-sheet&gt;</a><a href="#nk-peek">&lt;nk-peek&gt;</a><a href="#nk-dialog">&lt;nk-dialog&gt;</a><a href="#nk-settings-pane">&lt;nk-settings-pane&gt;</a><a href="#nk-settings-user">&lt;nk-settings-user&gt;</a><a href="#nk-cmdk">&lt;nk-cmdk&gt;</a><a href="#nk-menu">&lt;nk-menu&gt;</a><a href="#nk-menu-item">&lt;nk-menu-item&gt;</a><a href="#nk-pop">&lt;nk-pop&gt;</a><a href="#nk-emoji-picker">&lt;nk-emoji-picker&gt;</a><a href="#nk-toast">&lt;nk-toast&gt;</a><a href="#nk-tooltip">&lt;nk-tooltip&gt;</a><div class="site-group">Data & collaboration</div><a href="#nk-database">&lt;nk-database&gt;</a><a href="#nk-table-view">&lt;nk-table-view&gt;</a><a href="#nk-board-view">&lt;nk-board-view&gt;</a><a href="#nk-list-view">&lt;nk-list-view&gt;</a><a href="#nk-calendar-view">&lt;nk-calendar-view&gt;</a><a href="#nk-filter-bar">&lt;nk-filter-bar&gt;</a><a href="#nk-comments">&lt;nk-comments&gt;</a><a href="#nk-comment">&lt;nk-comment&gt;</a><a href="#nk-ai-thread">&lt;nk-ai-thread&gt;</a><a href="#nk-ai-msg">&lt;nk-ai-msg&gt;</a><a href="#nk-ai-input-row">&lt;nk-ai-input-row&gt;</a></aside>
+  <a href="#install">Installation</a><a href="#prereq">Prerequisites</a><a href="#hosts">Hosts are display: contents</a><a href="#theming">Theming & branding</a><a href="#forms">Forms</a><a href="#lightdom">Light-DOM children</a><a href="#icons">Passing icons</a><a href="#overlays">Overlays</a><a href="#editor">Editor</a><div class="site-group">Forms & controls</div><a href="#nk-btn">&lt;nk-btn&gt;</a><a href="#nk-input">&lt;nk-input&gt;</a><a href="#nk-copy-field">&lt;nk-copy-field&gt;</a><a href="#nk-image-picker">&lt;nk-image-picker&gt;</a><a href="#nk-calendar">&lt;nk-calendar&gt;</a><a href="#nk-textarea">&lt;nk-textarea&gt;</a><a href="#nk-select">&lt;nk-select&gt;</a><a href="#nk-switch">&lt;nk-switch&gt;</a><a href="#nk-check">&lt;nk-check&gt;</a><a href="#nk-radio">&lt;nk-radio&gt;</a><a href="#nk-slider">&lt;nk-slider&gt;</a><a href="#nk-field">&lt;nk-field&gt;</a><a href="#nk-fields">&lt;nk-fields&gt;</a><div class="site-group">Content elements</div><a href="#nk-tag">&lt;nk-tag&gt;</a><a href="#nk-progress">&lt;nk-progress&gt;</a><a href="#nk-callout">&lt;nk-callout&gt;</a><a href="#nk-bookmark">&lt;nk-bookmark&gt;</a><a href="#nk-divider">&lt;nk-divider&gt;</a><a href="#nk-heading">&lt;nk-heading&gt;</a><a href="#nk-toggle">&lt;nk-toggle&gt;</a><a href="#nk-todo">&lt;nk-todo&gt;</a><a href="#nk-kbd">&lt;nk-kbd&gt;</a><a href="#nk-code">&lt;nk-code&gt;</a><a href="#nk-quote">&lt;nk-quote&gt;</a><div class="site-group">App shell & navigation</div><a href="#nk-app">&lt;nk-app&gt;</a><a href="#nk-sidebar">&lt;nk-sidebar&gt;</a><a href="#nk-workspace-switcher">&lt;nk-workspace-switcher&gt;</a><a href="#nk-section-label">&lt;nk-section-label&gt;</a><a href="#nk-tree">&lt;nk-tree&gt;</a><a href="#nk-tree-item">&lt;nk-tree-item&gt;</a><a href="#nk-topbar">&lt;nk-topbar&gt;</a><a href="#nk-breadcrumb">&lt;nk-breadcrumb&gt;</a><a href="#nk-theme-toggle">&lt;nk-theme-toggle&gt;</a><a href="#nk-tab-bar">&lt;nk-tab-bar&gt;</a><a href="#nk-tab-bar-item">&lt;nk-tab-bar-item&gt;</a><div class="site-group">Page shell & blocks</div><a href="#nk-page">&lt;nk-page&gt;</a><a href="#nk-page-cover">&lt;nk-page-cover&gt;</a><a href="#nk-page-title">&lt;nk-page-title&gt;</a><a href="#nk-page-actions">&lt;nk-page-actions&gt;</a><a href="#nk-props">&lt;nk-props&gt;</a><a href="#nk-prop">&lt;nk-prop&gt;</a><a href="#nk-panels">&lt;nk-panels&gt;</a><a href="#nk-panel">&lt;nk-panel&gt;</a><a href="#nk-block-host">&lt;nk-block-host&gt;</a><a href="#nk-banner">&lt;nk-banner&gt;</a><a href="#nk-empty">&lt;nk-empty&gt;</a><a href="#nk-skeleton">&lt;nk-skeleton&gt;</a><a href="#nk-synced">&lt;nk-synced&gt;</a><a href="#nk-tabs">&lt;nk-tabs&gt;</a><a href="#nk-tab">&lt;nk-tab&gt;</a><a href="#nk-segmented">&lt;nk-segmented&gt;</a><a href="#nk-steps">&lt;nk-steps&gt;</a><a href="#nk-stats">&lt;nk-stats&gt;</a><a href="#nk-stat">&lt;nk-stat&gt;</a><a href="#nk-avatar-group">&lt;nk-avatar-group&gt;</a><a href="#nk-avatar">&lt;nk-avatar&gt;</a><a href="#nk-mention">&lt;nk-mention&gt;</a><a href="#nk-template-btn">&lt;nk-template-btn&gt;</a><a href="#nk-model-card">&lt;nk-model-card&gt;</a><a href="#nk-profile-row">&lt;nk-profile-row&gt;</a><a href="#nk-danger-zone">&lt;nk-danger-zone&gt;</a><a href="#nk-member-list">&lt;nk-member-list&gt;</a><a href="#nk-member-row">&lt;nk-member-row&gt;</a><div class="site-group">Overlays</div><a href="#nk-modal">&lt;nk-modal&gt;</a><a href="#nk-sheet">&lt;nk-sheet&gt;</a><a href="#nk-peek">&lt;nk-peek&gt;</a><a href="#nk-dialog">&lt;nk-dialog&gt;</a><a href="#nk-settings-pane">&lt;nk-settings-pane&gt;</a><a href="#nk-settings-user">&lt;nk-settings-user&gt;</a><a href="#nk-cmdk">&lt;nk-cmdk&gt;</a><a href="#nk-menu">&lt;nk-menu&gt;</a><a href="#nk-menu-item">&lt;nk-menu-item&gt;</a><a href="#nk-pop">&lt;nk-pop&gt;</a><a href="#nk-emoji-picker">&lt;nk-emoji-picker&gt;</a><a href="#nk-toast">&lt;nk-toast&gt;</a><a href="#nk-tooltip">&lt;nk-tooltip&gt;</a><div class="site-group">Data & collaboration</div><a href="#nk-database">&lt;nk-database&gt;</a><a href="#nk-table-view">&lt;nk-table-view&gt;</a><a href="#nk-board-view">&lt;nk-board-view&gt;</a><a href="#nk-list-view">&lt;nk-list-view&gt;</a><a href="#nk-calendar-view">&lt;nk-calendar-view&gt;</a><a href="#nk-gallery-view">&lt;nk-gallery-view&gt;</a><a href="#nk-filter-bar">&lt;nk-filter-bar&gt;</a><a href="#nk-comments">&lt;nk-comments&gt;</a><a href="#nk-comment">&lt;nk-comment&gt;</a><a href="#nk-ai-thread">&lt;nk-ai-thread&gt;</a><a href="#nk-ai-msg">&lt;nk-ai-msg&gt;</a><a href="#nk-ai-input-row">&lt;nk-ai-input-row&gt;</a></aside>
 <main class="site-main"><div class="site-inner">
   <h1 class="site-h1">Documentation</h1>
   <p class="site-lead">Attributes, slots, events and the class markup each element replaces.</p>
   
 <section class="site-section" id="install"><h2>Installation</h2>
-  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+  <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css"&gt;
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
   <p class="doc-h4">npm</p><pre class="doc-code">npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 
 import '@jungherz-de/notionkit/notionkit.css';
@@ -128,8 +128,8 @@ import '@jungherz-de/notionkit-elements';</pre>
 </section>
 <section class="site-section" id="prereq"><h2>Prerequisites</h2><p class="doc-desc">Load <code>notionkit.css</code> on the document and put <code>class="nk-body"</code> on <code>&lt;body&gt;</code>. The shadow roots inherit font, colour and the scoped reset from there; the elements ship no visual CSS of their own. The bundle additionally injects the design tokens as a cascade layer (<code>@layer notionkit-defaults</code>), so a page without the stylesheet still renders, and any unlayered <code>:root { --nk-* }</code> of yours wins.</p><pre class="doc-code">&lt;<span class="tag">html</span> <span class="attr">lang</span>="en" <span class="attr">data-theme</span>="light"&gt;
   &lt;<span class="tag">head</span>&gt;
-    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css"&gt;
-    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.13.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css"&gt;
+    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.14.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
   &lt;/<span class="tag">head</span>&gt;
   &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
     &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="primary"&gt;Save&lt;/<span class="tag">nk-btn</span>&gt;
@@ -1044,7 +1044,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-app"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-app>
   <nk-sidebar slot=&quot;sidebar&quot;>
     <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
     <nk-tree>
@@ -1064,7 +1064,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
   </div></div>
 </nk-app><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:300px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-app&quot;>
   <aside class=&quot;nk-sidebar&quot;>
     <div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div>
     <div class=&quot;nk-sidebar-scroll&quot;>
@@ -1151,7 +1151,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sidebar"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 2</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar collapsible collapse-label=&quot;Close sidebar&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><nk-sidebar collapsible collapse-label=&quot;Close sidebar&quot;>
   <nk-workspace-switcher slot=&quot;workspace&quot; name=&quot;MonaHilft&quot;></nk-workspace-switcher>
   <nk-tree>
     <nk-tree-item icon=&quot;🏠&quot; active>Home</nk-tree-item>
@@ -1160,7 +1160,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;⚙️&quot;>Settings</nk-tree-item>
   <nk-tree-item slot=&quot;footer&quot; icon=&quot;🗑️&quot;>Trash</nk-tree-item>
 </nk-sidebar></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:260px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;height:100%&quot;><aside class=&quot;nk-sidebar&quot;>
   <div class=&quot;nk-sidebar-head&quot;><div class=&quot;nk-workspace&quot;><div class=&quot;avatar&quot;>M</div><span>MonaHilft</span><span class=&quot;chev&quot;>⌄</span></div><button class=&quot;nk-sidebar-collapse&quot; aria-label=&quot;Close sidebar&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;m18 17-5-5 5-5M11 17l-5-5 5-5&quot;/></svg></button></div>
   <div class=&quot;nk-sidebar-scroll&quot;>
     <div class=&quot;nk-tree-item active&quot;><span class=&quot;icon&quot;>🏠</span><span class=&quot;label&quot;>Home</span></div>
@@ -1574,12 +1574,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-page"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 3</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><nk-page icon=&quot;🚀&quot; cover>
   <nk-page-title>NotionKit MVP</nk-page-title>
   <nk-page-actions><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <nk-tag color=&quot;purple&quot;>Design system</nk-tag></span></nk-page-actions>
   <p class=&quot;lead&quot;>A calm, document-centric workspace app – built from elements only.</p>
 </nk-page></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div style=&quot;display:flex;flex-direction:column;height:100%&quot;><div class=&quot;nk-page-scroll&quot;><div class=&quot;nk-cover&quot;></div><div class=&quot;nk-page&quot;>
   <div class=&quot;nk-page-icon&quot;>🚀</div>
   <h1 class=&quot;nk-page-title&quot;>NotionKit MVP</h1>
   <div class=&quot;nk-page-meta&quot;><span>👤 Marcel Karas</span><span>📅 Created 12 May 2026</span><span>🏷️ <span class=&quot;nk-tag purple&quot;>Design system</span></span></div>
@@ -2504,7 +2504,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-modal"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-modal open>
   <nk-settings-user slot=&quot;user&quot; name=&quot;Marcel Karas&quot; mail=&quot;marcel@monahilft.de&quot;></nk-settings-user>
   <nk-settings-pane name=&quot;profile&quot; group=&quot;Account&quot; icon=&quot;👤&quot; label=&quot;My profile&quot; title=&quot;My profile&quot; active>
     <nk-profile-row avatar=&quot;MK&quot;><nk-btn variant=&quot;secondary&quot; small>Change photo</nk-btn></nk-profile-row>
@@ -2518,7 +2518,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-member-list><nk-member-row name=&quot;Sara Lindt&quot; mail=&quot;sara@example.com&quot; color=&quot;#448361&quot;></nk-member-row></nk-member-list>
   </nk-settings-pane>
 </nk-modal><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-modal-backdrop open&quot;><div class=&quot;nk-modal&quot;>
   <nav class=&quot;nk-settings-nav&quot;>
     <div class=&quot;nk-settings-user&quot;><div class=&quot;avatar&quot;>MK</div><div class=&quot;u-text&quot;><div class=&quot;name&quot;>Marcel Karas</div><div class=&quot;mail&quot;>marcel@monahilft.de</div></div></div>
     <div class=&quot;nk-section-label&quot;>Account</div>
@@ -2591,7 +2591,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-sheet"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-sheet open title=&quot;More&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-sheet open title=&quot;More&quot;>
   <nk-tree manual>
     <nk-section-label>Favourites</nk-section-label>
     <nk-tree-item icon=&quot;🚀&quot;>NotionKit MVP</nk-tree-item>
@@ -2601,7 +2601,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     <nk-tree-item icon=&quot;🗑️&quot;>Trash</nk-tree-item>
   </nk-tree>
 </nk-sheet><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-sheet-backdrop open&quot;><div class=&quot;nk-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;More&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:360px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-sheet-backdrop open&quot;><div class=&quot;nk-sheet&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;More&quot;>
   <div class=&quot;sh-grabber&quot;></div>
   <div class=&quot;sh-title&quot;>More</div>
   <div class=&quot;nk-section-label&quot;>Favourites</div>
@@ -2653,7 +2653,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-peek"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-peek open resizable resize-label=&quot;Resize&quot; label=&quot;Database Table-View&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-peek open resizable resize-label=&quot;Resize&quot; label=&quot;Database Table-View&quot;>
   <nk-btn slot=&quot;actions&quot; variant=&quot;topbar&quot; aria-label=&quot;Open as page&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7&quot;/></svg></nk-btn>
   <nk-page-title>🗃️ Database Table-View</nk-page-title>
   <nk-props>
@@ -2662,7 +2662,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   </nk-props>
   <div class=&quot;nk-prose&quot;><p>Table, board and list read the same rows; filters and sort act on all three.</p></div>
 </nk-peek><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-peek-backdrop open&quot;><aside class=&quot;nk-peek&quot; role=&quot;dialog&quot; aria-label=&quot;Database Table-View&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:520px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-peek-backdrop open&quot;><aside class=&quot;nk-peek&quot; role=&quot;dialog&quot; aria-label=&quot;Database Table-View&quot;>
   <div class=&quot;pk-resize&quot; role=&quot;separator&quot; aria-orientation=&quot;vertical&quot; aria-label=&quot;Resize&quot; tabindex=&quot;0&quot;></div>
   <div class=&quot;pk-bar&quot;><button class=&quot;nk-topbar-btn&quot; aria-label=&quot;Close&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;m6 17 5-5-5-5M13 17l5-5-5-5&quot;/></svg></button><button class=&quot;nk-topbar-btn&quot; aria-label=&quot;Open as page&quot;><svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;><path d=&quot;M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7&quot;/></svg></button></div>
   <div class=&quot;pk-body&quot;>
@@ -2726,12 +2726,12 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-dialog"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-dialog open alert title=&quot;Move “NotionKit MVP” to trash?&quot;>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-dialog open alert title=&quot;Move “NotionKit MVP” to trash?&quot;>
   The page and its sub-pages can be restored from Trash for 30 days.
   <nk-btn slot=&quot;actions&quot; variant=&quot;secondary&quot; value=&quot;&quot;>Cancel</nk-btn>
   <nk-btn slot=&quot;actions&quot; variant=&quot;danger-solid&quot; value=&quot;trash&quot;>Move to trash</nk-btn>
 </nk-dialog><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-dialog-backdrop open&quot;><div class=&quot;nk-dialog&quot; role=&quot;alertdialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Move to trash&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:320px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-dialog-backdrop open&quot;><div class=&quot;nk-dialog&quot; role=&quot;alertdialog&quot; aria-modal=&quot;true&quot; aria-label=&quot;Move to trash&quot;>
   <div class=&quot;dl-title&quot;>Move “NotionKit MVP” to trash?</div>
   <div class=&quot;dl-body&quot;>The page and its sub-pages can be restored from Trash for 30 days.</div>
   <div class=&quot;dl-actions&quot;><button class=&quot;nk-btn secondary&quot;>Cancel</button><button class=&quot;nk-btn danger-solid&quot;>Move to trash</button></div>
@@ -2827,7 +2827,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-cmdk"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-cmdk open placeholder=&quot;Search or type a command …&quot;></nk-cmdk>
 <script>
   document.querySelector('nk-cmdk').commands = [
     { group: 'Pages', items: [
@@ -2842,7 +2842,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     ]},
   ];
 </script><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:420px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-cmdk-backdrop open&quot;><div class=&quot;nk-cmdk&quot;>
   <div class=&quot;nk-cmdk-input-row&quot;><span style=&quot;font-size:15px&quot;>🔍</span><input placeholder=&quot;Search or type a command …&quot;><kbd class=&quot;nk-kbd&quot;>esc</kbd></div>
   <div class=&quot;nk-cmdk-list&quot;>
     <div class=&quot;nk-cmdk-group&quot;>Pages</div>
@@ -3064,8 +3064,8 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-compare"><div class="doc-compare-bar">
     <div class="nk-segmented" data-compare="nk-toast"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
     <span class="site-spacer"></span><span>Wave 4</span></div>
-    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
-    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.13.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="element"><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><nk-toast open duration=&quot;0&quot;>Settings saved</nk-toast><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
+    <div class="doc-preview" data-mode="class" hidden><iframe class="doc-frame" data-theme-sync loading="lazy" style="height:120px" srcdoc="<!DOCTYPE html><html lang=&quot;en&quot;><head><meta charset=&quot;UTF-8&quot;><link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.14.0/notionkit.min.css&quot;><script src=&quot;dist/notionkit-elements.min.js&quot;></script><style>body{margin:0;height:100vh}</style></head><body class=&quot;nk-body&quot;><div class=&quot;nk-toast show&quot;>✓ <span>Settings saved</span></div><script>(function(){var r=document.documentElement;function s(t){r.setAttribute('data-theme',t)}s(parent.document.documentElement.getAttribute('data-theme')||'light');addEventListener('message',function(e){if(e.data&amp;&amp;e.data.nkTheme)s(e.data.nkTheme)});})()</script></body></html>"></iframe></div>
     <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-toast</span> open <span class="attr">duration</span>="0"&gt;Settings saved&lt;/<span class="tag">nk-toast</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-toast show"&gt;✓ &lt;<span class="tag">span</span>&gt;Settings saved&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;</pre>
   </div>
@@ -3147,10 +3147,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script></div>
     <div class="doc-preview" data-mode="class" hidden><div class="nk-database">
@@ -3187,10 +3187,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }&lt;/<span class="tag">script</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-database"&gt;
@@ -3248,10 +3248,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'actions', type: 'actions', actions: [{ action: 'open', label: 'Open' }, { action: 'archive', label: 'Archive', danger: true }] },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'] },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'], cover: '/covers/tide.svg' },
   ];
 }</script></div>
     <div class="doc-preview" data-mode="class" hidden><div class="nk-table-wrap"><table class="nk-table">
@@ -3277,10 +3277,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'actions', type: 'actions', actions: [{ action: 'open', label: 'Open' }, { action: 'archive', label: 'Archive', danger: true }] },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'] },
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, actions: ['open'], cover: '/covers/tide.svg' },
   ];
 }&lt;/<span class="tag">script</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-table-wrap"&gt;&lt;<span class="tag">table</span> <span class="attr">class</span>="nk-table"&gt;
@@ -3336,10 +3336,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script></div>
     <div class="doc-preview" data-mode="class" hidden><div class="nk-board active">
@@ -3360,10 +3360,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }&lt;/<span class="tag">script</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-board active"&gt;
@@ -3411,10 +3411,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script></div>
     <div class="doc-preview" data-mode="class" hidden><div class="nk-list">
@@ -3436,10 +3436,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }&lt;/<span class="tag">script</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-list"&gt;
@@ -3487,10 +3487,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }</script></div>
     <div class="doc-preview" data-mode="class" hidden><div class="nk-calendar-view weeks">
@@ -3517,10 +3517,10 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
     { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
   ];
   db.rows = [
-    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6 },
-    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5 },
-    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5 },
-    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8 },
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
   ];
 }&lt;/<span class="tag">script</span>&gt;</pre>
     <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-calendar-view weeks"&gt;
@@ -3561,6 +3561,88 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <p class="doc-meta"><b>Methods:</b> <code>refresh()</code></p>
   <div class="doc-meta"><b>On a small screen:</b><span>Keeps seven columns; the days get lower (64px) and the cards smaller.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-calendar-view</code><code>.weeks</code><code>.cv-head</code><code>.cv-title</code><code>.cal-nav</code><code>.cv-grid</code><code>.cv-wd</code><code>.cv-week</code><code>.cv-day</code><code>.out</code><code>.off</code><code>.today</code><code>.cv-num</code><code>.cv-item</code></div>
+</article>
+<article class="doc-entry" id="nk-gallery-view">
+  <h3><code>&lt;nk-gallery-view&gt;</code> Gallery view</h3>
+  <p class="doc-desc">The fifth database view: the rows as cards with a picture on top, in a grid that fills the row – Notion’s gallery, for a course catalog or a reading list. <code>cover-key</code> names the row field with the picture’s URL (default: <code>cover</code>); a row without one shows the cover gradient, <code>no-cover</code> leaves the pictures out. The picture stands in 2:1, cropped to fill; <code>fit</code> shows it whole, for logos. <code>size</code> small, medium or large sets the card size – columns from 180, 260 or 340px. Cards show the title and the <code>meta-keys</code> (default: the select and date columns) and fire <code>nk-select</code> on a click, Enter or Space; <code>new-row</code> adds the add card.</p>
+  <div class="doc-compare"><div class="doc-compare-bar">
+    <div class="nk-segmented" data-compare="nk-gallery-view"><button class="active" data-mode="element">After – one element</button><button data-mode="class">Before – .nk-* classes</button></div>
+    <span class="site-spacer"></span><span>Wave 5</span></div>
+    <div class="doc-preview" data-mode="element"><nk-gallery-view meta-keys="status,due" new-row></nk-gallery-view>
+<script>{
+  const db = document.currentScript.previousElementSibling;
+  db.columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' }, { value: 'progress', label: 'In progress', color: 'blue' }, { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+  ];
+  db.rows = [
+    { id: 1, icon: '🧭', name: 'App shell & sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell & typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view & drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
+  ];
+}</script></div>
+    <div class="doc-preview" data-mode="class" hidden><div class="nk-gallery" role="list">
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/aurora.svg" alt=""></div><div class="card-title">🧭 App shell & sidebar</div><div class="card-meta"><span><span class="nk-tag green">Done</span></span><span>📅 08.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/dunes.svg" alt=""></div><div class="card-title">📄 Page shell & typography</div><div class="card-meta"><span><span class="nk-tag green">Done</span></span><span>📅 10.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/meadow.svg" alt=""></div><div class="card-title">🗃️ Database table view</div><div class="card-meta"><span><span class="nk-tag blue">In progress</span></span><span>📅 20.05.2026</span></div></div>
+  <div class="nk-card" role="listitem" tabindex="0"><div class="nk-cover"><img src="/covers/tide.svg" alt=""></div><div class="card-title">▤ Board view & drag-and-drop</div><div class="card-meta"><span><span class="nk-tag orange">Planned</span></span><span>📅 02.06.2026</span></div></div>
+  <div class="nk-new-row" role="button" tabindex="0">＋ New page</div>
+</div></div>
+    <pre class="doc-code" data-mode="element">&lt;<span class="tag">nk-gallery-view</span> <span class="attr">meta-keys</span>="status,due" new-row&gt;&lt;/<span class="tag">nk-gallery-view</span>&gt;
+&lt;<span class="tag">script</span>&gt;{
+  const db = document.currentScript.previousElementSibling;
+  db.columns = [
+    { key: 'name', label: 'Name', type: 'text', icon: '📄', title: true },
+    { key: 'status', label: 'Status', type: 'select', icon: '◉', options: [
+      { value: 'planned', label: 'Planned', color: 'orange' }, { value: 'progress', label: 'In progress', color: 'blue' }, { value: 'done', label: 'Done', color: 'green' } ] },
+    { key: 'owner', label: 'Owner', type: 'person', icon: '👤' },
+    { key: 'due', label: 'Due', type: 'date', icon: '📅' },
+    { key: 'progress', label: 'Progress', type: 'progress', icon: '▰' },
+    { key: 'effort', label: 'Effort (h)', type: 'number', icon: '#', locale: 'en', format: { minimumFractionDigits: 1 } },
+  ];
+  db.rows = [
+    { id: 1, icon: '🧭', name: 'App shell &amp; sidebar', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '08.05.2026', progress: 100, effort: 6, cover: '/covers/aurora.svg' },
+    { id: 2, icon: '📄', name: 'Page shell &amp; typography', status: 'done', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '10.05.2026', progress: 100, effort: 4.5, cover: '/covers/dunes.svg' },
+    { id: 3, icon: '🗃️', name: 'Database table view', status: 'progress', owner: { name: 'Marcel', initials: 'MK', color: 'purple' }, due: '20.05.2026', progress: 65, effort: 12.5, cover: '/covers/meadow.svg' },
+    { id: 4, icon: '▤', name: 'Board view &amp; drag-and-drop', status: 'planned', due: '02.06.2026', progress: 0, effort: 8, cover: '/covers/tide.svg' },
+  ];
+}&lt;/<span class="tag">script</span>&gt;</pre>
+    <pre class="doc-code" data-mode="class" hidden>&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-gallery" <span class="attr">role</span>="list"&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-card" <span class="attr">role</span>="listitem" <span class="attr">tabindex</span>="0"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-cover"&gt;&lt;<span class="tag">img</span> <span class="attr">src</span>="/covers/aurora.svg" <span class="attr">alt</span>=""&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-title"&gt;🧭 App shell &amp; sidebar&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-meta"&gt;&lt;<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag green"&gt;Done&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;📅 08.05.2026&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-card" <span class="attr">role</span>="listitem" <span class="attr">tabindex</span>="0"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-cover"&gt;&lt;<span class="tag">img</span> <span class="attr">src</span>="/covers/dunes.svg" <span class="attr">alt</span>=""&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-title"&gt;📄 Page shell &amp; typography&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-meta"&gt;&lt;<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag green"&gt;Done&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;📅 10.05.2026&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-card" <span class="attr">role</span>="listitem" <span class="attr">tabindex</span>="0"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-cover"&gt;&lt;<span class="tag">img</span> <span class="attr">src</span>="/covers/meadow.svg" <span class="attr">alt</span>=""&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-title"&gt;🗃️ Database table view&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-meta"&gt;&lt;<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag blue"&gt;In progress&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;📅 20.05.2026&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-card" <span class="attr">role</span>="listitem" <span class="attr">tabindex</span>="0"&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="nk-cover"&gt;&lt;<span class="tag">img</span> <span class="attr">src</span>="/covers/tide.svg" <span class="attr">alt</span>=""&gt;&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-title"&gt;▤ Board view &amp; drag-and-drop&lt;/<span class="tag">div</span>&gt;&lt;<span class="tag">div</span> <span class="attr">class</span>="card-meta"&gt;&lt;<span class="tag">span</span>&gt;&lt;<span class="tag">span</span> <span class="attr">class</span>="nk-tag orange"&gt;Planned&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">span</span>&gt;&lt;<span class="tag">span</span>&gt;📅 02.06.2026&lt;/<span class="tag">span</span>&gt;&lt;/<span class="tag">div</span>&gt;&lt;/<span class="tag">div</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">class</span>="nk-new-row" <span class="attr">role</span>="button" <span class="attr">tabindex</span>="0"&gt;＋ New page&lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">div</span>&gt;</pre>
+  </div>
+  <p class="doc-h4">Attributes</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>name</code></td><td><code>string</code></td><td>–</td><td>View name.</td></tr>
+<tr><td><code>label</code></td><td><code>string</code></td><td>–</td><td>Tab label.</td></tr>
+<tr><td><code>cover-key</code></td><td><code>string</code></td><td><code>cover</code></td><td>Row field with the picture’s URL.</td></tr>
+<tr><td><code>no-cover</code></td><td><code>boolean</code></td><td>–</td><td>Cards without pictures.</td></tr>
+<tr><td><code>size</code></td><td><code>small | medium | large</code></td><td><code>medium</code></td><td>Card size.</td></tr>
+<tr><td><code>fit</code></td><td><code>boolean</code></td><td>–</td><td>Show a picture whole instead of cropped.</td></tr>
+<tr><td><code>title-key</code></td><td><code>string</code></td><td>–</td><td>Title column.</td></tr>
+<tr><td><code>meta-keys</code></td><td><code>list</code></td><td>–</td><td>Comma-separated columns under the title.</td></tr>
+<tr><td><code>new-row</code></td><td><code>boolean</code></td><td>–</td><td>Show the add card.</td></tr>
+<tr><td><code>new-row-label</code></td><td><code>string</code></td><td><code>＋ New page</code></td><td>Its text.</td></tr></table></div>
+  <p class="doc-h4">Slots</p>
+  <p class="doc-meta">none</p>
+  <p class="doc-h4">Events</p>
+  <div class="doc-table-wrap"><table class="doc-table"><tr><th>Event</th><th>detail</th><th>Description</th></tr>
+<tr><td><code>nk-select</code></td><td><code>{ row, id, value }</code></td><td>Card clicked, Enter or Space.</td></tr>
+<tr><td><code>nk-action</code></td><td><code>{ action: 'new-row' }</code></td><td>Add card clicked.</td></tr></table></div>
+  <p class="doc-meta"><b>Properties:</b> <code>columns</code> <code>rows</code> <code>data</code></p>
+  <p class="doc-meta"><b>Methods:</b> <code>refresh()</code></p>
+  <div class="doc-meta"><b>On a small screen:</b><span>The grid drops columns by itself – one card per row on a phone, no breakpoint involved.</span></div>
+  <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-gallery</code><code>.small</code><code>.large</code><code>.fit</code><code>.nk-card</code><code>.nk-cover</code><code>.card-title</code><code>.card-meta</code><code>.nk-new-row</code></div>
 </article>
 <article class="doc-entry" id="nk-filter-bar">
   <h3><code>&lt;nk-filter-bar&gt;</code> Filter bar</h3>
@@ -3772,7 +3854,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-meta"><b>On a small screen:</b><span>Unchanged.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-ai-input-row</code><code>.nk-ai-send</code></div>
 </article></section>
-  <div class="site-footer">NotionKit Elements v1.13.0 · wrapping NotionKit CSS v1.13.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.14.0 · wrapping NotionKit CSS v1.14.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

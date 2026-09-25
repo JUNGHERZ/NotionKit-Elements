@@ -193,3 +193,18 @@ test('nk-filter-bar: removing a pill leaves the caller\'s array alone', async ({
   });
   expect(r).toEqual([2, ['B'], ['B']]);
 });
+
+// 1.14.0: the page's button reset (body.nk-body) won over the ::slotted()
+// margin, so a <button slot="action"> after a short text sat right behind it
+// instead of at the banner's right edge.
+test('nk-banner: a slotted button action stands at the right edge on an nk-body page', async ({ page }) => {
+  await openHarness(page);
+  expect(await page.evaluate(() => document.body.classList.contains('nk-body'))).toBe(true);
+  await setStage(page, '<div style="width:700px"><nk-banner id="b" variant="warning">⚠️ <span>Two entries are overdue.</span><button slot="action" type="button">View</button></nk-banner></div>');
+  const gap = await page.evaluate(() => {
+    const box = document.getElementById('b').shadowRoot.querySelector('.nk-banner').getBoundingClientRect();
+    const action = document.querySelector('#b [slot="action"]').getBoundingClientRect();
+    return Math.round(box.right - action.right);
+  });
+  expect(gap).toBeLessThanOrEqual(16);
+});
