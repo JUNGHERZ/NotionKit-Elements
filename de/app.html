@@ -13,7 +13,9 @@
 <meta property="og:image" content="https://notionkit-elements.jungherz.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://notionkit-elements.jungherz.com/og.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
 <script src="../dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
@@ -68,7 +70,7 @@
     <span slot="actions" class="nk-topbar-meta" id="lastEdited">Zuletzt bearbeitet vor 2 Min.</span>
     <nk-btn slot="actions" variant="share" data-tooltip="Teilen oder veröffentlichen">Teilen</nk-btn>
     <nk-btn slot="actions" variant="topbar" aria-label="Favorit" data-tooltip="Zu Favoriten hinzufügen">⭐</nk-btn>
-    <nk-theme-toggle slot="actions" id="themeToggle"></nk-theme-toggle>
+    <nk-theme-toggle slot="actions" id="themeToggle" modes="auto light dark" theme-color></nk-theme-toggle>
     <nk-btn slot="actions" variant="topbar" id="pageMenuBtn" aria-haspopup="menu" aria-label="Seitenoptionen" data-tooltip="Stil, Export und mehr">⋯</nk-btn>
   </nk-topbar>
 
@@ -590,10 +592,10 @@
   });
 
   /* ============ Theme ============ */
-  themeToggle.addEventListener('nk-change', e => toast.show(e.detail.value === 'dark' ? 'Dunkelmodus an' : 'Hellmodus an'));
+  themeToggle.addEventListener('nk-change', e => toast.show(e.detail.value === 'auto' ? `Darstellung folgt dem System (${e.detail.theme})` : e.detail.value === 'dark' ? 'Dunkelmodus an' : 'Hellmodus an'));
   themeSelect.addEventListener('nk-change', e => {
-    const value = e.detail.value === 'system' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : e.detail.value;
-    themeToggle.apply(value);
+    // `system` is the toggle's own auto mode – no stored value, and it keeps following.
+    themeToggle.apply(e.detail.value === 'system' ? 'auto' : e.detail.value);
     if (e.detail.value === 'system') toast.show('Folgt der Systemeinstellung');
   });
 
@@ -757,7 +759,7 @@
     ]},
     { group: 'Aktionen', items: [
       { id: 'new', icon: '＋', label: 'Neue Seite anlegen', shortcut: '⌘N' },
-      { id: 'theme', icon: '🌙', label: 'Theme wechseln', shortcut: '⌘⇧L', action: () => themeToggle.apply(themeToggle.value === 'dark' ? 'light' : 'dark') },
+      { id: 'theme', icon: '🌙', label: 'Theme wechseln', shortcut: '⌘⇧L', action: () => themeToggle.apply(themeToggle.nextMode()) },
       { id: 'settings', icon: '⚙️', label: 'Einstellungen öffnen', shortcut: '⌘,', action: () => settingsModal.show() },
       { id: 'export', icon: '📤', label: 'Seite exportieren …' },
     ]},

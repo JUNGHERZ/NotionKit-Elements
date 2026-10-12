@@ -1,6 +1,6 @@
 ---
 name: notionkit-elements
-description: NotionKit Elements is a vanilla-JS Web Components library (v1.19.0) wrapping NotionKit CSS v1.19.1 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
+description: NotionKit Elements is a vanilla-JS Web Components library (v1.20.0) wrapping NotionKit CSS v1.20.0 – the calm, document-centric design system in the Notion idiom. 88 custom elements with the `nk-` prefix, Shadow DOM, automatic light/dark sync via data-theme on <html>, and form-associated controls. Use this reference whenever generating HTML that uses <nk-*> tags to get attributes, slots, events and composition right.
 ---
 
 # NotionKit Elements – AI Component Reference
@@ -21,8 +21,8 @@ description: NotionKit Elements is a vanilla-JS Web Components library (v1.19.0)
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
   <nk-btn variant="primary">Save</nk-btn>
@@ -1177,7 +1177,7 @@ Give it plain `<span>` or `<a>` children; they are cloned into the bar with sepa
 
 ### 3.33 `<nk-theme-toggle>` – Theme toggle
 
-The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in `localStorage`, applies a stored or system preference on first connect when `<html>` has no theme yet, and accepts `postMessage({ nkTheme })` from a parent page. `apply(theme)` does everything a click does: sets, persists and fires `nk-change`.
+The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in `localStorage`, applies a stored or system preference on first connect when `<html>` has no theme yet, and accepts `postMessage({ nkTheme })` from a parent page. `apply(mode)` does everything a click does: sets, persists and fires `nk-change`.`modes="auto light dark"` adds a third state: auto follows `prefers-color-scheme`, live, and is what no stored value means – so the inline script before first paint keeps working and a choice made without `modes` still counts. A click then goes from auto to the theme not on screen, to the other one, back to auto, so every click but the last changes something. The glyph shows the mode (`nk-theme-glyph`, sun and moon diagonally for auto) instead of the next theme, the title names the mode and the next one, and another tab's choice arrives through the `storage` event. Two states stay the default, where nothing about this element changes.
 
 ```html
 <nk-theme-toggle></nk-theme-toggle>
@@ -1185,14 +1185,16 @@ The ☀️/🌙 button. Flips `data-theme` on `<html>`, remembers the choice in 
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `storage-key` | string | `nk-theme` | localStorage key. |
-| `title` | string | – | Tooltip. |
+| `modes` | string | `light dark` | The states offered, e.g. `auto light dark`; without `auto` among them nothing changes. |
+| `storage-key` | string | `nk-theme` | localStorage key; `auto` is no entry. |
+| `theme-color` | boolean | – | Keeps `<meta name="theme-color">` in step: while a theme is fixed every bar carries that theme's colour – the page's own, never invented. |
+| `title` | string | – | Tooltip; replaces the built-in text. |
 
-**Events:** `nk-change` `{ value: 'light' | 'dark' }` – Theme applied.
+**Events:** `nk-change` `{ value: 'auto' | 'light' | 'dark', theme: 'light' | 'dark' }` – Mode applied; `theme` is what is on screen (without `auto` both are the theme).
 
-**Properties:** `value` · **Methods:** `apply(theme)`
+**Properties:** `value`, `theme`, `mode`, `modes` · **Methods:** `apply(mode)`, `nextMode()`, `themeFor(mode)`
 
-**Replaces:** `.nk-theme-toggle`
+**Replaces:** `.nk-theme-toggle`, `.nk-theme-glyph`
 
 ```html
 <!-- equivalent class markup -->
@@ -3150,8 +3152,8 @@ Eight skeletons, one per app shape, mirroring the NotionKit CSS SKILL.md. Copy o
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3232,8 +3234,8 @@ Rules of the shell: `nk-sidebar`, `nk-topbar` and `nk-page` are `display: conten
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3340,8 +3342,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3400,8 +3402,8 @@ Data contract: `columns` describe the properties (`type`: text | select | multi-
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- your app -->
@@ -3478,8 +3480,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <div class="nk-page" style="padding-top:48px">
@@ -3525,8 +3527,8 @@ The open/close contract is one attribute: `settings.open = true`, `settings.show
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-page narrow icon="📘" cover>
@@ -3570,8 +3572,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <nk-app>
@@ -3625,8 +3627,8 @@ Note `narrow`: the page is the document, so there is no inner scroll wrapper –
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.19.1/notionkit.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.19.0/dist/notionkit-elements.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"></script>
 </head>
 <body class="nk-body">
 <!-- A narrow column, centred: layout is yours, so it is inline. -->
@@ -3761,7 +3763,7 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | `<nk-tree-item>` | shell | `icon`, `label`, `value`, `href` | `(default)`, `icon`, `end` | `nk-select`, `nk-toggle`, `nk-action` |
 | `<nk-topbar>` | shell | – | `(default)`, `actions` | – |
 | `<nk-breadcrumb>` | shell | `separator` | `(default)` | `nk-select` |
-| `<nk-theme-toggle>` | shell | `storage-key`, `title` | – | `nk-change` |
+| `<nk-theme-toggle>` | shell | `modes`, `storage-key`, `theme-color`, `title` | – | `nk-change` |
 | `<nk-tab-bar>` | shell | `value`, `always`, `fixed`, `floating` | `(default)` | `nk-change`, `nk-select` |
 | `<nk-tab-bar-item>` | shell | `icon`, `value`, `label`, `href` | `(default)`, `icon` | `nk-select` |
 | `<nk-page>` | page | `icon`, `full`, `small`, `cover` | `(default)`, `cover`, `icon` | `nk-action` |
@@ -3837,10 +3839,10 @@ Form controls additionally re-dispatch a native, bubbling `change` event, so `fo
 | Texts | `src/util/strings.js` – the English and German dictionary and `setStrings()`; `NkElement#str(key)` reads it in the element's language, `onStringsChanged()` runs after `setStrings()` and when `<html lang>` changes |
 | Components | `src/components/{forms,content,shell,page,overlays,data}/nk-*.js`, one tag per file, `customElements.define` at the bottom |
 | Build | Rollup: IIFE, minified IIFE, ESM, and per-component ESM entries on a stable `dist/components/base.js` that import NotionKit's sheet (`@jungherz-de/notionkit/notionkit-styles.js`) instead of inlining it; the full bundles inline it and export `componentsSheet` |
-| Peer | `@jungherz-de/notionkit >= 1.19.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
+| Peer | `@jungherz-de/notionkit >= 1.20.0` – from 1.5.0 on the elements and the foundation share one version number; the bundle embeds that release's stylesheet, so keep them in step |
 
 Lifecycle: construct (attach shadow, adopt sheets) → first connect (wrapper + `render()`) → every connect (`setupEvents()`, theme registration, light-DOM observer) → `attributeChangedCallback` → `onAttributeChanged` → disconnect (`teardownEvents()`, unregister).
 
 
 ---
-*NotionKit Elements v1.19.0 · wrapping NotionKit CSS v1.19.1 · MIT · Jungherz GmbH*
+*NotionKit Elements v1.20.0 · wrapping NotionKit CSS v1.20.0 · MIT · Jungherz GmbH*

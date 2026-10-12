@@ -4,6 +4,38 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.20.0] – 2026-10-12
+
+Built against NotionKit CSS 1.20.0 (peer `>= 1.20.0`).
+
+### Added
+- **`<nk-theme-toggle modes="auto light dark">` – a third state that follows
+  the system.** `auto` is what no stored value means, so the documented
+  inline script before first paint keeps working and a choice made without
+  `modes` still counts; while it is in force the element follows
+  `prefers-color-scheme` live, which the toggle never did. A click goes from
+  `auto` to the theme *not* on screen, then to the other one, then back, so
+  every click but the last changes something visibly. The glyph shows the
+  mode – `.nk-theme-glyph`, sun and moon diagonally for `auto` – instead of
+  the next theme, and the title names the mode and the next step (four new
+  texts: `appearance`, `themeAuto`, `themeLight`, `themeDark`). A choice made
+  in another tab arrives through the `storage` event. `value` returns
+  `auto | light | dark`, the new `theme` what is on screen, `nk-change`
+  reports both; `nextMode()` and `themeFor(mode)` are public.
+  **Two states stay the default**, where nothing about this element changes.
+  Requested by Mailverse (#2).
+- `theme-color` keeps `<meta name="theme-color">` in step: while a theme is
+  fixed every bar carries that theme's colour, back on `auto` each one
+  carries its own again. The colours are the page's, never invented.
+
+### Fixed
+- The toggle added its system-preference listener to a throwaway
+  `matchMedia()` object and removed it from a second one, so it was never
+  released and could be collected with its query. One query per element now.
+- A mode whose write failed (Safari's private mode refuses to store but
+  reads) is kept in the element until the page reloads, instead of falling
+  back to `auto` on the next read.
+
 ## [1.19.0] – 2026-09-25
 
 Built against NotionKit CSS 1.19.1 (peer `>= 1.19.1`). Auxdesk's wish 24 and what SupaGantt's mock-ups found – 14, 15 and 16 – together with a toast that never hid.
@@ -746,6 +778,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.20.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.20.0
 [1.19.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.18.0
 [1.17.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.17.0
