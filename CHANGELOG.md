@@ -4,6 +4,34 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.20.1] – 2026-10-14
+
+Elements only; NotionKit CSS stays at 1.20.0 (peer `>= 1.20.0`).
+
+### Fixed
+- **`<nk-tooltip>` follows the pointer and the focus inside a shadow root
+  (#3).** Moving from one `[data-tooltip]` to the next in the same shadow
+  root never updated the tooltip – the first one stayed, or none appeared –
+  for the pointer and for Tab alike; `<nk-copy-field icons secret>` kept
+  saying "Show" over Copy, an app's toolbar or chart bars in one root did
+  the same. `pointerover`, `focusin` and `focusout` carry a `relatedTarget`,
+  and when target and `relatedTarget` share a shadow tree the DOM standard
+  ends the event path at its host, so the listeners on the document never
+  heard of the move. The tooltip now also reads `pointermove` (no
+  `relatedTarget`, it always reaches the document) and acts only when the
+  element under the pointer changes, so a hand resting on the page leaves a
+  tooltip the keyboard or `show(rect)` opened alone; and it catches a key
+  that moved the focus – Tab, Option+Tab in Safari, the arrow keys of a
+  roving tab stop that moves the focus in its own `keydown` – on `keyup`,
+  against the focus recorded before the key went down. Nested shadow roots
+  are followed too. A focus move by script alone inside one shadow root
+  stays unseen. Reported by Mailverse.
+- **Leaving the window** over a `[data-tooltip]` left its tooltip standing,
+  and one still waiting appeared after the pointer had gone. It now goes
+  with the pointer (`pointerout` without a `relatedTarget`); a tooltip the
+  keyboard or `show(rect)` opened is not the pointer's and stays. Found
+  while testing #3.
+
 ## [1.20.0] – 2026-10-12
 
 Built against NotionKit CSS 1.20.0 (peer `>= 1.20.0`).
@@ -778,6 +806,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.20.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.20.1
 [1.20.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.20.0
 [1.19.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.19.0
 [1.18.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.18.0

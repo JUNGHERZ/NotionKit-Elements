@@ -93,7 +93,7 @@ body { margin: 0; }
 </head>
 <body class="nk-body">
 <nav class="site-nav">
-  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.20.0</span></a>
+  <a class="site-brand" href="index.html">NotionKit <span>Elements</span> <span class="site-version">v1.20.1</span></a>
   <div class="site-nav-links">
     <a href="docs.html" class="current">Docs</a>
     <a href="showcase.html">Showcase</a>
@@ -116,7 +116,7 @@ body { margin: 0; }
   
 <section class="site-section" id="install"><h2>Installation</h2>
   <p class="doc-h4">CDN</p><pre class="doc-code">&lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css"&gt;
-&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+&lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.1/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;</pre>
   <p class="doc-h4">npm</p><pre class="doc-code">npm install @jungherz-de/notionkit-elements @jungherz-de/notionkit
 
 import '@jungherz-de/notionkit/notionkit.css';
@@ -129,7 +129,7 @@ import '@jungherz-de/notionkit-elements';</pre>
 <section class="site-section" id="prereq"><h2>Prerequisites</h2><p class="doc-desc">Load <code>notionkit.css</code> on the document and put <code>class="nk-body"</code> on <code>&lt;body&gt;</code>. The shadow roots inherit font, colour and the scoped reset from there; the elements ship no visual CSS of their own. The bundle additionally injects the design tokens as a cascade layer (<code>@layer notionkit-defaults</code>), so a page without the stylesheet still renders, and any unlayered <code>:root { --nk-* }</code> of yours wins.</p><pre class="doc-code">&lt;<span class="tag">html</span> <span class="attr">lang</span>="en" <span class="attr">data-theme</span>="light"&gt;
   &lt;<span class="tag">head</span>&gt;
     &lt;<span class="tag">link</span> <span class="attr">rel</span>="stylesheet" <span class="attr">href</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit@1.20.0/notionkit.min.css"&gt;
-    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.0/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
+    &lt;<span class="tag">script</span> <span class="attr">src</span>="https://cdn.jsdelivr.net/npm/@jungherz-de/notionkit-elements@1.20.1/dist/notionkit-elements.min.js"&gt;&lt;/<span class="tag">script</span>&gt;
   &lt;/<span class="tag">head</span>&gt;
   &lt;<span class="tag">body</span> <span class="attr">class</span>="nk-body"&gt;
     &lt;<span class="tag">nk-btn</span> <span class="attr">variant</span>="primary"&gt;Save&lt;/<span class="tag">nk-btn</span>&gt;
@@ -3110,7 +3110,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
 </article>
 <article class="doc-entry" id="nk-tooltip">
   <h3><code>&lt;nk-tooltip&gt;</code> Tooltip</h3>
-  <p class="doc-desc">Notion’s hover hint in the toast’s colours, a shortcut muted beside it. One <code>&lt;nk-tooltip&gt;</code> without <code>for</code> serves every element with <code>data-tooltip</code> (and <code>data-tooltip-key</code>) on the page, inside shadow roots too – a whole toolbar in one element; with <code>for</code> it belongs to one element and shows its own content and <code>shortcut</code>. It appears after <code>delay</code> ms (400) under the pointer and at once on keyboard focus, never on touch; leaving, a press, blur, scrolling and Escape hide it. It sits 6px below its target and centred, above it where the window ends, 8px inside the window – <code>placeNear</code> in <code>util/floating.js</code>. <code>show(target, text, shortcut)</code> takes an element or a rect, for what has no element of its own: the bars of a chart. The target’s <code>aria-describedby</code> names it while it shows. Hover the buttons. A tooltip shown with <code>show(rect, …)</code> stays until <code>hide()</code>, the pointer on another <code>[data-tooltip]</code>, a press or Escape; the wheel hides it too, also inside a shadow root. A line break in the text is kept.</p>
+  <p class="doc-desc">Notion’s hover hint in the toast’s colours, a shortcut muted beside it. One <code>&lt;nk-tooltip&gt;</code> without <code>for</code> serves every element with <code>data-tooltip</code> (and <code>data-tooltip-key</code>) on the page, inside shadow roots too – a whole toolbar in one element, and it follows pointer and keyboard from one such element to the next within the same shadow root; with <code>for</code> it belongs to one element and shows its own content and <code>shortcut</code>. It appears after <code>delay</code> ms (400) under the pointer and at once on keyboard focus, never on touch; leaving – the window too –, a press, blur, scrolling and Escape hide it. It sits 6px below its target and centred, above it where the window ends, 8px inside the window – <code>placeNear</code> in <code>util/floating.js</code>. <code>show(target, text, shortcut)</code> takes an element or a rect, for what has no element of its own: the bars of a chart. The target’s <code>aria-describedby</code> names it while it shows. Hover the buttons. A tooltip shown with <code>show(rect, …)</code> stays until <code>hide()</code>, the pointer on another <code>[data-tooltip]</code>, a press or Escape; the wheel hides it too, also inside a shadow root. A line break in the text is kept.</p>
   <div class="doc-compare">
     <div class="doc-preview" data-mode="element"><div style="display:flex;gap:16px;align-items:center;padding:4px 0 44px">
   <nk-btn variant="topbar" aria-label="Style, export and more" data-tooltip="Style, export and more">⋯</nk-btn>
@@ -3878,7 +3878,7 @@ sel.innerHTML = roles.map(r =&gt; `&lt;<span class="tag">option</span> <span cla
   <div class="doc-meta"><b>On a small screen:</b><span>Unchanged.</span></div>
   <div class="doc-classes"><span class="doc-meta"><b>Replaces</b></span><code>.nk-ai-input-row</code><code>.nk-ai-send</code></div>
 </article></section>
-  <div class="site-footer">NotionKit Elements v1.20.0 · wrapping NotionKit CSS v1.20.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
+  <div class="site-footer">NotionKit Elements v1.20.1 · wrapping NotionKit CSS v1.20.0 · MIT · <a href="https://www.jungherz.com">Jungherz GmbH</a></div>
 <script>
 (function () {
   var root = document.documentElement;

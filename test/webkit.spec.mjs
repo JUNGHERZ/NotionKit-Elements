@@ -54,3 +54,33 @@ test('the link contract holds in WebKit: a plain click and Enter select, cancell
   }
   expect(await page.evaluate(() => [window.got, location.hash])).toEqual([['c1', 'c1', 7, 7], '']);
 });
+
+// 1.20.1 (#3): the tooltip follows the pointer and the focus between two
+// [data-tooltip] in one shadow root – the event path ends at the host for
+// pointerover/focusin there, in Safari's engine as in Chromium.
+test('nk-tooltip follows pointer and Tab inside one shadow root in WebKit', async ({ page }) => {
+  await page.goto('/test/fixtures/harness.html');
+  await page.waitForFunction(() => customElements.get('nk-tooltip'));
+  await page.evaluate(() => {
+    customElements.define('demo-toolbar', class extends HTMLElement {
+      connectedCallback() { this.attachShadow({ mode: 'open' }).innerHTML = '<button id="a" data-tooltip="First">A</button> <button id="b" data-tooltip="Second">B</button>'; }
+    });
+    document.getElementById('stage').innerHTML = '<nk-tooltip id="tip" delay="0"></nk-tooltip><p style="margin:40px"><button id="before">before</button> <demo-toolbar id="bar"></demo-toolbar></p>';
+    window.tipText = () => { const b = document.getElementById('tip').shadowRoot.querySelector('.nk-tooltip'); return b.classList.contains('open') ? b.textContent : null; };
+  });
+  const centre = id => page.evaluate(i => { const r = document.getElementById('bar').shadowRoot.getElementById(i).getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, id);
+  for (const [id, text] of [['a', 'First'], ['b', 'Second'], ['a', 'First']]) {
+    const { x, y } = await centre(id);
+    await page.mouse.move(x, y, { steps: 4 });
+    await page.waitForTimeout(80);
+    expect(await page.evaluate(() => window.tipText())).toBe(text);
+  }
+  await page.mouse.move(5, 5);
+  await page.evaluate(() => document.getElementById('tip').hide());
+  // Safari's Tab stops at fields only; Option+Tab reaches every button.
+  await page.focus('#before');
+  await page.keyboard.press('Alt+Tab');
+  const first = await page.evaluate(() => window.tipText());
+  await page.keyboard.press('Alt+Tab');
+  expect([first, await page.evaluate(() => window.tipText())]).toEqual(['First', 'Second']);
+});

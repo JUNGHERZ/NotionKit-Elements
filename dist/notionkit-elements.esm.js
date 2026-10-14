@@ -5636,6 +5636,17 @@ customElements.define('nk-dialog', NkDialog);
 // [data-tooltip], a press or Escape. A line break in the text is kept.
 // While it shows, the target's aria-describedby names it (in the same
 // document or shadow root).
+//
+// Following the pointer and the focus inside a shadow root (1.20.1):
+// pointerover, focusin and focusout carry a relatedTarget, and when target
+// and relatedTarget share a shadow tree the DOM standard ends the event path
+// at its host – the document never hears of a move from one [data-tooltip]
+// to the next in the same root. So the pointer is also read from
+// pointermove, which has no relatedTarget, and acted on only when the
+// element under it changes; and a key that moved the focus – Tab, the arrow
+// keys of a group – is caught on keyup, comparing the focused element with
+// the one before the key went down. A move by script alone inside one
+// shadow root stays unseen.
 const hostSheet = new CSSStyleSheet();
 hostSheet.replaceSync(`:host { display: block; position: fixed; top: 0; left: 0; z-index: 130; pointer-events: none; }`);
 let count = 0;
@@ -5713,14 +5724,50 @@ class NkTooltip extends NkElement {
     this.show(el, own ? null : el.getAttribute('data-tooltip'), own ? this.getAttribute('shortcut') : el.getAttribute('data-tooltip-key'));
   }
 
+  /**
+   * The pointer is over `el` now (null: no [data-tooltip]). pointerover acts
+   * on every boundary it crosses, as it always has; pointermove – the only
+   * one that reaches the document from inside a shadow root – only when the
+   * element under the pointer changed, so a hand resting on the page leaves
+   * a tooltip the keyboard or show(rect) opened alone.
+   */
+  _pointer(e, move) {
+    const el = e.pointerType === 'touch' ? null : this._targetOf(e);
+    if (move && el === this._hover) return;
+    this._hover = el;
+    if (el === this._target) return;
+    this.hide();
+    if (!el) return;
+    this._target = el;
+    this._timer = setTimeout(() => this._showFor(el), this._delay);
+  }
+
   setupEvents() {
-    this._onOver = (e) => {
-      const el = e.pointerType === 'touch' ? null : this._targetOf(e);
-      if (el === this._target) return;
+    this._onOver = (e) => this._pointer(e, false);
+    this._onMove = (e) => this._pointer(e, true);
+    // The pointer left the window (no relatedTarget): a tooltip – shown or
+    // still waiting – for what it was on goes with it. One the keyboard or
+    // show(rect) opened is not the pointer's and stays.
+    this._onOut = (e) => {
+      if (e.relatedTarget || e.pointerType === 'touch') return;
+      if (this._target && this._target === this._hover) this.hide();
+      this._hover = null;
+    };
+    // Capture, before an element's own keydown moves the focus (a roving tab
+    // stop does); not for a held key's repeats, so keyup compares with where
+    // the focus was before the key went down.
+    this._onKeyDown = (e) => { if (!e.repeat) this._focusBefore = deepActiveElement(); };
+    this._onKeyUp = (e) => {
+      const active = deepActiveElement();
+      if (active === this._focusBefore) return;
+      this._focusBefore = active;
+      // keyup goes to the focused element, so its path is the focus's path.
+      const el = this._targetOf(e);
+      if (el && el === this._target) return;   // focusin got there first
       this.hide();
-      if (!el) return;
+      if (!el || !active?.matches(':focus-visible')) return;
       this._target = el;
-      this._timer = setTimeout(() => this._showFor(el), this._delay);
+      this._showFor(el);
     };
     this._onFocus = (e) => {
       const el = this._targetOf(e);
@@ -5732,7 +5779,11 @@ class NkTooltip extends NkElement {
     this._onHide = () => this.hide();
     this._onKey = (e) => { if (e.key === 'Escape' && this.open) this.hide(); };
     document.addEventListener('pointerover', this._onOver);
+    document.addEventListener('pointermove', this._onMove, { capture: true, passive: true });
+    document.addEventListener('pointerout', this._onOut);
     document.addEventListener('focusin', this._onFocus);
+    document.addEventListener('keydown', this._onKeyDown, true);
+    document.addEventListener('keyup', this._onKeyUp, true);
     document.addEventListener('focusout', this._onHide);
     document.addEventListener('pointerdown', this._onHide, true);
     document.addEventListener('scroll', this._onHide, true);
@@ -5743,13 +5794,18 @@ class NkTooltip extends NkElement {
 
   teardownEvents() {
     document.removeEventListener('pointerover', this._onOver);
+    document.removeEventListener('pointermove', this._onMove, { capture: true });
+    document.removeEventListener('pointerout', this._onOut);
     document.removeEventListener('focusin', this._onFocus);
+    document.removeEventListener('keydown', this._onKeyDown, true);
+    document.removeEventListener('keyup', this._onKeyUp, true);
     document.removeEventListener('focusout', this._onHide);
     document.removeEventListener('pointerdown', this._onHide, true);
     document.removeEventListener('scroll', this._onHide, true);
     document.removeEventListener('wheel', this._onHide, { capture: true });
     document.removeEventListener('keydown', this._onKey);
     this.hide();
+    this._hover = this._focusBefore = null;
   }
 
   onAttributeChanged(name) { if (name === 'shortcut' && !this._text.data) this._fill(null); if (name === 'for') this.hide(); }
