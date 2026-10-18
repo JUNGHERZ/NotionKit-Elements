@@ -16,6 +16,15 @@ import './shared/dates-a32DcW1l.js';
 // type 'actions' (NotionKit 1.12.0) sets buttons in each row; a click on one
 // fires nk-action { action, row, id, anchor } instead of selecting the row,
 // and its header sorts nothing.
+//
+// A checkbox column with `selectAll: true` (1.21.0) is a selection column:
+// its header holds a checkbox instead of a name – empty, a dash for some
+// rows, a check for all – and sorts nothing (th.select-all, NotionKit
+// 1.21.0). A click or Space sets the column for every row the view has –
+// a dash selects all, as Notion does –, renders again and fires one
+// nk-change { key, value, all: true, rows }, so an app that keeps its own
+// selection follows with one update. What "all" means beyond these rows –
+// more pages, a filter on the server – stays with the app.
 class NkTableView extends NkElement {
   static get observedAttributes() { return ['name', 'label', 'badge', 'count', 'new-row', 'new-row-label', 'sortable', 'sort-key', 'sort-dir', 'wrap']; }
 
@@ -45,6 +54,7 @@ class NkTableView extends NkElement {
     this._table.classList.toggle('wrap', this.getBoolAttr('wrap'));
     const tr = document.createElement('tr');
     for (const col of this._columns) {
+      if (col.type === 'checkbox' && col.selectAll) { tr.appendChild(this._selectAllHeader(col)); continue; }
       const actions = col.type === 'actions';
       const th = this.createElement('th', actions ? ['actions'] : [], actions ? { scope: 'col' } : { 'data-key': col.key, scope: 'col' });
       if (col.icon) { const i = this.createElement('span', ['th-icon']); i.textContent = col.icon; th.appendChild(i); }
@@ -68,6 +78,40 @@ class NkTableView extends NkElement {
     }
     this._newRow.textContent = this.getAttribute('new-row-label') || this.str('newPage');
     this._newRow.style.display = this.getBoolAttr('new-row') ? '' : 'none';
+    this._syncSelectAll();
+  }
+
+  /** The header of a selection column: the cells' own checkbox, named "Select all". */
+  _selectAllHeader(col) {
+    const th = this.createElement('th', ['select-all'], { scope: 'col' });
+    const label = this.createElement('label', ['nk-check']);
+    label.appendChild(this.createElement('input', [], { type: 'checkbox', 'aria-label': this.str('selectAll'), 'data-select-all': col.key }));
+    th.appendChild(label);
+    if (col.width) th.style.width = col.width;
+    return th;
+  }
+
+  /** Every header box shows its column: checked for all rows, a dash for some, empty for none – and nothing to choose without rows. */
+  _syncSelectAll() {
+    for (const input of this._thead?.querySelectorAll('input[data-select-all]') ?? []) {
+      const key = input.dataset.selectAll, on = this._rows.filter(r => r[key]).length;
+      input.checked = on > 0 && on === this._rows.length;
+      input.indeterminate = on > 0 && on < this._rows.length;
+      input.disabled = !this._rows.length;
+    }
+  }
+
+  /** A click or Space on a header box: the column for every row, one event. */
+  _selectAll(input) {
+    const key = input.dataset.selectAll;
+    // A dash selects all, as Notion does; only a full column clears.
+    const value = !(this._rows.length && this._rows.every(r => r[key]));
+    for (const row of this._rows) row[key] = value;
+    const focused = this._shadow.activeElement === input;
+    this._render();
+    // Space should leave the focus where it was – on the new header box.
+    if (focused) [...this._thead.querySelectorAll('input[data-select-all]')].find(i => i.dataset.selectAll === key)?.focus();
+    this.emit('nk-change', { key, value, all: true, rows: this._rows });
   }
 
   setupEvents() {
@@ -98,8 +142,10 @@ class NkTableView extends NkElement {
     this._onChange = (e) => {
       const input = e.target;
       if (input.type !== 'checkbox') return;
+      if (input.dataset.selectAll != null) { this._selectAll(input); return; }
       const row = this._rowById(input.dataset.rowId);
       if (row) row[input.dataset.key] = input.checked;
+      this._syncSelectAll();
       this.emit('nk-change', { row, key: input.dataset.key, value: input.checked });
     };
     this._onKey = (e) => { if ((e.key === 'Enter' || e.key === ' ') && e.target === this._newRow) { e.preventDefault(); this.emit('nk-action', { action: 'new-row' }); } };

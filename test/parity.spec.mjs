@@ -51,9 +51,13 @@ for (const theme of ['light', 'dark']) {
           <div class="box" id="b"${box}>${entry.example(WORDS.en)}</div>
         </div>`);
         // Example scripts (database data etc.) run in the page; document.currentScript
-        // does not exist inside page.evaluate, so the reference is rewritten.
-        for (const m of entry.example(WORDS.en).matchAll(/<script>([\s\S]*?)<\/script>/g)) {
-          await page.evaluate(m[1].replace(/document\.currentScript\.previousElementSibling/g, "document.querySelector('#b').firstElementChild"));
+        // does not exist inside page.evaluate, so the reference is rewritten. The
+        // class markup may carry one too, for what only a script sets – a
+        // checkbox's indeterminate (1.21.0).
+        for (const [box, html] of [['#a', classHtml], ['#b', entry.example(WORDS.en)]]) {
+          for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+            await page.evaluate(m[1].replace(/document\.currentScript\.previousElementSibling/g, `document.querySelector('${box}').firstElementChild`));
+          }
         }
         await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
         const a = page.locator('#a'), b = page.locator('#b');

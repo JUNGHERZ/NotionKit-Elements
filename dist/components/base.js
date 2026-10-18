@@ -21,7 +21,7 @@ const BUILT_IN = {
     appearance: 'Appearance: {mode} – click: {next}', themeAuto: 'automatic (follows the system)', themeLight: 'light', themeDark: 'dark',
     message: 'Message', breadcrumb: 'Breadcrumb', commandPalette: 'Command palette', comment: 'Comment',
     searchEmoji: 'Search emoji', settings: 'Settings', title: 'Title', changeIcon: 'Change icon',
-    add: 'Add', more: 'More',
+    add: 'Add', more: 'More', selectAll: 'Select all',
   },
   de: {
     copy: 'Kopieren', copied: 'Kopiert', show: 'Zeigen', hide: 'Verbergen',
@@ -36,7 +36,7 @@ const BUILT_IN = {
     appearance: 'Darstellung: {mode} – Klick: {next}', themeAuto: 'automatisch (wie das System)', themeLight: 'hell', themeDark: 'dunkel',
     message: 'Nachricht', breadcrumb: 'Pfad', commandPalette: 'Befehlspalette', comment: 'Kommentar',
     searchEmoji: 'Emoji suchen', settings: 'Einstellungen', title: 'Titel', changeIcon: 'Symbol ändern',
-    add: 'Hinzufügen', more: 'Mehr',
+    add: 'Hinzufügen', more: 'Mehr', selectAll: 'Alle auswählen',
   },
 };
 const custom = {};

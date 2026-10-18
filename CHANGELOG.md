@@ -4,6 +4,37 @@ All notable changes to NotionKit Elements are documented here. The format follow
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.21.0] – 2026-10-18
+
+Built against NotionKit CSS 1.21.0 (peer `>= 1.21.0`).
+
+### Added
+- **Select all from the header of a checkbox column (#4).** A `checkbox`
+  column with `selectAll: true` is a selection column: its header holds the
+  cells' own checkbox instead of a name – empty when no row is chosen, a dash
+  for some, a check for all (`th.select-all`, NotionKit 1.21.0) – and sorts
+  nothing. A click or Space sets the column for every row the view has – a
+  dash selects all, as in Notion –, renders the cells again and fires **one**
+  `nk-change { key, value, all: true, rows }`, so an app that keeps its own
+  selection follows with one update instead of one per row; Space leaves the
+  focus on the header box. A row's own box keeps the header in step without
+  losing its focus. Without rows the header box is disabled. What "all" means
+  beyond the view's rows – more pages, a filter on the server – stays with
+  the app. Its accessible name is the new built-in text `selectAll`
+  ("Select all" / "Alle auswählen"). Requested by Mailverse for its
+  quarantine list.
+- `<nk-check indeterminate>` finally shows its mixed state – a dash in the
+  accent box (NotionKit 1.21.0); it looked empty before. The docs show it
+  next to the table's selection column.
+
+### Fixed
+- Through NotionKit 1.21.0: a table row with a checkbox cell was 39.5px
+  instead of 36px; a selection column would have grown every row.
+
+### Tests
+- The parity test runs a script in the class markup too, for what only a
+  script sets – an `indeterminate` checkbox – as the docs page does.
+
 ## [1.20.1] – 2026-10-14
 
 Elements only; NotionKit CSS stays at 1.20.0 (peer `>= 1.20.0`).
@@ -806,6 +837,7 @@ built and tested against NotionKit CSS 1.1.1 (peer range `>= 1.0.0`).
   import, never in the core bundle – shadow-less, adding `nk-block-host` to
   itself so the foundation's editor adapter rules apply.
 
+[1.21.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.21.0
 [1.20.1]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.20.1
 [1.20.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.20.0
 [1.19.0]: https://github.com/JUNGHERZ/NotionKit-Elements/releases/tag/v1.19.0

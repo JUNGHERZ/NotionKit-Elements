@@ -123,7 +123,7 @@ test('setStrings() adds texts for one language or for all; the elements on the p
     en.copy = 'changed';                                              // a copy – the dictionary stays
     return [Object.keys(en).sort().join() === Object.keys(de).sort().join(), Object.keys(de).length, builtInStrings('en').copy];
   });
-  expect(keys).toEqual([true, 42, 'Copy']);
+  expect(keys).toEqual([true, 43, 'Copy']);
   expect(await read()).toEqual(['Copy', '＋ New course', 'Close']);
   await page.evaluate(() => { document.documentElement.lang = 'fr'; });
   await tick(page);
