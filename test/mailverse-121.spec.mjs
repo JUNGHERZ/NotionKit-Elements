@@ -148,8 +148,11 @@ test('the header box stands over the cells\' boxes and the column is as narrow a
     const r = el => el.getBoundingClientRect();
     const h = r(root.querySelector('th.select-all input')), th = r(root.querySelector('th.select-all'));
     const c = r(root.querySelector('tbody input[data-key="selected"]')), td = r(root.querySelector('tbody td'));
-    return { dx: Math.abs((h.left + h.width / 2) - (c.left + c.width / 2)), headerMiddle: Math.abs((h.top + h.height / 2) - (th.top + th.height / 2)), cellMiddle: Math.abs((c.top + c.height / 2) - (td.top + td.height / 2)), width: Math.round(th.width) };
+    return { dx: Math.abs((h.left + h.width / 2) - (c.left + c.width / 2)), headerMiddle: Math.abs((h.top + h.height / 2) - (th.top + th.height / 2)), cellMiddle: Math.abs((c.top + c.height / 2) - (td.top + td.height / 2)), width: Math.round(th.width),
+      rows: [...root.querySelectorAll('tbody tr')].map(tr => Math.round(tr.getBoundingClientRect().height)) };
   });
+  // A checkbox cell no longer grows its row: 36px, as every other row (it was 39.5px before NotionKit 1.21.0).
+  expect(geo.rows).toEqual([36, 36, 36, 36]);
   expect(geo.dx).toBeLessThan(0.5);
   expect(geo.headerMiddle).toBeLessThanOrEqual(1);
   expect(geo.cellMiddle).toBeLessThanOrEqual(1);
